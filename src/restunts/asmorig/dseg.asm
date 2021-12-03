@@ -2138,26 +2138,26 @@ aScrn     db 115
     db 4
     db 2
     db 0
-menu_buttons_x1     dw 105
-    dw 66
-    dw 5
-    dw 190
+menu_buttons_x1     dw 128
+    dw 64
+    dw 0
+    dw 192
+    dw 256
+menu_buttons_x2     dw 191
+    dw 127
+    dw 63
     dw 255
-menu_buttons_x2     dw 208
-    dw 107
-    dw 67
-    dw 253
-    dw 312
-menu_buttons_y1     dw 119
-    dw 77
-    dw 114
-    dw 76
-    dw 116
-menu_buttons_y2     dw 197
-    dw 120
-    dw 170
-    dw 122
-    dw 166
+    dw 319
+menu_buttons_y1     dw 185
+    dw 185
+    dw 185
+    dw 185
+    dw 185
+menu_buttons_y2     dw 199
+    dw 199
+    dw 199
+    dw 199
+    dw 199
 asc_3BA24     db 39
     db 0
 asc_3BA26     db 39
