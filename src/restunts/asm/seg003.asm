@@ -6412,7 +6412,7 @@ loc_1D9CF:
     mov     [bp+var_3C], 12Ch
     mov     [bp+var_E], 0
     mov     [bp+var_5D4], 0
-    mov     ax, offset aCarcoun_0; "carcoun"
+    mov     ax, offset aCarcoun_0; "carzhns"
     push    ax
     call    file_load_resfile
     add     sp, 2

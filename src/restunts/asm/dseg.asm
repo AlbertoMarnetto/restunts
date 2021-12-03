@@ -1899,14 +1899,7 @@ aOpp1     db 111
     db 49
     db 0
     db 0
-aCarcoun     db 99
-    db 97
-    db 114
-    db 99
-    db 111
-    db 117
-    db 110
-    db 0
+aCarcoun db "carzhns", 0
 aTitl     db 84
     db 73
     db 84
@@ -3980,14 +3973,7 @@ aLogolog2brav     db 108
     db 118
     db 0
     db 0
-aCarcoun_0     db 99
-    db 97
-    db 114
-    db 99
-    db 111
-    db 117
-    db 110
-    db 0
+aCarcoun_0 db "carzhns", 0
 intro_cliprect     db 0
     db 0
     db 64

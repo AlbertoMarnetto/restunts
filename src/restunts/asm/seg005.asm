@@ -3021,7 +3021,7 @@ setup_player_cars proc far
     mov     byte ptr aCarcoun+5, al
     mov     al, gameconfig.game_playercarid+3
     mov     byte ptr aCarcoun+6, al
-    mov     ax, offset aCarcoun; "carcoun"
+    mov     ax, offset aCarcoun; "carzhns"
     push    ax
     call    file_load_resfile
     add     sp, 2
@@ -3047,7 +3047,7 @@ setup_player_cars proc far
     mov     byte ptr aCarcoun+5, al
     mov     al, gameconfig.game_opponentcarid+3
     mov     byte ptr aCarcoun+6, al
-    mov     ax, offset aCarcoun; "carcoun"
+    mov     ax, offset aCarcoun; "carzhns"
     push    ax
     call    file_load_resfile
     add     sp, 2

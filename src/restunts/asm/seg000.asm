@@ -3381,7 +3381,7 @@ loc_11FC8:
     mov     byte ptr aCarcoun+5, al
     mov     al, [di+var_carids+3]
     mov     byte ptr aCarcoun+6, al
-    mov     ax, offset aCarcoun; "carcoun"
+    mov     ax, offset aCarcoun; "carzhns"
     push    ax
     call    file_load_resfile
     add     sp, 2
@@ -7328,13 +7328,13 @@ loc_146E2:
 security_check endp
 set_default_car proc far
 
-    mov     gameconfig.game_playercarid, 43h ; 'C'
+    mov     gameconfig.game_playercarid, 5Ah ; 'Z'
 loc_146E9:
-    mov     gameconfig.game_playercarid+1, 4Fh ; 'O'
+    mov     gameconfig.game_playercarid+1, 48h ; 'H'
 loc_146EE:
-    mov     gameconfig.game_playercarid+2, 55h ; 'U'
+    mov     gameconfig.game_playercarid+2, 4Eh ; 'N'
 loc_146F3:
-    mov     gameconfig.game_playercarid+3, 4Eh ; 'N'
+    mov     gameconfig.game_playercarid+3, 53h ; 'S'
 loc_146F8:
     mov     gameconfig.game_playermaterial, 0
 loc_146FD:
