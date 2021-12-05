@@ -1899,10 +1899,10 @@ aOpp1     db 111
 aCarcoun     db 99
     db 97
     db 114
-    db 99
-    db 111
-    db 117
-    db 110
+    db 102          ; 'F'
+    db 103          ; 'G'
+    db 116          ; 'T'
+    db 111          ; 'O'
     db 0
 aTitl     db 84
     db 73
@@ -3980,10 +3980,10 @@ aLogolog2brav     db 108
 aCarcoun_0     db 99
     db 97
     db 114
-    db 99
-    db 111
-    db 117
-    db 110
+    db 102          ; 'F'
+    db 103          ; 'G'
+    db 116          ; 'T'
+    db 111          ; 'O'
     db 0
 intro_cliprect     db 0
     db 0
