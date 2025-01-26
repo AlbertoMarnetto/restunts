@@ -352,7 +352,7 @@ extern unsigned short framespersec;
 extern unsigned short framespersec2;
 extern unsigned short timertestflag;
 extern unsigned short timertestflag_copy;
-extern unsigned char timertestflag2;
+extern unsigned char detail_level;
 
 extern unsigned short pspofs;
 extern unsigned short pspseg;

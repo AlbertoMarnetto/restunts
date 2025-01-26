@@ -20,7 +20,7 @@ extern int word_3B8EC;
 extern int word_3B8F0;
 extern int word_3B8EE;
 extern int word_44D20;
-extern char byte_3C09C[];
+extern char detail_threshold_by_level[];
 extern char byte_3C0C6[];
 extern char word_46468;
 extern int word_3BE34[];
@@ -87,17 +87,17 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	char var_DC[2];
 	struct RECTANGLE* var_rectptr;
 	struct MATRIX var_mat, var_mat2;
-	struct MATRIX* var_matptr;
-	struct VECTOR var_vec4, car_pos, var_vec6, var_vec7, var_vec8;
+	struct MATRIX* car_rot_matrix;
+	struct VECTOR cam_pos, car_pos, car_to_cam_abs, car_to_cam_rotated, var_vec8;
 	int car_rot_y, car_rot_x, car_rot_z;
 	int car_rot_y_2, car_rot_x_2, car_rot_z_2;
 	int var_38, var_angZ;
 	int var_transformresult;
 	int var_52;
-	char* var_50;
+	char* tiles_to_draw;
 	int var_2;
 	int var_counter, var_counter2;
-	char var_posadjust, var_pos2adjust;
+	char cam_tile_z, cam_tile_x;
 	char var_poslookup, var_pos2lookup;
 	char var_poslookupadjust, var_pos2lookupadjust;
 	char var_D8, var_E2;
@@ -107,7 +107,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	char var_postab[24];
 	char var_pos2tab[24];
 	unsigned char var_14C[24];
-	char var_130;
+	char detail_threshold;
 	char var_3C;
 	char var_60;
 	char var_6E;
@@ -178,49 +178,49 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		car_rot_x_2 = car_rot_x & 0x3ff;
 		car_rot_y_2 = car_rot_y & 0x3ff;
 		car_rot_z_2   = car_rot_z & 0x3ff;
-		var_matptr = mat_rot_zxy(-car_rot_z, -car_rot_y, -car_rot_x, 0);
-		var_vec6.x = 0;
-		var_vec6.z = 0;
-		var_vec6.y = simd_player.car_height - 6;
+		car_rot_matrix = mat_rot_zxy(-car_rot_z, -car_rot_y, -car_rot_x, 0);
+		car_to_cam_abs.x = 0;
+		car_to_cam_abs.z = 0;
+		car_to_cam_abs.y = simd_player.car_height - 6;
 
-		mat_mul_vector(&var_vec6, var_matptr, &var_vec7);
-		var_vec4.x = car_pos.x + var_vec7.x;
-		var_vec4.y = car_pos.y + var_vec7.y;
-		var_vec4.z = car_pos.z + var_vec7.z;
+		mat_mul_vector(&car_to_cam_abs, car_rot_matrix, &car_to_cam_rotated);
+		cam_pos.x = car_pos.x + car_to_cam_rotated.x;
+		cam_pos.y = car_pos.y + car_to_cam_rotated.y;
+		cam_pos.z = car_pos.z + car_to_cam_rotated.z;
 	} else if (cameramode == 1) {
-		var_vec4.x = state.game_vec1[followOpponentFlag].x;
-		var_vec4.z = state.game_vec1[followOpponentFlag].z;
-		var_vec4.y = state.game_vec1[followOpponentFlag].y;
+		cam_pos.x = state.game_vec1[followOpponentFlag].x;
+		cam_pos.z = state.game_vec1[followOpponentFlag].z;
+		cam_pos.y = state.game_vec1[followOpponentFlag].y;
 	} else if (cameramode == 2) {
-		var_vec6.x = 0;
-		var_vec6.y = 0;
-		var_vec6.z = 0x4000;
-		var_matptr = mat_rot_zxy(-car_rot_z, -car_rot_y, -car_rot_x, 0);
-		mat_mul_vector(&var_vec6, var_matptr, &var_vec7);
+		car_to_cam_abs.x = 0;
+		car_to_cam_abs.y = 0;
+		car_to_cam_abs.z = 0x4000;
+		car_rot_matrix = mat_rot_zxy(-car_rot_z, -car_rot_y, -car_rot_x, 0);
+		mat_mul_vector(&car_to_cam_abs, car_rot_matrix, &car_to_cam_rotated);
 
-		var_vec6.x = 0;
-		var_vec6.y = 0;
-		var_vec6.z = word_3B8EC;
-		var_matptr = mat_rot_zxy(0, -word_3B8F0, polarAngle(var_vec7.x, var_vec7.z) - word_3B8EE, 0);
+		car_to_cam_abs.x = 0;
+		car_to_cam_abs.y = 0;
+		car_to_cam_abs.z = word_3B8EC;
+		car_rot_matrix = mat_rot_zxy(0, -word_3B8F0, polarAngle(car_to_cam_rotated.x, car_to_cam_rotated.z) - word_3B8EE, 0);
 
-		mat_mul_vector(&var_vec6, var_matptr, &var_vec7);
-		var_vec4.x = car_pos.x + var_vec7.x;
-		var_vec4.y = car_pos.y + var_vec7.y;
-		var_vec4.z = car_pos.z + var_vec7.z;
+		mat_mul_vector(&car_to_cam_abs, car_rot_matrix, &car_to_cam_rotated);
+		cam_pos.x = car_pos.x + car_to_cam_rotated.x;
+		cam_pos.y = car_pos.y + car_to_cam_rotated.y;
+		cam_pos.z = car_pos.z + car_to_cam_rotated.z;
 	} else if (cameramode == 3) {
-		var_vec4.x = trackdata9[state.field_3F7[followOpponentFlag] * 3 + 0];
-		var_vec4.y = trackdata9[state.field_3F7[followOpponentFlag] * 3 + 1] + word_44D20 + 0x5A;
-		var_vec4.z = trackdata9[state.field_3F7[followOpponentFlag] * 3 + 2];
+		cam_pos.x = trackdata9[state.field_3F7[followOpponentFlag] * 3 + 0];
+		cam_pos.y = trackdata9[state.field_3F7[followOpponentFlag] * 3 + 1] + word_44D20 + 0x5A;
+		cam_pos.z = trackdata9[state.field_3F7[followOpponentFlag] * 3 + 2];
 	}
 
 	if (car_rot_x_2 == -1) {
-		build_track_object(&var_vec4, &var_vec4);
-		if (var_vec4.y < terrainHeight) {
-			var_vec4.y = terrainHeight;
+		build_track_object(&cam_pos, &cam_pos);
+		if (cam_pos.y < terrainHeight) {
+			cam_pos.y = terrainHeight;
 		}
 
 		if (byte_4392C != 0) {		
-			si = plane_origin_op(planindex, var_vec4.x, var_vec4.y, var_vec4.z);
+			si = plane_origin_op(planindex, cam_pos.x, cam_pos.y, cam_pos.z);
 			if (si < 0xC) {			
 				vec_unk2.x = 0;
 				vec_unk2.y = 0xC - si;
@@ -231,15 +231,15 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				pState_minusRotate_z_2 = 0;
 				pState_minusRotate_y_2 = 0;
 				plane_rotate_op();
-				var_vec4.x += vec_planerotopresult.x;
-				var_vec4.y += vec_planerotopresult.y;
-				var_vec4.z += vec_planerotopresult.z;
+				cam_pos.x += vec_planerotopresult.x;
+				cam_pos.y += vec_planerotopresult.y;
+				cam_pos.z += vec_planerotopresult.z;
 			}
 		}
 
-		car_rot_x_2 = (-polarAngle(car_pos.x - var_vec4.x, car_pos.z - var_vec4.z)) & 0x3FF;
-		var_38 = polarRadius2D(car_pos.x - var_vec4.x, car_pos.z - var_vec4.z);
-		car_rot_y_2 = polarAngle(car_pos.y - var_vec4.y + 0x32, var_38) & 0x3FF;
+		car_rot_x_2 = (-polarAngle(car_pos.x - cam_pos.x, car_pos.z - cam_pos.z)) & 0x3FF;
+		var_38 = polarRadius2D(car_pos.x - cam_pos.x, car_pos.z - cam_pos.z);
+		car_rot_y_2 = polarAngle(car_pos.y - cam_pos.y + 0x32, var_38) & 0x3FF;
 	}
 
 	if (car_rot_z_2 > 1 && car_rot_z_2 < 0x3FF) {
@@ -255,20 +255,20 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	}
 
 	var_52 = select_cliprect_rotate(var_angZ, car_rot_y_2, car_rot_x_2, arg_cliprectptr, 0);
-	var_50 = off_3C084[(var_52 & 0x3FF) >> 7];
+	tiles_to_draw = off_3C084[(var_52 & 0x3FF) >> 7];
 
 	var_mat = *mat_rot_zxy(var_angZ, car_rot_y_2, 0, 1);
-	var_vec6.x = 0;
-	var_vec6.y = 0;
-	var_vec6.z = 0x3E8;
-	mat_mul_vector(&var_vec6, &var_mat, &var_vec8);
+	car_to_cam_abs.x = 0;
+	car_to_cam_abs.y = 0;
+	car_to_cam_abs.z = 0x3E8;
+	mat_mul_vector(&car_to_cam_abs, &var_mat, &var_vec8);
 	if (var_vec8.z > 0) {
 		var_2 = 1;
 	} else {
 		var_2 = -1;
 	}
 
-	if (timertestflag2 == 0) {
+	if (detail_level == 0) {
 		currenttransshape[0].rectptr = &rect_unk9;
 		currenttransshape[0].ts_flags = var_122 | 7;
 		currenttransshape[0].rotvec.x = 0;
@@ -280,12 +280,12 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			si = (word_3BE34[var_counter] + car_rot_x_2 + run_game_random) & 0x3ff;
 			if (si < 0x87 || si > 0x379) {
 				mat_rot_y(&var_mat2, si);
-				var_vec6.x = 0;
-				var_vec6.y = 0xAE6 - var_vec4.y;
-				var_vec6.z = 0x3A98; //15000
-				mat_mul_vector(&var_vec6, &var_mat2, &var_vec7);
-				var_vec7.z = 0x3A98; //15000
-				mat_mul_vector(&var_vec7, &var_mat, &currenttransshape[0].pos);
+				car_to_cam_abs.x = 0;
+				car_to_cam_abs.y = 0xAE6 - cam_pos.y;
+				car_to_cam_abs.z = 0x3A98; //15000
+				mat_mul_vector(&car_to_cam_abs, &var_mat2, &car_to_cam_rotated);
+				car_to_cam_rotated.z = 0x3A98; //15000
+				mat_mul_vector(&car_to_cam_rotated, &var_mat, &currenttransshape[0].pos);
 				if (currenttransshape[0].pos.z > 0xC8) {
 					currenttransshape[0].shapeptr = off_3BE44[var_counter];
 					currenttransshape[0].rotvec.z = -car_rot_x_2;
@@ -299,9 +299,9 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 ; -----------------------------------------------------------------------------------------------
 */
 
-	var_pos2adjust = var_vec4.x >> 0xA;
-	var_posadjust = -((var_vec4.z >> 0xA) - 0x1D);
-	if (timertestflag2 != 0) {
+	cam_tile_x = cam_pos.x >> 0xA;
+	cam_tile_z = -((cam_pos.z >> 0xA) - 0x1D);
+	if (detail_level != 0) {
 		var_D8 = state.playerstate.car_posWorld1.lx >> 16;
 		var_E2 = 0x1D - (state.playerstate.car_posWorld1.lz >> 16);
 	}
@@ -310,15 +310,15 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		var_32[si] = 0;
 	}
 
-	var_130 = byte_3C09C[timertestflag2];
+	detail_threshold = detail_threshold_by_level[detail_level];
 	
 	for (si = 0x16; si >= 0; si--) {
 		if (var_32[si] != 0)
 			continue;
 
-		if (var_50[si * 3 + 2] <= var_130) {
-			var_pos2lookup = var_50[si * 3] + var_pos2adjust;
-			var_poslookup = var_50[si * 3 + 1] + var_posadjust;
+		if (tiles_to_draw[si * 3 + 2] <= detail_threshold) {
+			var_pos2lookup = tiles_to_draw[si * 3] + cam_tile_x;
+			var_poslookup = tiles_to_draw[si * 3 + 1] + cam_tile_z;
 			if (var_pos2lookup >= 0 && var_pos2lookup <= 0x1D && var_poslookup >= 0 && var_poslookup <= 0x1D) {
 				elem_map_value = td14_elem_map_main[var_pos2lookup + trackrows[var_poslookup]];
 				terr_map_value = td15_terr_map_main[var_pos2lookup + terrainrows[var_poslookup]];
@@ -350,9 +350,9 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				}
 
 				var_1A[si] = terr_map_value;
-				var_BC[si] = var_50[si * 3 + 2];
+				var_BC[si] = tiles_to_draw[si * 3 + 2];
 				
-				if (elem_map_value != 0 && timertestflag2 != 0 && 
+				if (elem_map_value != 0 && detail_level != 0 && 
 					trkObjectList[elem_map_value].ss_physicalModel >= 0x40 &&
 					(var_pos2lookup != var_D8 || var_poslookup != var_E2))
 				{
@@ -367,24 +367,24 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 					var_multitileflag = trkObjectList[elem_map_value].ss_multiTileFlag;
 					if (var_multitileflag != 0) {
 
-						var_pos2lookupadjust = var_pos2lookup - var_pos2adjust;
-						var_poslookupadjust = var_poslookup - var_posadjust;
+						var_pos2lookupadjust = var_pos2lookup - cam_tile_x;
+						var_poslookupadjust = var_poslookup - cam_tile_z;
 						if (var_multitileflag == 1) {
 							for (di = 0; di < si; di++) {
-								if (var_50[di * 3] == var_pos2lookupadjust && (var_50[di * 3 + 1] == var_poslookupadjust || var_50[di * 3 + 1] == var_poslookupadjust + 1)) {
+								if (tiles_to_draw[di * 3] == var_pos2lookupadjust && (tiles_to_draw[di * 3 + 1] == var_poslookupadjust || tiles_to_draw[di * 3 + 1] == var_poslookupadjust + 1)) {
 									var_32[di] = 1;
 								}
 							}
 						} else if (var_multitileflag == 2) {
 							for (di = 0; di < si; di++) {
-								if (var_50[si * 3 + 1] == var_poslookupadjust && (var_50[si * 3] == var_pos2lookupadjust || var_50[si * 3] != var_pos2lookupadjust + 1)) {
+								if (tiles_to_draw[si * 3 + 1] == var_poslookupadjust && (tiles_to_draw[si * 3] == var_pos2lookupadjust || tiles_to_draw[si * 3] != var_pos2lookupadjust + 1)) {
 									var_32[di] = 1;
 								}
 							}
 						} else if (var_multitileflag == 3) {
 							for (di = 0; di < si; di++) {
-								if ((var_50[di * 3] == var_pos2lookupadjust || var_50[di * 3] == var_pos2lookupadjust + 1) && 
-									(var_50[di * 3 + 1] == var_poslookupadjust || var_50[di * 3 + 1] == var_poslookupadjust + 1))
+								if ((tiles_to_draw[di * 3] == var_pos2lookupadjust || tiles_to_draw[di * 3] == var_pos2lookupadjust + 1) && 
+									(tiles_to_draw[di * 3 + 1] == var_poslookupadjust || tiles_to_draw[di * 3 + 1] == var_poslookupadjust + 1))
 								{
 									var_32[di] = 1;
 								}
@@ -409,17 +409,17 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 
 		if (state.playerstate.car_crashBmpFlag != 2) {
 
-			var_matptr = mat_rot_zxy(-state.playerstate.car_rotate.z, -state.playerstate.car_rotate.y, -state.playerstate.car_rotate.x, 0);
+			car_rot_matrix = mat_rot_zxy(-state.playerstate.car_rotate.z, -state.playerstate.car_rotate.y, -state.playerstate.car_rotate.x, 0);
 			var_multitileflag = -1;
 			di = -1;
 			for (var_counter2 = 0; var_counter2 < 4; var_counter2++) {
-				var_vec6 = simd_player.wheel_coords[var_counter2];
-				mat_mul_vector(&var_vec6, var_matptr, &var_vec8); //; rotating car wheels, maybe?
+				car_to_cam_abs = simd_player.wheel_coords[var_counter2];
+				mat_mul_vector(&car_to_cam_abs, car_rot_matrix, &var_vec8); //; rotating car wheels, maybe?
 				var_pos2lookup = (var_vec8.x + state.playerstate.car_posWorld1.lx) >> 16; // bits 16-24
 				var_poslookup = -(((var_vec8.z + state.playerstate.car_posWorld1.lz) >> 16) - 0x1D);
 
 				for (si = 0x16; si > var_multitileflag; si--) {
-					if (var_32[si] != 2 && var_50[si * 3] + var_pos2adjust == var_pos2lookup && var_50[si * 3 + 1] + var_posadjust == var_poslookup) {
+					if (var_32[si] != 2 && tiles_to_draw[si * 3] + cam_tile_x == var_pos2lookup && tiles_to_draw[si * 3 + 1] + cam_tile_z == var_poslookup) {
 						var_3C = var_pos2lookup;
 						var_60 = var_poslookup;
 						var_multitileflag = si;
@@ -430,12 +430,12 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 
 			if (di != -1) {
 				if (state.playerstate.car_surfaceWhl[0] != 4 || state.playerstate.car_surfaceWhl[1] != 4 || state.playerstate.car_surfaceWhl[2] != 4 || state.playerstate.car_surfaceWhl[3] != 4) {
-					var_vec6.x = 0;
-					var_vec6.z = 0;
-					var_vec6.y = 0x7530;
-					mat_mul_vector(&var_vec6, var_matptr, &var_vec8);
-					mat_mul_vector(&var_vec8, &mat_temp, &var_vec6);
-					if (var_vec6.z <= 0) {
+					car_to_cam_abs.x = 0;
+					car_to_cam_abs.z = 0;
+					car_to_cam_abs.y = 0x7530;
+					mat_mul_vector(&car_to_cam_abs, car_rot_matrix, &var_vec8);
+					mat_mul_vector(&var_vec8, &mat_temp, &car_to_cam_abs);
+					if (car_to_cam_abs.z <= 0) {
 						var_6C = -0x800 ;
 					} else {
 						var_6C = 0x800;
@@ -451,18 +451,18 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 
 		if (cameramode != 0 || followOpponentFlag == 0) {
 			if (state.opponentstate.car_crashBmpFlag != 2) {
-				var_matptr = mat_rot_zxy(-state.opponentstate.car_rotate.z, -state.opponentstate.car_rotate.y, -state.opponentstate.car_rotate.x, 0);
+				car_rot_matrix = mat_rot_zxy(-state.opponentstate.car_rotate.z, -state.opponentstate.car_rotate.y, -state.opponentstate.car_rotate.x, 0);
 				var_multitileflag = -1;
 				di = -1;
 
 				for (var_counter2 = 0; var_counter2 < 4; var_counter2++) {
-					var_vec6 = simd_opponent.wheel_coords[var_counter2];
-					mat_mul_vector(&var_vec6, var_matptr, &var_vec8); //; rotating car wheels, maybe?
+					car_to_cam_abs = simd_opponent.wheel_coords[var_counter2];
+					mat_mul_vector(&car_to_cam_abs, car_rot_matrix, &var_vec8); //; rotating car wheels, maybe?
 					var_pos2lookup = (var_vec8.x + state.opponentstate.car_posWorld1.lx) >> 16; // bits 16-24
 					var_poslookup = -(((var_vec8.z + state.opponentstate.car_posWorld1.lz) >> 16) - 0x1D);
 
 					for (si = 0x16; si > var_multitileflag; si--) {
-						if (var_32[si] != 2 && var_50[si * 3] + var_pos2adjust == var_pos2lookup && var_50[si * 3 + 1] + var_posadjust == var_poslookup) {
+						if (var_32[si] != 2 && tiles_to_draw[si * 3] + cam_tile_x == var_pos2lookup && tiles_to_draw[si * 3 + 1] + cam_tile_z == var_poslookup) {
 							var_4A = var_pos2lookup;
 							var_6E = var_poslookup;
 							var_multitileflag = si;
@@ -474,12 +474,12 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				if (di != -1) {
 						
 					if (state.opponentstate.car_surfaceWhl[0] != 4 || state.opponentstate.car_surfaceWhl[1] != 4 || state.opponentstate.car_surfaceWhl[2] != 4 || state.opponentstate.car_surfaceWhl[3] != 4) {
-						var_vec6.x = 0;
-						var_vec6.y = 0;
-						var_vec6.z = 0x7530;
-						mat_mul_vector(&var_vec6, var_matptr, &var_vec8);
-						mat_mul_vector(&var_vec8, &mat_temp, &var_vec6);
-						if (var_vec6.z <= 0) {
+						car_to_cam_abs.x = 0;
+						car_to_cam_abs.y = 0;
+						car_to_cam_abs.z = 0x7530;
+						mat_mul_vector(&car_to_cam_abs, car_rot_matrix, &var_vec8);
+						mat_mul_vector(&var_vec8, &mat_temp, &car_to_cam_abs);
+						if (car_to_cam_abs.z <= 0) {
 							var_A4 = -0x800; //0xF800; // signed number!
 						} else {
 							var_A4 = 0x800;
@@ -529,7 +529,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			var_pos2lookupadjust = var_10E[var_multitileflag * 2] + var_pos2lookup;
 			var_poslookupadjust = var_10E[var_multitileflag * 2 + 1] + var_poslookup;
 			
-			if (timertestflag2 == 0 || (var_pos2lookupadjust == var_D8 && var_poslookupadjust == var_E2)) {
+			if (detail_level == 0 || (var_pos2lookupadjust == var_D8 && var_poslookupadjust == var_E2)) {
 				if (var_pos2lookupadjust == 0) {
 					if (var_poslookupadjust == 0) {
 						di = 7;
@@ -565,9 +565,9 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 						currenttransshape[0].shapeptr = var_trkobjectptr->ss_loShapePtr;
 					}
 
-					currenttransshape[0].pos.x = trackcenterpos2[var_pos2lookupadjust] - var_vec4.x;
-					currenttransshape[0].pos.y = -var_vec4.y;
-					currenttransshape[0].pos.z = trackcenterpos[var_poslookupadjust] - var_vec4.z;
+					currenttransshape[0].pos.x = trackcenterpos2[var_pos2lookupadjust] - cam_pos.x;
+					currenttransshape[0].pos.y = -cam_pos.y;
+					currenttransshape[0].pos.z = trackcenterpos[var_poslookupadjust] - cam_pos.z;
 					currenttransshape[0].rectptr = &rect_unk2;
 					currenttransshape[0].ts_flags = var_122 | 5;
 					currenttransshape[0].rotvec.x = 0;
@@ -606,9 +606,9 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 					if (terr_map_value != 0) {
 						var_trkobject_ptr = &sceneshapes2[terr_map_value];
 						currenttransshape[0].shapeptr = var_trkobject_ptr->ss_shapePtr;
-						currenttransshape[0].pos.x = trackcenterpos2[var_pos2lookupadjust] - var_vec4.x;
-						currenttransshape[0].pos.y = -var_vec4.y;
-						currenttransshape[0].pos.z = trackcenterpos[var_poslookupadjust] - var_vec4.z;
+						currenttransshape[0].pos.x = trackcenterpos2[var_pos2lookupadjust] - cam_pos.x;
+						currenttransshape[0].pos.y = -cam_pos.y;
+						currenttransshape[0].pos.z = trackcenterpos[var_poslookupadjust] - cam_pos.z;
 						currenttransshape[0].rectptr = &rect_unk2;
 						currenttransshape[0].ts_flags = var_122 | 5;
 						currenttransshape[0].rotvec.x = 0;
@@ -634,9 +634,9 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		if (terr_map_value != 0) {
 			var_trkobject_ptr = &sceneshapes2[terr_map_value];
 			currenttransshape[0].shapeptr = var_trkobject_ptr->ss_shapePtr;
-			currenttransshape[0].pos.x = trackcenterpos2[var_pos2lookup] - var_vec4.x;
-			currenttransshape[0].pos.y = var_hillheight - var_vec4.y;
-			currenttransshape[0].pos.z = trackcenterpos[var_poslookup] - var_vec4.z;
+			currenttransshape[0].pos.x = trackcenterpos2[var_pos2lookup] - cam_pos.x;
+			currenttransshape[0].pos.y = var_hillheight - cam_pos.y;
+			currenttransshape[0].pos.z = trackcenterpos[var_poslookup] - cam_pos.z;
 			if (var_hillheight == 0) {
 				currenttransshape[0].rectptr = &rect_unk2;
 			} else {
@@ -677,9 +677,9 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				var_pos2lookupadjust = var_pos2lookup;
 			}
 
-			var_vec8.x = var_3A - var_vec4.x;
-			var_vec8.y = var_hillheight - var_vec4.y;
-			var_vec8.z = var_5E - var_vec4.z;
+			var_vec8.x = var_3A - cam_pos.x;
+			var_vec8.y = var_hillheight - cam_pos.y;
+			var_vec8.z = var_5E - cam_pos.z;
 			if (var_hillheight != 0) {
 				if (var_trkobject_ptr->ss_multiTileFlag == 0) {
 					di = 1;
@@ -807,9 +807,9 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			if (var_4C != 0xFF) {
 				if (state.field_3FA[var_4C] == 0) {
 					var_trkobject_ptr = &trkObjectList[212 + trackdata23[var_4C]];
-					curtransshape_ptr->pos.x = td10_track_check_rel[var_4C * 3 + 0] - var_vec4.x;
-					curtransshape_ptr->pos.y = td10_track_check_rel[var_4C * 3 + 1] - var_vec4.y;
-					curtransshape_ptr->pos.z = td10_track_check_rel[var_4C * 3 + 2] - var_vec4.z;
+					curtransshape_ptr->pos.x = td10_track_check_rel[var_4C * 3 + 0] - cam_pos.x;
+					curtransshape_ptr->pos.y = td10_track_check_rel[var_4C * 3 + 1] - cam_pos.y;
+					curtransshape_ptr->pos.z = td10_track_check_rel[var_4C * 3 + 2] - cam_pos.z;
 					curtransshape_ptr->shapeptr = var_trkobject_ptr->ss_shapePtr;
 					curtransshape_ptr->rectptr = &rect_unk6;
 					curtransshape_ptr->ts_flags = var_122 | 4;
@@ -823,9 +823,9 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 					for (di = 0; di < 0x18; di++) {
 						if (state.field_38E[di] != 0 && var_4C + 2 == state.field_443[di]) {
 							var_trkobject_ptr = &sceneshapes3[state.field_42B[di]];
-							curtransshape_ptr->pos.x = (state.game_longs1[di] >> 6) + td10_track_check_rel[var_4C * 3 + 0] - var_vec4.x;
-							curtransshape_ptr->pos.y = (state.game_longs2[di] >> 6) + td10_track_check_rel[var_4C * 3 + 1] - var_vec4.y;
-							curtransshape_ptr->pos.z = (state.game_longs3[di] >> 6) + td10_track_check_rel[var_4C * 3 + 2] - var_vec4.z;
+							curtransshape_ptr->pos.x = (state.game_longs1[di] >> 6) + td10_track_check_rel[var_4C * 3 + 0] - cam_pos.x;
+							curtransshape_ptr->pos.y = (state.game_longs2[di] >> 6) + td10_track_check_rel[var_4C * 3 + 1] - cam_pos.y;
+							curtransshape_ptr->pos.z = (state.game_longs3[di] >> 6) + td10_track_check_rel[var_4C * 3 + 2] - cam_pos.z;
 							curtransshape_ptr->shapeptr = var_trkobject_ptr->ss_shapePtr;
 							curtransshape_ptr->rectptr = &rect_unk6;
 							curtransshape_ptr->ts_flags = var_122 | 5;
@@ -846,9 +846,9 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				for (di = 0; di < 0x18; di++) {
 					if (state.field_38E[di] != 0 && state.field_443[di] == 0) {
 						var_trkobject_ptr = &sceneshapes3[state.field_42B[di]];
-						curtransshape_ptr->pos.x = (state.game_longs1[di] + state.playerstate.car_posWorld1.lx >> 6) - var_vec4.x;
-						curtransshape_ptr->pos.y = (state.game_longs2[di] + state.playerstate.car_posWorld1.ly >> 6) - var_vec4.y;
-						curtransshape_ptr->pos.z = (state.game_longs3[di] + state.playerstate.car_posWorld1.lz >> 6) - var_vec4.z;
+						curtransshape_ptr->pos.x = (state.game_longs1[di] + state.playerstate.car_posWorld1.lx >> 6) - cam_pos.x;
+						curtransshape_ptr->pos.y = (state.game_longs2[di] + state.playerstate.car_posWorld1.ly >> 6) - cam_pos.y;
+						curtransshape_ptr->pos.z = (state.game_longs3[di] + state.playerstate.car_posWorld1.lz >> 6) - cam_pos.z;
 						curtransshape_ptr->shapeptr = var_trkobject_ptr->ss_shapePtr;
 						curtransshape_ptr->rectptr = &rect_unk6;
 						curtransshape_ptr->ts_flags = var_122 | 5;
@@ -863,11 +863,11 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			}
 
 			var_trkobject_ptr = &trkObjectList[2];//0x1C / sizeof(struct TRACKOBJECT)];
-			curtransshape_ptr->pos.x = (state.playerstate.car_posWorld1.lx >> 6) - var_vec4.x;
-			curtransshape_ptr->pos.y = (state.playerstate.car_posWorld1.ly >> 6) - var_vec4.y;
-			curtransshape_ptr->pos.z = (state.playerstate.car_posWorld1.lz >> 6) - var_vec4.z;
+			curtransshape_ptr->pos.x = (state.playerstate.car_posWorld1.lx >> 6) - cam_pos.x;
+			curtransshape_ptr->pos.y = (state.playerstate.car_posWorld1.ly >> 6) - cam_pos.y;
+			curtransshape_ptr->pos.z = (state.playerstate.car_posWorld1.lz >> 6) - cam_pos.z;
 			
-			if (var_FC != 0 || timertestflag2 > 2) {
+			if (var_FC != 0 || detail_level > 2) {
 				curtransshape_ptr->shapeptr = var_trkobject_ptr->ss_loShapePtr;
 			} else {
 				curtransshape_ptr->shapeptr = var_trkobject_ptr->ss_shapePtr;
@@ -900,9 +900,9 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 						if (state.field_38E[di] != 0) {
 							if (state.field_443[di] == 1) {
 								var_trkobject_ptr = &sceneshapes3[state.field_42B[di]];
-								curtransshape_ptr->pos.x = (state.game_longs1[di] + state.opponentstate.car_posWorld1.lx >> 6) - var_vec4.x;
-								curtransshape_ptr->pos.y = (state.game_longs2[di] + state.opponentstate.car_posWorld1.ly >> 6) - var_vec4.y;
-								curtransshape_ptr->pos.z = (state.game_longs3[di] + state.opponentstate.car_posWorld1.lz >> 6) - var_vec4.z;
+								curtransshape_ptr->pos.x = (state.game_longs1[di] + state.opponentstate.car_posWorld1.lx >> 6) - cam_pos.x;
+								curtransshape_ptr->pos.y = (state.game_longs2[di] + state.opponentstate.car_posWorld1.ly >> 6) - cam_pos.y;
+								curtransshape_ptr->pos.z = (state.game_longs3[di] + state.opponentstate.car_posWorld1.lz >> 6) - cam_pos.z;
 								curtransshape_ptr->shapeptr = var_trkobject_ptr->ss_shapePtr;
 								curtransshape_ptr->rectptr = &rect_unk6;
 								curtransshape_ptr->ts_flags = var_122 | 5;
@@ -917,11 +917,11 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 					}
 				}
 				var_trkobject_ptr = &trkObjectList[3];//0x2A / sizeof(struct TRACKOBJECT)];
-				curtransshape_ptr->pos.x = (state.opponentstate.car_posWorld1.lx >> 6) - var_vec4.x;
-				curtransshape_ptr->pos.y = (state.opponentstate.car_posWorld1.ly >> 6) - var_vec4.y;
-				curtransshape_ptr->pos.z = (state.opponentstate.car_posWorld1.lz >> 6) - var_vec4.z;
+				curtransshape_ptr->pos.x = (state.opponentstate.car_posWorld1.lx >> 6) - cam_pos.x;
+				curtransshape_ptr->pos.y = (state.opponentstate.car_posWorld1.ly >> 6) - cam_pos.y;
+				curtransshape_ptr->pos.z = (state.opponentstate.car_posWorld1.lz >> 6) - cam_pos.z;
 
-				if (var_FC != 0 || timertestflag2 > 2) {
+				if (var_FC != 0 || detail_level > 2) {
 					curtransshape_ptr->shapeptr = var_trkobject_ptr->ss_loShapePtr;
 				} else {
 					curtransshape_ptr->shapeptr = var_trkobject_ptr->ss_shapePtr;
@@ -970,12 +970,12 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				curtransshape_ptr->pos.x =
 					multiply_and_scale(sin_fast(track_angle + 0x100), 0x24) +
 					multiply_and_scale(sin_fast(track_angle + 0x200), 0x1B6) + 
-					trackcenterpos2[startcol2] - var_vec4.x;
-				curtransshape_ptr->pos.y = hillHeightConsts[hillFlag] - var_vec4.y;
+					trackcenterpos2[startcol2] - cam_pos.x;
+				curtransshape_ptr->pos.y = hillHeightConsts[hillFlag] - cam_pos.y;
 				curtransshape_ptr->pos.z =
 					multiply_and_scale(cos_fast(track_angle + 0x100), 0x24) +
 					multiply_and_scale(cos_fast(track_angle + 0x200), 0x1B6) + 
-					trackcenterpos[startrow2] - var_vec4.z;
+					trackcenterpos[startrow2] - cam_pos.z;
 
 				curtransshape_ptr->shapeptr = &game3dshapes[0x98A / sizeof(struct SHAPE3D)];
 				curtransshape_ptr->rectptr = &rect_unk6;
@@ -1034,7 +1034,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		}
 	}
 
-	var_132 = skybox_op(arg_0, arg_cliprectptr, var_2, &var_mat, var_angZ, car_rot_x_2, var_vec4.y);
+	var_132 = skybox_op(arg_0, arg_cliprectptr, var_2, &var_mat, var_angZ, car_rot_x_2, cam_pos.y);
 	sprite_set_1_size(0, 0x140, arg_cliprectptr->top, arg_cliprectptr->bottom);
 	get_a_poly_info();
 	for (si = 0; si < 2; si++) {
@@ -1057,8 +1057,8 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 
 		if (rect_intersect(var_rectptr, arg_cliprectptr) == 0) {
 			sprite_set_1_size(var_rectptr->left, var_rectptr->right, var_rectptr->top, var_rectptr->bottom);
-			var_vec6.x = (var_rectptr->right + var_rectptr->left) >> 1;
-			var_vec6.y = (var_rectptr->top + var_rectptr->bottom) >> 1;
+			car_to_cam_abs.x = (var_rectptr->right + var_rectptr->left) >> 1;
+			car_to_cam_abs.y = (var_rectptr->top + var_rectptr->bottom) >> 1;
 			var_multitileflag = var_rectptr->right - var_rectptr->left;
 			var_counter = var_rectptr->bottom - var_rectptr->top;
 			if (var_counter > var_multitileflag) {
@@ -1067,7 +1067,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 
 			di = (state.game_frame >> 2) % 3 ;
 			var_counter = ((long)var_multitileflag << 8) / (long)sdgame2_widths[di];
-			shape_op_explosion(var_counter, sdgame2shapes[di], var_vec6.x, var_vec6.y);
+			shape_op_explosion(var_counter, sdgame2shapes[di], car_to_cam_abs.x, car_to_cam_abs.y);
 		}
 	}
 

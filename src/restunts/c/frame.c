@@ -20,7 +20,7 @@ extern int word_3B8EC;
 extern int word_3B8F0;
 extern int word_3B8EE;
 extern int word_44D20;
-extern char byte_3C09C[];
+extern char detail_threshold_by_level[];
 extern char byte_3C0C6[];
 extern char word_46468;
 extern int word_3BE34[];
@@ -268,7 +268,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		var_2 = -1;
 	}
 
-	if (timertestflag2 == 0) {
+	if (detail_level == 0) {
 		currenttransshape[0].rectptr = &rect_unk9;
 		currenttransshape[0].ts_flags = var_122 | 7;
 		currenttransshape[0].rotvec.x = 0;
@@ -301,7 +301,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 
 	var_pos2adjust = var_vec4.x >> 0xA;
 	var_posadjust = -((var_vec4.z >> 0xA) - 0x1D);
-	if (timertestflag2 != 0) {
+	if (detail_level != 0) {
 		var_D8 = state.playerstate.car_posWorld1.lx >> 16;
 		var_E2 = 0x1D - (state.playerstate.car_posWorld1.lz >> 16);
 	}
@@ -310,7 +310,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		var_32[si] = 0;
 	}
 
-	var_130 = byte_3C09C[timertestflag2];
+	var_130 = detail_threshold_by_level[detail_level];
 	
 	for (si = 0x16; si >= 0; si--) {
 		if (var_32[si] != 0)
@@ -352,7 +352,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				var_1A[si] = terr_map_value;
 				var_BC[si] = var_50[si * 3 + 2];
 				
-				if (elem_map_value != 0 && timertestflag2 != 0 && 
+				if (elem_map_value != 0 && detail_level != 0 && 
 					trkObjectList[elem_map_value].ss_physicalModel >= 0x40 &&
 					(var_pos2lookup != var_D8 || var_poslookup != var_E2))
 				{
@@ -529,7 +529,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			var_pos2lookupadjust = var_10E[var_multitileflag * 2] + var_pos2lookup;
 			var_poslookupadjust = var_10E[var_multitileflag * 2 + 1] + var_poslookup;
 			
-			if (timertestflag2 == 0 || (var_pos2lookupadjust == var_D8 && var_poslookupadjust == var_E2)) {
+			if (detail_level == 0 || (var_pos2lookupadjust == var_D8 && var_poslookupadjust == var_E2)) {
 				if (var_pos2lookupadjust == 0) {
 					if (var_poslookupadjust == 0) {
 						di = 7;
@@ -867,7 +867,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			curtransshape_ptr->pos.y = (state.playerstate.car_posWorld1.ly >> 6) - var_vec4.y;
 			curtransshape_ptr->pos.z = (state.playerstate.car_posWorld1.lz >> 6) - var_vec4.z;
 			
-			if (var_FC != 0 || timertestflag2 > 2) {
+			if (var_FC != 0 || detail_level > 2) {
 				curtransshape_ptr->shapeptr = var_trkobject_ptr->ss_loShapePtr;
 			} else {
 				curtransshape_ptr->shapeptr = var_trkobject_ptr->ss_shapePtr;
@@ -921,7 +921,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				curtransshape_ptr->pos.y = (state.opponentstate.car_posWorld1.ly >> 6) - var_vec4.y;
 				curtransshape_ptr->pos.z = (state.opponentstate.car_posWorld1.lz >> 6) - var_vec4.z;
 
-				if (var_FC != 0 || timertestflag2 > 2) {
+				if (var_FC != 0 || detail_level > 2) {
 					curtransshape_ptr->shapeptr = var_trkobject_ptr->ss_loShapePtr;
 				} else {
 					curtransshape_ptr->shapeptr = var_trkobject_ptr->ss_shapePtr;
