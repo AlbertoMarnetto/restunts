@@ -24,7 +24,7 @@ extern char detail_threshold_by_level[];
 extern char byte_3C0C6[];
 extern char word_46468;
 extern int word_3BE34[];
-extern char* off_3C084[];
+extern char* tiles_to_draw_offsets_tables[];
 extern struct SHAPE3D* off_3BE44[];
 extern int terrainHeight;
 extern int planindex;
@@ -255,7 +255,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	}
 
 	var_52 = select_cliprect_rotate(var_angZ, var_angX, var_angY, arg_cliprectptr, 0);
-	var_50 = off_3C084[(var_52 & 0x3FF) >> 7];
+	var_50 = tiles_to_draw_offsets_tables[(var_52 & 0x3FF) >> 7];
 
 	var_mat = *mat_rot_zxy(var_angZ, var_angX, 0, 1);
 	var_vec6.x = 0;
