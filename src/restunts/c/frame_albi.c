@@ -90,7 +90,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	struct MATRIX* var_matptr;
 	struct VECTOR var_vec4, car_pos, var_vec6, var_vec7, var_vec8;
 	int car_rot_y, car_rot_x, car_rot_z;
-	int var_angX, var_angY, var_E0;
+	int car_rot_y_2, car_rot_x_2, car_rot_z_2;
 	int var_38, var_angZ;
 	int var_transformresult;
 	int var_52;
@@ -171,13 +171,13 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		car_rot_x = state.opponentstate.car_rotate.x;
 	}
 
-	var_angY = -1;
-	var_E0 = 0;
+	car_rot_x_2 = -1;
+	car_rot_z_2 = 0;
 	
 	if (cameramode == 0) {
-		var_angY = car_rot_x & 0x3ff;
-		var_angX = car_rot_y & 0x3ff;
-		var_E0   = car_rot_z & 0x3ff;
+		car_rot_x_2 = car_rot_x & 0x3ff;
+		car_rot_y_2 = car_rot_y & 0x3ff;
+		car_rot_z_2   = car_rot_z & 0x3ff;
 		var_matptr = mat_rot_zxy(-car_rot_z, -car_rot_y, -car_rot_x, 0);
 		var_vec6.x = 0;
 		var_vec6.z = 0;
@@ -213,7 +213,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		var_vec4.z = trackdata9[state.field_3F7[followOpponentFlag] * 3 + 2];
 	}
 
-	if (var_angY == -1) {
+	if (car_rot_x_2 == -1) {
 		build_track_object(&var_vec4, &var_vec4);
 		if (var_vec4.y < terrainHeight) {
 			var_vec4.y = terrainHeight;
@@ -237,13 +237,13 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			}
 		}
 
-		var_angY = (-polarAngle(car_pos.x - var_vec4.x, var_vec5.z - var_vec4.z)) & 0x3FF;
-		var_38 = polarRadius2D(car_pos.x - var_vec4.x, var_vec5.z - var_vec4.z);
-		var_angX = polarAngle(car_pos.y - var_vec4.y + 0x32, var_38) & 0x3FF;
+		car_rot_x_2 = (-polarAngle(car_pos.x - var_vec4.x, car_pos.z - var_vec4.z)) & 0x3FF;
+		var_38 = polarRadius2D(car_pos.x - var_vec4.x, car_pos.z - var_vec4.z);
+		car_rot_y_2 = polarAngle(car_pos.y - var_vec4.y + 0x32, var_38) & 0x3FF;
 	}
 
-	if (var_E0 > 1 && var_E0 < 0x3FF) {
-		var_angZ = var_E0;
+	if (car_rot_z_2 > 1 && car_rot_z_2 < 0x3FF) {
+		var_angZ = car_rot_z_2;
 	} else {
 		var_angZ = 0;
 	}
@@ -254,10 +254,10 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		var_E4 = byte_3C0C6[state.game_frame&0xF];
 	}
 
-	var_52 = select_cliprect_rotate(var_angZ, var_angX, var_angY, arg_cliprectptr, 0);
+	var_52 = select_cliprect_rotate(var_angZ, car_rot_y_2, car_rot_x_2, arg_cliprectptr, 0);
 	var_50 = off_3C084[(var_52 & 0x3FF) >> 7];
 
-	var_mat = *mat_rot_zxy(var_angZ, var_angX, 0, 1);
+	var_mat = *mat_rot_zxy(var_angZ, car_rot_y_2, 0, 1);
 	var_vec6.x = 0;
 	var_vec6.y = 0;
 	var_vec6.z = 0x3E8;
@@ -277,7 +277,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		currenttransshape[0].material = 0;
 
 		for (var_counter = 0; var_counter < 8; var_counter++) {
-			si = (word_3BE34[var_counter] + var_angY + run_game_random) & 0x3ff;
+			si = (word_3BE34[var_counter] + car_rot_x_2 + run_game_random) & 0x3ff;
 			if (si < 0x87 || si > 0x379) {
 				mat_rot_y(&var_mat2, si);
 				var_vec6.x = 0;
@@ -288,7 +288,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				mat_mul_vector(&var_vec7, &var_mat, &currenttransshape[0].pos);
 				if (currenttransshape[0].pos.z > 0xC8) {
 					currenttransshape[0].shapeptr = off_3BE44[var_counter];
-					currenttransshape[0].rotvec.z = -var_angY;
+					currenttransshape[0].rotvec.z = -car_rot_x_2;
 					var_transformresult = transformed_shape_op(&currenttransshape[0]);
 				}
 			}
@@ -1034,7 +1034,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		}
 	}
 
-	var_132 = skybox_op(arg_0, arg_cliprectptr, var_2, &var_mat, var_angZ, var_angY, var_vec4.y);
+	var_132 = skybox_op(arg_0, arg_cliprectptr, var_2, &var_mat, var_angZ, car_rot_x_2, var_vec4.y);
 	sprite_set_1_size(0, 0x140, arg_cliprectptr->top, arg_cliprectptr->bottom);
 	get_a_poly_info();
 	for (si = 0; si < 2; si++) {
@@ -1127,8 +1127,8 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		for (si = 0; si < 15; si++) {
 			rectptr_unk[si] = rect_unk[si];
 		}
-		word_449FC[arg_0] = var_angY;
-		word_463D6 = var_angY;
+		word_449FC[arg_0] = car_rot_x_2;
+		word_463D6 = car_rot_x_2;
 
 	} else {
 		draw_ingame_text();
