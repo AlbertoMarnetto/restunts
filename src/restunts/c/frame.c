@@ -155,7 +155,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		var_122 = 0;
 	}
 
-	if (followOpponentFlag == 0) {		
+	if (followOpponentFlag == 0) {
 		car_pos.x = state.playerstate.car_posWorld1.lx >> 6;
 		car_pos.y = state.playerstate.car_posWorld1.ly >> 6;
 		car_pos.z = state.playerstate.car_posWorld1.lz >> 6;
@@ -173,7 +173,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 
 	car_rot_x_2 = -1;
 	car_rot_z_2 = 0;
-	
+
 	if (cameramode == 0) {
 		car_rot_x_2 = car_rot_x & 0x3ff;
 		car_rot_y_2 = car_rot_y & 0x3ff;
@@ -219,9 +219,9 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			cam_pos.y = terrainHeight;
 		}
 
-		if (byte_4392C != 0) {		
+		if (byte_4392C != 0) {
 			si = plane_origin_op(planindex, cam_pos.x, cam_pos.y, cam_pos.z);
-			if (si < 0xC) {			
+			if (si < 0xC) {
 				vec_unk2.x = 0;
 				vec_unk2.y = 0xC - si;
 				vec_unk2.z = 0;
@@ -311,7 +311,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	}
 
 	detail_threshold = detail_threshold_by_level[detail_level];
-	
+
 	for (si = 0x16; si >= 0; si--) {
 		if (var_32[si] != 0)
 			continue;
@@ -322,14 +322,14 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			if (tile_to_draw_x >= 0 && tile_to_draw_x <= 0x1D && tile_to_draw_y >= 0 && tile_to_draw_y <= 0x1D) {
 				elem_map_value = td14_elem_map_main[tile_to_draw_x + trackrows[tile_to_draw_y]];
 				terr_map_value = td15_terr_map_main[tile_to_draw_x + terrainrows[tile_to_draw_y]];
-				
+
 				if (elem_map_value != 0) {
 
 					if (terr_map_value >= 7 && terr_map_value < 0xB) {
 						elem_map_value = subst_hillroad_track(terr_map_value, elem_map_value);
 						terr_map_value = 0;
 					}
-					
+
 					if (elem_map_value == 0xFD) {
 						// the item on the top left needs this space
 						tile_to_draw_x--;
@@ -351,8 +351,8 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 
 				tiles_to_draw_terr_type_vec[si] = terr_map_value;
 				tile_detail_level_vec[si] = tiles_to_draw_offsets[si * 3 + 2];
-				
-				if (elem_map_value != 0 && detail_level != 0 && 
+
+				if (elem_map_value != 0 && detail_level != 0 &&
 					trkObjectList[elem_map_value].ss_physicalModel >= 0x40 &&
 					(tile_to_draw_x != car_tile_x || tile_to_draw_y != car_tile_y))
 				{
@@ -383,7 +383,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 							}
 						} else if (idx == 3) {
 							for (di = 0; di < si; di++) {
-								if ((tiles_to_draw_offsets[di * 3] == tile_to_draw_x_offset_2 || tiles_to_draw_offsets[di * 3] == tile_to_draw_x_offset_2 + 1) && 
+								if ((tiles_to_draw_offsets[di * 3] == tile_to_draw_x_offset_2 || tiles_to_draw_offsets[di * 3] == tile_to_draw_x_offset_2 + 1) &&
 									(tiles_to_draw_offsets[di * 3 + 1] == tile_to_draw_y_offset || tiles_to_draw_offsets[di * 3 + 1] == tile_to_draw_y_offset + 1))
 								{
 									var_32[di] = 1;
@@ -392,7 +392,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 						}
 					}
 				}
-				
+
 			} else {
 				var_32[si] = 2;
 			}
@@ -400,9 +400,9 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			var_32[si] = 2;
 		}
 	}
-	
+
 //; -----------------------------------------------------------------------------
-	
+
 	var_3C = -1;
 	var_6C = 0;
 	if (cameramode != 0 || followOpponentFlag != 0) {
@@ -472,7 +472,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				}
 
 				if (di != -1) {
-						
+
 					if (state.opponentstate.car_surfaceWhl[0] != 4 || state.opponentstate.car_surfaceWhl[1] != 4 || state.opponentstate.car_surfaceWhl[2] != 4 || state.opponentstate.car_surfaceWhl[3] != 4) {
 						car_to_cam_abs.x = 0;
 						car_to_cam_abs.y = 0;
@@ -528,7 +528,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		for (idx = 0; idx < var_counter; idx++) {
 			tile_to_draw_x_offset_2 = var_10E[idx * 2] + tile_to_draw_x;
 			tile_to_draw_y_offset = var_10E[idx * 2 + 1] + tile_to_draw_y;
-			
+
 			if (detail_level == 0 || (tile_to_draw_x_offset_2 == car_tile_x && tile_to_draw_y_offset == car_tile_y)) {
 				if (tile_to_draw_x_offset_2 == 0) {
 					if (tile_to_draw_y_offset == 0) {
@@ -584,7 +584,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			}
 		}
 
-		// terrain type 0x06: a flat piece of land at an elevated level  
+		// terrain type 0x06: a flat piece of land at an elevated level
 		if (terr_map_value != 6) {
 			var_hillheight = 0;
 			if (elem_map_value >= 0x69 && elem_map_value <= 0x6C) {
@@ -621,7 +621,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 							break;
 					}
 				}
-				
+
 				terr_map_value = 0;
 			}
 		} else {
@@ -866,7 +866,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			curtransshape_ptr->pos.x = (state.playerstate.car_posWorld1.lx >> 6) - cam_pos.x;
 			curtransshape_ptr->pos.y = (state.playerstate.car_posWorld1.ly >> 6) - cam_pos.y;
 			curtransshape_ptr->pos.z = (state.playerstate.car_posWorld1.lz >> 6) - cam_pos.z;
-			
+
 			if (tile_det_level != 0 || detail_level > 2) {
 				curtransshape_ptr->shapeptr = var_trkobject_ptr->ss_loShapePtr;
 			} else {
@@ -892,7 +892,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			curtransshape_ptr->material = gameconfig.game_playermaterial;
 			transformed_shape_add_for_sort(var_6C & var_12A, 2);
 		}
-		
+
 		if ((var_4A == tile_to_draw_x) || (var_4A == tile_to_draw_x_offset_2)) {
 			if ((var_6E == tile_to_draw_y) || (var_6E == tile_to_draw_y_offset)) {
 				if (state.field_42A != 0) {
@@ -966,15 +966,15 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				var_108[1].z = var_counter;
 				var_108[2].z = var_counter;
 				var_108[3].z = var_counter;
-				 
+
 				curtransshape_ptr->pos.x =
 					multiply_and_scale(sin_fast(track_angle + 0x100), 0x24) +
-					multiply_and_scale(sin_fast(track_angle + 0x200), 0x1B6) + 
+					multiply_and_scale(sin_fast(track_angle + 0x200), 0x1B6) +
 					trackcenterpos2[startcol2] - cam_pos.x;
 				curtransshape_ptr->pos.y = hillHeightConsts[hillFlag] - cam_pos.y;
 				curtransshape_ptr->pos.z =
 					multiply_and_scale(cos_fast(track_angle + 0x100), 0x24) +
-					multiply_and_scale(cos_fast(track_angle + 0x200), 0x1B6) + 
+					multiply_and_scale(cos_fast(track_angle + 0x200), 0x1B6) +
 					trackcenterpos[startrow2] - cam_pos.z;
 
 				curtransshape_ptr->shapeptr = &game3dshapes[0x98A / sizeof(struct SHAPE3D)];
