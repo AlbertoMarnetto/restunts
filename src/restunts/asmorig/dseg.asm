@@ -87,7 +87,7 @@ dseg segment byte public 'STUNTSD' use16
     public byte_3B8F7
     public kbormouse
     public mouse_isdirty
-    public timertestflag2
+    public detail_level
     public g_is_busy
     public byte_3B8FC
     public aKevin
@@ -300,9 +300,9 @@ dseg segment byte public 'STUNTSD' use16
     public unk_3C03E
     public unk_3C071
     public unk_3C072
-    public off_3C084
+    public tiles_to_draw_offsets_tables
     public rect_unk5
-    public byte_3C09C
+    public detail_threshold_by_level
     public unk_3C0A2
     public unk_3C0A6
     public unk_3C0AE
@@ -1880,7 +1880,7 @@ byte_3B8F6     db 0
 byte_3B8F7     db 0
 kbormouse     db 0
 mouse_isdirty     db 0
-timertestflag2     db 0
+detail_level     db 0
 g_is_busy     db 0
 byte_3B8FC     db 0
     db 0
@@ -3694,7 +3694,7 @@ unk_3C072     db 0
     db 0
     db 0
     db 0
-off_3C084     dw offset unk_3BE9A
+tiles_to_draw_offsets_tables     dw offset unk_3BE9A
     dw offset unk_3BEE0
     dw offset unk_3BF26
     dw offset unk_3BF6C
@@ -3710,7 +3710,7 @@ rect_unk5     db 0
     db 0
     db 200
     db 0
-byte_3C09C     db 2
+detail_threshold_by_level     db 2
     db 2
     db 1
     db 0
