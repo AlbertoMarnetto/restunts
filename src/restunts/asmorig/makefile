@@ -1,12 +1,12 @@
-ifndef TARGET
+!ifndef TARGET
 TARGET=dos
-endif
+!endif
 
 OBJDIR = build
 
-if ($(TARGET)!=dos)
+!if ($(TARGET)!=dos)
 !error Unsupported ASM target: $(TARGET)
-endif
+!endif
 
 ASM = tasmbox /m2 /s /zi
 

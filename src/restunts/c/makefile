@@ -1,11 +1,11 @@
-ifndef TARGET
+!ifndef TARGET
 TARGET=dos
-endif
+!endif
 
 OBJDIR = build\$(TARGET)
 
 # Set up tools for DOS
-if ($(TARGET)==dos)
+!if ($(TARGET)==dos)
 CC = bcc /c /u- /mm /v /n$(OBJDIR) /DRESTUNTS_DOS
 
 # Set up tools for SDL
@@ -15,7 +15,7 @@ CC = cl  /Zi /MD /c /I$(SDLPATH)\include /DRESTUNTS_SDL /Fo$(OBJDIR)\$?
 
 !else
 !error Unsupported C target: $(TARGET)
-endif
+!endif
 
 
 all: $(OBJDIR)\fileio.obj $(OBJDIR)\math.obj $(OBJDIR)\memmgr.obj $(OBJDIR)\restunts.obj $(OBJDIR)\shape3d.obj $(OBJDIR)\shape2d.obj $(OBJDIR)\keyboard.obj $(OBJDIR)\heapsort.obj $(OBJDIR)\frame.obj $(OBJDIR)\state.obj $(OBJDIR)\stateply.obj $(OBJDIR)\statecrs.obj $(OBJDIR)\statecar.obj 

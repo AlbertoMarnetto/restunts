@@ -1,6 +1,6 @@
-ifndef TARGET
+!ifndef TARGET
 TARGET=ported
-endif
+!endif
 
 RESTUNTS_OBJDIR = ..\c\build\dos
 RESTUNTS_OBJFILES = $(RESTUNTS_OBJDIR)\fileio.obj $(RESTUNTS_OBJDIR)\math.obj $(RESTUNTS_OBJDIR)\memmgr.obj $(RESTUNTS_OBJDIR)\restunts.obj $(RESTUNTS_OBJDIR)\shape3d.obj $(RESTUNTS_OBJDIR)\shape2d.obj $(RESTUNTS_OBJDIR)\keyboard.obj $(RESTUNTS_OBJDIR)\heapsort.obj $(RESTUNTS_OBJDIR)\frame.obj $(RESTUNTS_OBJDIR)\state.obj $(RESTUNTS_OBJDIR)\stateply.obj $(RESTUNTS_OBJDIR)\statecrs.obj $(RESTUNTS_OBJDIR)\statecar.obj
@@ -16,22 +16,24 @@ ASMORIG_OBJFILES = $(ASM_OBJDIR)\segments.obj $(ASMORIG_OBJDIR)\seg000.obj $(ASM
 OBJDIR = build\$(TARGET)
 RESTUNTS_CFLAGS = /c /u- /mm /n$(OBJDIR) /v /DRESTUNTS_DOS
 
-ifeq ($(TARGET), ported)
+!if ($(TARGET)==ported)
 
 CTARGETS = $(ASM_OBJFILES) $(RESTUNTS_OBJFILES) $(OBJDIR)\main.obj getvect.obj labs.obj memcpy.obj fmemcpy.obj h_ldiv.obj f_lxmul.obj f_scopy.obj h_lrsh.obj h_padd.obj h_pina.obj h_pada.obj f_pcmp.obj h_lursh.obj h_psbp.obj h_llsh.obj
 OUTFILE = restunts.exe
 CFLAGS = 
 
-else 
+!elif ($(TARGET)==original)
 
 CTARGETS = $(ASMORIG_OBJFILES) $(OBJDIR)\main.obj
 CFLAGS = /DRESTUNTS_ORIGINAL
 OUTFILE = restunto.exe
 
-endif
+!else
+!error Unsupported DOS target: $(TARGET)
+!endif
 
-CC = echo gcc $(RESTUNTS_CFLAGS) $(CFLAGS)
-LINK = tlinkbox
+CC = bcc  $(RESTUNTS_CFLAGS) $(CFLAGS)
+LINK = call tlinkbox
 
 restunts: $(OBJDIR)\main.obj
 	echo $(CTARGETS) > restunts.lnk

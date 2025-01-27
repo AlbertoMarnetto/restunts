@@ -1,0 +1,8 @@
+DOSBox version 0.74
+Copyright 2002-2010 DOSBox Team, published under GNU GPL.
+---
+CONFIG:Loading primary settings from config file tlink.dosbox.conf
+"dynamic" is not a valid value for variable: cputype.
+It might now be reset it to default value: auto
+MIDI:Opened device:win32
+SHELL:Redirect output to tlinkbox.out
