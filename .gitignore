@@ -1,0 +1,12 @@
+src/restunts/asm/build/*OBJ
+src/restunts/c/build/dos/*obj
+src/restunts/asm/TASMBOX.OUT
+src/restunts/dos/*EXE
+src/restunts/dos/*MAP
+src/restunts/dos/build/ported/*obj
+**/stderr.txt
+**/stdout.txt
+stunts/RESTUNTS.EXE
+stunts/*.TRK
+stunts/*.HIG
+stunts/*.RPL
