@@ -1375,22 +1375,22 @@ printf("Driv: %c %c", (audiodriverstring)[0], (audiodriverstring)[1]);
 	framespersec2 = (timerdelta3 >= 75) ? 10 : 20;
 
 	if (timerdelta3 < 35) {
-		timertestflag2 = 0;
+		detail_level = 0;
 	}
 	else if (timerdelta3 < 55) {
-		timertestflag2 = 1;
+		detail_level = 1;
 	}
 	else if (timerdelta3 < 75) {
-		timertestflag2 = 2;
+		detail_level = 2;
 	}
 	else if (timerdelta3 < 100) {
-		timertestflag2 = 3;
+		detail_level = 3;
 	}
 	else if (timertestflag) {
-		timertestflag2 = 4;
+		detail_level = 4;
 	}
 	else {
-		timertestflag2 = 3;
+		detail_level = 3;
 	}
 
 	framespersec = framespersec2;
