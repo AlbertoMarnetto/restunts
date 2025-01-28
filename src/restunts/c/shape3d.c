@@ -1,6 +1,7 @@
 #include <dos.h>
 #include <stddef.h>
 #include <limits.h>
+#include <stdio.h>
 #include "externs.h"
 #include "fileio.h"
 #include "memmgr.h"
@@ -2596,8 +2597,12 @@ extern unsigned transformed_shape_op_helper(unsigned arg_0, unsigned arg_2) {
 	word_45D98 = word_40ED6[word_45D98];
 	polyinfonumpolys++;
 	polyinfoptrnext += (transshapenumvertscopy * sizeof(struct POINT2D)) + 6; // TODO: sizeof POINT2D?
-	if (polyinfonumpolys == 0x190) return 1;
+	if (polyinfonumpolys == 0x190) {
+		printf("End of memory: polyinfonumpolys");
+		return 1;
+	}
 	if (polyinfoptrnext <= 0x2872) return 0;
+	printf("End of memory: polyinfoptrnext");
 	return 1;
 }
 
@@ -2943,10 +2948,6 @@ void preRender_default_impl(unsigned arg_color, unsigned arg_vertlinecount, int*
 	spritefunc(&var_798[temp1y], &var_798[480 + temp1y], temp1y, temp0x, arg_color);
 
 }
-
-
-
-extern void _printf(const char*, ...);
 
 // generate_poly_edges is called preRender_helper in the IDB.
 void generate_poly_edges(int* var_18, int* regsi, int mode) {

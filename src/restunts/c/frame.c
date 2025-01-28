@@ -1061,6 +1061,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			}
 		}
 	}
+	//printf("%d\n", si);
 
 	var_132 = skybox_op(arg_0, arg_cliprectptr, var_2, &var_mat, car_rot_z_3, car_rot_x_2, cam_pos.y);
 	sprite_set_1_size(0, 0x140, arg_cliprectptr->top, arg_cliprectptr->bottom);
