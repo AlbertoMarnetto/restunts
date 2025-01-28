@@ -2,6 +2,10 @@
 #include "math.h"
 #include "shape3d.h"
 
+#define TILES_TO_DRAW_WIDTH 11  // odd is better
+#define TILES_TO_DRAW_DEPTH 10
+#define TILES_TO_DRAW_COUNT TILES_TO_DRAW_WIDTH * TILES_TO_DRAW_DEPTH
+
 extern struct RECTANGLE* rectptr_unk2;
 extern struct RECTANGLE rect_array_unk[];
 extern struct RECTANGLE rect_array_unk2[];
@@ -30,7 +34,7 @@ extern int terrainHeight;
 extern int planindex;
 extern int planindex_copy;
 extern char byte_4392C;
-extern struct TRANSFORMEDSHAPE3D currenttransshape[29];
+static struct TRANSFORMEDSHAPE3D local_currenttransshape[TILES_TO_DRAW_COUNT + 5];
 //extern struct TRANSFORMEDSHAPE3D transshapeunk;
 extern struct TRANSFORMEDSHAPE3D* curtransshape_ptr;
 extern struct TRACKOBJECT trkObjectList[215]; // 215 entries
@@ -58,9 +62,9 @@ extern short word_4448A[];
 extern char backlights_paint_override;
 extern int word_449FC[];
 extern int word_463D6;
-extern int transformedshape_zarray[];
-extern int transformedshape_indices[];
-extern char transformedshape_arg2array[];
+static int local_transformedshape_zarray[TILES_TO_DRAW_COUNT + 5];
+static int local_transformedshape_indices[TILES_TO_DRAW_COUNT + 5];
+static char local_transformedshape_arg2array[TILES_TO_DRAW_COUNT + 5];
 extern int sdgame2_widths[];
 extern void far* sdgame2shapes[];
 extern void far* fontledresptr;
@@ -93,20 +97,20 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	int car_rot_y_2, car_rot_x_2, car_rot_z_2;
 	int var_38, car_rot_z_3;
 	int var_transformresult;
-	int wind; // direction, rounded to the nearest 45 deg
+	int heading;
 	char* tiles_to_draw_offsets;
 	int var_2;
 	int var_counter, var_counter2;
-	char cam_tile_y, cam_tile_x;
-	char tile_to_draw_y, tile_to_draw_x;
+	char cam_tile_negz, cam_tile_x;
+	char tile_to_draw_negz, tile_to_draw_x;
 	char tile_to_draw_y_offset, tile_to_draw_x_offset_2;
 	char car_tile_x, car_tile_y;
-	unsigned char tiles_to_draw_terr_type_vec[24];
-	char var_32[24];
-	char tile_detail_level_vec[24];
-	char tiles_to_draw_y_vec[24];
-	char tiles_to_draw_x_vec[24];
-	unsigned char tiles_to_draw_elem_type_vec[24];
+	unsigned char tiles_to_draw_terr_type_vec[TILES_TO_DRAW_COUNT];
+	char var_32[TILES_TO_DRAW_COUNT];
+	char tile_detail_level_vec[TILES_TO_DRAW_COUNT];
+	char tiles_to_draw_y_vec[TILES_TO_DRAW_COUNT];
+	char tiles_to_draw_x_vec[TILES_TO_DRAW_COUNT];
+	unsigned char tiles_to_draw_elem_type_vec[TILES_TO_DRAW_COUNT];
 	char detail_threshold;
 	char var_3C;
 	char var_60;
@@ -133,6 +137,14 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	struct CARSTATE* var_stateptr;
 	unsigned char elem_map_value;
 	unsigned char terr_map_value;
+
+	char tiles_to_draw_offset_depth;
+	char tiles_to_draw_offset_width;
+	char depth_to_x;
+	char depth_to_negz;
+	char width_to_x;
+	char width_to_negz;
+	char width_idx;
 
 	var_DC[0] = 0;
 	var_DC[1] = 0;
@@ -254,8 +266,8 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		var_E4 = byte_3C0C6[state.game_frame&0xF];
 	}
 
-	wind = select_cliprect_rotate(car_rot_z_3, car_rot_y_2, car_rot_x_2, arg_cliprectptr, 0);
-	tiles_to_draw_offsets = tiles_to_draw_offsets_tables[(wind & 0x3FF) >> 7]; //off_3C084[(var_52 & 0x3FF) >> 7];
+	heading = select_cliprect_rotate(car_rot_z_3, car_rot_y_2, car_rot_x_2, arg_cliprectptr, 0);
+	tiles_to_draw_offsets = tiles_to_draw_offsets_tables[(heading & 0x3FF) >> 7]; //off_3C084[(var_52 & 0x3FF) >> 7];
 
 	var_mat = *mat_rot_zxy(car_rot_z_3, car_rot_y_2, 0, 1);
 	car_to_cam_abs.x = 0;
@@ -269,12 +281,12 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	}
 
 	if (detail_level == 0) {
-		currenttransshape->rectptr = &rect_unk9;
-		currenttransshape->ts_flags = var_122 | 7;
-		currenttransshape->rotvec.x = 0;
-		currenttransshape->rotvec.y = 0;
-		currenttransshape->unk = 0x400;
-		currenttransshape->material = 0;
+		local_currenttransshape->rectptr = &rect_unk9;
+		local_currenttransshape->ts_flags = var_122 | 7;
+		local_currenttransshape->rotvec.x = 0;
+		local_currenttransshape->rotvec.y = 0;
+		local_currenttransshape->unk = 0x400;
+		local_currenttransshape->material = 0;
 
 		for (var_counter = 0; var_counter < 8; var_counter++) {
 			si = (word_3BE34[var_counter] + car_rot_x_2 + run_game_random) & 0x3ff;
@@ -285,11 +297,11 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				car_to_cam_abs.z = 0x3A98; //15000
 				mat_mul_vector(&car_to_cam_abs, &var_mat2, &car_to_cam_rotated);
 				car_to_cam_rotated.z = 0x3A98; //15000
-				mat_mul_vector(&car_to_cam_rotated, &var_mat, &currenttransshape->pos);
-				if (currenttransshape->pos.z > 0xC8) {
-					currenttransshape->shapeptr = off_3BE44[var_counter];
-					currenttransshape->rotvec.z = -car_rot_x_2;
-					var_transformresult = transformed_shape_op(&currenttransshape[0]);
+				mat_mul_vector(&car_to_cam_rotated, &var_mat, &local_currenttransshape->pos);
+				if (local_currenttransshape->pos.z > 0xC8) {
+					local_currenttransshape->shapeptr = off_3BE44[var_counter];
+					local_currenttransshape->rotvec.z = -car_rot_x_2;
+					var_transformresult = transformed_shape_op(&local_currenttransshape[0]);
 				}
 			}
 		}
@@ -300,28 +312,44 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 */
 
 	cam_tile_x = cam_pos.x >> 0xA;
-	cam_tile_y = -((cam_pos.z >> 0xA) - 0x1D);
+	cam_tile_negz = -((cam_pos.z >> 0xA) - 0x1D);
 	if (detail_level != 0) {
 		car_tile_x = state.playerstate.car_posWorld1.lx >> 16;
 		car_tile_y = 0x1D - (state.playerstate.car_posWorld1.lz >> 16);
 	}
 
-	for (si = 0; si < 0x17; si++) {
+	for (si = 0; si < TILES_TO_DRAW_COUNT; si++) {
 		var_32[si] = 0;
 	}
 
 	detail_threshold = detail_threshold_by_level[detail_level];
 
-	for (si = 0x16; si >= 0; si--) {
+	depth_to_x = tiles_to_draw_offsets[0] == 4 ? 1 : tiles_to_draw_offsets[0] == -4 ? -1 : 0;
+	depth_to_negz = tiles_to_draw_offsets[1] == 4 ? 1 : tiles_to_draw_offsets[1] == -4 ? -1 : 0;
+	width_to_x = tiles_to_draw_offsets[0] == 2 ? 1 : tiles_to_draw_offsets[0] == -2 ? -1 : 0;
+	width_to_negz = tiles_to_draw_offsets[1] == 2 ? 1 : tiles_to_draw_offsets[1] == -2 ? -1 : 0;
+
+	for (si = TILES_TO_DRAW_COUNT - 1; si >= 0; si--) {
 		if (var_32[si] != 0)
 			continue;
 
-		if (tiles_to_draw_offsets[si * 3 + 2] <= detail_threshold) {
-			tile_to_draw_x = tiles_to_draw_offsets[si * 3] + cam_tile_x;
-			tile_to_draw_y = tiles_to_draw_offsets[si * 3 + 1] + cam_tile_y;
-			if (tile_to_draw_x >= 0 && tile_to_draw_x <= 0x1D && tile_to_draw_y >= 0 && tile_to_draw_y <= 0x1D) {
-				elem_map_value = td14_elem_map_main[tile_to_draw_x + trackrows[tile_to_draw_y]];
-				terr_map_value = td15_terr_map_main[tile_to_draw_x + terrainrows[tile_to_draw_y]];
+		if (1 /*tiles_to_draw_offsets[si * 3 + 2] <= detail_threshold*/) {
+			tiles_to_draw_offset_depth = TILES_TO_DRAW_DEPTH - 1 - (si / TILES_TO_DRAW_WIDTH);
+			width_idx = (TILES_TO_DRAW_WIDTH - 1) - (si % TILES_TO_DRAW_WIDTH);
+			tiles_to_draw_offset_width = (width_idx % 2 == 0) ? (width_idx + 1) / 2 : -(width_idx + 1) / 2;
+
+			tile_to_draw_x = cam_tile_x
+				+ tiles_to_draw_offset_depth * depth_to_x
+				+ tiles_to_draw_offset_width * width_to_x;
+				//tiles_to_draw_offsets[si * 3] + cam_tile_x;
+			tile_to_draw_negz = cam_tile_negz
+				+ tiles_to_draw_offset_depth * depth_to_negz
+				+ tiles_to_draw_offset_width * width_to_negz;
+				// tiles_to_draw_offsets[si * 3 + 1] + cam_tile_y;
+
+			if (tile_to_draw_x >= 0 && tile_to_draw_x <= 0x1D && tile_to_draw_negz >= 0 && tile_to_draw_negz <= 0x1D) {
+				elem_map_value = td14_elem_map_main[tile_to_draw_x + trackrows[tile_to_draw_negz]];
+				terr_map_value = td15_terr_map_main[tile_to_draw_x + terrainrows[tile_to_draw_negz]];
 
 				if (elem_map_value != 0) {
 
@@ -333,19 +361,19 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 					if (elem_map_value == 0xFD) {
 						// the item on the top left needs this space
 						tile_to_draw_x--;
-						tile_to_draw_y--;
-						elem_map_value = td14_elem_map_main[tile_to_draw_x + trackrows[tile_to_draw_y]];
-						terr_map_value = td15_terr_map_main[tile_to_draw_x + terrainrows[tile_to_draw_y]];
+						tile_to_draw_negz--;
+						elem_map_value = td14_elem_map_main[tile_to_draw_x + trackrows[tile_to_draw_negz]];
+						terr_map_value = td15_terr_map_main[tile_to_draw_x + terrainrows[tile_to_draw_negz]];
 					} else if (elem_map_value == 0xFE) {
 						// the item on the top needs this space
-						tile_to_draw_y--;
-						elem_map_value = td14_elem_map_main[tile_to_draw_x + trackrows[tile_to_draw_y]];
-						terr_map_value = td15_terr_map_main[tile_to_draw_x + terrainrows[tile_to_draw_y]];
+						tile_to_draw_negz--;
+						elem_map_value = td14_elem_map_main[tile_to_draw_x + trackrows[tile_to_draw_negz]];
+						terr_map_value = td15_terr_map_main[tile_to_draw_x + terrainrows[tile_to_draw_negz]];
 					} else if (elem_map_value == 0xFF) {
 						// the item on the left needs this space
 						tile_to_draw_x--;
-						elem_map_value = td14_elem_map_main[tile_to_draw_x + trackrows[tile_to_draw_y]];
-						terr_map_value = td15_terr_map_main[tile_to_draw_x + terrainrows[tile_to_draw_y]];
+						elem_map_value = td14_elem_map_main[tile_to_draw_x + trackrows[tile_to_draw_negz]];
+						terr_map_value = td15_terr_map_main[tile_to_draw_x + terrainrows[tile_to_draw_negz]];
 					}
 				}
 
@@ -354,13 +382,13 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 
 				if (elem_map_value != 0 && detail_level != 0 &&
 					trkObjectList[elem_map_value].ss_physicalModel >= 0x40 &&
-					(tile_to_draw_x != car_tile_x || tile_to_draw_y != car_tile_y))
+					(tile_to_draw_x != car_tile_x || tile_to_draw_negz != car_tile_y))
 				{
 					elem_map_value = 0;
 				}
 
 				tiles_to_draw_x_vec[si] = tile_to_draw_x;
-				tiles_to_draw_y_vec[si] = tile_to_draw_y;
+				tiles_to_draw_y_vec[si] = tile_to_draw_negz;
 				tiles_to_draw_elem_type_vec[si] = elem_map_value;
 				if (elem_map_value != 0) {
 
@@ -368,7 +396,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 					if (idx != 0) {
 
 						tile_to_draw_x_offset_2 = tile_to_draw_x - cam_tile_x;
-						tile_to_draw_y_offset = tile_to_draw_y - cam_tile_y;
+						tile_to_draw_y_offset = tile_to_draw_negz - cam_tile_negz;
 						if (idx == 1) {
 							for (di = 0; di < si; di++) {
 								if (tiles_to_draw_offsets[di * 3] == tile_to_draw_x_offset_2 && (tiles_to_draw_offsets[di * 3 + 1] == tile_to_draw_y_offset || tiles_to_draw_offsets[di * 3 + 1] == tile_to_draw_y_offset + 1)) {
@@ -416,12 +444,12 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				car_to_cam_abs = simd_player.wheel_coords[var_counter2];
 				mat_mul_vector(&car_to_cam_abs, car_rot_matrix, &var_vec8); //; rotating car wheels, maybe?
 				tile_to_draw_x = (var_vec8.x + state.playerstate.car_posWorld1.lx) >> 16; // bits 16-24
-				tile_to_draw_y = -(((var_vec8.z + state.playerstate.car_posWorld1.lz) >> 16) - 0x1D);
+				tile_to_draw_negz = -(((var_vec8.z + state.playerstate.car_posWorld1.lz) >> 16) - 0x1D);
 
-				for (si = 0x16; si > idx; si--) {
-					if (var_32[si] != 2 && tiles_to_draw_offsets[si * 3] + cam_tile_x == tile_to_draw_x && tiles_to_draw_offsets[si * 3 + 1] + cam_tile_y == tile_to_draw_y) {
+				for (si = TILES_TO_DRAW_COUNT - 1; si > idx; si--) {
+					if (var_32[si] != 2 && tiles_to_draw_offsets[si * 3] + cam_tile_x == tile_to_draw_x && tiles_to_draw_offsets[si * 3 + 1] + cam_tile_negz == tile_to_draw_negz) {
 						var_3C = tile_to_draw_x;
-						var_60 = tile_to_draw_y;
+						var_60 = tile_to_draw_negz;
 						idx = si;
 						di = var_counter2;
 					}
@@ -459,12 +487,12 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 					car_to_cam_abs = simd_opponent.wheel_coords[var_counter2];
 					mat_mul_vector(&car_to_cam_abs, car_rot_matrix, &var_vec8); //; rotating car wheels, maybe?
 					tile_to_draw_x = (var_vec8.x + state.opponentstate.car_posWorld1.lx) >> 16; // bits 16-24
-					tile_to_draw_y = -(((var_vec8.z + state.opponentstate.car_posWorld1.lz) >> 16) - 0x1D);
+					tile_to_draw_negz = -(((var_vec8.z + state.opponentstate.car_posWorld1.lz) >> 16) - 0x1D);
 
-					for (si = 0x16; si > idx; si--) {
-						if (var_32[si] != 2 && tiles_to_draw_offsets[si * 3] + cam_tile_x == tile_to_draw_x && tiles_to_draw_offsets[si * 3 + 1] + cam_tile_y == tile_to_draw_y) {
+					for (si = TILES_TO_DRAW_COUNT - 1; si > idx; si--) {
+						if (var_32[si] != 2 && tiles_to_draw_offsets[si * 3] + cam_tile_x == tile_to_draw_x && tiles_to_draw_offsets[si * 3 + 1] + cam_tile_negz == tile_to_draw_negz) {
 							var_4A = tile_to_draw_x;
-							var_6E = tile_to_draw_y;
+							var_6E = tile_to_draw_negz;
 							idx = si;
 							di = var_counter2;
 						}
@@ -495,15 +523,15 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	var_4E = 0;
 	si = 0;
 
-	for (si = 0; si < 0x17; si++) {
+	for (si = 0; si < TILES_TO_DRAW_COUNT; si++) {
 		if (var_32[si] != 0) {
 			continue;
 		}
 		tile_to_draw_x = tiles_to_draw_x_vec[si];
-		tile_to_draw_y = tiles_to_draw_y_vec[si];
+		tile_to_draw_negz = tiles_to_draw_y_vec[si];
 		elem_map_value = tiles_to_draw_elem_type_vec[si];
 		terr_map_value = tiles_to_draw_terr_type_vec[si];
-		tile_det_level = tile_detail_level_vec[si];  // Ghidra: 19f1:208d
+		tile_det_level = 0; //tile_detail_level_vec[si];  // Ghidra: 19f1:208d
 		var_12A = 0;
 		if (elem_map_value == 0) {
 			var_counter = 1;
@@ -527,7 +555,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		// Border check
 		for (idx = 0; idx < var_counter; idx++) {
 			tile_to_draw_x_offset_2 = var_10E[idx * 2] + tile_to_draw_x;
-			tile_to_draw_y_offset = var_10E[idx * 2 + 1] + tile_to_draw_y;
+			tile_to_draw_y_offset = var_10E[idx * 2 + 1] + tile_to_draw_negz;
 
 			if (detail_level == 0 || (tile_to_draw_x_offset_2 == car_tile_x && tile_to_draw_y_offset == car_tile_y)) {
 				if (tile_to_draw_x_offset_2 == 0) {
@@ -560,22 +588,22 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				if (di != -1) { // obj on the border
 					var_trkobjectptr = &trkObjectList[fence_TrkObjCodes[di]];
 					if (tile_det_level == 0) {
-						currenttransshape->shapeptr = var_trkobjectptr->ss_shapePtr;
+						local_currenttransshape->shapeptr = var_trkobjectptr->ss_shapePtr;
 					} else {
-						currenttransshape->shapeptr = var_trkobjectptr->ss_loShapePtr;
+						local_currenttransshape->shapeptr = var_trkobjectptr->ss_loShapePtr;
 					}
 
-					currenttransshape->pos.x = trackcenterpos2[tile_to_draw_x_offset_2] - cam_pos.x;
-					currenttransshape->pos.y = -cam_pos.y;
-					currenttransshape->pos.z = trackcenterpos[tile_to_draw_y_offset] - cam_pos.z;
-					currenttransshape->rectptr = &rect_unk2;
-					currenttransshape->ts_flags = var_122 | 5;
-					currenttransshape->rotvec.x = 0;
-					currenttransshape->rotvec.y = 0;
-					currenttransshape->rotvec.z = word_3C0D6[di];
-					currenttransshape->unk = 0x400;
-					currenttransshape->material = 0;
-					var_transformresult = transformed_shape_op(&currenttransshape[0]);
+					local_currenttransshape->pos.x = trackcenterpos2[tile_to_draw_x_offset_2] - cam_pos.x;
+					local_currenttransshape->pos.y = -cam_pos.y;
+					local_currenttransshape->pos.z = trackcenterpos[tile_to_draw_y_offset] - cam_pos.z;
+					local_currenttransshape->rectptr = &rect_unk2;
+					local_currenttransshape->ts_flags = var_122 | 5;
+					local_currenttransshape->rotvec.x = 0;
+					local_currenttransshape->rotvec.y = 0;
+					local_currenttransshape->rotvec.z = word_3C0D6[di];
+					local_currenttransshape->unk = 0x400;
+					local_currenttransshape->material = 0;
+					var_transformresult = transformed_shape_op(&local_currenttransshape[0]);
 					if (var_transformresult > 0) {
 						// break loop .. start end game
 						break;
@@ -591,32 +619,32 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				for (idx = 0; idx < 4; idx++) {
 					if (idx == 0) {
 						tile_to_draw_x_offset_2 = tile_to_draw_x;
-						tile_to_draw_y_offset = tile_to_draw_y;
+						tile_to_draw_y_offset = tile_to_draw_negz;
 					} else if (idx == 1) {
 						tile_to_draw_x_offset_2 = tile_to_draw_x + 1;
-						tile_to_draw_y_offset = tile_to_draw_y;
+						tile_to_draw_y_offset = tile_to_draw_negz;
 					} else if (idx == 2) {
 						tile_to_draw_x_offset_2 = tile_to_draw_x;
-						tile_to_draw_y_offset = tile_to_draw_y + 1;
+						tile_to_draw_y_offset = tile_to_draw_negz + 1;
 					} else if (idx == 3) {
 						tile_to_draw_x_offset_2 = tile_to_draw_x + 1;
-						tile_to_draw_y_offset = tile_to_draw_y + 1;
+						tile_to_draw_y_offset = tile_to_draw_negz + 1;
 					}
 					terr_map_value = td15_terr_map_main[tile_to_draw_x_offset_2 + terrainrows[tile_to_draw_y_offset]];
 					if (terr_map_value != 0) {
 						var_trkobject_ptr = &sceneshapes2[terr_map_value];
-						currenttransshape->shapeptr = var_trkobject_ptr->ss_shapePtr;
-						currenttransshape->pos.x = trackcenterpos2[tile_to_draw_x_offset_2] - cam_pos.x;
-						currenttransshape->pos.y = -cam_pos.y;
-						currenttransshape->pos.z = trackcenterpos[tile_to_draw_y_offset] - cam_pos.z;
-						currenttransshape->rectptr = &rect_unk2;
-						currenttransshape->ts_flags = var_122 | 5;
-						currenttransshape->rotvec.x = 0;
-						currenttransshape->rotvec.y = 0;
-						currenttransshape->rotvec.z = var_trkobject_ptr->ss_rotY;
-						currenttransshape->unk = 0x400;
-						currenttransshape->material = 0;
-						var_transformresult = transformed_shape_op(&currenttransshape[0]);
+						local_currenttransshape->shapeptr = var_trkobject_ptr->ss_shapePtr;
+						local_currenttransshape->pos.x = trackcenterpos2[tile_to_draw_x_offset_2] - cam_pos.x;
+						local_currenttransshape->pos.y = -cam_pos.y;
+						local_currenttransshape->pos.z = trackcenterpos[tile_to_draw_y_offset] - cam_pos.z;
+						local_currenttransshape->rectptr = &rect_unk2;
+						local_currenttransshape->ts_flags = var_122 | 5;
+						local_currenttransshape->rotvec.x = 0;
+						local_currenttransshape->rotvec.y = 0;
+						local_currenttransshape->rotvec.z = var_trkobject_ptr->ss_rotY;
+						local_currenttransshape->unk = 0x400;
+						local_currenttransshape->material = 0;
+						var_transformresult = transformed_shape_op(&local_currenttransshape[0]);
 						if (var_transformresult > 0)
 							break;
 					}
@@ -633,40 +661,40 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 
 		if (terr_map_value != 0) {
 			var_trkobject_ptr = &sceneshapes2[terr_map_value];
-			currenttransshape->shapeptr = var_trkobject_ptr->ss_shapePtr;
-			currenttransshape->pos.x = trackcenterpos2[tile_to_draw_x] - cam_pos.x;
-			currenttransshape->pos.y = var_hillheight - cam_pos.y;
-			currenttransshape->pos.z = trackcenterpos[tile_to_draw_y] - cam_pos.z;
+			local_currenttransshape->shapeptr = var_trkobject_ptr->ss_shapePtr;
+			local_currenttransshape->pos.x = trackcenterpos2[tile_to_draw_x] - cam_pos.x;
+			local_currenttransshape->pos.y = var_hillheight - cam_pos.y;
+			local_currenttransshape->pos.z = trackcenterpos[tile_to_draw_negz] - cam_pos.z;
 			if (var_hillheight == 0) {
-				currenttransshape->rectptr = &rect_unk2;
+				local_currenttransshape->rectptr = &rect_unk2;
 			} else {
-				currenttransshape->rectptr = &rect_unk6;
+				local_currenttransshape->rectptr = &rect_unk6;
 			}
 
-			currenttransshape->ts_flags = var_122 | 5;
-			currenttransshape->rotvec.x = 0;
-			currenttransshape->rotvec.y = 0;
-			currenttransshape->rotvec.z = var_trkobject_ptr->ss_rotY;
-			currenttransshape->unk = 0x400;
-			currenttransshape->material = 0;
-			var_transformresult = transformed_shape_op(&currenttransshape[0]);
+			local_currenttransshape->ts_flags = var_122 | 5;
+			local_currenttransshape->rotvec.x = 0;
+			local_currenttransshape->rotvec.y = 0;
+			local_currenttransshape->rotvec.z = var_trkobject_ptr->ss_rotY;
+			local_currenttransshape->unk = 0x400;
+			local_currenttransshape->material = 0;
+			var_transformresult = transformed_shape_op(&local_currenttransshape[0]);
 			if (var_transformresult > 0)
 				break;
 		}
 
 		transformedshape_counter = 0;
-		curtransshape_ptr = currenttransshape;
+		curtransshape_ptr = local_currenttransshape;
 		if (elem_map_value == 0) {
 			tile_to_draw_x_offset_2 = tile_to_draw_x;
-			tile_to_draw_y_offset = tile_to_draw_y;
+			tile_to_draw_y_offset = tile_to_draw_negz;
 		} else {
 			var_trkobject_ptr = &trkObjectList[elem_map_value];
 			if ((var_trkobject_ptr->ss_multiTileFlag & 1) != 0) {
-				var_5E = trackpos[tile_to_draw_y];
-				tile_to_draw_y_offset = tile_to_draw_y + 1;
+				var_5E = trackpos[tile_to_draw_negz];
+				tile_to_draw_y_offset = tile_to_draw_negz + 1;
 			} else {
-				var_5E = trackcenterpos[tile_to_draw_y];
-				tile_to_draw_y_offset = tile_to_draw_y;
+				var_5E = trackcenterpos[tile_to_draw_negz];
+				tile_to_draw_y_offset = tile_to_draw_negz;
 			}
 
 			if ((var_trkobject_ptr->ss_multiTileFlag & 2) != 0) {
@@ -696,20 +724,20 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				}
 
 				for (idx = 0; idx < di; idx++) {
-					currenttransshape->pos.x = *var_DA + var_vec8.x;
+					local_currenttransshape->pos.x = *var_DA + var_vec8.x;
 					var_DA++;
-					currenttransshape->pos.y = var_vec8.y;
-					currenttransshape->pos.z = *var_DA + var_vec8.z;
+					local_currenttransshape->pos.y = var_vec8.y;
+					local_currenttransshape->pos.z = *var_DA + var_vec8.z;
 					var_DA++;
-					currenttransshape->shapeptr = &game3dshapes[0x3B2 / sizeof(struct SHAPE3D)];
-					currenttransshape->rectptr = &rect_unk6;
-					currenttransshape->ts_flags = var_122 | 5;
-					currenttransshape->rotvec.x = 0;
-					currenttransshape->rotvec.y = 0;
-					currenttransshape->rotvec.z = 0;
-					currenttransshape->unk = 0x800;
-					currenttransshape->material = 0;
-					var_transformresult = transformed_shape_op(&currenttransshape[0]);
+					local_currenttransshape->shapeptr = &game3dshapes[0x3B2 / sizeof(struct SHAPE3D)];
+					local_currenttransshape->rectptr = &rect_unk6;
+					local_currenttransshape->ts_flags = var_122 | 5;
+					local_currenttransshape->rotvec.x = 0;
+					local_currenttransshape->rotvec.y = 0;
+					local_currenttransshape->rotvec.z = 0;
+					local_currenttransshape->unk = 0x800;
+					local_currenttransshape->material = 0;
+					var_transformresult = transformed_shape_op(&local_currenttransshape[0]);
 					if (var_transformresult > 0)
 						break;
 				}
@@ -718,71 +746,71 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			if (var_trkobject_ptr->ss_ssOvelay != 0) {
 				var_trkobjectptr = &trkObjectList[var_trkobject_ptr->ss_ssOvelay];
 				if (tile_det_level != 0) {
-					currenttransshape[1].shapeptr = var_trkobjectptr->ss_loShapePtr;
+					local_currenttransshape[1].shapeptr = var_trkobjectptr->ss_loShapePtr;
 				} else {
-					currenttransshape[1].shapeptr = var_trkobjectptr->ss_shapePtr;
+					local_currenttransshape[1].shapeptr = var_trkobjectptr->ss_shapePtr;
 				}
 
-				if (currenttransshape[1].shapeptr != 0) {
-					currenttransshape[1].pos = var_vec8;
-					currenttransshape[1].rotvec.x = 0;
-					currenttransshape[1].rotvec.y = 0;
-					currenttransshape[1].rotvec.z = var_trkobjectptr->ss_rotY;
+				if (local_currenttransshape[1].shapeptr != 0) {
+					local_currenttransshape[1].pos = var_vec8;
+					local_currenttransshape[1].rotvec.x = 0;
+					local_currenttransshape[1].rotvec.y = 0;
+					local_currenttransshape[1].rotvec.z = var_trkobjectptr->ss_rotY;
 					if (var_trkobjectptr->ss_multiTileFlag != 0) {
-						currenttransshape[1].unk = 0x400;
+						local_currenttransshape[1].unk = 0x400;
 					} else {
-						currenttransshape[1].unk = 0x800;
+						local_currenttransshape[1].unk = 0x800;
 					}
 
 					if (var_trkobjectptr->ss_surfaceType >= 0) {
-						currenttransshape[1].material = var_trkobjectptr->ss_surfaceType;
+						local_currenttransshape[1].material = var_trkobjectptr->ss_surfaceType;
 					} else {
-						currenttransshape[1].material = var_E4;
+						local_currenttransshape[1].material = var_E4;
 					}
 
-					currenttransshape[1].ts_flags = var_trkobjectptr->ss_ignoreZBias | var_122 | 4;
-					if ((currenttransshape[1].ts_flags & 1) != 0) {
-						currenttransshape[1].rectptr = &rect_unk2;
-						var_transformresult = transformed_shape_op(&currenttransshape[1]);
+					local_currenttransshape[1].ts_flags = var_trkobjectptr->ss_ignoreZBias | var_122 | 4;
+					if ((local_currenttransshape[1].ts_flags & 1) != 0) {
+						local_currenttransshape[1].rectptr = &rect_unk2;
+						var_transformresult = transformed_shape_op(&local_currenttransshape[1]);
 						if (var_transformresult > 0)
 							break;
 					} else {
-						currenttransshape[1].rectptr = &rect_unk6;
+						local_currenttransshape[1].rectptr = &rect_unk6;
 						var_4E = 1;
 					}
 				}
 			}
 
 			if (tile_det_level != 0) {
-				currenttransshape->shapeptr = var_trkobject_ptr->ss_loShapePtr;
+				local_currenttransshape->shapeptr = var_trkobject_ptr->ss_loShapePtr;
 			} else {
-				currenttransshape->shapeptr = var_trkobject_ptr->ss_shapePtr;
+				local_currenttransshape->shapeptr = var_trkobject_ptr->ss_shapePtr;
 			}
 
-			currenttransshape->pos = var_vec8; // whatever
-			currenttransshape->rotvec.x = 0;
-			currenttransshape->rotvec.y = 0;
-			currenttransshape->rotvec.z = var_trkobject_ptr->ss_rotY;
+			local_currenttransshape->pos = var_vec8; // whatever
+			local_currenttransshape->rotvec.x = 0;
+			local_currenttransshape->rotvec.y = 0;
+			local_currenttransshape->rotvec.z = var_trkobject_ptr->ss_rotY;
 			if (var_trkobject_ptr->ss_multiTileFlag != 0) {
-				currenttransshape->unk = 0x400;
+				local_currenttransshape->unk = 0x400;
 			} else {
-				currenttransshape->unk = 0x800;
+				local_currenttransshape->unk = 0x800;
 			}
 
-			currenttransshape->ts_flags = var_trkobject_ptr->ss_ignoreZBias | var_122 | 4;
+			local_currenttransshape->ts_flags = var_trkobject_ptr->ss_ignoreZBias | var_122 | 4;
 			if (var_trkobject_ptr->ss_surfaceType >= 0) {
-				currenttransshape->material = var_trkobject_ptr->ss_surfaceType;
+				local_currenttransshape->material = var_trkobject_ptr->ss_surfaceType;
 			} else {
-				currenttransshape->material = var_E4;
+				local_currenttransshape->material = var_E4;
 			}
 
 			if ((var_trkobject_ptr->ss_ignoreZBias & 1) != 0) {
-				currenttransshape->rectptr = &rect_unk2;
-				var_transformresult = transformed_shape_op(&currenttransshape[0]);
+				local_currenttransshape->rectptr = &rect_unk2;
+				var_transformresult = transformed_shape_op(&local_currenttransshape[0]);
 				if (var_transformresult > 0)
 					break;
 			} else {
-				currenttransshape->rectptr = &rect_unk6;
+				local_currenttransshape->rectptr = &rect_unk6;
 				transformed_shape_add_for_sort(0, 0);
 				if (var_4E != 0) {
 					var_4E = 0;
@@ -796,14 +824,14 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 					}
 				}
 
-				if (tile_to_draw_x == startcol2 && tile_to_draw_y == startrow2) {
+				if (tile_to_draw_x == startcol2 && tile_to_draw_negz == startrow2) {
 					var_12A = 0;
 				} else {
 					var_12A = -1;
 				}
 			}
 
-			var_4C = trackdata19[tile_to_draw_x + trackrows[tile_to_draw_y]];
+			var_4C = trackdata19[tile_to_draw_x + trackrows[tile_to_draw_negz]];
 			if (var_4C != 0xFF) {
 				if (state.field_3FA[var_4C] == 0) {
 					var_trkobject_ptr = &trkObjectList[212 + trackdata23[var_4C]];
@@ -841,7 +869,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			}
 		}
 
-		if ((var_3C == tile_to_draw_x || var_3C == tile_to_draw_x_offset_2) && (var_60 == tile_to_draw_y || var_60 == tile_to_draw_y_offset)) {
+		if ((var_3C == tile_to_draw_x || var_3C == tile_to_draw_x_offset_2) && (var_60 == tile_to_draw_negz || var_60 == tile_to_draw_y_offset)) {
 			if (state.field_42A != 0) {
 				for (di = 0; di < 0x18; di++) {
 					if (state.field_38E[di] != 0 && state.field_443[di] == 0) {
@@ -894,7 +922,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		}
 
 		if ((var_4A == tile_to_draw_x) || (var_4A == tile_to_draw_x_offset_2)) {
-			if ((var_6E == tile_to_draw_y) || (var_6E == tile_to_draw_y_offset)) {
+			if ((var_6E == tile_to_draw_negz) || (var_6E == tile_to_draw_y_offset)) {
 				if (state.field_42A != 0) {
 					for (di = 0; di < 0x18; di++) {
 						if (state.field_38E[di] != 0) {
@@ -951,7 +979,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		}
 
 		if (state.game_inputmode == 0) {
-			if ((tile_to_draw_x == startcol2 || tile_to_draw_x_offset_2 == startcol2) && (tile_to_draw_y == startrow2 || tile_to_draw_y_offset == startrow2)) {
+			if ((tile_to_draw_x == startcol2 || tile_to_draw_x_offset_2 == startcol2) && (tile_to_draw_negz == startrow2 || tile_to_draw_y_offset == startrow2)) {
 
 				idx = multiply_and_scale(cos_fast(word_44DCA), 0x24);
 				var_counter = multiply_and_scale(sin_fast(word_44DCA), 0x24) + 0x38;
@@ -996,18 +1024,18 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		// Draw the shapes, starting from the farthest
 		if (transformedshape_counter != 0) {
 			if (transformedshape_counter > 1) {
-				heapsort_by_order(transformedshape_counter, transformedshape_zarray, transformedshape_indices);
+				heapsort_by_order(transformedshape_counter, local_transformedshape_zarray, local_transformedshape_indices);
 			}
 			for (idx = 0; idx < transformedshape_counter; idx++) {
-				// di is used for index into currenttransshape elsewhere
-				di = transformedshape_indices[idx];
-				if (transformedshape_arg2array[di] == 2) {
+				// di is used for index into local_currenttransshape elsewhere
+				di = local_transformedshape_indices[idx];
+				if (local_transformedshape_arg2array[di] == 2) {
 					if (state.playerstate.car_is_braking != 0) {
 						backlights_paint_override = 0x2F;
 					} else {
 						backlights_paint_override = 0x2E;
 					}
-				} else if (transformedshape_arg2array[di] == 3) {
+				} else if (local_transformedshape_arg2array[di] == 3) {
 					if (state.opponentstate.car_is_braking == 0) {
 						backlights_paint_override = 0x2E;
 					} else {
@@ -1015,16 +1043,16 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 					}
 				}
 
-				var_transformresult = transformed_shape_op(&currenttransshape[di]); // DI??
+				var_transformresult = transformed_shape_op(&local_currenttransshape[di]); // DI??
 				if (var_transformresult > 0)
 					break;
 
 				if (var_transformresult == 0) {
-					if (transformedshape_arg2array[di] == 2) {
+					if (local_transformedshape_arg2array[di] == 2) {
 						if (state.playerstate.car_crashBmpFlag == 1) {
 							var_DC[0] = 1;
 						}
-					} else if (transformedshape_arg2array[di] == 3) {
+					} else if (local_transformedshape_arg2array[di] == 3) {
 						if (state.opponentstate.car_crashBmpFlag == 1) {
 							var_DC[1] = 1;
 						}
