@@ -51,9 +51,9 @@ seg006 segment byte public 'STUNTSC' use16
     public ported_polyinfo_reset_
     public ported_select_cliprect_rotate_
     public ported_transformed_shape_op_
-    public ported_transformed_shape_op_helper_
+    public ported_insert_newest_poly_in_poly_linked_list_40ED6_
     public ported_rect_compare_point_
-    public ported_transformed_shape_op_helper3_
+    public ported_is_facing_camera_
     public get_a_poly_info
     public ported_mat_rot_zxy_
     public ported_rect_adjust_from_point_
@@ -1140,7 +1140,7 @@ loc_2572E:
     push    dx
     push    ax
     push    cs
-    call near ptr ported_transformed_shape_op_helper3_
+    call near ptr ported_is_facing_camera_
     add     sp, 4
     or      al, al
     jz      short loc_25763
@@ -1398,7 +1398,7 @@ loc_25997:
     push    dx
     push    ax
     push    cs
-    call near ptr ported_transformed_shape_op_helper3_
+    call near ptr ported_is_facing_camera_
     add     sp, 4
     or      al, al
     jnz     short loc_25A7C
@@ -1638,7 +1638,7 @@ loc_25C01:
     call    polarRadius3D
     add     sp, 2
     push    ax
-    call    transformed_shape_op_helper2
+    call    projectiondata9_times_ratio
     add     sp, 4
     mov     [bp+var_462], ax
     les     bx, transshapepolyinfo
@@ -1792,7 +1792,7 @@ loc_25DF1:
     push    ax
     push    si
     push    cs
-    call near ptr ported_transformed_shape_op_helper_
+    call near ptr ported_insert_newest_poly_in_poly_linked_list_40ED6_
     add     sp, 4
     mov     word_40ECE, ax
     or      ax, ax
@@ -1817,7 +1817,7 @@ _done_ret_0:
     ; align 2
     db 144
 ported_transformed_shape_op_ endp
-ported_transformed_shape_op_helper_ proc far
+ported_insert_newest_poly_in_poly_linked_list_40ED6_ proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -1832,14 +1832,14 @@ ported_transformed_shape_op_helper_ proc far
     jnz     short loc_25E3E
     mov     bx, word_45D98
     shl     bx, 1
-    mov     di, word_40ED6[bx]
+    mov     di, poly_linked_list_40ED6[bx]
     jmp     short loc_25E7B
 loc_25E3E:
     mov     ax, word_4394E
     mov     word_45D98, ax
     mov     bx, ax
     shl     bx, 1
-    mov     di, word_40ED6[bx]
+    mov     di, poly_linked_list_40ED6[bx]
     mov     si, word_4554A
     jmp     short loc_25E77
 loc_25E52:
@@ -1857,18 +1857,18 @@ loc_25E52:
     mov     word_45D98, di
     mov     bx, di
     shl     bx, 1
-    mov     di, word_40ED6[bx]
+    mov     di, poly_linked_list_40ED6[bx]
 loc_25E77:
     or      di, di
     jge     short loc_25E52
 loc_25E7B:
     mov     bx, polyinfonumpolys
     shl     bx, 1
-    mov     word_40ED6[bx], di
+    mov     poly_linked_list_40ED6[bx], di
     mov     bx, word_45D98
     shl     bx, 1
     mov     ax, polyinfonumpolys
-    mov     word_40ED6[bx], ax
+    mov     poly_linked_list_40ED6[bx], ax
     inc     word_4554A
     or      di, di
     jge     short loc_25EA0
@@ -1877,7 +1877,7 @@ loc_25E7B:
 loc_25EA0:
     mov     bx, word_45D98
     shl     bx, 1
-    mov     ax, word_40ED6[bx]
+    mov     ax, poly_linked_list_40ED6[bx]
     mov     word_45D98, ax
     inc     polyinfonumpolys
     mov     al, transshapenumvertscopy
@@ -1904,7 +1904,7 @@ loc_25EDA:
     mov     sp, bp
     pop     bp
     retf
-ported_transformed_shape_op_helper_ endp
+ported_insert_newest_poly_in_poly_linked_list_40ED6_ endp
 ported_rect_compare_point_ proc far
     var_flags = byte ptr -4
      s = byte ptr 0
@@ -1954,7 +1954,7 @@ loc_25F25:
     pop     bp
     retf
 ported_rect_compare_point_ endp
-ported_transformed_shape_op_helper3_ proc far
+ported_is_facing_camera_ proc far
     var_10 = dword ptr -16
     var_C = dword ptr -12
     var_8 = dword ptr -8
@@ -2058,7 +2058,7 @@ loc_25FEE:
     mov     sp, bp
     pop     bp
     retf
-ported_transformed_shape_op_helper3_ endp
+ported_is_facing_camera_ endp
 get_a_poly_info proc far
     var_pattype2 = word ptr -64
     var_polyinfoptrdata = dword ptr -62
@@ -2161,7 +2161,7 @@ loc_260B4:
 loc_260B7:
     mov     bx, di          ; di = 400
     shl     bx, 1
-    mov     di, word_40ED6[bx]
+    mov     di, poly_linked_list_40ED6[bx]
     mov     bx, di
     shl     bx, 1
     shl     bx, 1
