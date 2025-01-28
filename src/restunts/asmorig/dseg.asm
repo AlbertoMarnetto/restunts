@@ -1099,7 +1099,7 @@ dseg segment byte public 'STUNTSD' use16
     public word_40ECE
     public select_rect_param
     public polyinfoptr
-    public word_40ED6
+    public poly_linked_list_40ED6
     public word_411F6
     public polyinfoptrs
     public mat_y0
@@ -22281,7 +22281,7 @@ transshapepolyinfo     dd 0
 word_40ECE     dw 0
 select_rect_param     dw 0
 polyinfoptr     dd 0
-word_40ED6     dw 0
+poly_linked_list_40ED6     dw 0
     dw 0
     dw 0
     dw 0
