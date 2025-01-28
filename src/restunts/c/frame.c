@@ -34,7 +34,7 @@ extern int terrainHeight;
 extern int planindex;
 extern int planindex_copy;
 extern char byte_4392C;
-static struct TRANSFORMEDSHAPE3D local_currenttransshape[TILES_TO_DRAW_COUNT + 5];
+extern struct TRANSFORMEDSHAPE3D currenttransshape[TILES_TO_DRAW_COUNT + 5];
 //extern struct TRANSFORMEDSHAPE3D transshapeunk;
 extern struct TRANSFORMEDSHAPE3D* curtransshape_ptr;
 extern struct TRACKOBJECT trkObjectList[215]; // 215 entries
@@ -62,9 +62,9 @@ extern short word_4448A[];
 extern char backlights_paint_override;
 extern int word_449FC[];
 extern int word_463D6;
-static int local_transformedshape_zarray[TILES_TO_DRAW_COUNT + 5];
-static int local_transformedshape_indices[TILES_TO_DRAW_COUNT + 5];
-static char local_transformedshape_arg2array[TILES_TO_DRAW_COUNT + 5];
+extern int transformedshape_zarray[TILES_TO_DRAW_COUNT + 5];
+extern int transformedshape_indices[TILES_TO_DRAW_COUNT + 5];
+extern char transformedshape_arg2array[TILES_TO_DRAW_COUNT + 5];
 extern int sdgame2_widths[];
 extern void far* sdgame2shapes[];
 extern void far* fontledresptr;
@@ -281,12 +281,12 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	}
 
 	if (detail_level == 0) {
-		local_currenttransshape->rectptr = &rect_unk9;
-		local_currenttransshape->ts_flags = var_122 | 7;
-		local_currenttransshape->rotvec.x = 0;
-		local_currenttransshape->rotvec.y = 0;
-		local_currenttransshape->unk = 0x400;
-		local_currenttransshape->material = 0;
+		currenttransshape->rectptr = &rect_unk9;
+		currenttransshape->ts_flags = var_122 | 7;
+		currenttransshape->rotvec.x = 0;
+		currenttransshape->rotvec.y = 0;
+		currenttransshape->unk = 0x400;
+		currenttransshape->material = 0;
 
 		for (var_counter = 0; var_counter < 8; var_counter++) {
 			si = (word_3BE34[var_counter] + car_rot_x_2 + run_game_random) & 0x3ff;
@@ -297,11 +297,11 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				car_to_cam_abs.z = 0x3A98; //15000
 				mat_mul_vector(&car_to_cam_abs, &var_mat2, &car_to_cam_rotated);
 				car_to_cam_rotated.z = 0x3A98; //15000
-				mat_mul_vector(&car_to_cam_rotated, &var_mat, &local_currenttransshape->pos);
-				if (local_currenttransshape->pos.z > 0xC8) {
-					local_currenttransshape->shapeptr = off_3BE44[var_counter];
-					local_currenttransshape->rotvec.z = -car_rot_x_2;
-					var_transformresult = transformed_shape_op(&local_currenttransshape[0]);
+				mat_mul_vector(&car_to_cam_rotated, &var_mat, &currenttransshape->pos);
+				if (currenttransshape->pos.z > 0xC8) {
+					currenttransshape->shapeptr = off_3BE44[var_counter];
+					currenttransshape->rotvec.z = -car_rot_x_2;
+					var_transformresult = transformed_shape_op(&currenttransshape[0]);
 				}
 			}
 		}
@@ -588,22 +588,22 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				if (di != -1) { // obj on the border
 					var_trkobjectptr = &trkObjectList[fence_TrkObjCodes[di]];
 					if (tile_det_level == 0) {
-						local_currenttransshape->shapeptr = var_trkobjectptr->ss_shapePtr;
+						currenttransshape->shapeptr = var_trkobjectptr->ss_shapePtr;
 					} else {
-						local_currenttransshape->shapeptr = var_trkobjectptr->ss_loShapePtr;
+						currenttransshape->shapeptr = var_trkobjectptr->ss_loShapePtr;
 					}
 
-					local_currenttransshape->pos.x = trackcenterpos2[tile_to_draw_x_offset_2] - cam_pos.x;
-					local_currenttransshape->pos.y = -cam_pos.y;
-					local_currenttransshape->pos.z = trackcenterpos[tile_to_draw_y_offset] - cam_pos.z;
-					local_currenttransshape->rectptr = &rect_unk2;
-					local_currenttransshape->ts_flags = var_122 | 5;
-					local_currenttransshape->rotvec.x = 0;
-					local_currenttransshape->rotvec.y = 0;
-					local_currenttransshape->rotvec.z = word_3C0D6[di];
-					local_currenttransshape->unk = 0x400;
-					local_currenttransshape->material = 0;
-					var_transformresult = transformed_shape_op(&local_currenttransshape[0]);
+					currenttransshape->pos.x = trackcenterpos2[tile_to_draw_x_offset_2] - cam_pos.x;
+					currenttransshape->pos.y = -cam_pos.y;
+					currenttransshape->pos.z = trackcenterpos[tile_to_draw_y_offset] - cam_pos.z;
+					currenttransshape->rectptr = &rect_unk2;
+					currenttransshape->ts_flags = var_122 | 5;
+					currenttransshape->rotvec.x = 0;
+					currenttransshape->rotvec.y = 0;
+					currenttransshape->rotvec.z = word_3C0D6[di];
+					currenttransshape->unk = 0x400;
+					currenttransshape->material = 0;
+					var_transformresult = transformed_shape_op(&currenttransshape[0]);
 					if (var_transformresult > 0) {
 						// break loop .. start end game
 						break;
@@ -633,18 +633,18 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 					terr_map_value = td15_terr_map_main[tile_to_draw_x_offset_2 + terrainrows[tile_to_draw_y_offset]];
 					if (terr_map_value != 0) {
 						var_trkobject_ptr = &sceneshapes2[terr_map_value];
-						local_currenttransshape->shapeptr = var_trkobject_ptr->ss_shapePtr;
-						local_currenttransshape->pos.x = trackcenterpos2[tile_to_draw_x_offset_2] - cam_pos.x;
-						local_currenttransshape->pos.y = -cam_pos.y;
-						local_currenttransshape->pos.z = trackcenterpos[tile_to_draw_y_offset] - cam_pos.z;
-						local_currenttransshape->rectptr = &rect_unk2;
-						local_currenttransshape->ts_flags = var_122 | 5;
-						local_currenttransshape->rotvec.x = 0;
-						local_currenttransshape->rotvec.y = 0;
-						local_currenttransshape->rotvec.z = var_trkobject_ptr->ss_rotY;
-						local_currenttransshape->unk = 0x400;
-						local_currenttransshape->material = 0;
-						var_transformresult = transformed_shape_op(&local_currenttransshape[0]);
+						currenttransshape->shapeptr = var_trkobject_ptr->ss_shapePtr;
+						currenttransshape->pos.x = trackcenterpos2[tile_to_draw_x_offset_2] - cam_pos.x;
+						currenttransshape->pos.y = -cam_pos.y;
+						currenttransshape->pos.z = trackcenterpos[tile_to_draw_y_offset] - cam_pos.z;
+						currenttransshape->rectptr = &rect_unk2;
+						currenttransshape->ts_flags = var_122 | 5;
+						currenttransshape->rotvec.x = 0;
+						currenttransshape->rotvec.y = 0;
+						currenttransshape->rotvec.z = var_trkobject_ptr->ss_rotY;
+						currenttransshape->unk = 0x400;
+						currenttransshape->material = 0;
+						var_transformresult = transformed_shape_op(&currenttransshape[0]);
 						if (var_transformresult > 0)
 							break;
 					}
@@ -661,29 +661,29 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 
 		if (terr_map_value != 0) {
 			var_trkobject_ptr = &sceneshapes2[terr_map_value];
-			local_currenttransshape->shapeptr = var_trkobject_ptr->ss_shapePtr;
-			local_currenttransshape->pos.x = trackcenterpos2[tile_to_draw_x] - cam_pos.x;
-			local_currenttransshape->pos.y = var_hillheight - cam_pos.y;
-			local_currenttransshape->pos.z = trackcenterpos[tile_to_draw_negz] - cam_pos.z;
+			currenttransshape->shapeptr = var_trkobject_ptr->ss_shapePtr;
+			currenttransshape->pos.x = trackcenterpos2[tile_to_draw_x] - cam_pos.x;
+			currenttransshape->pos.y = var_hillheight - cam_pos.y;
+			currenttransshape->pos.z = trackcenterpos[tile_to_draw_negz] - cam_pos.z;
 			if (var_hillheight == 0) {
-				local_currenttransshape->rectptr = &rect_unk2;
+				currenttransshape->rectptr = &rect_unk2;
 			} else {
-				local_currenttransshape->rectptr = &rect_unk6;
+				currenttransshape->rectptr = &rect_unk6;
 			}
 
-			local_currenttransshape->ts_flags = var_122 | 5;
-			local_currenttransshape->rotvec.x = 0;
-			local_currenttransshape->rotvec.y = 0;
-			local_currenttransshape->rotvec.z = var_trkobject_ptr->ss_rotY;
-			local_currenttransshape->unk = 0x400;
-			local_currenttransshape->material = 0;
-			var_transformresult = transformed_shape_op(&local_currenttransshape[0]);
+			currenttransshape->ts_flags = var_122 | 5;
+			currenttransshape->rotvec.x = 0;
+			currenttransshape->rotvec.y = 0;
+			currenttransshape->rotvec.z = var_trkobject_ptr->ss_rotY;
+			currenttransshape->unk = 0x400;
+			currenttransshape->material = 0;
+			var_transformresult = transformed_shape_op(&currenttransshape[0]);
 			if (var_transformresult > 0)
 				break;
 		}
 
 		transformedshape_counter = 0;
-		curtransshape_ptr = local_currenttransshape;
+		curtransshape_ptr = currenttransshape;
 		if (elem_map_value == 0) {
 			tile_to_draw_x_offset_2 = tile_to_draw_x;
 			tile_to_draw_y_offset = tile_to_draw_negz;
@@ -724,20 +724,20 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				}
 
 				for (idx = 0; idx < di; idx++) {
-					local_currenttransshape->pos.x = *var_DA + var_vec8.x;
+					currenttransshape->pos.x = *var_DA + var_vec8.x;
 					var_DA++;
-					local_currenttransshape->pos.y = var_vec8.y;
-					local_currenttransshape->pos.z = *var_DA + var_vec8.z;
+					currenttransshape->pos.y = var_vec8.y;
+					currenttransshape->pos.z = *var_DA + var_vec8.z;
 					var_DA++;
-					local_currenttransshape->shapeptr = &game3dshapes[0x3B2 / sizeof(struct SHAPE3D)];
-					local_currenttransshape->rectptr = &rect_unk6;
-					local_currenttransshape->ts_flags = var_122 | 5;
-					local_currenttransshape->rotvec.x = 0;
-					local_currenttransshape->rotvec.y = 0;
-					local_currenttransshape->rotvec.z = 0;
-					local_currenttransshape->unk = 0x800;
-					local_currenttransshape->material = 0;
-					var_transformresult = transformed_shape_op(&local_currenttransshape[0]);
+					currenttransshape->shapeptr = &game3dshapes[0x3B2 / sizeof(struct SHAPE3D)];
+					currenttransshape->rectptr = &rect_unk6;
+					currenttransshape->ts_flags = var_122 | 5;
+					currenttransshape->rotvec.x = 0;
+					currenttransshape->rotvec.y = 0;
+					currenttransshape->rotvec.z = 0;
+					currenttransshape->unk = 0x800;
+					currenttransshape->material = 0;
+					var_transformresult = transformed_shape_op(&currenttransshape[0]);
 					if (var_transformresult > 0)
 						break;
 				}
@@ -746,71 +746,71 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			if (var_trkobject_ptr->ss_ssOvelay != 0) {
 				var_trkobjectptr = &trkObjectList[var_trkobject_ptr->ss_ssOvelay];
 				if (tile_det_level != 0) {
-					local_currenttransshape[1].shapeptr = var_trkobjectptr->ss_loShapePtr;
+					currenttransshape[1].shapeptr = var_trkobjectptr->ss_loShapePtr;
 				} else {
-					local_currenttransshape[1].shapeptr = var_trkobjectptr->ss_shapePtr;
+					currenttransshape[1].shapeptr = var_trkobjectptr->ss_shapePtr;
 				}
 
-				if (local_currenttransshape[1].shapeptr != 0) {
-					local_currenttransshape[1].pos = var_vec8;
-					local_currenttransshape[1].rotvec.x = 0;
-					local_currenttransshape[1].rotvec.y = 0;
-					local_currenttransshape[1].rotvec.z = var_trkobjectptr->ss_rotY;
+				if (currenttransshape[1].shapeptr != 0) {
+					currenttransshape[1].pos = var_vec8;
+					currenttransshape[1].rotvec.x = 0;
+					currenttransshape[1].rotvec.y = 0;
+					currenttransshape[1].rotvec.z = var_trkobjectptr->ss_rotY;
 					if (var_trkobjectptr->ss_multiTileFlag != 0) {
-						local_currenttransshape[1].unk = 0x400;
+						currenttransshape[1].unk = 0x400;
 					} else {
-						local_currenttransshape[1].unk = 0x800;
+						currenttransshape[1].unk = 0x800;
 					}
 
 					if (var_trkobjectptr->ss_surfaceType >= 0) {
-						local_currenttransshape[1].material = var_trkobjectptr->ss_surfaceType;
+						currenttransshape[1].material = var_trkobjectptr->ss_surfaceType;
 					} else {
-						local_currenttransshape[1].material = var_E4;
+						currenttransshape[1].material = var_E4;
 					}
 
-					local_currenttransshape[1].ts_flags = var_trkobjectptr->ss_ignoreZBias | var_122 | 4;
-					if ((local_currenttransshape[1].ts_flags & 1) != 0) {
-						local_currenttransshape[1].rectptr = &rect_unk2;
-						var_transformresult = transformed_shape_op(&local_currenttransshape[1]);
+					currenttransshape[1].ts_flags = var_trkobjectptr->ss_ignoreZBias | var_122 | 4;
+					if ((currenttransshape[1].ts_flags & 1) != 0) {
+						currenttransshape[1].rectptr = &rect_unk2;
+						var_transformresult = transformed_shape_op(&currenttransshape[1]);
 						if (var_transformresult > 0)
 							break;
 					} else {
-						local_currenttransshape[1].rectptr = &rect_unk6;
+						currenttransshape[1].rectptr = &rect_unk6;
 						var_4E = 1;
 					}
 				}
 			}
 
 			if (tile_det_level != 0) {
-				local_currenttransshape->shapeptr = var_trkobject_ptr->ss_loShapePtr;
+				currenttransshape->shapeptr = var_trkobject_ptr->ss_loShapePtr;
 			} else {
-				local_currenttransshape->shapeptr = var_trkobject_ptr->ss_shapePtr;
+				currenttransshape->shapeptr = var_trkobject_ptr->ss_shapePtr;
 			}
 
-			local_currenttransshape->pos = var_vec8; // whatever
-			local_currenttransshape->rotvec.x = 0;
-			local_currenttransshape->rotvec.y = 0;
-			local_currenttransshape->rotvec.z = var_trkobject_ptr->ss_rotY;
+			currenttransshape->pos = var_vec8; // whatever
+			currenttransshape->rotvec.x = 0;
+			currenttransshape->rotvec.y = 0;
+			currenttransshape->rotvec.z = var_trkobject_ptr->ss_rotY;
 			if (var_trkobject_ptr->ss_multiTileFlag != 0) {
-				local_currenttransshape->unk = 0x400;
+				currenttransshape->unk = 0x400;
 			} else {
-				local_currenttransshape->unk = 0x800;
+				currenttransshape->unk = 0x800;
 			}
 
-			local_currenttransshape->ts_flags = var_trkobject_ptr->ss_ignoreZBias | var_122 | 4;
+			currenttransshape->ts_flags = var_trkobject_ptr->ss_ignoreZBias | var_122 | 4;
 			if (var_trkobject_ptr->ss_surfaceType >= 0) {
-				local_currenttransshape->material = var_trkobject_ptr->ss_surfaceType;
+				currenttransshape->material = var_trkobject_ptr->ss_surfaceType;
 			} else {
-				local_currenttransshape->material = var_E4;
+				currenttransshape->material = var_E4;
 			}
 
 			if ((var_trkobject_ptr->ss_ignoreZBias & 1) != 0) {
-				local_currenttransshape->rectptr = &rect_unk2;
-				var_transformresult = transformed_shape_op(&local_currenttransshape[0]);
+				currenttransshape->rectptr = &rect_unk2;
+				var_transformresult = transformed_shape_op(&currenttransshape[0]);
 				if (var_transformresult > 0)
 					break;
 			} else {
-				local_currenttransshape->rectptr = &rect_unk6;
+				currenttransshape->rectptr = &rect_unk6;
 				transformed_shape_add_for_sort(0, 0);
 				if (var_4E != 0) {
 					var_4E = 0;
@@ -1024,18 +1024,18 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		// Draw the shapes, starting from the farthest
 		if (transformedshape_counter != 0) {
 			if (transformedshape_counter > 1) {
-				heapsort_by_order(transformedshape_counter, local_transformedshape_zarray, local_transformedshape_indices);
+				heapsort_by_order(transformedshape_counter, transformedshape_zarray, transformedshape_indices);
 			}
 			for (idx = 0; idx < transformedshape_counter; idx++) {
-				// di is used for index into local_currenttransshape elsewhere
-				di = local_transformedshape_indices[idx];
-				if (local_transformedshape_arg2array[di] == 2) {
+				// di is used for index into currenttransshape elsewhere
+				di = transformedshape_indices[idx];
+				if (transformedshape_arg2array[di] == 2) {
 					if (state.playerstate.car_is_braking != 0) {
 						backlights_paint_override = 0x2F;
 					} else {
 						backlights_paint_override = 0x2E;
 					}
-				} else if (local_transformedshape_arg2array[di] == 3) {
+				} else if (transformedshape_arg2array[di] == 3) {
 					if (state.opponentstate.car_is_braking == 0) {
 						backlights_paint_override = 0x2E;
 					} else {
@@ -1043,16 +1043,16 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 					}
 				}
 
-				var_transformresult = transformed_shape_op(&local_currenttransshape[di]); // DI??
+				var_transformresult = transformed_shape_op(&currenttransshape[di]); // DI??
 				if (var_transformresult > 0)
 					break;
 
 				if (var_transformresult == 0) {
-					if (local_transformedshape_arg2array[di] == 2) {
+					if (transformedshape_arg2array[di] == 2) {
 						if (state.playerstate.car_crashBmpFlag == 1) {
 							var_DC[0] = 1;
 						}
-					} else if (local_transformedshape_arg2array[di] == 3) {
+					} else if (transformedshape_arg2array[di] == 3) {
 						if (state.opponentstate.car_crashBmpFlag == 1) {
 							var_DC[1] = 1;
 						}
