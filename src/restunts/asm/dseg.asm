@@ -27513,7 +27513,7 @@ td10_track_check_rel     dd 0
 basdres     dd 0
 followOpponentFlag_copy     db 0
     db 0
-currenttransshape     db 0
+qcurrenttransshape     db 0
     db 0
     db 0
     db 0
@@ -38066,7 +38066,7 @@ word_454CE     dw 0
 trackdata6     dd 0
 video_flag3_isFFFF     dw 0
 trackdata18     dd 0
-transformedshape_zarray     dw 0
+qtransformedshape_zarray     dw 0
     db 0
     db 0
     db 0
@@ -39307,7 +39307,7 @@ fontledresptr     dd 0
 someZeroVideoConst     dw 0
 nextPosAndNormalIP     dw 0
 word_45A00     dw 0
-transformedshape_arg2array     db 0
+qtransformedshape_arg2array     db 0
     db 0
     db 0
     db 0
@@ -40239,7 +40239,7 @@ byte_45E16     db 0
     db 0
 passed_security     db 0
     db 0
-transformedshape_indices     dw 0
+qtransformedshape_indices     dw 0
     db 0
     db 0
     db 0
@@ -41823,5 +41823,14 @@ word_46486     dw 0
     db 0
     db 0
     db 0
+; currenttransshape: 20 x TILES_TO_DRAW_COUNT times db 
+currenttransshape db 2210 dup(0)
+; transformedshape_zarray: 2 x TILES_TO_DRAW_COUNT times db 
+transformedshape_zarray db 250 dup(0)
+; transformedshape_indices: 2 x TILES_TO_DRAW_COUNT times db 
+transformedshape_indices db 250 dup(0)
+; transformedshape_arg2array: 1 x TILES_TO_DRAW_COUNT times db 
+transformedshape_arg2array db 126 dup(0)
+
 dseg ends
 end
