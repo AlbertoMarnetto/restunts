@@ -2597,7 +2597,7 @@ extern unsigned transformed_shape_op_helper(unsigned arg_0, unsigned arg_2) {
 	word_45D98 = word_40ED6[word_45D98];
 	polyinfonumpolys++;
 	polyinfoptrnext += (transshapenumvertscopy * sizeof(struct POINT2D)) + 6; // TODO: sizeof POINT2D?
-	if (polyinfonumpolys == 0x190) {
+	if (polyinfonumpolys == MAX_POLY_INFO_COUNT) {
 		printf("End of memory: polyinfonumpolys");
 		return 1;
 	}
@@ -2652,8 +2652,8 @@ void polyinfo_reset(void) {
 	polyinfonumpolys = 0;
 	polyinfoptrnext = 0;
 	word_40ECE = 0;
-	word_40ED6[0x190] = 0xFFFF;
-	word_443F2 = 0x190;
+	word_40ED6[MAX_POLY_INFO_COUNT] = 0xFFFF;
+	word_443F2 = MAX_POLY_INFO_COUNT;
 }
 
 void calc_sincos80(void) {
@@ -2690,7 +2690,7 @@ void get_a_poly_info(void) {
 
 	return ported_get_a_poly_info_();
 /*
-	regdi = 0x190;
+	regdi = MAX_POLY_INFO_COUNT;
 	counter = 0;
 	while (counter < polyinfonumpolys) {
 		regdi = word_40ED6[regdi];

@@ -5,6 +5,7 @@ extern "C" {
 #include "fileio.h"
 #include "memmgr.h"
 #include "shape3d.h"
+#include "externs.h"
 }
 
 /* Function Prototypes */
@@ -187,9 +188,9 @@ unsigned polyinfonumpolys;
 char transprimitivepaintjob;
 unsigned char far* transshapeprimindexptr;
 
-unsigned char far* polyinfoptrs[0x190];
+unsigned char far* polyinfoptrs[MAX_POLY_INFO_COUNT];
 struct POINT2D* polyvertpointptrtab[10];
-unsigned word_40ED6[0x190 + 1]; // the +1 replaces word_411F6
+unsigned word_40ED6[MAX_POLY_INFO_COUNT + 1]; // the +1 replaces word_411F6
 //unsigned word_411F6;
 
 char primtypetab[] = {
