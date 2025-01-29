@@ -22280,7 +22280,7 @@ mat_y300     db 0
 transshapepolyinfo     dd 0
 word_40ECE     dw 0
 select_rect_param     dw 0
-polyinfoptr     dd 0
+qpolyinfoptr     dd 0
 qpoly_linked_list_40ED6     dw 0
     dw 0
     dw 0
