@@ -148,6 +148,10 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 
 	unsigned tiles_to_discard;
 
+	char tiles_to_draw_offset_depths[TILES_TO_DRAW_COUNT];
+	char tiles_to_draw_offset_widths[TILES_TO_DRAW_COUNT];
+	char radius;
+
 	var_DC[0] = 0;
 	var_DC[1] = 0;
 	if (video_flag5_is0 == 0 || arg_0 == 0) {
@@ -268,7 +272,25 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		var_E4 = byte_3C0C6[state.game_frame&0xF];
 	}
 
+
 	tiles_to_discard = 0;
+
+	si = TILES_TO_DRAW_COUNT - 1;
+	di = 0;
+	radius = 0;
+	while (1) {
+		for (di = -radius; di <= radius; ++di) {
+			tiles_to_draw_offset_depths[si] = radius - abs(di);
+			tiles_to_draw_offset_widths[si] = di;
+			// printf("%d %d %d -- ", si, tiles_to_draw_offset_depths[si], tiles_to_draw_offset_widths[si]);
+			if (si == 0) {
+				goto retry;
+			}
+			--si;
+		}
+		++radius;
+	}
+
 retry:
 	heading = select_cliprect_rotate(car_rot_z_3, car_rot_y_2, car_rot_x_2, arg_cliprectptr, 0);
 	tiles_to_draw_offsets = tiles_to_draw_offsets_tables[(heading & 0x3FF) >> 7]; //off_3C084[(var_52 & 0x3FF) >> 7];
@@ -338,9 +360,8 @@ retry:
 			continue;
 
 		if (1 /*tiles_to_draw_offsets[si * 3 + 2] <= detail_threshold*/) {
-			tiles_to_draw_offset_depth = TILES_TO_DRAW_DEPTH - 1 - (si / TILES_TO_DRAW_WIDTH);
-			width_idx = (TILES_TO_DRAW_WIDTH - 1) - (si % TILES_TO_DRAW_WIDTH);
-			tiles_to_draw_offset_width = (width_idx % 2 == 0) ? (width_idx + 1) / 2 : -(width_idx + 1) / 2;
+			tiles_to_draw_offset_depth = tiles_to_draw_offset_depths[si];
+			tiles_to_draw_offset_width = tiles_to_draw_offset_widths[si];
 
 			tile_to_draw_x = cam_tile_x
 				+ tiles_to_draw_offset_depth * depth_to_x
