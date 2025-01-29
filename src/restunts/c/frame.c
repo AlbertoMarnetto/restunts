@@ -71,6 +71,9 @@ extern void far* fontledresptr;
 extern int dialog_fnt_colour;
 extern char transformedshape_counter;
 
+char tiles_to_draw_offset_depths[TILES_TO_DRAW_COUNT];
+char tiles_to_draw_offset_widths[TILES_TO_DRAW_COUNT];
+
 void build_track_object(struct VECTOR* a, struct VECTOR* b);
 void transformed_shape_add_for_sort(int a, int b);
 unsigned char subst_hillroad_track(unsigned char a, unsigned char b);
@@ -148,8 +151,6 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 
 	unsigned tiles_to_discard;
 
-	char tiles_to_draw_offset_depths[TILES_TO_DRAW_COUNT];
-	char tiles_to_draw_offset_widths[TILES_TO_DRAW_COUNT];
 	char radius;
 
 	var_DC[0] = 0;
@@ -272,26 +273,26 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		var_E4 = byte_3C0C6[state.game_frame&0xF];
 	}
 
-
-	tiles_to_discard = 0;
-
-	si = TILES_TO_DRAW_COUNT - 1;
-	di = 0;
-	radius = 0;
-	while (1) {
-		for (di = -radius; di <= radius; ++di) {
-			tiles_to_draw_offset_depths[si] = radius - abs(di);
-			tiles_to_draw_offset_widths[si] = di;
-			// printf("%d %d %d -- ", si, tiles_to_draw_offset_depths[si], tiles_to_draw_offset_widths[si]);
-			if (si == 0) {
-				goto retry;
+	if (tiles_to_draw_offset_widths[0] == 0) {
+		// init. TODO move elsewhere
+		si = TILES_TO_DRAW_COUNT - 1;
+		di = 0;
+		radius = 0;
+		while (1) {
+			for (di = -radius; di <= radius; ++di) {
+				tiles_to_draw_offset_depths[si] = radius - abs(di);
+				tiles_to_draw_offset_widths[si] = di;
+				// printf("%d %d %d -- ", si, tiles_to_draw_offset_depths[si], tiles_to_draw_offset_widths[si]);
+				if (si == 0) {
+					goto end_gen;
+				}
+				--si;
 			}
-			--si;
+			++radius;
 		}
-		++radius;
 	}
+	end_gen:
 
-retry:
 	heading = select_cliprect_rotate(car_rot_z_3, car_rot_y_2, car_rot_x_2, arg_cliprectptr, 0);
 	tiles_to_draw_offsets = tiles_to_draw_offsets_tables[(heading & 0x3FF) >> 7]; //off_3C084[(var_52 & 0x3FF) >> 7];
 
@@ -363,6 +364,12 @@ retry:
 			tiles_to_draw_offset_depth = tiles_to_draw_offset_depths[si];
 			tiles_to_draw_offset_width = tiles_to_draw_offset_widths[si];
 
+			if (tiles_to_draw_offset_depth + 2*tiles_to_draw_offset_width <= 6) {
+				tile_detail_level_vec[si] = 0;
+			} else {
+				tile_detail_level_vec[si] = 1;
+			}
+
 			tile_to_draw_x = cam_tile_x
 				+ tiles_to_draw_offset_depth * depth_to_x
 				+ tiles_to_draw_offset_width * width_to_x;
@@ -403,7 +410,6 @@ retry:
 				}
 
 				tiles_to_draw_terr_type_vec[si] = terr_map_value;
-				tile_detail_level_vec[si] = tiles_to_draw_offsets[si * 3 + 2];
 
 				if (elem_map_value != 0 && detail_level != 0 &&
 					trkObjectList[elem_map_value].ss_physicalModel >= 0x40 &&
@@ -548,6 +554,8 @@ retry:
 	var_4E = 0;
 	si = 0;
 
+	tiles_to_discard = 0;
+retry:
 	for (si = tiles_to_discard; si < TILES_TO_DRAW_COUNT; si++) {
 		if (var_32[si] != 0) {
 			continue;
@@ -556,7 +564,7 @@ retry:
 		tile_to_draw_negz = tiles_to_draw_y_vec[si];
 		elem_map_value = tiles_to_draw_elem_type_vec[si];
 		terr_map_value = tiles_to_draw_terr_type_vec[si];
-		tile_det_level = 0; //tile_detail_level_vec[si];  // Ghidra: 19f1:208d
+		tile_det_level = (tiles_to_discard == 0 ? 0 : tile_detail_level_vec[si]);  // Ghidra: 19f1:208d
 		var_12A = 0;
 		if (elem_map_value == 0) {
 			var_counter = 1;
@@ -1086,10 +1094,11 @@ retry:
 			}
 		}
 	}
-	if (si < TILES_TO_DRAW_COUNT)
+	if (si < TILES_TO_DRAW_COUNT && tiles_to_discard + 25 < TILES_TO_DRAW_COUNT - 15)
 	{
-        tiles_to_discard += 40;
-        goto retry;
+		tiles_to_discard += 25;
+		heading = select_cliprect_rotate(car_rot_z_3, car_rot_y_2, car_rot_x_2, arg_cliprectptr, 0);
+		goto retry;
 	}
 	//printf("%d\n", si);
 
