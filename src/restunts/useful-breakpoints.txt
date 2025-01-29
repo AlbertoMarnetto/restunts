@@ -1,0 +1,31 @@
+HEAVYLOG
+bp 167B:12A3
+bp 167B:12be
+
+bpm 2CC4:5766 
+bpm 2CC4:5786 
+bpm 2CC4:57A6 
+bpm 2CC4:57C6 
+bpm 2CC4:57E6 
+bpm 2CC4:5806 
+bpm 2CC4:5826 
+bpm 2CC4:5846 
+bpm 2CC4:5866 
+bpm 2CC4:5886 
+bpm 2CC4:58A6 
+bpm 2CC4:58C6 
+bpm 2CC4:58E6 
+bpm 2CC4:5906 
+bpm 2CC4:5926 
+bpm 2CC4:5946 
+bpm 2CC4:5966 
+bpm 2CC4:5986 
+bpm 2CC4:59A6 
+bpm 2CC4:59C6 
+bpm 2CC4:59E6 
+bpm 2CC4:5A06 
+bpm 2CC4:5A26 
+bpm 2CC4:5A46 
+bpm 2CC4:5A66 
+bpm 2CC4:5A86 
+
