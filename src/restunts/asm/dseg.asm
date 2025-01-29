@@ -22281,7 +22281,7 @@ transshapepolyinfo     dd 0
 word_40ECE     dw 0
 select_rect_param     dw 0
 polyinfoptr     dd 0
-poly_linked_list_40ED6     dw 0
+qpoly_linked_list_40ED6     dw 0
     dw 0
     dw 0
     dw 0
@@ -22681,7 +22681,7 @@ poly_linked_list_40ED6     dw 0
     dw 0
     dw 0
     dw 0
-word_411F6     dw 0
+qword_411F6     dw 0
 polyinfoptrs     dd 0
     dd 0
     dd 0
@@ -41831,6 +41831,8 @@ transformedshape_zarray db 250 dup(0)
 transformedshape_indices db 250 dup(0)
 ; transformedshape_arg2array: 1 x TILES_TO_DRAW_COUNT times db 
 transformedshape_arg2array db 126 dup(0)
+ALIGN 4
+polyinfoptr     dd 0
 ; poly_linked_list_40ED6: MAX_POLY_INFO_COUNT times dw
 poly_linked_list_40ED6 dw 190h dup(0)
 ; terminator for the list? In doubt, we copy that here
@@ -41838,6 +41840,7 @@ word_411F6     dw 0
 ; polyinfonumpolys: MAX_POLY_INFO_COUNT times dd, plus 6 db
 qpolyinfoptrs dd 300h dup(0)
 	db 6 dup(0)
+
 
 dseg ends
 end
