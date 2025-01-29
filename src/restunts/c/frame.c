@@ -146,6 +146,8 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	char width_to_negz;
 	char width_idx;
 
+	unsigned tiles_to_discard;
+
 	var_DC[0] = 0;
 	var_DC[1] = 0;
 	if (video_flag5_is0 == 0 || arg_0 == 0) {
@@ -266,6 +268,8 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		var_E4 = byte_3C0C6[state.game_frame&0xF];
 	}
 
+	tiles_to_discard = 0;
+retry:
 	heading = select_cliprect_rotate(car_rot_z_3, car_rot_y_2, car_rot_x_2, arg_cliprectptr, 0);
 	tiles_to_draw_offsets = tiles_to_draw_offsets_tables[(heading & 0x3FF) >> 7]; //off_3C084[(var_52 & 0x3FF) >> 7];
 
@@ -523,7 +527,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	var_4E = 0;
 	si = 0;
 
-	for (si = 0; si < TILES_TO_DRAW_COUNT; si++) {
+	for (si = tiles_to_discard; si < TILES_TO_DRAW_COUNT; si++) {
 		if (var_32[si] != 0) {
 			continue;
 		}
@@ -1060,6 +1064,11 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				}
 			}
 		}
+	}
+	if (si < TILES_TO_DRAW_COUNT)
+	{
+        tiles_to_discard += 40;
+        goto retry;
 	}
 	//printf("%d\n", si);
 
