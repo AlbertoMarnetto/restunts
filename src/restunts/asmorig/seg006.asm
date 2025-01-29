@@ -483,7 +483,7 @@ loc_25077:
 loc_250A3:
     mov     ax, word_443F2  ; initialized to 190h in polyinfo_reset()
     mov     word_4394E, ax
-    mov     word_45D98, ax
+    mov     poly_linked_list_40ED6_tail, ax
     mov     word_4554A, 0
     mov     [bp+var_45E], 0
     cmp     transshapenumverts, 8
@@ -1830,13 +1830,13 @@ insert_newest_poly_in_poly_linked_list_40ED6 proc far
     push    si
     cmp     [bp+arg_2], 0
     jnz     short loc_25E3E
-    mov     bx, word_45D98
+    mov     bx, poly_linked_list_40ED6_tail
     shl     bx, 1
     mov     di, poly_linked_list_40ED6[bx]
     jmp     short loc_25E7B
 loc_25E3E:
     mov     ax, word_4394E
-    mov     word_45D98, ax
+    mov     poly_linked_list_40ED6_tail, ax
     mov     bx, ax
     shl     bx, 1
     mov     di, poly_linked_list_40ED6[bx]
@@ -1854,7 +1854,7 @@ loc_25E52:
     mov     ax, [bp+arg_0]
     cmp     es:[bx], ax
     jl      short loc_25E7B
-    mov     word_45D98, di
+    mov     poly_linked_list_40ED6_tail, di
     mov     bx, di
     shl     bx, 1
     mov     di, poly_linked_list_40ED6[bx]
@@ -1865,7 +1865,7 @@ loc_25E7B:
     mov     bx, polyinfonumpolys
     shl     bx, 1
     mov     poly_linked_list_40ED6[bx], di
-    mov     bx, word_45D98
+    mov     bx, poly_linked_list_40ED6_tail
     shl     bx, 1
     mov     ax, polyinfonumpolys
     mov     poly_linked_list_40ED6[bx], ax
@@ -1875,10 +1875,10 @@ loc_25E7B:
     mov     ax, polyinfonumpolys
     mov     word_443F2, ax
 loc_25EA0:
-    mov     bx, word_45D98
+    mov     bx, poly_linked_list_40ED6_tail
     shl     bx, 1
     mov     ax, poly_linked_list_40ED6[bx]
-    mov     word_45D98, ax
+    mov     poly_linked_list_40ED6_tail, ax
     inc     polyinfonumpolys
     mov     al, transshapenumvertscopy
     sub     ah, ah

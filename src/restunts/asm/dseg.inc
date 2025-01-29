@@ -1388,7 +1388,7 @@ dseg segment byte public 'STUNTSD' use16
     extrn material_patlist2_ptr_cpy:word
     extrn word_45D94:word
     extrn wallOrientation:word
-    extrn word_45D98:word
+    extrn poly_linked_list_40ED6_tail:word
     extrn byte_45D9A:byte
     extrn game_replay_mode:byte
     extrn td08_direction_related:dword
