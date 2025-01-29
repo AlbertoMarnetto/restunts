@@ -1436,7 +1436,7 @@ dseg segment byte public 'STUNTSD' use16
     public material_patlist2_ptr_cpy
     public word_45D94
     public wallOrientation
-    public word_45D98
+    public poly_linked_list_40ED6_tail
     public byte_45D9A
     public game_replay_mode
     public td08_direction_related
@@ -40165,7 +40165,7 @@ byte_45D90     db 0
 material_patlist2_ptr_cpy     dw 0
 word_45D94     dw 0
 wallOrientation     dw 0
-word_45D98     dw 0
+poly_linked_list_40ED6_tail     dw 0
 byte_45D9A     db 0
     db 0
     db 0

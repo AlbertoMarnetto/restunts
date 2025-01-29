@@ -109,7 +109,7 @@ extern struct MATRIX mat_temp;
 extern long invpow2tbl[32];
 extern unsigned char byte_4393D;
 extern unsigned word_4394E;
-extern unsigned word_45D98;
+extern unsigned poly_linked_list_40ED6_tail;
 extern unsigned word_4554A;
 extern unsigned word_443F2;
 extern unsigned char transshapenumvertscopy;
@@ -255,7 +255,7 @@ unsigned transformed_shape_op(struct TRANSFORMEDSHAPE3D* arg_transshapeptr) {
 	
 // loc_250A3:
 	word_4394E = word_443F2;
-	word_45D98 = word_443F2;
+	poly_linked_list_40ED6_tail = word_443F2;
 	word_4554A = 0;
 	var_45E = 0;
 	
@@ -521,7 +521,7 @@ loc_25077:
 loc_250A3:
     mov     ax, word_443F2
     mov     word_4394E, ax
-    mov     word_45D98, ax
+    mov     poly_linked_list_40ED6_tail, ax
     mov     word_4554A, 0
     mov     word ptr [var_45E], 0
     cmp     transshapenumverts, 8
@@ -2572,9 +2572,9 @@ extern unsigned insert_newest_poly_in_poly_linked_list_40ED6(unsigned arg_0, uns
 	//return ported_insert_newest_poly_in_poly_linked_list_40ED6_(arg_0, arg_2);
 
 	if (arg_2 == 0) {
-		regdi = poly_linked_list_40ED6[word_45D98];
+		regdi = poly_linked_list_40ED6[poly_linked_list_40ED6_tail];
 	} else {
-		word_45D98 = word_4394E;
+		poly_linked_list_40ED6_tail = word_4394E;
 		regdi = poly_linked_list_40ED6[word_4394E];
 		regsi = word_4554A;
 
@@ -2583,18 +2583,18 @@ extern unsigned insert_newest_poly_in_poly_linked_list_40ED6(unsigned arg_0, uns
 			regsi--;
 			if (regax == 0) break;
 			if (polyinfoptrs[regdi][0] < (int)arg_0) break;
-			word_45D98 = regdi;
+			poly_linked_list_40ED6_tail = regdi;
 			regdi = poly_linked_list_40ED6[regdi];
 		}
 	}
 
 	poly_linked_list_40ED6[polyinfonumpolys] = regdi;
-	poly_linked_list_40ED6[word_45D98] = polyinfonumpolys;
+	poly_linked_list_40ED6[poly_linked_list_40ED6_tail] = polyinfonumpolys;
 	word_4554A++;
 	if (regdi < 0) {
 		word_443F2 = polyinfonumpolys;
 	}
-	word_45D98 = poly_linked_list_40ED6[word_45D98];
+	poly_linked_list_40ED6_tail = poly_linked_list_40ED6[poly_linked_list_40ED6_tail];
 	polyinfonumpolys++;
 	polyinfoptrnext += (transshapenumvertscopy * sizeof(struct POINT2D)) + 6; // TODO: sizeof POINT2D?
 	if (polyinfonumpolys == MAX_POLY_INFO_COUNT) {
