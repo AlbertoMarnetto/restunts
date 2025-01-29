@@ -54,7 +54,7 @@ seg006 segment byte public 'STUNTSC' use16
     public ported_insert_newest_poly_in_poly_linked_list_40ED6_
     public ported_rect_compare_point_
     public ported_is_facing_camera_
-    public get_a_poly_info
+    public ported_get_a_poly_info
     public ported_mat_rot_zxy_
     public ported_rect_adjust_from_point_
     public ported_vector_op_unk2_
@@ -2059,7 +2059,7 @@ loc_25FEE:
     pop     bp
     retf
 ported_is_facing_camera_ endp
-get_a_poly_info proc far
+ported_get_a_poly_info proc far
     var_pattype2 = word ptr -64
     var_polyinfoptrdata = dword ptr -62
     var_polyinfoptr = dword ptr -56
@@ -2157,7 +2157,7 @@ loc_260AC:
     cmp     ax, polyinfonumpolys
     jb      short loc_260B7
 loc_260B4:
-    jmp     _get_a_poly_info_done
+    jmp     _ported_get_a_poly_info_done
 loc_260B7:
     mov     bx, di          ; di = 400
     shl     bx, 1
@@ -2281,7 +2281,7 @@ _fill_pixel:
     push    word ptr es:[bx+6]
     call    putpixel_single_maybe
     jmp     _fill_next_eop6
-_get_a_poly_info_done:
+_ported_get_a_poly_info_done:
     push    cs
     call near ptr ported_polyinfo_reset_
     pop     si
@@ -2289,7 +2289,7 @@ _get_a_poly_info_done:
     mov     sp, bp
     pop     bp
     retf
-get_a_poly_info endp
+ported_get_a_poly_info endp
 ported_mat_rot_zxy_ proc far
      s = byte ptr 0
      r = byte ptr 2

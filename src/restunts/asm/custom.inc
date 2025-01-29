@@ -121,7 +121,7 @@ extrn shape3d_init_shape:proc
 extrn transformed_shape_op:proc
 extrn projectiondata9_times_ratio:proc
 extrn is_facing_camera:proc
-;extrn get_a_poly_info:proc
+extrn get_a_poly_info:proc
 extrn preRender_default:proc
 extrn preRender_default_alt:proc
 extrn skybox_op_helper:proc

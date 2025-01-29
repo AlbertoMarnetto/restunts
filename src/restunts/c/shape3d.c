@@ -2672,7 +2672,6 @@ void init_polyinfo(void) {
 	calc_sincos80();
 }
 
-#if 0
 void get_a_poly_info(void) {
 
 	int counter;
@@ -2687,8 +2686,6 @@ void get_a_poly_info(void) {
 	int i;
 	int var_32[256];
 
-	return ported_get_a_poly_info_();
-/*
 	regdi = MAX_POLY_INFO_COUNT;
 	counter = 0;
 	while (counter < polyinfonumpolys) {
@@ -2710,10 +2707,10 @@ void get_a_poly_info(void) {
 			materialpattern = material_patlist_ptr_cpy[materialtype];
 			if (materialpattern == 0) {
 				for (i = 0; i < somecount; i++) {
-					printf("count: %i color: %i, %i, %i\n", somecount, materialcolor, var_32[i * 2 + 0], var_32[i * 2 + 1]);
+					// printf("count: %i color: %i, %i, %i\n", somecount, materialcolor, var_32[i * 2 + 0], var_32[i * 2 + 1]);
 				}
 				//printf("somecount %i @ %i", somecount, polyinfonumpolys);
-				preRender_default(materialcolor, somecount, var_32);
+				ported_preRender_default_(materialcolor, somecount, var_32);
 			} else
 			if (materialpattern == 1) {
 				// fill poatterned
@@ -2740,10 +2737,8 @@ void get_a_poly_info(void) {
 	}
 	
 	polyinfo_reset(); // polyinfo_reset();
-*/
 }
 
-#endif
 
 extern void draw_filled_lines();
 extern void draw_patterned_lines();
