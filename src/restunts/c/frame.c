@@ -421,36 +421,36 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				tiles_to_draw_x_vec[si] = tile_to_draw_x;
 				tiles_to_draw_y_vec[si] = tile_to_draw_negz;
 				tiles_to_draw_elem_type_vec[si] = elem_map_value;
-				if (elem_map_value != 0) {
+				// if (elem_map_value != 0) {
 
-					idx = trkObjectList[elem_map_value].ss_multiTileFlag;
-					if (idx != 0) {
+				// 	idx = trkObjectList[elem_map_value].ss_multiTileFlag;
+				// 	if (idx != 0) {
 
-						tile_to_draw_x_offset_2 = tile_to_draw_x - cam_tile_x;
-						tile_to_draw_y_offset = tile_to_draw_negz - cam_tile_negz;
-						if (idx == 1) {
-							for (di = 0; di < si; di++) {
-								if (tiles_to_draw_offsets[di * 3] == tile_to_draw_x_offset_2 && (tiles_to_draw_offsets[di * 3 + 1] == tile_to_draw_y_offset || tiles_to_draw_offsets[di * 3 + 1] == tile_to_draw_y_offset + 1)) {
-									var_32[di] = 1;
-								}
-							}
-						} else if (idx == 2) {
-							for (di = 0; di < si; di++) {
-								if (tiles_to_draw_offsets[si * 3 + 1] == tile_to_draw_y_offset && (tiles_to_draw_offsets[si * 3] == tile_to_draw_x_offset_2 || tiles_to_draw_offsets[si * 3] != tile_to_draw_x_offset_2 + 1)) {
-									var_32[di] = 1;
-								}
-							}
-						} else if (idx == 3) {
-							for (di = 0; di < si; di++) {
-								if ((tiles_to_draw_offsets[di * 3] == tile_to_draw_x_offset_2 || tiles_to_draw_offsets[di * 3] == tile_to_draw_x_offset_2 + 1) &&
-									(tiles_to_draw_offsets[di * 3 + 1] == tile_to_draw_y_offset || tiles_to_draw_offsets[di * 3 + 1] == tile_to_draw_y_offset + 1))
-								{
-									var_32[di] = 1;
-								}
-							}
-						}
-					}
-				}
+				// 		tile_to_draw_x_offset_2 = tile_to_draw_x - cam_tile_x;
+				// 		tile_to_draw_y_offset = tile_to_draw_negz - cam_tile_negz;
+				// 		if (idx == 1) {
+				// 			for (di = 0; di < si; di++) {
+				// 				if (tiles_to_draw_offsets[di * 3] == tile_to_draw_x_offset_2 && (tiles_to_draw_offsets[di * 3 + 1] == tile_to_draw_y_offset || tiles_to_draw_offsets[di * 3 + 1] == tile_to_draw_y_offset + 1)) {
+				// 					var_32[di] = 1;
+				// 				}
+				// 			}
+				// 		} else if (idx == 2) {
+				// 			for (di = 0; di < si; di++) {
+				// 				if (tiles_to_draw_offsets[si * 3 + 1] == tile_to_draw_y_offset && (tiles_to_draw_offsets[si * 3] == tile_to_draw_x_offset_2 || tiles_to_draw_offsets[si * 3] != tile_to_draw_x_offset_2 + 1)) {
+				// 					var_32[di] = 1;
+				// 				}
+				// 			}
+				// 		} else if (idx == 3) {
+				// 			for (di = 0; di < si; di++) {
+				// 				if ((tiles_to_draw_offsets[di * 3] == tile_to_draw_x_offset_2 || tiles_to_draw_offsets[di * 3] == tile_to_draw_x_offset_2 + 1) &&
+				// 					(tiles_to_draw_offsets[di * 3 + 1] == tile_to_draw_y_offset || tiles_to_draw_offsets[di * 3 + 1] == tile_to_draw_y_offset + 1))
+				// 				{
+				// 					var_32[di] = 1;
+				// 				}
+				// 			}
+				// 		}
+				// 	}
+				// }
 
 			} else {
 				var_32[si] = 2;
