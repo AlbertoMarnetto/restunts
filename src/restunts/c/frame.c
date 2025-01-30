@@ -2,9 +2,7 @@
 #include "math.h"
 #include "shape3d.h"
 
-#define TILES_TO_DRAW_WIDTH 11  // odd is better
-#define TILES_TO_DRAW_DEPTH 10
-#define TILES_TO_DRAW_COUNT TILES_TO_DRAW_WIDTH * TILES_TO_DRAW_DEPTH
+#define TILES_TO_DRAW_COUNT 110
 
 extern struct RECTANGLE* rectptr_unk2;
 extern struct RECTANGLE rect_array_unk[];
@@ -149,7 +147,9 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	char width_to_negz;
 	char width_idx;
 
-	unsigned tiles_to_discard;
+	unsigned discarded_tiles;
+	char discarded_tiles_str[100];
+	char is_last_attempt;
 
 	char radius;
 
@@ -329,6 +329,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 					currenttransshape->shapeptr = off_3BE44[var_counter];
 					currenttransshape->rotvec.z = -car_rot_x_2;
 					var_transformresult = transformed_shape_op(&currenttransshape[0]);
+					(void) var_transformresult; // we cannot be out of memory as we are just starting to process
 				}
 			}
 		}
@@ -421,6 +422,11 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				tiles_to_draw_x_vec[si] = tile_to_draw_x;
 				tiles_to_draw_y_vec[si] = tile_to_draw_negz;
 				tiles_to_draw_elem_type_vec[si] = elem_map_value;
+
+
+				// The following is an optimization that (I think) prevents
+				// drawing multi-tile elements twice.
+
 				// if (elem_map_value != 0) {
 
 				// 	idx = trkObjectList[elem_map_value].ss_multiTileFlag;
@@ -430,20 +436,29 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				// 		tile_to_draw_y_offset = tile_to_draw_negz - cam_tile_negz;
 				// 		if (idx == 1) {
 				// 			for (di = 0; di < si; di++) {
-				// 				if (tiles_to_draw_offsets[di * 3] == tile_to_draw_x_offset_2 && (tiles_to_draw_offsets[di * 3 + 1] == tile_to_draw_y_offset || tiles_to_draw_offsets[di * 3 + 1] == tile_to_draw_y_offset + 1)) {
+				// 				if (tiles_to_draw_offset_depths[di] == tile_to_draw_x_offset_2
+				// 					&& (tiles_to_draw_offset_widths[di] == tile_to_draw_y_offset
+				// 					|| tiles_to_draw_offset_widths[di] == tile_to_draw_y_offset + 1))
+				// 			{
 				// 					var_32[di] = 1;
 				// 				}
 				// 			}
 				// 		} else if (idx == 2) {
 				// 			for (di = 0; di < si; di++) {
-				// 				if (tiles_to_draw_offsets[si * 3 + 1] == tile_to_draw_y_offset && (tiles_to_draw_offsets[si * 3] == tile_to_draw_x_offset_2 || tiles_to_draw_offsets[si * 3] != tile_to_draw_x_offset_2 + 1)) {
+				// 			// Bugged in the original (si instead of di. here fixed)
+				// 				if (tiles_to_draw_offset_widths[di] == tile_to_draw_y_offset
+				// 					&& (tiles_to_draw_offset_depths[di] == tile_to_draw_x_offset_2
+				// 					|| tiles_to_draw_offset_depths[di] != tile_to_draw_x_offset_2 + 1))
+				// 			{
 				// 					var_32[di] = 1;
 				// 				}
 				// 			}
 				// 		} else if (idx == 3) {
 				// 			for (di = 0; di < si; di++) {
-				// 				if ((tiles_to_draw_offsets[di * 3] == tile_to_draw_x_offset_2 || tiles_to_draw_offsets[di * 3] == tile_to_draw_x_offset_2 + 1) &&
-				// 					(tiles_to_draw_offsets[di * 3 + 1] == tile_to_draw_y_offset || tiles_to_draw_offsets[di * 3 + 1] == tile_to_draw_y_offset + 1))
+				// 				if ((tiles_to_draw_offset_depths[di] == tile_to_draw_x_offset_2
+				// 					|| tiles_to_draw_offset_depths[di] == tile_to_draw_x_offset_2 + 1) &&
+				// 					(tiles_to_draw_offset_widths[di] == tile_to_draw_y_offset
+				// 				|| tiles_to_draw_offset_widths[di] == tile_to_draw_y_offset + 1))
 				// 				{
 				// 					var_32[di] = 1;
 				// 				}
@@ -554,9 +569,11 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	var_4E = 0;
 	si = 0;
 
-	tiles_to_discard = 0;
-retry:
-	for (si = tiles_to_discard; si < TILES_TO_DRAW_COUNT; si++) {
+	discarded_tiles = 0;
+	is_last_attempt = 0;
+start_rendering:
+	var_transformresult = 0;
+	for (si = discarded_tiles; si < TILES_TO_DRAW_COUNT; si++) {
 		if (var_32[si] != 0) {
 			continue;
 		}
@@ -564,7 +581,7 @@ retry:
 		tile_to_draw_negz = tiles_to_draw_y_vec[si];
 		elem_map_value = tiles_to_draw_elem_type_vec[si];
 		terr_map_value = tiles_to_draw_terr_type_vec[si];
-		tile_det_level = (tiles_to_discard == 0 ? 0 : tile_detail_level_vec[si]);  // Ghidra: 19f1:208d
+		tile_det_level = (discarded_tiles == 0 ? 0 : tile_detail_level_vec[si]);  // Ghidra: 19f1:208d
 		var_12A = 0;
 		if (elem_map_value == 0) {
 			var_counter = 1;
@@ -1094,11 +1111,16 @@ retry:
 			}
 		}
 	}
-	if (si < TILES_TO_DRAW_COUNT && tiles_to_discard + 25 < TILES_TO_DRAW_COUNT - 15)
+	if ((si < TILES_TO_DRAW_COUNT || var_transformresult > 0) && ! is_last_attempt)
 	{
-		tiles_to_discard += 25;
-		heading = select_cliprect_rotate(car_rot_z_3, car_rot_y_2, car_rot_x_2, arg_cliprectptr, 0);
-		goto retry;
+		// failed
+		discarded_tiles += 25;
+		if (discarded_tiles > TILES_TO_DRAW_COUNT - 4) {
+			discarded_tiles = TILES_TO_DRAW_COUNT - 4;
+			is_last_attempt = 1;
+		}
+		polyinfo_reset();
+		goto start_rendering;
 	}
 	//printf("%d\n", si);
 
@@ -1182,6 +1204,13 @@ retry:
 			font_set_fontdef();
 		}
 	}
+
+	// Debug: print discarded tiles
+	_sprintf(discarded_tiles_str, "Disc: %d", discarded_tiles);
+	font_set_fontdef2(fontnptr);
+	si = discarded_tiles == 0 ? 11 : discarded_tiles < 30 ? 14 : 12; // cyan, yellow, red
+	rect_union(intro_draw_text(discarded_tiles_str, 0x0C, roofbmpheight + 2, si, 0), &rect_unk11, &rect_unk11);
+	font_set_fontdef();
 
 	if (timertestflag_copy != 0) {
 		rect_union(draw_ingame_text(), rect_unk, rect_unk);
