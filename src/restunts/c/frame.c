@@ -263,8 +263,9 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	char width_idx;
 
 	unsigned discarded_tiles;
-	char discarded_tiles_str[100];
+	char discarded_tiles_str[50];
 	char is_last_attempt;
+	char has_attempt_failed;
 
 	char radius;
 	var_DC[0] = 0;
@@ -625,7 +626,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	is_last_attempt = 0;
 start_rendering:
     // Draw the shapes, starting from the farthest
-	var_transformresult = 0;
+	has_attempt_failed = 0;
 	for (si = discarded_tiles; si < TILES_TO_DRAW_COUNT; si++) {
 		if (var_32[si] != 0) {
 			continue;
@@ -709,6 +710,7 @@ start_rendering:
 					var_transformresult = transformed_shape_op(&currenttransshape[0]);
 					if (var_transformresult > 0) {
 						// break loop .. start end game
+						has_attempt_failed = 1;
 						break;
 					}
 				}
@@ -749,7 +751,10 @@ start_rendering:
 						currenttransshape->material = 0;
 						var_transformresult = transformed_shape_op(&currenttransshape[0]);
 						if (var_transformresult > 0)
+						{
+							has_attempt_failed = 1;
 							break;
+						}
 					}
 				}
 
@@ -782,7 +787,10 @@ start_rendering:
 			currenttransshape->material = 0;
 			var_transformresult = transformed_shape_op(&currenttransshape[0]);
 			if (var_transformresult > 0)
+			{
+				has_attempt_failed = 1;
 				break;
+			}
 		}
 
 		transformedshape_counter = 0;
@@ -842,7 +850,10 @@ start_rendering:
 					currenttransshape->material = 0;
 					var_transformresult = transformed_shape_op(&currenttransshape[0]);
 					if (var_transformresult > 0)
+					{
+						has_attempt_failed = 1;
 						break;
+					}
 				}
 			}
 
@@ -876,7 +887,10 @@ start_rendering:
 						currenttransshape[1].rectptr = &rect_unk2;
 						var_transformresult = transformed_shape_op(&currenttransshape[1]);
 						if (var_transformresult > 0)
+						{
+							has_attempt_failed = 1;
 							break;
+						}
 					} else {
 						currenttransshape[1].rectptr = &rect_unk6;
 						var_4E = 1;
@@ -911,7 +925,10 @@ start_rendering:
 				currenttransshape->rectptr = &rect_unk2;
 				var_transformresult = transformed_shape_op(&currenttransshape[0]);
 				if (var_transformresult > 0)
+				{
+					has_attempt_failed = 1;
 					break;
+				}
 			} else {
 				currenttransshape->rectptr = &rect_unk6;
 				transformed_shape_add_for_sort(0, 0);
@@ -1148,7 +1165,10 @@ start_rendering:
 
 				var_transformresult = transformed_shape_op(&currenttransshape[di]); // DI??
 				if (var_transformresult > 0)
+				{
+					has_attempt_failed = 1;
 					break;
+				}
 
 				if (var_transformresult == 0) {
 					if (transformedshape_arg2array[di] == 2) {
@@ -1164,7 +1184,7 @@ start_rendering:
 			}
 		}
 	}
-	if ((si < TILES_TO_DRAW_COUNT || var_transformresult > 0) && ! is_last_attempt)
+	if ((si < TILES_TO_DRAW_COUNT || has_attempt_failed > 0) && ! is_last_attempt)
 	{
 		// failed
 		discarded_tiles += 20;
