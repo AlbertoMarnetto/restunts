@@ -69,8 +69,122 @@ extern void far* fontledresptr;
 extern int dialog_fnt_colour;
 extern char transformedshape_counter;
 
-char tiles_to_draw_offset_depths[TILES_TO_DRAW_COUNT];
-char tiles_to_draw_offset_widths[TILES_TO_DRAW_COUNT];
+struct TILE_REL_COORDS {
+	char width, depth;
+};
+
+struct TILE_REL_COORDS lookahead_tiles[TILES_TO_DRAW_COUNT] = {
+{   2,  11 },
+{  -2,  11 },
+{   5,   8 },
+{  -5,   8 },
+{   6,   6 },
+{  -6,   6 },
+{   1,  11 },
+{  -1,  11 },
+{   3,  10 },
+{  -3,  10 },
+{   0,  11 },
+{   4,   9 },
+{  -4,   9 },
+{   6,   5 },
+{  -6,   5 },
+{   5,   7 },
+{  -5,   7 },
+{   2,  10 },
+{  -2,  10 },
+{   6,   4 },
+{  -6,   4 },
+{   4,   8 },
+{  -4,   8 },
+{   3,   9 },
+{  -3,   9 },
+{   1,  10 },
+{  -1,  10 },
+{   0,  10 },
+{   6,   3 },
+{  -6,   3 },
+{   5,   6 },
+{  -5,   6 },
+{   2,   9 },
+{  -2,   9 },
+{   4,   7 },
+{  -4,   7 },
+{   5,   5 },
+{  -5,   5 },
+{   3,   8 },
+{  -3,   8 },
+{   1,   9 },
+{  -1,   9 },
+{   0,   9 },
+{   5,   4 },
+{  -5,   4 },
+{   4,   6 },
+{  -4,   6 },
+{   2,   8 },
+{  -2,   8 },
+{   5,   3 },
+{   3,   7 },
+{  -3,   7 },
+{  -5,   3 },
+{   1,   8 },
+{  -1,   8 },
+{   4,   5 },
+{  -4,   5 },
+{   0,   8 },
+{   2,   7 },
+{  -2,   7 },
+{   3,   6 },
+{  -3,   6 },
+{   4,   4 },
+{  -4,   4 },
+{   1,   7 },
+{  -1,   7 },
+{   4,   3 },
+{   0,   7 },
+{  -4,   3 },
+{   3,   5 },
+{  -3,   5 },
+{   2,   6 },
+{  -2,   6 },
+{   4,   2 },
+{  -4,   2 },
+{   3,   4 },
+{   1,   6 },
+{  -1,   6 },
+{  -3,   4 },
+{   0,   6 },
+{   2,   5 },
+{  -2,   5 },
+{   3,   3 },
+{  -3,   3 },
+{   1,   5 },
+{  -1,   5 },
+{   3,   2 },
+{  -3,   2 },
+{   2,   4 },
+{  -2,   4 },
+{   0,   5 },
+{   2,   3 },
+{  -2,   3 },
+{   1,   4 },
+{  -1,   4 },
+{   0,   4 },
+{   2,   2 },
+{  -2,   2 },
+{   1,   3 },
+{  -1,   3 },
+{   2,   1 },
+{  -2,   1 },
+{   0,   3 },
+{   1,   2 },
+{  -1,   2 },
+{   0,   2 },
+{   1,   1 },
+{  -1,   1 },
+{   0,   1 },
+{   0,   0 }
+};
 
 void build_track_object(struct VECTOR* a, struct VECTOR* b);
 void transformed_shape_add_for_sort(int a, int b);
@@ -84,6 +198,7 @@ void font_set_fontdef2(void far* data);
 void format_frame_as_string(char* s, int time, int c);
 void shape_op_explosion(int a, void far* shp, int x, int y);
 void heapsort_by_order(int n, int* heap, int* data);
+
 
 void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	int si;
@@ -152,7 +267,6 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	char is_last_attempt;
 
 	char radius;
-
 	var_DC[0] = 0;
 	var_DC[1] = 0;
 	if (video_flag5_is0 == 0 || arg_0 == 0) {
@@ -273,26 +387,6 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		var_E4 = byte_3C0C6[state.game_frame&0xF];
 	}
 
-	if (tiles_to_draw_offset_widths[0] == 0) {
-		// init. TODO move elsewhere
-		si = TILES_TO_DRAW_COUNT - 1;
-		di = 0;
-		radius = 0;
-		while (1) {
-			for (di = -radius; di <= radius; ++di) {
-				tiles_to_draw_offset_depths[si] = radius - abs(di);
-				tiles_to_draw_offset_widths[si] = di;
-				// printf("%d %d %d -- ", si, tiles_to_draw_offset_depths[si], tiles_to_draw_offset_widths[si]);
-				if (si == 0) {
-					goto end_gen;
-				}
-				--si;
-			}
-			++radius;
-		}
-	}
-	end_gen:
-
 	heading = select_cliprect_rotate(car_rot_z_3, car_rot_y_2, car_rot_x_2, arg_cliprectptr, 0);
 	tiles_to_draw_offsets = tiles_to_draw_offsets_tables[(heading & 0x3FF) >> 7]; //off_3C084[(var_52 & 0x3FF) >> 7];
 
@@ -352,6 +446,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 
 	detail_threshold = detail_threshold_by_level[detail_level];
 
+	// Calculate the matrix to convert
 	depth_to_x = tiles_to_draw_offsets[0] == 4 ? 1 : tiles_to_draw_offsets[0] == -4 ? -1 : 0;
 	depth_to_negz = tiles_to_draw_offsets[1] == 4 ? 1 : tiles_to_draw_offsets[1] == -4 ? -1 : 0;
 	width_to_x = tiles_to_draw_offsets[0] == 2 ? 1 : tiles_to_draw_offsets[0] == -2 ? -1 : 0;
@@ -362,8 +457,8 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			continue;
 
 		if (1 /*tiles_to_draw_offsets[si * 3 + 2] <= detail_threshold*/) {
-			tiles_to_draw_offset_depth = tiles_to_draw_offset_depths[si];
-			tiles_to_draw_offset_width = tiles_to_draw_offset_widths[si];
+			tiles_to_draw_offset_depth = lookahead_tiles[si].depth;
+			tiles_to_draw_offset_width = lookahead_tiles[si].width;
 
 			if (tiles_to_draw_offset_depth + 2*tiles_to_draw_offset_width <= 6) {
 				tile_detail_level_vec[si] = 0;
@@ -374,11 +469,9 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			tile_to_draw_x = cam_tile_x
 				+ tiles_to_draw_offset_depth * depth_to_x
 				+ tiles_to_draw_offset_width * width_to_x;
-				//tiles_to_draw_offsets[si * 3] + cam_tile_x;
 			tile_to_draw_negz = cam_tile_negz
 				+ tiles_to_draw_offset_depth * depth_to_negz
 				+ tiles_to_draw_offset_width * width_to_negz;
-				// tiles_to_draw_offsets[si * 3 + 1] + cam_tile_y;
 
 			if (tile_to_draw_x >= 0 && tile_to_draw_x <= 0x1D && tile_to_draw_negz >= 0 && tile_to_draw_negz <= 0x1D) {
 				elem_map_value = td14_elem_map_main[tile_to_draw_x + trackrows[tile_to_draw_negz]];
@@ -423,50 +516,9 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				tiles_to_draw_y_vec[si] = tile_to_draw_negz;
 				tiles_to_draw_elem_type_vec[si] = elem_map_value;
 
-
-				// The following is an optimization that (I think) prevents
-				// drawing multi-tile elements twice.
-
-				// if (elem_map_value != 0) {
-
-				// 	idx = trkObjectList[elem_map_value].ss_multiTileFlag;
-				// 	if (idx != 0) {
-
-				// 		tile_to_draw_x_offset_2 = tile_to_draw_x - cam_tile_x;
-				// 		tile_to_draw_y_offset = tile_to_draw_negz - cam_tile_negz;
-				// 		if (idx == 1) {
-				// 			for (di = 0; di < si; di++) {
-				// 				if (tiles_to_draw_offset_depths[di] == tile_to_draw_x_offset_2
-				// 					&& (tiles_to_draw_offset_widths[di] == tile_to_draw_y_offset
-				// 					|| tiles_to_draw_offset_widths[di] == tile_to_draw_y_offset + 1))
-				// 			{
-				// 					var_32[di] = 1;
-				// 				}
-				// 			}
-				// 		} else if (idx == 2) {
-				// 			for (di = 0; di < si; di++) {
-				// 			// Bugged in the original (si instead of di. here fixed)
-				// 				if (tiles_to_draw_offset_widths[di] == tile_to_draw_y_offset
-				// 					&& (tiles_to_draw_offset_depths[di] == tile_to_draw_x_offset_2
-				// 					|| tiles_to_draw_offset_depths[di] != tile_to_draw_x_offset_2 + 1))
-				// 			{
-				// 					var_32[di] = 1;
-				// 				}
-				// 			}
-				// 		} else if (idx == 3) {
-				// 			for (di = 0; di < si; di++) {
-				// 				if ((tiles_to_draw_offset_depths[di] == tile_to_draw_x_offset_2
-				// 					|| tiles_to_draw_offset_depths[di] == tile_to_draw_x_offset_2 + 1) &&
-				// 					(tiles_to_draw_offset_widths[di] == tile_to_draw_y_offset
-				// 				|| tiles_to_draw_offset_widths[di] == tile_to_draw_y_offset + 1))
-				// 				{
-				// 					var_32[di] = 1;
-				// 				}
-				// 			}
-				// 		}
-				// 	}
-				// }
-
+				// Here was an optimization that (I think) prevented
+				// drawing multi-tile elements twice. Removed. Reintroduce if
+				// nec to support illusion tracks
 			} else {
 				var_32[si] = 2;
 			}
@@ -572,6 +624,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	discarded_tiles = 0;
 	is_last_attempt = 0;
 start_rendering:
+    // Draw the shapes, starting from the farthest
 	var_transformresult = 0;
 	for (si = discarded_tiles; si < TILES_TO_DRAW_COUNT; si++) {
 		if (var_32[si] != 0) {
@@ -1071,7 +1124,7 @@ start_rendering:
 				transformed_shape_add_for_sort(var_12A & -0x800 /*0xF800*/, 0);
 			}
 		}
-		// Draw the shapes, starting from the farthest
+
 		if (transformedshape_counter != 0) {
 			if (transformedshape_counter > 1) {
 				heapsort_by_order(transformedshape_counter, transformedshape_zarray, transformedshape_indices);
@@ -1114,7 +1167,7 @@ start_rendering:
 	if ((si < TILES_TO_DRAW_COUNT || var_transformresult > 0) && ! is_last_attempt)
 	{
 		// failed
-		discarded_tiles += 25;
+		discarded_tiles += 20;
 		if (discarded_tiles > TILES_TO_DRAW_COUNT - 4) {
 			discarded_tiles = TILES_TO_DRAW_COUNT - 4;
 			is_last_attempt = 1;
