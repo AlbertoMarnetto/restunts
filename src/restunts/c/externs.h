@@ -381,7 +381,7 @@ extern const char* aSFileError_1;
 extern const char* aSInvalidPackTy;
 extern const char* aLocateshape4_4sShapeNotF;
 extern const char* aLocatesound4_4sSoundNotF;
-extern char* audiodriverstring;
+extern char audiodriverstring[];
 
 extern unsigned short gState_frame;
 extern short is_audioloaded;
