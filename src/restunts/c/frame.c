@@ -3,7 +3,7 @@
 #include "shape3d.h"
 
 #define TILES_TO_DRAW_COUNT 110
-#define DISPLAY_DEBUG_INFO 0
+#define DISPLAY_DEBUG_INFO 1
 
 extern struct RECTANGLE* rectptr_unk2;
 extern struct RECTANGLE rect_array_unk[];
@@ -27,7 +27,7 @@ extern char detail_threshold_by_level[];
 extern char byte_3C0C6[];
 extern char word_46468;
 extern int word_3BE34[];
-extern char* tiles_to_draw_offsets_tables[];
+extern char* lookahead_tiles_tables[];
 extern struct SHAPE3D* off_3BE44[];
 extern int terrainHeight;
 extern int planindex;
@@ -74,7 +74,7 @@ struct TILE_REL_COORDS {
 	char width, depth;
 };
 
-struct TILE_REL_COORDS lookahead_tiles[TILES_TO_DRAW_COUNT] = {
+struct TILE_REL_COORDS lookahead_tiles_supersight[TILES_TO_DRAW_COUNT] = {
 {  -5,   7 },
 {   3,   9 },
 {   1,  10 },
@@ -210,22 +210,23 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	struct RECTANGLE* var_rectptr;
 	struct MATRIX var_mat, var_mat2;
 	struct MATRIX* car_rot_matrix;
-	struct VECTOR cam_pos, car_pos, car_to_cam_abs, car_to_cam_rotated, var_vec8;
+	struct VECTOR cam_pos, car_pos, offset_vector, car_to_cam_rotated, var_vec8;
 	int car_rot_y, car_rot_x, car_rot_z;
 	int car_rot_y_2, car_rot_x_2, car_rot_z_2;
 	int var_38, car_rot_z_3;
 	int var_transformresult;
 	int heading;
-	char* tiles_to_draw_offsets;
+	char* lookahead_tiles;
 	int var_2;
 	int var_counter, var_counter2;
-	char cam_tile_negz, cam_tile_x;
-	char tile_to_draw_negz, tile_to_draw_x;
+	char cam_tile_south, cam_tile_east;
+	char tile_south, tile_east;
+	char other_tile_south, other_tile_east;
 	char tile_to_draw_y_offset, tile_to_draw_x_offset_2;
 	char car_tile_x, car_tile_y;
 	unsigned char tiles_to_draw_terr_type_vec[TILES_TO_DRAW_COUNT];
-	char var_32[TILES_TO_DRAW_COUNT];
-	char tile_detail_level_vec[TILES_TO_DRAW_COUNT];
+	char should_skip_tile[TILES_TO_DRAW_COUNT];
+	char tile_detail_level[TILES_TO_DRAW_COUNT];
 	char tiles_to_draw_y_vec[TILES_TO_DRAW_COUNT];
 	char tiles_to_draw_x_vec[TILES_TO_DRAW_COUNT];
 	unsigned char tiles_to_draw_elem_type_vec[TILES_TO_DRAW_COUNT];
@@ -256,12 +257,12 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	unsigned char elem_map_value;
 	unsigned char terr_map_value;
 
-	char tiles_to_draw_offset_depth;
-	char tiles_to_draw_offset_width;
-	char depth_to_x;
-	char depth_to_negz;
-	char width_to_x;
-	char width_to_negz;
+	char offset_east;
+	char offset_south;
+	char M_depth_east;
+	char M_depth_south;
+	char M_width_east;
+	char M_width_south;
 	char width_idx;
 
 	unsigned discarded_tiles;
@@ -269,7 +270,6 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	char is_last_attempt;
 	char has_attempt_failed;
 
-	char radius;
 	var_DC[0] = 0;
 	var_DC[1] = 0;
 	if (video_flag5_is0 == 0 || arg_0 == 0) {
@@ -315,11 +315,11 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		car_rot_y_2 = car_rot_y & 0x3ff;
 		car_rot_z_2   = car_rot_z & 0x3ff;
 		car_rot_matrix = mat_rot_zxy(-car_rot_z, -car_rot_y, -car_rot_x, 0);
-		car_to_cam_abs.x = 0;
-		car_to_cam_abs.z = 0;
-		car_to_cam_abs.y = simd_player.car_height - 6;
+		offset_vector.x = 0;
+		offset_vector.z = 0;
+		offset_vector.y = simd_player.car_height - 6;
 
-		mat_mul_vector(&car_to_cam_abs, car_rot_matrix, &car_to_cam_rotated);
+		mat_mul_vector(&offset_vector, car_rot_matrix, &car_to_cam_rotated);
 		cam_pos.x = car_pos.x + car_to_cam_rotated.x;
 		cam_pos.y = car_pos.y + car_to_cam_rotated.y;
 		cam_pos.z = car_pos.z + car_to_cam_rotated.z;
@@ -328,18 +328,18 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		cam_pos.z = state.game_vec1[followOpponentFlag].z;
 		cam_pos.y = state.game_vec1[followOpponentFlag].y;
 	} else if (cameramode == 2) {
-		car_to_cam_abs.x = 0;
-		car_to_cam_abs.y = 0;
-		car_to_cam_abs.z = 0x4000;
+		offset_vector.x = 0;
+		offset_vector.y = 0;
+		offset_vector.z = 0x4000;
 		car_rot_matrix = mat_rot_zxy(-car_rot_z, -car_rot_y, -car_rot_x, 0);
-		mat_mul_vector(&car_to_cam_abs, car_rot_matrix, &car_to_cam_rotated);
+		mat_mul_vector(&offset_vector, car_rot_matrix, &car_to_cam_rotated);
 
-		car_to_cam_abs.x = 0;
-		car_to_cam_abs.y = 0;
-		car_to_cam_abs.z = word_3B8EC;
+		offset_vector.x = 0;
+		offset_vector.y = 0;
+		offset_vector.z = word_3B8EC;
 		car_rot_matrix = mat_rot_zxy(0, -word_3B8F0, polarAngle(car_to_cam_rotated.x, car_to_cam_rotated.z) - word_3B8EE, 0);
 
-		mat_mul_vector(&car_to_cam_abs, car_rot_matrix, &car_to_cam_rotated);
+		mat_mul_vector(&offset_vector, car_rot_matrix, &car_to_cam_rotated);
 		cam_pos.x = car_pos.x + car_to_cam_rotated.x;
 		cam_pos.y = car_pos.y + car_to_cam_rotated.y;
 		cam_pos.z = car_pos.z + car_to_cam_rotated.z;
@@ -391,13 +391,13 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	}
 
 	heading = select_cliprect_rotate(car_rot_z_3, car_rot_y_2, car_rot_x_2, arg_cliprectptr, 0);
-	tiles_to_draw_offsets = tiles_to_draw_offsets_tables[(heading & 0x3FF) >> 7]; //off_3C084[(var_52 & 0x3FF) >> 7];
+	lookahead_tiles = lookahead_tiles_tables[(heading & 0x3FF) >> 7]; //off_3C084[(var_52 & 0x3FF) >> 7];
 
 	var_mat = *mat_rot_zxy(car_rot_z_3, car_rot_y_2, 0, 1);
-	car_to_cam_abs.x = 0;
-	car_to_cam_abs.y = 0;
-	car_to_cam_abs.z = 0x3E8;
-	mat_mul_vector(&car_to_cam_abs, &var_mat, &var_vec8);
+	offset_vector.x = 0;
+	offset_vector.y = 0;
+	offset_vector.z = 0x3E8;
+	mat_mul_vector(&offset_vector, &var_mat, &var_vec8);
 	if (var_vec8.z > 0) {
 		var_2 = 1;
 	} else {
@@ -416,10 +416,10 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			si = (word_3BE34[var_counter] + car_rot_x_2 + run_game_random) & 0x3ff;
 			if (si < 0x87 || si > 0x379) {
 				mat_rot_y(&var_mat2, si);
-				car_to_cam_abs.x = 0;
-				car_to_cam_abs.y = 0xAE6 - cam_pos.y;
-				car_to_cam_abs.z = 0x3A98; //15000
-				mat_mul_vector(&car_to_cam_abs, &var_mat2, &car_to_cam_rotated);
+				offset_vector.x = 0;
+				offset_vector.y = 0xAE6 - cam_pos.y;
+				offset_vector.z = 0x3A98; //15000
+				mat_mul_vector(&offset_vector, &var_mat2, &car_to_cam_rotated);
 				car_to_cam_rotated.z = 0x3A98; //15000
 				mat_mul_vector(&car_to_cam_rotated, &var_mat, &currenttransshape->pos);
 				if (currenttransshape->pos.z > 0xC8) {
@@ -436,102 +436,141 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 ; -----------------------------------------------------------------------------------------------
 */
 
-	cam_tile_x = cam_pos.x >> 0xA;
-	cam_tile_negz = -((cam_pos.z >> 0xA) - 0x1D);
+	cam_tile_east = cam_pos.x >> 0xA;
+	cam_tile_south = -((cam_pos.z >> 0xA) - 0x1D);
 	if (detail_level != 0) {
 		car_tile_x = state.playerstate.car_posWorld1.lx >> 16;
 		car_tile_y = 0x1D - (state.playerstate.car_posWorld1.lz >> 16);
 	}
 
 	for (si = 0; si < TILES_TO_DRAW_COUNT; si++) {
-		var_32[si] = 0;
+		should_skip_tile[si] = 0;
 	}
 
 	detail_threshold = detail_threshold_by_level[detail_level];
 
-	// Calculate the matrix to convert
-	depth_to_x = tiles_to_draw_offsets[0] == 4 ? 1 : tiles_to_draw_offsets[0] == -4 ? -1 : 0;
-	depth_to_negz = tiles_to_draw_offsets[1] == 4 ? 1 : tiles_to_draw_offsets[1] == -4 ? -1 : 0;
-	width_to_x = tiles_to_draw_offsets[0] == 2 ? 1 : tiles_to_draw_offsets[0] == -2 ? -1 : 0;
-	width_to_negz = tiles_to_draw_offsets[1] == 2 ? 1 : tiles_to_draw_offsets[1] == -2 ? -1 : 0;
+	// Calculate the matrix to convert depth-width in east-south coords
+	// Use the original lookahead_tiles tables, noticing that its first two
+	// elements are the east and south offsets of the farthest tile from the
+	// cam (located at depth = 4, width = +- 2)
+	M_depth_east = lookahead_tiles[0] == 4 ? 1 : lookahead_tiles[0] == -4 ? -1 : 0;
+	M_depth_south = lookahead_tiles[1] == 4 ? 1 : lookahead_tiles[1] == -4 ? -1 : 0;
+	M_width_east = lookahead_tiles[0] == 2 ? 1 : lookahead_tiles[0] == -2 ? -1 : 0;
+	M_width_south = lookahead_tiles[1] == 2 ? 1 : lookahead_tiles[1] == -2 ? -1 : 0;
 
 	for (si = TILES_TO_DRAW_COUNT - 1; si >= 0; si--) {
-		if (var_32[si] != 0)
+		if (should_skip_tile[si] != 0)
 			continue;
 
-		if (1 /*tiles_to_draw_offsets[si * 3 + 2] <= detail_threshold*/) {
-			tiles_to_draw_offset_depth = lookahead_tiles[si].depth;
-			tiles_to_draw_offset_width = lookahead_tiles[si].width;
+		offset_east
+			= lookahead_tiles_supersight[si].depth * M_depth_east
+			+ lookahead_tiles_supersight[si].width * M_width_east;
+		offset_south
+			= lookahead_tiles_supersight[si].depth * M_depth_south
+			+ lookahead_tiles_supersight[si].width * M_width_south;
 
-			if (tiles_to_draw_offset_depth + 2*tiles_to_draw_offset_width <= 6) {
-				tile_detail_level_vec[si] = 0;
-			} else {
-				tile_detail_level_vec[si] = 1;
-			}
-
-			tile_to_draw_x = cam_tile_x
-				+ tiles_to_draw_offset_depth * depth_to_x
-				+ tiles_to_draw_offset_width * width_to_x;
-			tile_to_draw_negz = cam_tile_negz
-				+ tiles_to_draw_offset_depth * depth_to_negz
-				+ tiles_to_draw_offset_width * width_to_negz;
-
-			if (tile_to_draw_x >= 0 && tile_to_draw_x <= 0x1D && tile_to_draw_negz >= 0 && tile_to_draw_negz <= 0x1D) {
-				elem_map_value = td14_elem_map_main[tile_to_draw_x + trackrows[tile_to_draw_negz]];
-				terr_map_value = td15_terr_map_main[tile_to_draw_x + terrainrows[tile_to_draw_negz]];
-
-				if (elem_map_value != 0) {
-
-					if (terr_map_value >= 7 && terr_map_value < 0xB) {
-						elem_map_value = subst_hillroad_track(terr_map_value, elem_map_value);
-						terr_map_value = 0;
-					}
-
-					if (elem_map_value == 0xFD) {
-						// the item on the top left needs this space
-						tile_to_draw_x--;
-						tile_to_draw_negz--;
-						elem_map_value = td14_elem_map_main[tile_to_draw_x + trackrows[tile_to_draw_negz]];
-						terr_map_value = td15_terr_map_main[tile_to_draw_x + terrainrows[tile_to_draw_negz]];
-					} else if (elem_map_value == 0xFE) {
-						// the item on the top needs this space
-						tile_to_draw_negz--;
-						elem_map_value = td14_elem_map_main[tile_to_draw_x + trackrows[tile_to_draw_negz]];
-						terr_map_value = td15_terr_map_main[tile_to_draw_x + terrainrows[tile_to_draw_negz]];
-					} else if (elem_map_value == 0xFF) {
-						// the item on the left needs this space
-						tile_to_draw_x--;
-						elem_map_value = td14_elem_map_main[tile_to_draw_x + trackrows[tile_to_draw_negz]];
-						terr_map_value = td15_terr_map_main[tile_to_draw_x + terrainrows[tile_to_draw_negz]];
-					}
-				}
-
-				tiles_to_draw_terr_type_vec[si] = terr_map_value;
-
-				if (elem_map_value != 0 && detail_level != 0 &&
-					trkObjectList[elem_map_value].ss_physicalModel >= 0x40 &&
-					(tile_to_draw_x != car_tile_x || tile_to_draw_negz != car_tile_y))
-				{
-					elem_map_value = 0;
-				}
-
-				tiles_to_draw_x_vec[si] = tile_to_draw_x;
-				tiles_to_draw_y_vec[si] = tile_to_draw_negz;
-				tiles_to_draw_elem_type_vec[si] = elem_map_value;
-
-				// Here was an optimization that (I think) prevented
-				// drawing multi-tile elements twice. Removed. Reintroduce if
-				// nec to support illusion tracks
-			} else {
-				var_32[si] = 2;
-			}
+		if (lookahead_tiles_supersight[si].depth
+			+ 2*lookahead_tiles_supersight[si].width <= 6)
+		{
+			tile_detail_level[si] = 0;
 		} else {
-			var_32[si] = 2;
+			tile_detail_level[si] = 1;
 		}
+
+		tile_east = cam_tile_east + offset_east;
+		tile_south = cam_tile_south + offset_south;
+
+		if (! (tile_east >= 0 && tile_east <= 0x1D && tile_south >= 0 && tile_south <= 0x1D)) {
+			should_skip_tile[si] = 2;
+			continue;
+		}
+
+		elem_map_value = td14_elem_map_main[tile_east + trackrows[tile_south]];
+		terr_map_value = td15_terr_map_main[tile_east + terrainrows[tile_south]];
+
+		if (elem_map_value != 0) {
+
+			if (terr_map_value >= 7 && terr_map_value < 0xB) {
+				elem_map_value = subst_hillroad_track(terr_map_value, elem_map_value);
+				terr_map_value = 0;
+			}
+
+			if (elem_map_value == 0xFD) {
+				// the item on the top left needs this space
+				tile_east--;
+				tile_south--;
+				elem_map_value = td14_elem_map_main[tile_east + trackrows[tile_south]];
+				terr_map_value = td15_terr_map_main[tile_east + terrainrows[tile_south]];
+			} else if (elem_map_value == 0xFE) {
+				// the item on the top needs this space
+				tile_south--;
+				elem_map_value = td14_elem_map_main[tile_east + trackrows[tile_south]];
+				terr_map_value = td15_terr_map_main[tile_east + terrainrows[tile_south]];
+			} else if (elem_map_value == 0xFF) {
+				// the item on the left needs this space
+				tile_east--;
+				elem_map_value = td14_elem_map_main[tile_east + trackrows[tile_south]];
+				terr_map_value = td15_terr_map_main[tile_east + terrainrows[tile_south]];
+			}
+		}
+
+		tiles_to_draw_terr_type_vec[si] = terr_map_value;
+
+		if (elem_map_value != 0 && detail_level != 0 &&
+			trkObjectList[elem_map_value].ss_physicalModel >= 0x40 &&
+			(tile_east != car_tile_x || tile_south != car_tile_y))
+		{
+			elem_map_value = 0;
+		}
+
+		tiles_to_draw_x_vec[si] = tile_east;
+		tiles_to_draw_y_vec[si] = tile_south;
+		tiles_to_draw_elem_type_vec[si] = elem_map_value;
+
+		// if (elem_map_value == 0) {
+		// 	continue;
+		// }
+
+		// idx = trkObjectList[elem_map_value].ss_multiTileFlag;
+		// if (idx == 0) {
+		// 	continue;
+		// }
+
+		// for (di = 0; di < si; di++) {
+		// 	tile_depth = lookahead_tiles_supersight[si].depth;
+		// 	tile_width = lookahead_tiles_supersight[si].width;
+
+		// 	other_tile_east = cam_tile_east
+		// 		+ tile_depth * M_depth_east
+		// 		+ tile_width * M_width_east;
+		// 	other_tile_south = cam_tile_south
+		// 		+ tile_depth * M_depth_south
+		// 		+ tile_width * M_width_south;
+
+		// 	if (idx == 1) {
+		// 		if (other_tile_east == tile_east && other_tile_south == tile_south + 1) {
+		// 			should_skip_tile[di] = 1;
+		// 		}
+		// 	}
+		// 	if (idx == 2) {
+		// 		if (other_tile_east == tile_east + 1 && other_tile_south == tile_south) {
+		// 			should_skip_tile[di] = 1;
+		// 		}
+		// 	}
+		// 	if (idx == 3) {
+		// 		if (
+		// 			   (other_tile_east == tile_east || other_tile_east == tile_east + 1)
+		// 			&& (other_tile_south == tile_south || other_tile_south == tile_south + 1))
+		// 		{
+		// 			should_skip_tile[di] = 1;
+		// 		}
+		// 	}
+		// }
 	}
 
 //; -----------------------------------------------------------------------------
 
+	// Draw own wheels
 	var_3C = -1;
 	var_6C = 0;
 	if (cameramode != 0 || followOpponentFlag != 0) {
@@ -542,15 +581,29 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			idx = -1;
 			di = -1;
 			for (var_counter2 = 0; var_counter2 < 4; var_counter2++) {
-				car_to_cam_abs = simd_player.wheel_coords[var_counter2];
-				mat_mul_vector(&car_to_cam_abs, car_rot_matrix, &var_vec8); //; rotating car wheels, maybe?
-				tile_to_draw_x = (var_vec8.x + state.playerstate.car_posWorld1.lx) >> 16; // bits 16-24
-				tile_to_draw_negz = -(((var_vec8.z + state.playerstate.car_posWorld1.lz) >> 16) - 0x1D);
+				offset_vector = simd_player.wheel_coords[var_counter2];
+				mat_mul_vector(&offset_vector, car_rot_matrix, &var_vec8); //; rotating car wheels, maybe?
+				// Tile where the wheel is standing
+				tile_east = (var_vec8.x + state.playerstate.car_posWorld1.lx) >> 16; // bits 16-24
+				tile_south = -(((var_vec8.z + state.playerstate.car_posWorld1.lz) >> 16) - 0x1D);
 
 				for (si = TILES_TO_DRAW_COUNT - 1; si > idx; si--) {
-					if (var_32[si] != 2 && tiles_to_draw_offsets[si * 3] + cam_tile_x == tile_to_draw_x && tiles_to_draw_offsets[si * 3 + 1] + cam_tile_negz == tile_to_draw_negz) {
-						var_3C = tile_to_draw_x;
-						var_60 = tile_to_draw_negz;
+					if (should_skip_tile[si] == 2) {
+						continue;
+					}
+
+					offset_east
+						= lookahead_tiles_supersight[si].depth * M_depth_east
+						+ lookahead_tiles_supersight[si].width * M_width_east;
+					offset_south
+						= lookahead_tiles_supersight[si].depth * M_depth_south
+						+ lookahead_tiles_supersight[si].width * M_width_south;
+
+					if (offset_east + cam_tile_east == tile_east
+					    && offset_south + cam_tile_south == tile_south)
+					{
+						var_3C = tile_east;
+						var_60 = tile_south;
 						idx = si;
 						di = var_counter2;
 					}
@@ -559,12 +612,12 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 
 			if (di != -1) {
 				if (state.playerstate.car_surfaceWhl[0] != 4 || state.playerstate.car_surfaceWhl[1] != 4 || state.playerstate.car_surfaceWhl[2] != 4 || state.playerstate.car_surfaceWhl[3] != 4) {
-					car_to_cam_abs.x = 0;
-					car_to_cam_abs.z = 0;
-					car_to_cam_abs.y = 0x7530;
-					mat_mul_vector(&car_to_cam_abs, car_rot_matrix, &var_vec8);
-					mat_mul_vector(&var_vec8, &mat_temp, &car_to_cam_abs);
-					if (car_to_cam_abs.z <= 0) {
+					offset_vector.x = 0;
+					offset_vector.z = 0;
+					offset_vector.y = 0x7530;
+					mat_mul_vector(&offset_vector, car_rot_matrix, &var_vec8);
+					mat_mul_vector(&var_vec8, &mat_temp, &offset_vector);
+					if (offset_vector.z <= 0) {
 						var_6C = -0x800 ;
 					} else {
 						var_6C = 0x800;
@@ -574,6 +627,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		}
 	}
 
+	// Draw opponent's wheels
 	var_4A = -1;
 	var_A4 = 0;
 	if (gameconfig.game_opponenttype != 0) {
@@ -585,15 +639,28 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				di = -1;
 
 				for (var_counter2 = 0; var_counter2 < 4; var_counter2++) {
-					car_to_cam_abs = simd_opponent.wheel_coords[var_counter2];
-					mat_mul_vector(&car_to_cam_abs, car_rot_matrix, &var_vec8); //; rotating car wheels, maybe?
-					tile_to_draw_x = (var_vec8.x + state.opponentstate.car_posWorld1.lx) >> 16; // bits 16-24
-					tile_to_draw_negz = -(((var_vec8.z + state.opponentstate.car_posWorld1.lz) >> 16) - 0x1D);
+					offset_vector = simd_opponent.wheel_coords[var_counter2];
+					mat_mul_vector(&offset_vector, car_rot_matrix, &var_vec8); //; rotating car wheels, maybe?
+					tile_east = (var_vec8.x + state.opponentstate.car_posWorld1.lx) >> 16; // bits 16-24
+					tile_south = -(((var_vec8.z + state.opponentstate.car_posWorld1.lz) >> 16) - 0x1D);
 
 					for (si = TILES_TO_DRAW_COUNT - 1; si > idx; si--) {
-						if (var_32[si] != 2 && tiles_to_draw_offsets[si * 3] + cam_tile_x == tile_to_draw_x && tiles_to_draw_offsets[si * 3 + 1] + cam_tile_negz == tile_to_draw_negz) {
-							var_4A = tile_to_draw_x;
-							var_6E = tile_to_draw_negz;
+						if (should_skip_tile[si] == 2) {
+							continue;
+						}
+
+						offset_east
+							= lookahead_tiles_supersight[si].depth * M_depth_east
+							+ lookahead_tiles_supersight[si].width * M_width_east;
+						offset_south
+							= lookahead_tiles_supersight[si].depth * M_depth_south
+							+ lookahead_tiles_supersight[si].width * M_width_south;
+
+						if (offset_east + cam_tile_east == tile_east
+							&& offset_south + cam_tile_south == tile_south)
+						{
+							var_4A = tile_east;
+							var_6E = tile_south;
 							idx = si;
 							di = var_counter2;
 						}
@@ -603,12 +670,12 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				if (di != -1) {
 
 					if (state.opponentstate.car_surfaceWhl[0] != 4 || state.opponentstate.car_surfaceWhl[1] != 4 || state.opponentstate.car_surfaceWhl[2] != 4 || state.opponentstate.car_surfaceWhl[3] != 4) {
-						car_to_cam_abs.x = 0;
-						car_to_cam_abs.y = 0;
-						car_to_cam_abs.z = 0x7530;
-						mat_mul_vector(&car_to_cam_abs, car_rot_matrix, &var_vec8);
-						mat_mul_vector(&var_vec8, &mat_temp, &car_to_cam_abs);
-						if (car_to_cam_abs.z <= 0) {
+						offset_vector.x = 0;
+						offset_vector.y = 0;
+						offset_vector.z = 0x7530;
+						mat_mul_vector(&offset_vector, car_rot_matrix, &var_vec8);
+						mat_mul_vector(&var_vec8, &mat_temp, &offset_vector);
+						if (offset_vector.z <= 0) {
 							var_A4 = -0x800; //0xF800; // signed number!
 						} else {
 							var_A4 = 0x800;
@@ -630,14 +697,14 @@ start_rendering:
     // Draw the shapes, starting from the farthest
 	has_attempt_failed = 0;
 	for (si = discarded_tiles; si < TILES_TO_DRAW_COUNT; si++) {
-		if (var_32[si] != 0) {
+		if (should_skip_tile[si] != 0) {
 			continue;
 		}
-		tile_to_draw_x = tiles_to_draw_x_vec[si];
-		tile_to_draw_negz = tiles_to_draw_y_vec[si];
+		tile_east = tiles_to_draw_x_vec[si];
+		tile_south = tiles_to_draw_y_vec[si];
 		elem_map_value = tiles_to_draw_elem_type_vec[si];
 		terr_map_value = tiles_to_draw_terr_type_vec[si];
-		tile_det_level = (discarded_tiles == 0 ? 0 : tile_detail_level_vec[si]);  // Ghidra: 19f1:208d
+		tile_det_level = (discarded_tiles == 0 ? 0 : tile_detail_level[si]);  // Ghidra: 19f1:208d
 		var_12A = 0;
 		if (elem_map_value == 0) {
 			var_counter = 1;
@@ -660,8 +727,8 @@ start_rendering:
 		}
 		// Border check
 		for (idx = 0; idx < var_counter; idx++) {
-			tile_to_draw_x_offset_2 = var_10E[idx * 2] + tile_to_draw_x;
-			tile_to_draw_y_offset = var_10E[idx * 2 + 1] + tile_to_draw_negz;
+			tile_to_draw_x_offset_2 = var_10E[idx * 2] + tile_east;
+			tile_to_draw_y_offset = var_10E[idx * 2 + 1] + tile_south;
 
 			if (detail_level == 0 || (tile_to_draw_x_offset_2 == car_tile_x && tile_to_draw_y_offset == car_tile_y)) {
 				if (tile_to_draw_x_offset_2 == 0) {
@@ -725,17 +792,17 @@ start_rendering:
 			if (elem_map_value >= 0x69 && elem_map_value <= 0x6C) {
 				for (idx = 0; idx < 4; idx++) {
 					if (idx == 0) {
-						tile_to_draw_x_offset_2 = tile_to_draw_x;
-						tile_to_draw_y_offset = tile_to_draw_negz;
+						tile_to_draw_x_offset_2 = tile_east;
+						tile_to_draw_y_offset = tile_south;
 					} else if (idx == 1) {
-						tile_to_draw_x_offset_2 = tile_to_draw_x + 1;
-						tile_to_draw_y_offset = tile_to_draw_negz;
+						tile_to_draw_x_offset_2 = tile_east + 1;
+						tile_to_draw_y_offset = tile_south;
 					} else if (idx == 2) {
-						tile_to_draw_x_offset_2 = tile_to_draw_x;
-						tile_to_draw_y_offset = tile_to_draw_negz + 1;
+						tile_to_draw_x_offset_2 = tile_east;
+						tile_to_draw_y_offset = tile_south + 1;
 					} else if (idx == 3) {
-						tile_to_draw_x_offset_2 = tile_to_draw_x + 1;
-						tile_to_draw_y_offset = tile_to_draw_negz + 1;
+						tile_to_draw_x_offset_2 = tile_east + 1;
+						tile_to_draw_y_offset = tile_south + 1;
 					}
 					terr_map_value = td15_terr_map_main[tile_to_draw_x_offset_2 + terrainrows[tile_to_draw_y_offset]];
 					if (terr_map_value != 0) {
@@ -772,9 +839,9 @@ start_rendering:
 		if (terr_map_value != 0) {
 			var_trkobject_ptr = &sceneshapes2[terr_map_value];
 			currenttransshape->shapeptr = var_trkobject_ptr->ss_shapePtr;
-			currenttransshape->pos.x = trackcenterpos2[tile_to_draw_x] - cam_pos.x;
+			currenttransshape->pos.x = trackcenterpos2[tile_east] - cam_pos.x;
 			currenttransshape->pos.y = var_hillheight - cam_pos.y;
-			currenttransshape->pos.z = trackcenterpos[tile_to_draw_negz] - cam_pos.z;
+			currenttransshape->pos.z = trackcenterpos[tile_south] - cam_pos.z;
 			if (var_hillheight == 0) {
 				currenttransshape->rectptr = &rect_unk2;
 			} else {
@@ -798,24 +865,24 @@ start_rendering:
 		transformedshape_counter = 0;
 		curtransshape_ptr = currenttransshape;
 		if (elem_map_value == 0) {
-			tile_to_draw_x_offset_2 = tile_to_draw_x;
-			tile_to_draw_y_offset = tile_to_draw_negz;
+			tile_to_draw_x_offset_2 = tile_east;
+			tile_to_draw_y_offset = tile_south;
 		} else {
 			var_trkobject_ptr = &trkObjectList[elem_map_value];
 			if ((var_trkobject_ptr->ss_multiTileFlag & 1) != 0) {
-				var_5E = trackpos[tile_to_draw_negz];
-				tile_to_draw_y_offset = tile_to_draw_negz + 1;
+				var_5E = trackpos[tile_south];
+				tile_to_draw_y_offset = tile_south + 1;
 			} else {
-				var_5E = trackcenterpos[tile_to_draw_negz];
-				tile_to_draw_y_offset = tile_to_draw_negz;
+				var_5E = trackcenterpos[tile_south];
+				tile_to_draw_y_offset = tile_south;
 			}
 
 			if ((var_trkobject_ptr->ss_multiTileFlag & 2) != 0) {
-				var_3A = trackpos2[1 + tile_to_draw_x];
-				tile_to_draw_x_offset_2 = tile_to_draw_x + 1;
+				var_3A = trackpos2[1 + tile_east];
+				tile_to_draw_x_offset_2 = tile_east + 1;
 			} else {
-				var_3A = trackcenterpos2[tile_to_draw_x];
-				tile_to_draw_x_offset_2 = tile_to_draw_x;
+				var_3A = trackcenterpos2[tile_east];
+				tile_to_draw_x_offset_2 = tile_east;
 			}
 
 			var_vec8.x = var_3A - cam_pos.x;
@@ -946,14 +1013,14 @@ start_rendering:
 					}
 				}
 
-				if (tile_to_draw_x == startcol2 && tile_to_draw_negz == startrow2) {
+				if (tile_east == startcol2 && tile_south == startrow2) {
 					var_12A = 0;
 				} else {
 					var_12A = -1;
 				}
 			}
 
-			var_4C = trackdata19[tile_to_draw_x + trackrows[tile_to_draw_negz]];
+			var_4C = trackdata19[tile_east + trackrows[tile_south]];
 			if (var_4C != 0xFF) {
 				if (state.field_3FA[var_4C] == 0) {
 					var_trkobject_ptr = &trkObjectList[212 + trackdata23[var_4C]];
@@ -991,7 +1058,7 @@ start_rendering:
 			}
 		}
 
-		if ((var_3C == tile_to_draw_x || var_3C == tile_to_draw_x_offset_2) && (var_60 == tile_to_draw_negz || var_60 == tile_to_draw_y_offset)) {
+		if ((var_3C == tile_east || var_3C == tile_to_draw_x_offset_2) && (var_60 == tile_south || var_60 == tile_to_draw_y_offset)) {
 			if (state.field_42A != 0) {
 				for (di = 0; di < 0x18; di++) {
 					if (state.field_38E[di] != 0 && state.field_443[di] == 0) {
@@ -1043,8 +1110,8 @@ start_rendering:
 			transformed_shape_add_for_sort(var_6C & var_12A, 2);
 		}
 
-		if ((var_4A == tile_to_draw_x) || (var_4A == tile_to_draw_x_offset_2)) {
-			if ((var_6E == tile_to_draw_negz) || (var_6E == tile_to_draw_y_offset)) {
+		if ((var_4A == tile_east) || (var_4A == tile_to_draw_x_offset_2)) {
+			if ((var_6E == tile_south) || (var_6E == tile_to_draw_y_offset)) {
 				if (state.field_42A != 0) {
 					for (di = 0; di < 0x18; di++) {
 						if (state.field_38E[di] != 0) {
@@ -1101,7 +1168,7 @@ start_rendering:
 		}
 
 		if (state.game_inputmode == 0) {
-			if ((tile_to_draw_x == startcol2 || tile_to_draw_x_offset_2 == startcol2) && (tile_to_draw_negz == startrow2 || tile_to_draw_y_offset == startrow2)) {
+			if ((tile_east == startcol2 || tile_to_draw_x_offset_2 == startcol2) && (tile_south == startrow2 || tile_to_draw_y_offset == startrow2)) {
 
 				idx = multiply_and_scale(cos_fast(word_44DCA), 0x24);
 				var_counter = multiply_and_scale(sin_fast(word_44DCA), 0x24) + 0x38;
@@ -1222,8 +1289,8 @@ start_rendering:
 
 		if (rect_intersect(var_rectptr, arg_cliprectptr) == 0) {
 			sprite_set_1_size(var_rectptr->left, var_rectptr->right, var_rectptr->top, var_rectptr->bottom);
-			car_to_cam_abs.x = (var_rectptr->right + var_rectptr->left) >> 1;
-			car_to_cam_abs.y = (var_rectptr->top + var_rectptr->bottom) >> 1;
+			offset_vector.x = (var_rectptr->right + var_rectptr->left) >> 1;
+			offset_vector.y = (var_rectptr->top + var_rectptr->bottom) >> 1;
 			idx = var_rectptr->right - var_rectptr->left;
 			var_counter = var_rectptr->bottom - var_rectptr->top;
 			if (var_counter > idx) {
@@ -1232,7 +1299,7 @@ start_rendering:
 
 			di = (state.game_frame >> 2) % 3 ;
 			var_counter = ((long)idx << 8) / (long)sdgame2_widths[di];
-			shape_op_explosion(var_counter, sdgame2shapes[di], car_to_cam_abs.x, car_to_cam_abs.y);
+			shape_op_explosion(var_counter, sdgame2shapes[di], offset_vector.x, offset_vector.y);
 		}
 	}
 

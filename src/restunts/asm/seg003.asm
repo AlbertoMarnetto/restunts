@@ -784,7 +784,7 @@ loc_1A512:
     mov     si, ax
     mov     bx, si
     shl     bx, 1
-    mov     ax, tiles_to_draw_offsets_tables[bx]
+    mov     ax, lookahead_tiles_tables[bx]
     mov     [bp+var_50], ax
     mov     ax, 1
     push    ax

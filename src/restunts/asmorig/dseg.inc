@@ -252,7 +252,7 @@ dseg segment byte public 'STUNTSD' use16
     extrn unk_3C03E:byte
     extrn unk_3C071:byte
     extrn unk_3C072:byte
-    extrn tiles_to_draw_offsets_tables:word
+    extrn lookahead_tiles_tables:word
     extrn rect_unk5:RECTANGLE
     extrn detail_threshold_by_level:byte
     extrn unk_3C0A2:byte

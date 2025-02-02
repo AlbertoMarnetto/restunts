@@ -300,7 +300,7 @@ dseg segment byte public 'STUNTSD' use16
     public unk_3C03E
     public unk_3C071
     public unk_3C072
-    public tiles_to_draw_offsets_tables
+    public lookahead_tiles_tables
     public rect_unk5
     public detail_threshold_by_level
     public unk_3C0A2
@@ -3694,7 +3694,7 @@ unk_3C072     db 0
     db 0
     db 0
     db 0
-tiles_to_draw_offsets_tables     dw offset unk_3BE9A
+lookahead_tiles_tables     dw offset unk_3BE9A
     dw offset unk_3BEE0
     dw offset unk_3BF26
     dw offset unk_3BF6C
