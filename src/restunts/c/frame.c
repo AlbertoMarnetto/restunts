@@ -183,8 +183,8 @@ struct TILE_REL_COORDS lookahead_tiles_supersight[TILES_TO_DRAW_COUNT] = {
 {  -1,  -1 },
 {   0,   1 },
 {   0,  -2 },
+{   0,  -1 },
 {   0,   0 },
-{   0,  -1 }
 };
 
 
@@ -221,14 +221,14 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	int var_counter, var_counter2;
 	char cam_tile_south, cam_tile_east;
 	char tile_south, tile_east;
-	char other_tile_south, other_tile_east;
+	char other_offset_south, other_offset_east;
 	char tile_to_draw_y_offset, tile_to_draw_x_offset_2;
 	char car_tile_x, car_tile_y;
 	unsigned char tiles_to_draw_terr_type_vec[TILES_TO_DRAW_COUNT];
 	char should_skip_tile[TILES_TO_DRAW_COUNT];
 	char tile_detail_level[TILES_TO_DRAW_COUNT];
-	char tiles_to_draw_y_vec[TILES_TO_DRAW_COUNT];
-	char tiles_to_draw_x_vec[TILES_TO_DRAW_COUNT];
+	char tiles_to_draw_south[TILES_TO_DRAW_COUNT];
+	char tiles_to_draw_east[TILES_TO_DRAW_COUNT];
 	unsigned char tiles_to_draw_elem_type_vec[TILES_TO_DRAW_COUNT];
 	char detail_threshold;
 	char var_3C;
@@ -512,6 +512,9 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				elem_map_value = td14_elem_map_main[tile_east + trackrows[tile_south]];
 				terr_map_value = td15_terr_map_main[tile_east + terrainrows[tile_south]];
 			}
+
+			offset_east = tile_east - cam_tile_east;
+			offset_south = tile_south - cam_tile_south;
 		}
 
 		tiles_to_draw_terr_type_vec[si] = terr_map_value;
@@ -523,49 +526,53 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			elem_map_value = 0;
 		}
 
-		tiles_to_draw_x_vec[si] = tile_east;
-		tiles_to_draw_y_vec[si] = tile_south;
+		tiles_to_draw_east[si] = tile_east;
+		tiles_to_draw_south[si] = tile_south;
 		tiles_to_draw_elem_type_vec[si] = elem_map_value;
 
-		// if (elem_map_value == 0) {
-		// 	continue;
-		// }
+		if (elem_map_value == 0) {
+			continue;
+		}
 
-		// idx = trkObjectList[elem_map_value].ss_multiTileFlag;
-		// if (idx == 0) {
-		// 	continue;
-		// }
+		idx = trkObjectList[elem_map_value].ss_multiTileFlag;
+		if (idx == 0) {
+			continue;
+		}
 
-		// for (di = 0; di < si; di++) {
-		// 	tile_depth = lookahead_tiles_supersight[si].depth;
-		// 	tile_width = lookahead_tiles_supersight[si].width;
+		for (di = 0; di < si; di++) {
+			// Look the next tiles to process (i.e. with lower index, since si
+			// counts backwards) and remove those which belong to the
+			// multi-tile component present in this one
+			other_offset_east
+				= lookahead_tiles_supersight[di].depth * M_depth_east
+				+ lookahead_tiles_supersight[di].width * M_width_east;
+			other_offset_south
+				= lookahead_tiles_supersight[di].depth * M_depth_south
+				+ lookahead_tiles_supersight[di].width * M_width_south;
 
-		// 	other_tile_east = cam_tile_east
-		// 		+ tile_depth * M_depth_east
-		// 		+ tile_width * M_width_east;
-		// 	other_tile_south = cam_tile_south
-		// 		+ tile_depth * M_depth_south
-		// 		+ tile_width * M_width_south;
-
-		// 	if (idx == 1) {
-		// 		if (other_tile_east == tile_east && other_tile_south == tile_south + 1) {
-		// 			should_skip_tile[di] = 1;
-		// 		}
-		// 	}
-		// 	if (idx == 2) {
-		// 		if (other_tile_east == tile_east + 1 && other_tile_south == tile_south) {
-		// 			should_skip_tile[di] = 1;
-		// 		}
-		// 	}
-		// 	if (idx == 3) {
-		// 		if (
-		// 			   (other_tile_east == tile_east || other_tile_east == tile_east + 1)
-		// 			&& (other_tile_south == tile_south || other_tile_south == tile_south + 1))
-		// 		{
-		// 			should_skip_tile[di] = 1;
-		// 		}
-		// 	}
-		// }
+			if (idx == 1) {
+				if (other_offset_east == offset_east
+					&& (other_offset_south == offset_south || other_offset_south == offset_south + 1))
+				{
+					should_skip_tile[di] = 1;
+				}
+			}
+			if (idx == 2) {
+				if ((other_offset_east == offset_east || other_offset_east == offset_east + 1)
+					&& other_offset_south == offset_south)
+				{
+					should_skip_tile[di] = 1;
+				}
+			}
+			if (idx == 3) {
+				if (
+					   (other_offset_east == offset_east || other_offset_east == offset_east + 1)
+					&& (other_offset_south == offset_south || other_offset_south == offset_south + 1))
+				{
+					should_skip_tile[di] = 1;
+				}
+			}
+		}
 	}
 
 //; -----------------------------------------------------------------------------
@@ -700,10 +707,12 @@ start_rendering:
 		if (should_skip_tile[si] != 0) {
 			continue;
 		}
-		tile_east = tiles_to_draw_x_vec[si];
-		tile_south = tiles_to_draw_y_vec[si];
+		tile_east = tiles_to_draw_east[si];
+		tile_south = tiles_to_draw_south[si];
 		elem_map_value = tiles_to_draw_elem_type_vec[si];
 		terr_map_value = tiles_to_draw_terr_type_vec[si];
+		// On the first attempt, draw everything at max resolution. If it fails
+		// (too many polygons), use the given detail level
 		tile_det_level = (discarded_tiles == 0 ? 0 : tile_detail_level[si]);  // Ghidra: 19f1:208d
 		var_12A = 0;
 		if (elem_map_value == 0) {
@@ -725,7 +734,8 @@ start_rendering:
 				var_10E = unk_3C0F8;
 			}
 		}
-		// Border check
+
+		// Draw the fence (probably)
 		for (idx = 0; idx < var_counter; idx++) {
 			tile_to_draw_x_offset_2 = var_10E[idx * 2] + tile_east;
 			tile_to_draw_y_offset = var_10E[idx * 2 + 1] + tile_south;
@@ -1255,7 +1265,7 @@ start_rendering:
 	}
 	if ((si < TILES_TO_DRAW_COUNT || has_attempt_failed > 0) && ! is_last_attempt)
 	{
-		// failed
+		// Rendering failed (due to out-of-memory). Retry with less tiles.
 		discarded_tiles += 20;
 		if (discarded_tiles > TILES_TO_DRAW_COUNT - 4) {
 			discarded_tiles = TILES_TO_DRAW_COUNT - 4;
