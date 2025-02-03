@@ -495,24 +495,24 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				terr_map_value = 0;
 			}
 
+			// Hit a filler tile (non-main tile of a multitile component)
+			// Process the main tile of the component instead (the NW one)
 			if (elem_map_value == 0xFD) {
-				// the item on the top left needs this space
 				tile_east--;
 				tile_south--;
 				elem_map_value = td14_elem_map_main[tile_east + trackrows[tile_south]];
 				terr_map_value = td15_terr_map_main[tile_east + terrainrows[tile_south]];
 			} else if (elem_map_value == 0xFE) {
-				// the item on the top needs this space
 				tile_south--;
 				elem_map_value = td14_elem_map_main[tile_east + trackrows[tile_south]];
 				terr_map_value = td15_terr_map_main[tile_east + terrainrows[tile_south]];
 			} else if (elem_map_value == 0xFF) {
-				// the item on the left needs this space
 				tile_east--;
 				elem_map_value = td14_elem_map_main[tile_east + trackrows[tile_south]];
 				terr_map_value = td15_terr_map_main[tile_east + terrainrows[tile_south]];
 			}
 
+			// Recalculate the offset in case we hit a filler tile
 			offset_east = tile_east - cam_tile_east;
 			offset_south = tile_south - cam_tile_south;
 		}
@@ -540,9 +540,9 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		}
 
 		for (di = 0; di < si; di++) {
-			// Look the next tiles to process (i.e. with lower index, since si
-			// counts backwards) and remove those which belong to the
-			// multi-tile component present in this one
+			// Look the future tiles to process (i.e. with lower index, since si
+			// counts backwards) and remove those which belong to the same
+			// multi-tile component as this tile
 			other_offset_east
 				= lookahead_tiles_supersight[di].depth * M_depth_east
 				+ lookahead_tiles_supersight[di].width * M_width_east;
@@ -799,6 +799,7 @@ start_rendering:
 		// terrain type 0x06: a flat piece of land at an elevated level
 		if (terr_map_value != 6) {
 			var_hillheight = 0;
+			// Special treatment of elevated corners
 			if (elem_map_value >= 0x69 && elem_map_value <= 0x6C) {
 				for (idx = 0; idx < 4; idx++) {
 					if (idx == 0) {
@@ -1317,6 +1318,7 @@ start_rendering:
 ; --------------------------------------------------------
 */
 
+	// Depict crash?
 	sprite_set_1_size(0, 0x140, arg_cliprectptr->top, arg_cliprectptr->bottom);
 	if (cameramode == 0) {
 
@@ -1343,6 +1345,7 @@ start_rendering:
 		}
 	}
 
+	// Show elapsed time
 	if (game_replay_mode == 0) {
 		if (state.game_inputmode != 0) {
 			format_frame_as_string(&resID_byte1, elapsed_time1 + elapsed_time2, 0);
