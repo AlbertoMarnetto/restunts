@@ -387,7 +387,7 @@ loc_3A07A:
 loc_3A08A:
     call    timer_setup_interrupt
     call    sprite_copy_2_to_1_clear
-    mov     ax, 0C8h ; 'È'
+    mov     ax, 0C8h ; 'ï¿½'
     push    ax
     mov     ax, 140h
     push    ax
@@ -501,7 +501,7 @@ loc_3A191:
 loc_3A1AA:
     inc     si
 loc_3A1AB:
-    cmp     si, 92h ; '’'
+    cmp     si, 92h ; 'ï¿½'
     jge     short loc_3A1B6
     sub     di, di
     jmp     short loc_3A191
