@@ -354,7 +354,7 @@ extern struct RECTANGLE cliprect_unk;
 
 extern int polyinfonumpolys;
 extern unsigned char far* polyinfoptrs[]; // array size = 0x190 
-extern unsigned int word_40ED6[]; // array size = 0x190
+extern unsigned int poly_linked_list_40ED6[]; // array size = 0x190
 
 extern void preRender_default(int color, int vertlinecount, int* vertlines);
 
@@ -783,7 +783,7 @@ int setup_player_cars(void) {
 	word_449E4 = 0;
 	word_443F4 = 0;
 	fontledresptr = file_load_resource(0, "fontled.fnt");//aFontled_fnt); // "fontled.fnt"
-	timertestflag_copy = timertestflag;
+	is_sprite_rendering_slow_copy = is_sprite_rendering_slow;
 	init_rect_arrays();
 	if (idle_expired == 0) {
 		setup_car_shapes(0);
@@ -956,8 +956,8 @@ void run_game(void) {
 				state.game_frame = 0;
 			}
 
-			if (timertestflag_copy != timertestflag) {
-				timertestflag_copy = timertestflag;
+			if (is_sprite_rendering_slow_copy != is_sprite_rendering_slow) {
+				is_sprite_rendering_slow_copy = is_sprite_rendering_slow;
 				init_rect_arrays();
 			}
 
@@ -1056,7 +1056,7 @@ void run_game(void) {
 
 			update_frame(byte_44346, &rect_windshield);
 			if (dastbmp_y != 0 && byte_449E2 != 0) {			
-				if (timertestflag_copy != 0) {
+				if (is_sprite_rendering_slow_copy != 0) {
 					var_rect.left = 0;
 					var_rect.right = 0x140;
 					var_rect.top = dastbmp_y;
@@ -1371,30 +1371,30 @@ printf("Driv: %c %c", (audiodriverstring)[0], (audiodriverstring)[1]);
 	
 	timerdelta3 = timer_get_delta_alt();
 	
-	timertestflag = (timerdelta2 <= timerdelta1);
+	is_sprite_rendering_slow = (timerdelta2 <= timerdelta1);
 	framespersec2 = (timerdelta3 >= 75) ? 10 : 20;
 
 	if (timerdelta3 < 35) {
-		timertestflag2 = 0;
+		detail_level = 0;
 	}
 	else if (timerdelta3 < 55) {
-		timertestflag2 = 1;
+		detail_level = 1;
 	}
 	else if (timerdelta3 < 75) {
-		timertestflag2 = 2;
+		detail_level = 2;
 	}
 	else if (timerdelta3 < 100) {
-		timertestflag2 = 3;
+		detail_level = 3;
 	}
-	else if (timertestflag) {
-		timertestflag2 = 4;
+	else if (is_sprite_rendering_slow) {
+		detail_level = 4;
 	}
 	else {
-		timertestflag2 = 3;
+		detail_level = 3;
 	}
 
 	framespersec = framespersec2;
-	timertestflag_copy = timertestflag;
+	is_sprite_rendering_slow_copy = is_sprite_rendering_slow;
 	
 	random_wait();
 	

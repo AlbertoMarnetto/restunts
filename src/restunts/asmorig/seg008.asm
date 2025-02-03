@@ -5288,11 +5288,11 @@ loc_29FFC:
     inc     si
     cmp     si, 9
     jl      short loc_29FFC
-    mov     bl, timertestflag2
+    mov     bl, detail_level
     sub     bh, bh
     add     bx, bp
     mov     byte ptr [bx-20Ch], 1
-    mov     bx, timertestflag
+    mov     bx, is_sprite_rendering_slow
     add     bx, bp
     mov     byte ptr [bx-207h], 1
     cmp     framespersec2, 0Ah
@@ -5357,17 +5357,17 @@ loc_2A050:
 loc_2A098:
     cmp     ax, 9
     jz      short loc_2A0CC
-    mov     timertestflag2, al
+    mov     detail_level, al
     jmp     loc_29FD9
     ; align 2
     db 144
 loc_2A0A4:
-    mov     timertestflag, 0
+    mov     is_sprite_rendering_slow, 0
     jmp     loc_29FD9
     ; align 2
     db 144
 loc_2A0AE:
-    mov     timertestflag, 1
+    mov     is_sprite_rendering_slow, 1
     jmp     loc_29FD9
     ; align 2
     db 144

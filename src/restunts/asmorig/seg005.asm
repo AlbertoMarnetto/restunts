@@ -301,10 +301,10 @@ loc_21DCB:
     mov     gameconfig.game_recordedframes, 0
     mov     state.game_frame, 0
 loc_21DEB:
-    mov     ax, timertestflag
-    cmp     timertestflag_copy, ax
+    mov     ax, is_sprite_rendering_slow
+    cmp     is_sprite_rendering_slow_copy, ax
     jz      short loc_21DFC
-    mov     timertestflag_copy, ax
+    mov     is_sprite_rendering_slow_copy, ax
     call    init_rect_arrays
 loc_21DFC:
     cmp     byte_46467, 0
@@ -548,7 +548,7 @@ loc_22064:
     jz      short loc_220DB
     cmp     byte_449E2, 0
     jz      short loc_220DB
-    cmp     timertestflag_copy, 0
+    cmp     is_sprite_rendering_slow_copy, 0
     jz      short loc_220BB
     mov     [bp+var_rect.rc_left], 0
     mov     [bp+var_rect.rc_right], 140h
@@ -3099,8 +3099,8 @@ loc_23870:
     add     sp, 4
     mov     word ptr fontledresptr, ax
     mov     word ptr fontledresptr+2, dx
-    mov     ax, timertestflag
-    mov     timertestflag_copy, ax
+    mov     ax, is_sprite_rendering_slow
+    mov     is_sprite_rendering_slow_copy, ax
     call    init_rect_arrays
     cmp     idle_expired, 0
     jnz     short loc_238B4
@@ -4942,7 +4942,7 @@ loc_24956:
     push    ax
     call    copy_string
     add     sp, 6
-    cmp     timertestflag_copy, 0
+    cmp     is_sprite_rendering_slow_copy, 0
     jz      short loc_249D2
     push    rectptr_unk2
     sub     ax, ax
@@ -5137,7 +5137,7 @@ loc_24B4F:
     push    ax
     call    copy_string
     add     sp, 6
-    cmp     timertestflag_copy, 0
+    cmp     is_sprite_rendering_slow_copy, 0
     jz      short loc_24BB0
     push    rectptr_unk2
     sub     ax, ax
