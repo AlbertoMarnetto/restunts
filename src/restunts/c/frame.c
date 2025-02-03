@@ -279,7 +279,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		rectptr_unk = rect_array_unk2;
 	}
 
-	if (timertestflag_copy != 0) {
+	if (is_sprite_rendering_slow_copy != 0) {
 		var_122 = 8;
 		var_rectptr = rect_unk;
 		for (si = 0; si < 15; si++) {
@@ -1101,7 +1101,7 @@ start_rendering:
 				sub_204AE(&game3dshapes[0x0AD4 / sizeof(struct SHAPE3D)].shape3d_verts[8], state.playerstate.car_steeringAngle, &state.playerstate.car_rc2, word_443E8, carshapevecs, &carshapevec);
 			}
 
-			if (timertestflag_copy != 0) {
+			if (is_sprite_rendering_slow_copy != 0) {
 				curtransshape_ptr->rectptr = &rect_unk12;
 				curtransshape_ptr->ts_flags = 0xC;
 			} else if (state.playerstate.car_crashBmpFlag != 1) {
@@ -1155,7 +1155,7 @@ start_rendering:
 					sub_204AE(&game3dshapes[0x0AEA / sizeof(struct SHAPE3D)].shape3d_verts[8], state.opponentstate.car_steeringAngle, &state.opponentstate.car_rc2, word_4448A, oppcarshapevecs, &oppcarshapevec);
 				}
 
-				if (timertestflag_copy != 0) {
+				if (is_sprite_rendering_slow_copy != 0) {
 					curtransshape_ptr->rectptr = &rect_unk15;
 					curtransshape_ptr->ts_flags = 0xC;
 				} else {
@@ -1283,7 +1283,7 @@ start_rendering:
 		if (var_DC[si] == 0) {
 			continue;
 		}
-		if (timertestflag_copy == 0) {
+		if (is_sprite_rendering_slow_copy == 0) {
 			if (si == 0) {
 				var_rectptr = &var_rect;
 			} else {
@@ -1330,13 +1330,13 @@ start_rendering:
 		}
 
 		if (var_stateptr->car_crashBmpFlag == 1) {
-			if (timertestflag_copy != 0) {
+			if (is_sprite_rendering_slow_copy != 0) {
 				rect_union(init_crak(state.game_frame - si, arg_cliprectptr->top, arg_cliprectptr->bottom - arg_cliprectptr->top), rect_unk, rect_unk);
 			} else {
 				init_crak(state.game_frame - si, arg_cliprectptr->top, arg_cliprectptr->bottom - arg_cliprectptr->top);
 			}
 		} else if (var_stateptr->car_crashBmpFlag == 2) {
-			if (timertestflag_copy != 0) {
+			if (is_sprite_rendering_slow_copy != 0) {
 				rect_union(do_sinking(state.game_frame - si, arg_cliprectptr->top, arg_cliprectptr->bottom - arg_cliprectptr->top), rect_unk, rect_unk);
 			} else {
 				do_sinking(state.game_frame - si, arg_cliprectptr->top, arg_cliprectptr->bottom - arg_cliprectptr->top);
@@ -1349,7 +1349,7 @@ start_rendering:
 		if (state.game_inputmode != 0) {
 			format_frame_as_string(&resID_byte1, elapsed_time1 + elapsed_time2, 0);
 			font_set_fontdef2(fontledresptr);
-			if (timertestflag_copy != 0) {
+			if (is_sprite_rendering_slow_copy != 0) {
 				rect_union(intro_draw_text(&resID_byte1, 0x8C, roofbmpheight + 2, dialog_fnt_colour, 0), &rect_unk11, &rect_unk11);
 			} else {
 				intro_draw_text(&resID_byte1, 0x8C, roofbmpheight + 2, dialog_fnt_colour, 0);
@@ -1368,7 +1368,7 @@ start_rendering:
 	font_set_fontdef();
 #endif
 
-	if (timertestflag_copy != 0) {
+	if (is_sprite_rendering_slow_copy != 0) {
 		rect_union(draw_ingame_text(), rect_unk, rect_unk);
 		if (var_132 != 0) {
 			rect_unk[0] = *arg_cliprectptr;

@@ -5292,7 +5292,7 @@ loc_29FFC:
     sub     bh, bh
     add     bx, bp
     mov     byte ptr [bx-20Ch], 1
-    mov     bx, timertestflag
+    mov     bx, is_sprite_rendering_slow
     add     bx, bp
     mov     byte ptr [bx-207h], 1
     cmp     framespersec2, 0Ah
@@ -5362,12 +5362,12 @@ loc_2A098:
     ; align 2
     db 144
 loc_2A0A4:
-    mov     timertestflag, 0
+    mov     is_sprite_rendering_slow, 0
     jmp     loc_29FD9
     ; align 2
     db 144
 loc_2A0AE:
-    mov     timertestflag, 1
+    mov     is_sprite_rendering_slow, 1
     jmp     loc_29FD9
     ; align 2
     db 144

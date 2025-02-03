@@ -513,10 +513,10 @@ loc_3A1B6:
     mov     ax, [bp+var_timerdelta1]
     cmp     [bp+var_timerdelta2], ax
     jle     short loc_3A1CE
-    mov     timertestflag, 0
+    mov     is_sprite_rendering_slow, 0
     jmp     short loc_3A1D4
 loc_3A1CE:
-    mov     timertestflag, 1
+    mov     is_sprite_rendering_slow, 1
 loc_3A1D4:
     cmp     [bp+var_timerdelta3], 4Bh ; 'K'
     jge     short loc_3A1E2
@@ -548,7 +548,7 @@ loc_3A204:
 loc_3A212:
     cmp     [bp+var_timerdelta3], 64h ; 'd'
     jl      short loc_3A21F
-    cmp     timertestflag, 0
+    cmp     is_sprite_rendering_slow, 0
     jnz     short loc_3A226
 loc_3A21F:
     mov     detail_level, 3
@@ -558,8 +558,8 @@ loc_3A226:
 loc_3A22B:
     mov     ax, framespersec2
     mov     framespersec, ax
-    mov     ax, timertestflag
-    mov     timertestflag_copy, ax
+    mov     ax, is_sprite_rendering_slow
+    mov     is_sprite_rendering_slow_copy, ax
     push    cs
     call near ptr ported_random_wait_
     sub     ax, ax
