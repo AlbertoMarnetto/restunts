@@ -1,6 +1,7 @@
 #include <dos.h>
 #include <stddef.h>
 #include <limits.h>
+#include <stdio.h>
 #include "externs.h"
 #include "fileio.h"
 #include "memmgr.h"
@@ -2596,8 +2597,11 @@ extern unsigned insert_newest_poly_in_poly_linked_list_40ED6(unsigned arg_0, uns
 	poly_linked_list_40ED6_tail = poly_linked_list_40ED6[poly_linked_list_40ED6_tail];
 	polyinfonumpolys++;
 	polyinfoptrnext += (transshapenumvertscopy * sizeof(struct POINT2D)) + 6; // TODO: sizeof POINT2D?
-	if (polyinfonumpolys == 0x190) return 1;
+	if (polyinfonumpolys == MAX_POLY_INFO_COUNT) {
+		return 1;
+	}
 	if (polyinfoptrnext <= 0x2872) return 0;
+	printf("End of memory: polyinfoptrnext");
 	return 1;
 }
 
@@ -2647,8 +2651,8 @@ void polyinfo_reset(void) {
 	polyinfonumpolys = 0;
 	polyinfoptrnext = 0;
 	word_40ECE = 0;
-	poly_linked_list_40ED6[0x190] = 0xFFFF;
-	word_443F2 = 0x190;
+	poly_linked_list_40ED6[MAX_POLY_INFO_COUNT] = 0xFFFF;
+	word_443F2 = MAX_POLY_INFO_COUNT;
 }
 
 void calc_sincos80(void) {
@@ -2685,7 +2689,7 @@ void get_a_poly_info(void) {
 
 	return ported_get_a_poly_info_();
 /*
-	regdi = 0x190;
+	regdi = MAX_POLY_INFO_COUNT;
 	counter = 0;
 	while (counter < polyinfonumpolys) {
 		regdi = poly_linked_list_40ED6[regdi];
@@ -2943,10 +2947,6 @@ void preRender_default_impl(unsigned arg_color, unsigned arg_vertlinecount, int*
 	spritefunc(&var_798[temp1y], &var_798[480 + temp1y], temp1y, temp0x, arg_color);
 
 }
-
-
-
-extern void _printf(const char*, ...);
 
 // generate_poly_edges is called preRender_helper in the IDB.
 void generate_poly_edges(int* var_18, int* regsi, int mode) {
