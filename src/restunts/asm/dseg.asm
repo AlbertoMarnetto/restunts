@@ -41831,7 +41831,10 @@ transformedshape_zarray db 250 dup(0)
 transformedshape_indices db 250 dup(0)
 ; transformedshape_arg2array: 1 x TILES_TO_DRAW_COUNT times db 
 transformedshape_arg2array db 126 dup(0)
-ALIGN 4
+
+dseg ends
+
+fseg segment byte public use16
 qpolyinfoptr     dd 0
 ; poly_linked_list_40ED6: MAX_POLY_INFO_COUNT times dw
 qpoly_linked_list_40ED6 dw 190h dup(0)
@@ -41840,7 +41843,6 @@ qword_411F6     dw 0
 ; polyinfonumpolys: MAX_POLY_INFO_COUNT times dd, plus 6 db
 qpolyinfoptrs dd 300h dup(0)
 	db 6 dup(0)
+fseg segment byte public use16
 
-
-dseg ends
 end

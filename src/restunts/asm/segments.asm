@@ -25,6 +25,9 @@ _BSS ends
 SEG000_TEXT segment byte private 'CODE' use16
 SEG000_TEXT ends
 
+fseg segment byte private use16
+fseg ends
+
 ; this empty segment is placed at the end of the executable.
 ; it is used by the hacked crt to determine how large the image is
 endseg segment byte private 'ENDSEG' use16

@@ -1450,3 +1450,10 @@ dseg segment byte public 'STUNTSD' use16
     extrn replaybar_enabled:byte
     extrn word_46486:word
 dseg ends
+fseg segment byte public use16
+    extrn qpolyinfoptr:dword
+    extrn qpoly_linked_list_40ED6:word
+    extrn qword_411F6:word
+    extrn qpolyinfoptrs:dword
+fseg ends
+
