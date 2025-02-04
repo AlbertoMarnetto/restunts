@@ -6,7 +6,7 @@ OBJDIR = build\$(TARGET)
 
 # Set up tools for DOS
 !if ($(TARGET)==dos)
-CC = bcc /c /u- /mm /v /n$(OBJDIR) /DRESTUNTS_DOS
+CC = bcc /c /u- /mh /v /n$(OBJDIR) /DRESTUNTS_DOS
 
 # Set up tools for SDL
 !elif ($(TARGET)==sdl)

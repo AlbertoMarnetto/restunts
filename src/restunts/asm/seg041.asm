@@ -1,4 +1,4 @@
-.model medium
+.model huge
 nosmart
 .stack 8000
     include structs.inc

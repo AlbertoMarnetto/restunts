@@ -1,4 +1,4 @@
-.model medium
+.model huge
 nosmart
     include structs.inc
     include custom.inc
