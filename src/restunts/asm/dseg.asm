@@ -41835,10 +41835,12 @@ transformedshape_arg2array db 126 dup(0)
 
 dseg ends
 
-QGROUP group qseg
 qseg segment byte public use16
 emptyspace db 65534 dup(?)
 qseg ends
+wseg segment byte public use16
+emptyspace1 db 65534 dup(?)
+wseg ends
 
 FARDATA
 ALIGN 16
