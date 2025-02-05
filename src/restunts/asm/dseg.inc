@@ -1134,7 +1134,6 @@ dseg segment byte public 'STUNTSD' use16
     extrn td10_track_check_rel:dword
     extrn basdres:dword
     extrn followOpponentFlag_copy:byte
-    extrn currenttransshape:TRANSFORMEDSHAPE
     extrn terraincenterpos:word
     extrn carshapevec:VECTOR
     extrn carshapevec2:VECTOR
@@ -1327,7 +1326,6 @@ dseg segment byte public 'STUNTSD' use16
     extrn trackdata6:dword
     extrn video_flag3_isFFFF:word
     extrn trackdata18:dword
-    extrn transformedshape_zarray:word
     extrn backlights_paint_override:byte
     extrn track_angle:word
     extrn skybox_ptr1:word
@@ -1368,7 +1366,6 @@ dseg segment byte public 'STUNTSD' use16
     extrn someZeroVideoConst:word
     extrn nextPosAndNormalIP:word
     extrn word_45A00:word
-    extrn transformedshape_arg2array:byte
     extrn cvxptr:dword
     extrn elapsed_time1:word
     extrn unk_45A26:byte
@@ -1401,7 +1398,6 @@ dseg segment byte public 'STUNTSD' use16
     extrn tempdataptr:dword
     extrn byte_45E16:byte
     extrn passed_security:byte
-    extrn transformedshape_indices:word
     extrn trackdata19:dword
     extrn simd_player:SIMD
     extrn td13_rpl_header:dword
@@ -1450,3 +1446,10 @@ dseg segment byte public 'STUNTSD' use16
     extrn replaybar_enabled:byte
     extrn word_46486:word
 dseg ends
+FARDATA
+    extrn currenttransshape:TRANSFORMEDSHAPE
+    extrn transformedshape_zarray:word
+    extrn transformedshape_indices:word
+    extrn transformedshape_arg2array:byte
+ends
+

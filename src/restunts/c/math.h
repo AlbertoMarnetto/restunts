@@ -41,6 +41,33 @@ struct PLANE {
 	struct MATRIX plane_rotation;
 };
 
+struct SHAPE3D {
+	unsigned short shape3d_numverts;
+	struct VECTOR far* shape3d_verts;
+	unsigned short shape3d_numprimitives;
+	unsigned short shape3d_numpaints;
+	char far* shape3d_primitives;
+	char far* shape3d_cull1;
+	char far* shape3d_cull2;
+};
+
+struct SHAPE3DHEADER {
+	unsigned char header_numverts;
+	unsigned char header_numprimitives;
+	unsigned char header_numpaints;
+	unsigned char header_reserved;
+};
+
+struct TRANSFORMEDSHAPE3D {
+	struct VECTOR pos;
+	struct SHAPE3D* shapeptr;
+	struct RECTANGLE* rectptr;
+	struct VECTOR rotvec;
+	unsigned short unk;
+	unsigned char ts_flags;
+	unsigned char material;
+};
+
 #pragma pack (pop)
 
 short sin_fast(unsigned short s);

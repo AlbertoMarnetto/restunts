@@ -8,6 +8,7 @@
 #define huge
 #endif
 
+#define TILES_TO_DRAW_COUNT 110
 #define MAX_POLY_INFO_COUNT 0x190
 
 #pragma pack (push, 1)
@@ -488,6 +489,11 @@ extern int _rand(void);
 extern void _srand(unsigned int);
 
 extern far int qpolyinfoptr;
+
+extern far struct TRANSFORMEDSHAPE3D currenttransshape[TILES_TO_DRAW_COUNT + 5];
+extern far int transformedshape_zarray[TILES_TO_DRAW_COUNT + 5];
+extern far int transformedshape_indices[TILES_TO_DRAW_COUNT + 5];
+extern far char transformedshape_arg2array[TILES_TO_DRAW_COUNT + 5];
 
 #ifdef RESTUNTS_DOS
 #define memcpy _memcpy

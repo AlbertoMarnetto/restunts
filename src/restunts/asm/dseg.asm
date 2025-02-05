@@ -1182,7 +1182,6 @@ dseg segment byte public 'STUNTSD' use16
     public td10_track_check_rel
     public basdres
     public followOpponentFlag_copy
-    public currenttransshape
     public terraincenterpos
     public carshapevec
     public carshapevec2
@@ -1375,7 +1374,6 @@ dseg segment byte public 'STUNTSD' use16
     public trackdata6
     public video_flag3_isFFFF
     public trackdata18
-    public transformedshape_zarray
     public backlights_paint_override
     public track_angle
     public skybox_ptr1
@@ -1416,7 +1414,6 @@ dseg segment byte public 'STUNTSD' use16
     public someZeroVideoConst
     public nextPosAndNormalIP
     public word_45A00
-    public transformedshape_arg2array
     public cvxptr
     public elapsed_time1
     public unk_45A26
@@ -1449,7 +1446,6 @@ dseg segment byte public 'STUNTSD' use16
     public tempdataptr
     public byte_45E16
     public passed_security
-    public transformedshape_indices
     public trackdata19
     public simd_player
     public td13_rpl_header
@@ -41823,14 +41819,6 @@ word_46486     dw 0
     db 0
     db 0
     db 0
-; currenttransshape: 20 x TILES_TO_DRAW_COUNT times db 
-currenttransshape db 2210 dup(0)
-; transformedshape_zarray: 2 x TILES_TO_DRAW_COUNT times db 
-transformedshape_zarray db 250 dup(0)
-; transformedshape_indices: 2 x TILES_TO_DRAW_COUNT times db 
-transformedshape_indices db 250 dup(0)
-; transformedshape_arg2array: 1 x TILES_TO_DRAW_COUNT times db 
-transformedshape_arg2array db 126 dup(0)
 
 dseg ends
 
@@ -41840,10 +41828,26 @@ fseg ends
 
 
 FARDATA
+    assume cs:dseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:FAR_DATA
     public qpolyinfoptr
     public qpoly_linked_list_40ED6
     public qword_411F6
     public qpolyinfoptrs
+
+    public currenttransshape
+    public transformedshape_zarray
+    public transformedshape_indices
+    public transformedshape_arg2array
+
+; currenttransshape: 20 x TILES_TO_DRAW_COUNT times db 
+currenttransshape db 2210 dup(0)
+; transformedshape_zarray: 2 x TILES_TO_DRAW_COUNT times db 
+transformedshape_zarray db 250 dup(0)
+; transformedshape_indices: 2 x TILES_TO_DRAW_COUNT times db 
+transformedshape_indices db 250 dup(0)
+; transformedshape_arg2array: 1 x TILES_TO_DRAW_COUNT times db 
+transformedshape_arg2array db 126 dup(0)
 
 qpolyinfoptr     dw 700
 ; poly_linked_list_40ED6: MAX_POLY_INFO_COUNT times dw
@@ -41853,5 +41857,5 @@ qword_411F6     dw 0
 ; polyinfonumpolys: MAX_POLY_INFO_COUNT times dd, plus 6 db
 qpolyinfoptrs dd 300h dup(0)
 	db 6 dup(0)
-
+ends
 end

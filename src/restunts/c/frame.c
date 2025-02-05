@@ -2,7 +2,6 @@
 #include "math.h"
 #include "shape3d.h"
 
-#define TILES_TO_DRAW_COUNT 110
 #define DISPLAY_DEBUG_INFO 1
 
 extern struct RECTANGLE* rectptr_unk2;
@@ -33,7 +32,6 @@ extern int terrainHeight;
 extern int planindex;
 extern int planindex_copy;
 extern char byte_4392C;
-extern struct TRANSFORMEDSHAPE3D currenttransshape[TILES_TO_DRAW_COUNT + 5];
 //extern struct TRANSFORMEDSHAPE3D transshapeunk;
 extern struct TRANSFORMEDSHAPE3D* curtransshape_ptr;
 extern struct TRACKOBJECT trkObjectList[215]; // 215 entries
@@ -61,9 +59,6 @@ extern short word_4448A[];
 extern char backlights_paint_override;
 extern int word_449FC[];
 extern int word_463D6;
-extern int transformedshape_zarray[TILES_TO_DRAW_COUNT + 5];
-extern int transformedshape_indices[TILES_TO_DRAW_COUNT + 5];
-extern char transformedshape_arg2array[TILES_TO_DRAW_COUNT + 5];
 extern int sdgame2_widths[];
 extern void far* sdgame2shapes[];
 extern void far* fontledresptr;
