@@ -487,6 +487,8 @@ extern unsigned _abs(unsigned);
 extern int _rand(void);
 extern void _srand(unsigned int);
 
+// extern void far* qpolyinfoptr;
+
 #ifdef RESTUNTS_DOS
 #define memcpy _memcpy
 #define strcpy _strcpy

@@ -41835,14 +41835,28 @@ transformedshape_arg2array db 126 dup(0)
 dseg ends
 
 fseg segment byte public use16
-qpolyinfoptr     dd 0
+    assume cs:dseg
+    assume es:nothing, ss:nothing, ds:dseg
+
+    public qpolyinfoptr
+    public qpoly_linked_list_40ED6
+    public qword_411F6
+    public qpolyinfoptrs
+
+qpolyinfoptr dw seg dseg
+    dw offset qpolyinfoptr
+
+; qpolyinfoptr     dd 0
 ; poly_linked_list_40ED6: MAX_POLY_INFO_COUNT times dw
 qpoly_linked_list_40ED6 dw 190h dup(0)
 ; terminator for the list? In doubt, we copy that here
-qword_411F6     dw 0
+qword_411F6 dw 0
 ; polyinfonumpolys: MAX_POLY_INFO_COUNT times dd, plus 6 db
 qpolyinfoptrs dd 300h dup(0)
 	db 6 dup(0)
-fseg segment byte public use16
+fseg ends
 
 end
+
+;MOV AX/@fardata
+;MOV DS/AX
