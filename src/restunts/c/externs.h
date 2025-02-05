@@ -489,6 +489,8 @@ extern void _srand(unsigned int);
 
 extern far int qpolyinfoptr;
 
+extern far int poly_linked_list_40ED6[];
+
 #ifdef RESTUNTS_DOS
 #define memcpy _memcpy
 #define strcpy _strcpy

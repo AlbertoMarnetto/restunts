@@ -2563,8 +2563,6 @@ unsigned projectiondata9_times_ratio(unsigned i1, int i2) {
 	return projectiondata9 * i1 / i2;
 }
 
-extern int poly_linked_list_40ED6[];
-
 extern unsigned insert_newest_poly_in_poly_linked_list_40ED6(unsigned arg_0, unsigned arg_2) {
 	unsigned result;
 	int regdi, regsi, regax;
@@ -2625,7 +2623,6 @@ void set_projection(int i1, int i2, int i3, int i4) {
 }
 
 extern struct RECTANGLE select_rect_rc;
-//extern unsigned word_411F6;
 extern struct MATRIX mat_y0, mat_y100, mat_y200, mat_y300;
 extern long sin80, cos80, sin80_2, cos80_2;
 

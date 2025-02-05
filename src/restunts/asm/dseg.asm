@@ -41835,10 +41835,12 @@ transformedshape_arg2array db 126 dup(0)
 
 dseg ends
 
-xseg segment byte public use16
-emptyspace db 32768 dup(0)
-xseg ends
+QGROUP group qseg
+qseg segment byte public use16
+emptyspace db 65534 dup(0)
+qseg ends
 
+FGROUP group fseg
 
 fseg segment byte public use16
     assume cs:dseg
