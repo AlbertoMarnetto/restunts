@@ -46,7 +46,7 @@ nosmart
     include seg041.inc
 seg018 segment byte public 'STUNTSC' use16
     assume cs:seg018
-    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
+    assume es:nothing, ss:nothing, ds:dseg, fs:fdata
     public kb_shift_checking1
     public kb_shift_checking2
 locret_36AF2:

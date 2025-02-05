@@ -46,7 +46,7 @@ nosmart
     include seg041.inc
 seg025 segment byte public 'STUNTSC' use16
     assume cs:seg025
-    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
+    assume es:nothing, ss:nothing, ds:dseg, fs:fdata
     public sub_3702E
 algn_3702D:
     ; align 2

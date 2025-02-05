@@ -46,7 +46,7 @@ nosmart
     include seg041.inc
 seg027 segment byte public 'STUNTSC' use16
     assume cs:seg027
-    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
+    assume es:nothing, ss:nothing, ds:dseg, fs:fdata
     public init_audio_resources
     public load_audio_finalize
     public audio_unk

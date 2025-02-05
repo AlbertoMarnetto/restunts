@@ -46,7 +46,7 @@ nosmart
     include seg041.inc
 seg005 segment byte public 'STUNTSC' use16
     assume cs:seg005
-    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
+    assume es:nothing, ss:nothing, ds:dseg, fs:fdata
     public ported_run_game_
     public handle_ingame_kb_shortcuts
     public ported_init_unknown_

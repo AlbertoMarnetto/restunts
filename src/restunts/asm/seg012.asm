@@ -46,7 +46,7 @@ nosmart
     include seg041.inc
 seg012 segment byte public 'STUNTSC' use16
     assume cs:seg012
-    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
+    assume es:nothing, ss:nothing, ds:dseg, fs:fdata
     public fatal_error
     public ported_polarAngle_
     public off_2EA9B

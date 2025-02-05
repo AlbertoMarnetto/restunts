@@ -46,7 +46,7 @@ nosmart
     include seg041.inc
 seg002 segment byte public 'STUNTSC' use16
     assume cs:seg002
-    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
+    assume es:nothing, ss:nothing, ds:dseg, fs:fdata
     public ported_update_rpm_from_speed_
     public nopsub_19DE8
     public nopsub_19DFF

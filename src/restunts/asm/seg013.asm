@@ -46,7 +46,7 @@ nosmart
     include seg041.inc
 seg013 segment byte public 'STUNTSC' use16
     assume cs:seg013
-    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
+    assume es:nothing, ss:nothing, ds:dseg, fs:fdata
     public sprite_1_unk4
 sprite_1_unk4 proc far
     var_4 = word ptr -4

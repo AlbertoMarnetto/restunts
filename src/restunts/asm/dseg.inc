@@ -1450,7 +1450,7 @@ dseg segment byte public 'STUNTSD' use16
     extrn replaybar_enabled:byte
     extrn word_46486:word
 dseg ends
-FARDATA
+fdata segment para public use16
     extrn qpolyinfoptr:dword
     extrn poly_linked_list_40ED6:word
     extrn word_411F6:word

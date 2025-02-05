@@ -46,7 +46,7 @@ nosmart
     include seg041.inc
 seg017 segment byte public 'STUNTSC' use16
     assume cs:seg017
-    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
+    assume es:nothing, ss:nothing, ds:dseg, fs:fdata
     public mouse_set_pixratio
     public mouse_init
     public mouse_set_minmax

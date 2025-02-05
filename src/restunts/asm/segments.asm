@@ -4,6 +4,14 @@
 ; original game is placed first in the executable image, followed by our ported
 ; code.
 
+FDGROUP group fdata
+fdata segment para public use16
+ends
+
+QGROUP group qseg
+qseg segment byte public use16
+ends
+
 seg000 segment byte private 'STUNTSC' use16
 seg000 ends
 
@@ -27,9 +35,6 @@ SEG000_TEXT ends
 
 endseg segment byte private 'ENDSEG' use16
 endseg ends
-
-qseg segment byte public use16
-ends
 
 ; this empty segment is placed at the end of the executable.
 ; it is used by the hacked crt to determine how large the image is

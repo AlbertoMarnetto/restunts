@@ -46,7 +46,7 @@ nosmart
     include seg041.inc
 seg031 segment byte public 'STUNTSC' use16
     assume cs:seg031
-    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
+    assume es:nothing, ss:nothing, ds:dseg, fs:fdata
     public ported_file_load_shape2d_nofatal2_
     public ported_file_combine_and_find_
     public ported_file_find_next_alt_

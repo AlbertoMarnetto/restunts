@@ -47,7 +47,7 @@ nosmart
 DGROUP group dseg
 dseg segment byte public 'STUNTSD' use16
     assume cs:dseg
-    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
+    assume es:nothing, ss:nothing, ds:dseg, fs:fdata
     public word_3B770
     public word_3B772
     public word_3B774
@@ -41835,17 +41835,16 @@ transformedshape_arg2array db 126 dup(0)
 
 dseg ends
 
+QGROUP group qseg
 qseg segment byte public use16
 emptyspace db 65534 dup(?)
 qseg ends
-wseg segment byte public use16
-emptyspace1 db 65534 dup(?)
-wseg ends
 
-FARDATA
+FDGROUP group fdata 
+fdata segment para public use16
 ALIGN 16
     assume cs:dseg
-    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
+    assume es:nothing, ss:nothing, ds:dseg, fs:fdata
 
     public qpolyinfoptr
     public poly_linked_list_40ED6

@@ -46,7 +46,7 @@ nosmart
     include seg041.inc
 seg028 segment byte public 'STUNTSC' use16
     assume cs:seg028
-    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
+    assume es:nothing, ss:nothing, ds:dseg, fs:fdata
     public audiodriver_timer
     public sub_3868A
     public sub_386D6

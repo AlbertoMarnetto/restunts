@@ -46,7 +46,7 @@ nosmart
     include seg041.inc
 seg024 segment byte public 'STUNTSC' use16
     assume cs:seg024
-    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
+    assume es:nothing, ss:nothing, ds:dseg, fs:fdata
     public ported_mat_rot_x_
     public ported_mat_rot_y_
     public ported_mat_rot_z_

@@ -46,7 +46,7 @@ nosmart
     include seg041.inc
 seg010 segment byte public 'STUNTSC' use16
     assume cs:seg010
-    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
+    assume es:nothing, ss:nothing, ds:dseg, fs:fdata
     public byte_2CC52
     public start
     public __amsg_exit

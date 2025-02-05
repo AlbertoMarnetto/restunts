@@ -46,7 +46,7 @@ nosmart
     include seg041.inc
 seg003 segment byte public 'STUNTSC' use16
     assume cs:seg003
-    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
+    assume es:nothing, ss:nothing, ds:dseg, fs:fdata
     public sub_19F14
     public init_rect_arrays
     public ported_update_frame_
