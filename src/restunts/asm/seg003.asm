@@ -1,4 +1,5 @@
 .model medium
+.386
 nosmart
     include structs.inc
     include custom.inc
@@ -45,7 +46,7 @@ nosmart
     include seg041.inc
 seg003 segment byte public 'STUNTSC' use16
     assume cs:seg003
-    assume es:nothing, ss:nothing, ds:dseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
     public sub_19F14
     public init_rect_arrays
     public ported_update_frame_
@@ -1778,7 +1779,7 @@ loc_1AEC9:
     db 144
 loc_1AECC:
     cmp     [bp+terr_map_value], 6
-    jnz     short loc_1AF50
+    jnz     loc_1AF50
     mov     ax, hillHeightConsts+2
     mov     [bp+var_hillheight], ax
     cmp     [bp+elem_map_value], 0
@@ -2146,7 +2147,7 @@ loc_1B236:
     cbw
     mov     [bp+var_transformresult], ax
     or      ax, ax
-    jle     short loc_1B232
+    jle     loc_1B232
     jmp     loc_1B03C
 loc_1B2AE:
     mov     bx, [bp+var_trkobject_ptr]
@@ -3364,7 +3365,7 @@ loc_1BF38:
     mov     al, transformedshape_arg2array[di]
     cbw
     cmp     ax, 2
-    jz      short loc_1BED8
+    jz      loc_1BED8
     cmp     ax, 3
     jz      short loc_1BF02
     jmp     short loc_1BEE4

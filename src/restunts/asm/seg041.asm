@@ -1,4 +1,5 @@
 .model medium
+.386
 nosmart
 .stack 8000
     include structs.inc
@@ -47,6 +48,6 @@ nosmart
     include seg041.inc
 seg041 segment byte public 'STACK' use16
     assume cs:seg041
-    assume es:nothing, ss:nothing, ds:dseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
 seg041 ends
 end

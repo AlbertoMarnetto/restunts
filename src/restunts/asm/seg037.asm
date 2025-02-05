@@ -1,4 +1,5 @@
 .model medium
+.386
 nosmart
     include structs.inc
     include custom.inc
@@ -45,7 +46,7 @@ nosmart
     include seg041.inc
 seg037 segment byte public 'STUNTSC' use16
     assume cs:seg037
-    assume es:nothing, ss:nothing, ds:dseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
     public ported_file_load_shape2d_expandedsize_
 ported_file_load_shape2d_expandedsize_ proc far
     var_sizelo = word ptr -14

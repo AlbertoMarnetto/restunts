@@ -1,4 +1,5 @@
 ; this file's compiled counterpart must be placed first in the list of input
+.386
 ; files sent to tlink. tlink orders the segments in the order they are seen.
 ; the following order ensures reversed and patched code, data and stack for the
 ; original game is placed first in the executable image, followed by our ported
@@ -29,5 +30,12 @@ SEG000_TEXT ends
 ; it is used by the hacked crt to determine how large the image is
 endseg segment byte private 'ENDSEG' use16
 endseg ends
+
+xseg segment byte public use16
+ends
+yseg segment byte public use16
+ends
+fseg segment byte public use16
+ends
 
 end

@@ -1,4 +1,5 @@
 .model medium
+.386
 nosmart
     include structs.inc
     include custom.inc
@@ -45,7 +46,7 @@ nosmart
     include seg041.inc
 seg018 segment byte public 'STUNTSC' use16
     assume cs:seg018
-    assume es:nothing, ss:nothing, ds:dseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
     public kb_shift_checking1
     public kb_shift_checking2
 locret_36AF2:

@@ -1446,7 +1446,7 @@ dseg segment byte public 'STUNTSD' use16
     extrn replaybar_enabled:byte
     extrn word_46486:word
 dseg ends
-FARDATA
+fseg segment byte public use16
     extrn currenttransshape:TRANSFORMEDSHAPE
     extrn transformedshape_zarray:word
     extrn transformedshape_indices:word

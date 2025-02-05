@@ -1,4 +1,5 @@
 .model medium
+.386
 nosmart
     include structs.inc
     include custom.inc
@@ -46,7 +47,7 @@ nosmart
 DGROUP group dseg
 dseg segment byte public 'STUNTSD' use16
     assume cs:dseg
-    assume es:nothing, ss:nothing, ds:dseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
     public word_3B770
     public word_3B772
     public word_3B774
@@ -41822,14 +41823,19 @@ word_46486     dw 0
 
 dseg ends
 
+xseg segment byte public use16
+    public emptyspace1
+	emptyspace1 db 32768 dup(?)
+ends
+yseg segment byte public use16
+    public emptyspace2
+emptyspace2 db 32768 dup(?)
+ends
+
+
 fseg segment byte public use16
-emptyspace db 32768 dup(0)
-fseg ends
-
-
-FARDATA
     assume cs:dseg
-    assume es:nothing, ss:nothing, ds:dseg, fs:FAR_DATA
+    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
     public qpolyinfoptr
     public qpoly_linked_list_40ED6
     public qword_411F6

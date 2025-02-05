@@ -1,4 +1,5 @@
 .model medium
+.386
 nosmart
     include structs.inc
     include custom.inc
@@ -45,7 +46,7 @@ nosmart
     include seg041.inc
 seg002 segment byte public 'STUNTSC' use16
     assume cs:seg002
-    assume es:nothing, ss:nothing, ds:dseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
     public ported_update_rpm_from_speed_
     public nopsub_19DE8
     public nopsub_19DFF
@@ -294,6 +295,9 @@ loc_19EE3:
     iret
 intr0_handler endp
 ported_init_div0_ proc far
+	; This should NOT be here, but it's the first assembly funtion we call
+	mov ax, seg currenttransshape
+	mov fs, ax
 
     push    ds
 loc_19EE9:
