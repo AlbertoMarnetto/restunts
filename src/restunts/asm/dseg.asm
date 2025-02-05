@@ -1,4 +1,5 @@
 .model medium
+.386
 nosmart
     include structs.inc
     include custom.inc
@@ -41834,7 +41835,9 @@ transformedshape_arg2array db 126 dup(0)
 
 dseg ends
 
-fseg segment byte public use16
+;fseg segment byte public use16
+FARDATA fseg
+
     assume cs:dseg
     assume es:nothing, ss:nothing, ds:dseg
 
@@ -41843,8 +41846,9 @@ fseg segment byte public use16
     public qword_411F6
     public qpolyinfoptrs
 
-qpolyinfoptr dw seg dseg
-    dw offset qpolyinfoptr
+;qpolyinfoptr dw seg fseg
+;	dw offset qpolyinfoptr
+qpolyinfoptr dd fseg:qpolyinfoptr
 
 ; qpolyinfoptr     dd 0
 ; poly_linked_list_40ED6: MAX_POLY_INFO_COUNT times dw
@@ -41858,5 +41862,5 @@ fseg ends
 
 end
 
-;MOV AX/@fardata
+;MOV AX/@fardata
 ;MOV DS/AX

@@ -1393,7 +1393,7 @@ start_rendering:
 
 #if DISPLAY_DEBUG_INFO
 	// Debug: print discarded tiles
-	_sprintf(discarded_tiles_str, "Disc: %d %p", discarded_tiles, 0 /*qpolyinfoptr*/);
+	_sprintf(discarded_tiles_str, "Disc: %d %p", discarded_tiles, qpolyinfoptr);
 	font_set_fontdef2(fontnptr);
 	si = discarded_tiles == 0 ? 11 : discarded_tiles < 30 ? 14 : 12; // cyan, yellow, red
 	rect_union(intro_draw_text(discarded_tiles_str, 0x0C, roofbmpheight + 2, si, 0), &rect_unk11, &rect_unk11);

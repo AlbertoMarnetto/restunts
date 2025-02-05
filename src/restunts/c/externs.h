@@ -487,7 +487,9 @@ extern unsigned _abs(unsigned);
 extern int _rand(void);
 extern void _srand(unsigned int);
 
-// extern void far* qpolyinfoptr;
+// extern void __far * qpolyinfoptr;
+// extern unsigned short qpolyinfoptr[2];  // Segment and offset as two words
+extern far void* far qpolyinfoptr;
 
 #ifdef RESTUNTS_DOS
 #define memcpy _memcpy

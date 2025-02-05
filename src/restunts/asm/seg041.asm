@@ -1,4 +1,5 @@
 .model medium
+.386
 nosmart
 .stack 8000
     include structs.inc
