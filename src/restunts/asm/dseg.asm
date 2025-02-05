@@ -48,6 +48,7 @@ DGROUP group dseg
 dseg segment byte public 'STUNTSD' use16
     assume cs:dseg
     assume es:nothing, ss:nothing, ds:dseg, fs:fseg
+    public currenttransshape
     public word_3B770
     public word_3B772
     public word_3B774
@@ -41821,15 +41822,18 @@ word_46486     dw 0
     db 0
     db 0
 
+; currenttransshape: 20 x TILES_TO_DRAW_COUNT times db 
+currenttransshape db 2210 dup(0)
+
 dseg ends
 
 xseg segment byte public use16
     public emptyspace1
-	emptyspace1 db 32768 dup(?)
+	emptyspace1 db 65534 dup(?)
 ends
 yseg segment byte public use16
     public emptyspace2
-emptyspace2 db 32768 dup(?)
+emptyspace2 db 65534 dup(?)
 ends
 
 
@@ -41841,13 +41845,10 @@ fseg segment byte public use16
     public qword_411F6
     public qpolyinfoptrs
 
-    public currenttransshape
     public transformedshape_zarray
     public transformedshape_indices
     public transformedshape_arg2array
 
-; currenttransshape: 20 x TILES_TO_DRAW_COUNT times db 
-currenttransshape db 2210 dup(0)
 ; transformedshape_zarray: 2 x TILES_TO_DRAW_COUNT times db 
 transformedshape_zarray db 250 dup(0)
 ; transformedshape_indices: 2 x TILES_TO_DRAW_COUNT times db 

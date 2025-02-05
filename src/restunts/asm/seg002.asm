@@ -296,7 +296,7 @@ loc_19EE3:
 intr0_handler endp
 ported_init_div0_ proc far
 	; This should NOT be here, but it's the first assembly funtion we call
-	mov ax, seg currenttransshape
+	mov ax, seg transformedshape_zarray
 	mov fs, ax
 
     push    ds

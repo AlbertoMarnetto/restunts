@@ -1,0 +1,625 @@
+MAKE Version 5.2  Copyright (c) 1987, 2000 Borland
+	cd asm
+	if exist makefile make
+MAKE Version 5.2  Copyright (c) 1987, 2000 Borland
+	tasmbox /m2 /s /zi segments.asm , build\segments.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   segments.asm  to  build\segments.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  931k
+
+	tasmbox /m2 /s /zi seg000.asm , build\seg000.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg000.asm  to  build\seg000.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  624k
+
+	tasmbox /m2 /s /zi seg001.asm , build\seg001.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg001.asm  to  build\seg001.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  593k
+
+	tasmbox /m2 /s /zi seg002.asm , build\seg002.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg002.asm  to  build\seg002.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  721k
+
+	tasmbox /m2 /s /zi seg003.asm , build\seg003.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg003.asm  to  build\seg003.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  622k
+
+	tasmbox /m2 /s /zi seg004.asm , build\seg004.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg004.asm  to  build\seg004.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  624k
+
+	tasmbox /m2 /s /zi seg005.asm , build\seg005.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg005.asm  to  build\seg005.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  647k
+
+	tasmbox /m2 /s /zi seg006.asm , build\seg006.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg006.asm  to  build\seg006.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  675k
+
+	tasmbox /m2 /s /zi seg007.asm , build\seg007.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg007.asm  to  build\seg007.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  711k
+
+	tasmbox /m2 /s /zi seg008.asm , build\seg008.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg008.asm  to  build\seg008.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  638k
+
+	tasmbox /m2 /s /zi seg009.asm , build\seg009.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg009.asm  to  build\seg009.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  666k
+
+	tasmbox /m2 /s /zi seg010.asm , build\seg010.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg010.asm  to  build\seg010.obj
+Error messages:    None
+Warning messages:  None
+Passes:            2
+Remaining memory:  651k
+
+	tasmbox /m2 /s /zi seg011.asm , build\seg011.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg011.asm  to  build\seg011.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  727k
+
+	tasmbox /m2 /s /zi seg012.asm , build\seg012.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg012.asm  to  build\seg012.obj
+Error messages:    None
+Warning messages:  None
+Passes:            2
+Remaining memory:  446k
+
+	tasmbox /m2 /s /zi seg013.asm , build\seg013.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg013.asm  to  build\seg013.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  724k
+
+	tasmbox /m2 /s /zi seg014.asm , build\seg014.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg014.asm  to  build\seg014.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  721k
+
+	tasmbox /m2 /s /zi seg015.asm , build\seg015.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg015.asm  to  build\seg015.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  722k
+
+	tasmbox /m2 /s /zi seg016.asm , build\seg016.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg016.asm  to  build\seg016.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  722k
+
+	tasmbox /m2 /s /zi seg017.asm , build\seg017.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg017.asm  to  build\seg017.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  719k
+
+	tasmbox /m2 /s /zi seg018.asm , build\seg018.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg018.asm  to  build\seg018.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  727k
+
+	tasmbox /m2 /s /zi seg019.asm , build\seg019.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg019.asm  to  build\seg019.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  724k
+
+	tasmbox /m2 /s /zi seg020.asm , build\seg020.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg020.asm  to  build\seg020.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  726k
+
+	tasmbox /m2 /s /zi seg021.asm , build\seg021.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg021.asm  to  build\seg021.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  726k
+
+	tasmbox /m2 /s /zi seg022.asm , build\seg022.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg022.asm  to  build\seg022.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  721k
+
+	tasmbox /m2 /s /zi seg023.asm , build\seg023.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg023.asm  to  build\seg023.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  724k
+
+	tasmbox /m2 /s /zi seg024.asm , build\seg024.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg024.asm  to  build\seg024.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  725k
+
+	tasmbox /m2 /s /zi seg025.asm , build\seg025.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg025.asm  to  build\seg025.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  724k
+
+	tasmbox /m2 /s /zi seg026.asm , build\seg026.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg026.asm  to  build\seg026.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  727k
+
+	tasmbox /m2 /s /zi seg027.asm , build\seg027.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg027.asm  to  build\seg027.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  681k
+
+	tasmbox /m2 /s /zi seg028.asm , build\seg028.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg028.asm  to  build\seg028.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  688k
+
+	tasmbox /m2 /s /zi seg029.asm , build\seg029.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg029.asm  to  build\seg029.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  721k
+
+	tasmbox /m2 /s /zi seg030.asm , build\seg030.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg030.asm  to  build\seg030.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  725k
+
+	tasmbox /m2 /s /zi seg031.asm , build\seg031.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg031.asm  to  build\seg031.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  712k
+
+	tasmbox /m2 /s /zi seg032.asm , build\seg032.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg032.asm  to  build\seg032.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  715k
+
+	tasmbox /m2 /s /zi seg033.asm , build\seg033.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg033.asm  to  build\seg033.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  726k
+
+	tasmbox /m2 /s /zi seg034.asm , build\seg034.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg034.asm  to  build\seg034.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  720k
+
+	tasmbox /m2 /s /zi seg035.asm , build\seg035.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg035.asm  to  build\seg035.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  719k
+
+	tasmbox /m2 /s /zi seg036.asm , build\seg036.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg036.asm  to  build\seg036.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  725k
+
+	tasmbox /m2 /s /zi seg037.asm , build\seg037.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg037.asm  to  build\seg037.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  726k
+
+	tasmbox /m2 /s /zi seg038.asm , build\seg038.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg038.asm  to  build\seg038.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  729k
+
+	tasmbox /m2 /s /zi seg039.asm , build\seg039.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg039.asm  to  build\seg039.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  720k
+
+	tasmbox /m2 /s /zi seg041.asm , build\seg041.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   seg041.asm  to  build\seg041.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  730k
+
+	tasmbox /m2 /s /zi dseg.asm, build\dseg.obj
+Turbo Assembler  Version 4.0  Copyright (c) 1988, 1993 Borland International
+
+Assembling file:   dseg.asm  to  build\dseg.obj
+Error messages:    None
+Warning messages:  None
+Passes:            1
+Remaining memory:  527k
+
+	cd ..
+	cd c
+	if exist makefile make
+MAKE Version 5.2  Copyright (c) 1987, 2000 Borland
+	bcc -3 /c /u- /mm /v /nbuild\dos /DRESTUNTS_DOS  fileio.c  
+Borland C++ 5.2 Copyright (c) 1987, 1997 Borland International
+Mar 19 1997 17:29:40
+fileio.c:
+Warning fileio.c 992: Suspicious pointer conversion in function file_load_resource
+	bcc -3 /c /u- /mm /v /nbuild\dos /DRESTUNTS_DOS  math.c  
+Borland C++ 5.2 Copyright (c) 1987, 1997 Borland International
+Mar 19 1997 17:29:40
+math.c:
+Warning math.c 30: Function should return a value in function sin_fast
+Warning math.c 89: Function should return a value in function polarAngle
+Warning math.c 667: Call to function 'heapsort_by_order' with no prototype in function rect_array_sort_by_top
+	bcc -3 /c /u- /mm /v /nbuild\dos /DRESTUNTS_DOS  memmgr.c  
+Borland C++ 5.2 Copyright (c) 1987, 1997 Borland International
+Mar 19 1997 17:29:40
+memmgr.c:
+Warning externs.h 506: Redefinition of 'abs' is not identical
+	bcc -3 /c /u- /mm /v /nbuild\dos /DRESTUNTS_DOS  restunts.c  
+Borland C++ 5.2 Copyright (c) 1987, 1997 Borland International
+Mar 19 1997 17:29:40
+restunts.c:
+Warning restunts.c 71: Function should return a value in function timer_get_counter
+Warning restunts.c 102: Function should return a value in function timer_get_delta
+Warning restunts.c 184: Possibly incorrect assignment in function get_kevinrandom
+Warning restunts.c 266: Suspicious pointer conversion in function init_trackdata
+Warning restunts.c 269: Suspicious pointer conversion in function init_trackdata
+Warning restunts.c 275: Suspicious pointer conversion in function init_trackdata
+Warning restunts.c 278: Suspicious pointer conversion in function init_trackdata
+Warning restunts.c 287: Suspicious pointer conversion in function init_trackdata
+Warning restunts.c 290: Suspicious pointer conversion in function init_trackdata
+Warning restunts.c 293: Suspicious pointer conversion in function init_trackdata
+Warning restunts.c 575: Suspicious pointer conversion in function init_game_state
+Warning restunts.c 654: Call to function 'sub_2298C' with no prototype in function update_gamestate
+Warning restunts.c 656: Call to function 'sub_19BA0' with no prototype in function update_gamestate
+Warning restunts.c 766: Call to function 'load_opponent_data' with no prototype in function setup_player_cars
+Warning restunts.c 772: Call to function 'audio_add_driver_timer' with no prototype in function setup_player_cars
+Warning restunts.c 787: Call to function 'init_rect_arrays' with no prototype in function setup_player_cars
+Warning restunts.c 800: Call to function 'load_sdgame2_shapes' with no prototype in function setup_player_cars
+Warning restunts.c 801: Call to function 'load_skybox' with no prototype in function setup_player_cars
+Warning restunts.c 827: Call to function 'unload_skybox' with no prototype in function free_player_cars
+Warning restunts.c 828: Call to function 'free_sdgame2' with no prototype in function free_player_cars
+Warning restunts.c 836: Call to function 'audio_remove_driver_timer' with no prototype in function free_player_cars
+Warning restunts.c 839: Call to function 'shape3d_free_car_shapes' with no prototype in function free_player_cars
+Warning restunts.c 878: Call to function 'track_setup' with no prototype in function run_game
+Warning restunts.c 883: Call to function 'do_mer_restext' with no prototype in function run_game
+Warning restunts.c 929: Call to function 'update_gamestate' with no prototype in function run_game
+Warning restunts.c 940: Call to function 'replay_unk' with no prototype in function run_game
+Warning restunts.c 942: Call to function 'update_gamestate' with no prototype in function run_game
+Warning restunts.c 961: Call to function 'init_rect_arrays' with no prototype in function run_game
+Warning restunts.c 965: Call to function 'input_push_status' with no prototype in function run_game
+Warning restunts.c 966: Call to function 'audio_unk' with no prototype in function run_game
+Warning restunts.c 971: Call to function 'sub_372F4' with no prototype in function run_game
+Warning restunts.c 973: Call to function 'input_pop_status' with no prototype in function run_game
+Warning restunts.c 975: Call to function 'update_crash_state' with no prototype in function run_game
+Warning restunts.c 1070: Call to function 'shape2d_op_unk4' with no prototype in function run_game
+Warning restunts.c 1073: Call to function 'sub_19F14' with no prototype in function run_game
+Warning restunts.c 1089: Call to function 'mouse_draw_transparent_check' with no prototype in function run_game
+Warning restunts.c 1129: Call to function 'mouse_get_state' with no prototype in function run_game
+Warning restunts.c 1149: Call to function 'sub_35C4E' with no prototype in function run_game
+Warning restunts.c 1151: Call to function 'mouse_draw_transparent_check' with no prototype in function run_game
+Warning restunts.c 1157: Call to function 'audio_remove_driver_timer' with no prototype in function run_game
+Warning restunts.c 1165: Call to function 'replay_unk2' with no prototype in function run_game
+Warning restunts.c 1166: Call to function 'update_gamestate' with no prototype in function run_game
+Warning restunts.c 1170: Call to function 'format_frame_as_string' with no prototype in function run_game
+Warning restunts.c 1172: Call to function 'font_op2_alt' with no prototype in function run_game
+Warning restunts.c 1172: Call to function 'sub_345BC' with no prototype in function run_game
+Warning restunts.c 1173: Call to function 'mouse_draw_transparent_check' with no prototype in function run_game
+Warning restunts.c 1187: Call to function 'remove_frame_callback' with no prototype in function run_game
+Warning restunts.c 1201: Call to function 'ported_init_div0_' with no prototype in function init_div0
+Warning restunts.c 1325: Call to function '_printf' with no prototype in function init_main
+Warning restunts.c 1347: Call to function 'ported_sprite_clear_1_color_' with no prototype in function init_main
+Warning restunts.c 1652: Call to function 'track_setup' with no prototype in function stuntsmainimpl
+Warning restunts.c 1709: Suspicious pointer conversion in function stuntsmainimpl
+	bcc -3 /c /u- /mm /v /nbuild\dos /DRESTUNTS_DOS  shape3d.c  
+Borland C++ 5.2 Copyright (c) 1987, 1997 Borland International
+Mar 19 1997 17:29:40
+shape3d.c:
+Warning shape3d.c 84: Suspicious pointer conversion in function shape3d_init_shape
+Warning shape3d.c 88: Suspicious pointer conversion in function shape3d_init_shape
+Warning shape3d.c 216: Suspicious pointer conversion in function transformed_shape_op
+Warning shape3d.c 217: Suspicious pointer conversion in function transformed_shape_op
+Warning shape3d.c 761: Suspicious pointer conversion in function transformed_shape_op
+Warning shape3d.c 1074: Suspicious pointer conversion in function transformed_shape_op
+Warning shape3d.c 1477: Suspicious pointer conversion in function transformed_shape_op
+Warning shape3d.c 1518: Suspicious pointer conversion in function transformed_shape_op
+Warning shape3d.c 1800: Suspicious pointer conversion in function transformed_shape_op
+Warning shape3d.c 1886: Suspicious pointer conversion in function transformed_shape_op
+Warning shape3d.c 2004: Suspicious pointer conversion in function transformed_shape_op
+Warning shape3d.c 2140: Suspicious pointer conversion in function transformed_shape_op
+Warning shape3d.c 2528: 'errorstr2' is assigned a value that is never used in function transformed_shape_op
+Warning shape3d.c 2528: 'errorstr' is assigned a value that is never used in function transformed_shape_op
+Warning shape3d.c 2604: Call to function '_printf' with no prototype in function insert_newest_poly_in_poly_linked_list_40ED6
+Warning shape3d.c 2770: Suspicious pointer conversion in function preRender_default_alt
+Warning shape3d.c 2778: Suspicious pointer conversion in function preRender_default
+Warning shape3d.c 2786: Suspicious pointer conversion in function skybox_op_helper
+Warning shape3d.c 2794: Suspicious pointer conversion in function preRender_wheel_helper4
+Warning shape3d.c 2808: Suspicious pointer conversion in function preRender_unk
+Warning shape3d.c 2818: Suspicious pointer conversion in function preRender_patterned
+Warning shape3d.c 2844: Suspicious pointer conversion in function preRender_default_impl
+Warning shape3d.c 2845: Suspicious pointer conversion in function preRender_default_impl
+Warning shape3d.c 2850: Suspicious pointer conversion in function preRender_default_impl
+Warning shape3d.c 2851: Suspicious pointer conversion in function preRender_default_impl
+Warning shape3d.c 2861: Suspicious pointer conversion in function preRender_default_impl
+Warning shape3d.c 2865: Suspicious pointer conversion in function preRender_default_impl
+Warning shape3d.c 2898: Suspicious pointer conversion in function preRender_default_impl
+Warning shape3d.c 2905: Suspicious pointer conversion in function preRender_default_impl
+Warning shape3d.c 2906: Suspicious pointer conversion in function preRender_default_impl
+Warning shape3d.c 2906: Suspicious pointer conversion in function preRender_default_impl
+Warning shape3d.c 2908: Suspicious pointer conversion in function preRender_default_impl
+Warning shape3d.c 2909: Suspicious pointer conversion in function preRender_default_impl
+Warning shape3d.c 2909: Suspicious pointer conversion in function preRender_default_impl
+Warning shape3d.c 2920: Nonportable pointer comparison in function preRender_default_impl
+Warning shape3d.c 2927: Suspicious pointer conversion in function preRender_default_impl
+Warning shape3d.c 2929: Suspicious pointer conversion in function preRender_default_impl
+Warning shape3d.c 2931: Suspicious pointer conversion in function preRender_default_impl
+Warning shape3d.c 2931: Suspicious pointer conversion in function preRender_default_impl
+Warning shape3d.c 2947: Suspicious pointer conversion in function preRender_default_impl
+Warning shape3d.c 2947: Suspicious pointer conversion in function preRender_default_impl
+Warning shape3d.c 3298: 'errorstr' is assigned a value that is never used in function generate_poly_edges
+Warning shape3d.c 3298: 'sprite1_sprite_height' is assigned a value that is never used in function generate_poly_edges
+Warning shape3d.c 3298: 'sprite1_sprite_top' is assigned a value that is never used in function generate_poly_edges
+Warning shape3d.c 3892: 'sprite1_sprite_height' is assigned a value that is never used in function preRender_default_impl_helper
+Warning shape3d.c 3892: 'sprite1_sprite_top' is assigned a value that is never used in function preRender_default_impl_helper
+Warning shape3d.c 4925: Suspicious pointer conversion in function shape3d_load_car_shapes
+Warning shape3d.c 4926: Suspicious pointer conversion in function shape3d_load_car_shapes
+Warning shape3d.c 4949: Suspicious pointer conversion in function shape3d_load_car_shapes
+Warning shape3d.c 4950: Suspicious pointer conversion in function shape3d_load_car_shapes
+Warning shape3d.c 4951: Suspicious pointer conversion in function shape3d_load_car_shapes
+Warning shape3d.c 4952: Suspicious pointer conversion in function shape3d_load_car_shapes
+Warning shape3d.c 4953: Suspicious pointer conversion in function shape3d_load_car_shapes
+Warning shape3d.c 4959: Suspicious pointer conversion in function shape3d_load_car_shapes
+Warning shape3d.c 4973: Suspicious pointer conversion in function shape3d_load_car_shapes
+Warning shape3d.c 4974: Suspicious pointer conversion in function shape3d_load_car_shapes
+Warning shape3d.c 4995: Suspicious pointer conversion in function shape3d_load_car_shapes
+Warning shape3d.c 4996: Suspicious pointer conversion in function shape3d_load_car_shapes
+Warning shape3d.c 4997: Suspicious pointer conversion in function shape3d_load_car_shapes
+Warning shape3d.c 4998: Suspicious pointer conversion in function shape3d_load_car_shapes
+Warning shape3d.c 4999: Suspicious pointer conversion in function shape3d_load_car_shapes
+Warning shape3d.c 5035: Call to function '_labs' with no prototype in function sub_204AE
+Warning shape3d.c 5035: Call to function '_labs' with no prototype in function sub_204AE
+Warning shape3d.c 5055: Suspicious pointer conversion in function shape3d_free_car_shapes
+Warning shape3d.c 5055: Suspicious pointer conversion in function shape3d_free_car_shapes
+Warning shape3d.c 5056: Suspicious pointer conversion in function shape3d_free_car_shapes
+Warning shape3d.c 5058: Suspicious pointer conversion in function shape3d_free_car_shapes
+Warning shape3d.c 5058: Suspicious pointer conversion in function shape3d_free_car_shapes
+Warning shape3d.c 5059: Suspicious pointer conversion in function shape3d_free_car_shapes
+	bcc -3 /c /u- /mm /v /nbuild\dos /DRESTUNTS_DOS  shape2d.c  
+Borland C++ 5.2 Copyright (c) 1987, 1997 Borland International
+Mar 19 1997 17:29:40
+shape2d.c:
+Warning externs.h 506: Redefinition of 'abs' is not identical
+Warning shape2d.c 624: Suspicious pointer conversion in function file_load_shape2d_res
+	bcc -3 /c /u- /mm /v /nbuild\dos /DRESTUNTS_DOS  keyboard.c  
+Borland C++ 5.2 Copyright (c) 1987, 1997 Borland International
+Mar 19 1997 17:29:40
+keyboard.c:
+	bcc -3 /c /u- /mm /v /nbuild\dos /DRESTUNTS_DOS  heapsort.c  
+Borland C++ 5.2 Copyright (c) 1987, 1997 Borland International
+Mar 19 1997 17:29:40
+heapsort.c:
+	bcc -3 /c /u- /mm /v /nbuild\dos /DRESTUNTS_DOS  frame.c  
+Borland C++ 5.2 Copyright (c) 1987, 1997 Borland International
+Mar 19 1997 17:29:40
+frame.c:
+Warning frame.c 427: Suspicious pointer conversion in function update_frame
+Warning frame.c 431: Suspicious pointer conversion in function update_frame
+Warning frame.c 801: Suspicious pointer conversion in function update_frame
+Warning frame.c 845: Suspicious pointer conversion in function update_frame
+Warning frame.c 887: Suspicious pointer conversion in function update_frame
+Warning frame.c 896: Suspicious pointer conversion in function update_frame
+Warning frame.c 950: Suspicious pointer conversion in function update_frame
+Warning frame.c 987: Suspicious pointer conversion in function update_frame
+Warning frame.c 1025: Suspicious pointer conversion in function update_frame
+Warning frame.c 1121: Suspicious pointer conversion in function update_frame
+Warning frame.c 1175: Suspicious pointer conversion in function update_frame
+Warning frame.c 1246: Suspicious pointer conversion in function update_frame
+Warning frame.c 1246: Suspicious pointer conversion in function update_frame
+Warning frame.c 1267: Suspicious pointer conversion in function update_frame
+Warning frame.c 1391: Call to function '_sprintf' with no prototype in function update_frame
+Warning frame.c 1417: 'detail_threshold' is assigned a value that is never used in function update_frame
+	bcc -3 /c /u- /mm /v /nbuild\dos /DRESTUNTS_DOS  state.c  
+Borland C++ 5.2 Copyright (c) 1987, 1997 Borland International
+Mar 19 1997 17:29:40
+state.c:
+Warning state.c 54: Call to function 'detect_penalty' with no prototype in function player_op
+Warning state.c 226: Suspicious pointer conversion in function player_op
+Warning state.c 228: Suspicious pointer conversion in function player_op
+Warning state.c 231: Suspicious pointer conversion in function player_op
+Warning state.c 233: Suspicious pointer conversion in function player_op
+Warning state.c 315: Call to function 'update_crash_state' with no prototype in function player_op
+	bcc -3 /c /u- /mm /v /nbuild\dos /DRESTUNTS_DOS  stateply.c  
+Borland C++ 5.2 Copyright (c) 1987, 1997 Borland International
+Mar 19 1997 17:29:40
+stateply.c:
+Warning stateply.c 462: Call to function 'build_track_object' with no prototype in function update_player_state
+Warning stateply.c 2027: Call to function 'carState_rc_op' with no prototype in function update_player_state
+Warning stateply.c 2518: Call to function 'audio_unk3' with no prototype in function update_player_state
+Warning stateply.c 2529: Call to function 'audio_unk3' with no prototype in function update_player_state
+Warning stateply.c 2563: Call to function 'build_track_object' with no prototype in function update_player_state
+Warning stateply.c 2730: Call to function 'build_track_object' with no prototype in function update_player_state
+Warning stateply.c 2915: Call to function 'car_car_speed_adjust_maybe' with no prototype in function update_player_state
+Warning stateply.c 3143: Call to function 'state_op_unk' with no prototype in function update_player_state
+	bcc -3 /c /u- /mm /v /nbuild\dos /DRESTUNTS_DOS  statecrs.c  
+Borland C++ 5.2 Copyright (c) 1987, 1997 Borland International
+Mar 19 1997 17:29:40
+statecrs.c:
+Warning statecrs.c 136: Call to function 'state_op_unk' with no prototype in function update_crash_state
+Warning statecrs.c 167: Call to function 'audio_function2_wrap' with no prototype in function update_crash_state
+Warning statecrs.c 181: Call to function 'audio_function2_wrap' with no prototype in function update_crash_state
+Warning statecrs.c 196: Call to function 'audio_function2_wrap' with no prototype in function update_crash_state
+Warning statecrs.c 207: Call to function 'audio_function2_wrap' with no prototype in function update_crash_state
+	bcc -3 /c /u- /mm /v /nbuild\dos /DRESTUNTS_DOS  statecar.c  
+Borland C++ 5.2 Copyright (c) 1987, 1997 Borland International
+Mar 19 1997 17:29:40
+statecar.c:
+	cd ..
+	cd dos
+	if exist makefile make 
+MAKE Version 5.2  Copyright (c) 1987, 2000 Borland
+	bcc /c /u- /mm /nbuild\ported /v /DRESTUNTS_DOS  -I../c  main.c  
+Borland C++ 5.2 Copyright (c) 1987, 1997 Borland International
+Mar 19 1997 17:29:40
+main.c:
+	echo ..\asm\build\segments.obj ..\asm\build\seg000.obj ..\asm\build\seg001.obj ..\asm\build\seg002.obj ..\asm\build\seg003.obj ..\asm\build\seg004.obj ..\asm\build\seg005.obj ..\asm\build\seg006.obj ..\asm\build\seg007.obj ..\asm\build\seg008.obj ..\asm\build\seg009.obj ..\asm\build\seg010.obj ..\asm\build\seg011.obj ..\asm\build\seg012.obj ..\asm\build\seg013.obj ..\asm\build\seg014.obj ..\asm\build\seg015.obj ..\asm\build\seg016.obj ..\asm\build\seg017.obj ..\asm\build\seg018.obj ..\asm\build\seg019.obj ..\asm\build\seg020.obj ..\asm\build\seg021.obj ..\asm\build\seg022.obj ..\asm\build\seg023.obj ..\asm\build\seg024.obj ..\asm\build\seg025.obj ..\asm\build\seg026.obj ..\asm\build\seg027.obj ..\asm\build\seg028.obj ..\asm\build\seg029.obj ..\asm\build\seg030.obj ..\asm\build\seg031.obj ..\asm\build\seg032.obj ..\asm\build\seg033.obj ..\asm\build\seg034.obj ..\asm\build\seg035.obj ..\asm\build\seg036.obj ..\asm\build\seg037.obj ..\asm\build\seg038.obj ..\asm\build\seg039.obj ..\asm\build\dseg.obj ..\asm\build\seg041.obj ..\c\build\dos\fileio.obj ..\c\build\dos\math.obj ..\c\build\dos\memmgr.obj ..\c\build\dos\restunts.obj ..\c\build\dos\shape3d.obj ..\c\build\dos\shape2d.obj ..\c\build\dos\keyboard.obj ..\c\build\dos\heapsort.obj ..\c\build\dos\frame.obj ..\c\build\dos\state.obj ..\c\build\dos\stateply.obj ..\c\build\dos\statecrs.obj ..\c\build\dos\statecar.obj build\ported\main.obj getvect.obj labs.obj memcpy.obj fmemcpy.obj h_ldiv.obj f_lxmul.obj f_scopy.obj h_lrsh.obj h_padd.obj h_pina.obj h_pada.obj f_pcmp.obj h_lursh.obj h_psbp.obj h_llsh.obj > restunts.lnk
+	echo restunts.exe >> restunts.lnk
+	call tlinkbox /s /P- /v /js:\tools\lib\ @restunts.lnk
+Turbo Link  Version 7.1.32.2. Copyright (c) 1987, 1996 Borland International
+	del restunts.lnk
+	copy restunts.exe s:\stunts
+	cd ..

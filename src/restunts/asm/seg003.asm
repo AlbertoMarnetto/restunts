@@ -1779,7 +1779,7 @@ loc_1AEC9:
     db 144
 loc_1AECC:
     cmp     [bp+terr_map_value], 6
-    jnz     loc_1AF50
+    jnz     short loc_1AF50
     mov     ax, hillHeightConsts+2
     mov     [bp+var_hillheight], ax
     cmp     [bp+elem_map_value], 0
@@ -2147,7 +2147,7 @@ loc_1B236:
     cbw
     mov     [bp+var_transformresult], ax
     or      ax, ax
-    jle     loc_1B232
+    jle     short loc_1B232
     jmp     loc_1B03C
 loc_1B2AE:
     mov     bx, [bp+var_trkobject_ptr]
@@ -3370,7 +3370,7 @@ loc_1BF38:
     jz      short loc_1BF02
     jmp     short loc_1BEE4
     ; align 2
-    db 144
+    ;db 144
 loc_1BF5E:
     cmp     state.opponentstate.car_crashBmpFlag, 1
     jnz     short loc_1BF34

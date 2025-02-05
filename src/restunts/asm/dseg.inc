@@ -1445,9 +1445,9 @@ dseg segment byte public 'STUNTSD' use16
     extrn mat_x_rot:MATRIX
     extrn replaybar_enabled:byte
     extrn word_46486:word
+    extrn currenttransshape:TRANSFORMEDSHAPE
 dseg ends
 fseg segment byte public use16
-    extrn currenttransshape:TRANSFORMEDSHAPE
     extrn transformedshape_zarray:word
     extrn transformedshape_indices:word
     extrn transformedshape_arg2array:byte
