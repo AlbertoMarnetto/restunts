@@ -46,7 +46,7 @@ nosmart
     include seg041.inc
 seg026 segment byte public 'STUNTSC' use16
     assume cs:seg026
-    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
     public ported_toupper_
 ported_toupper_ proc far
      s = byte ptr 0

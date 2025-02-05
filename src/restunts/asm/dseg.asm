@@ -47,7 +47,7 @@ nosmart
 DGROUP group dseg
 dseg segment byte public 'STUNTSD' use16
     assume cs:dseg
-    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
     public word_3B770
     public word_3B772
     public word_3B774
@@ -41837,21 +41837,20 @@ dseg ends
 
 QGROUP group qseg
 qseg segment byte public use16
-emptyspace db 65534 dup(0)
+emptyspace db 65534 dup(?)
 qseg ends
 
-FGROUP group fseg
-
-fseg segment byte public use16
+FARDATA
+ALIGN 16
     assume cs:dseg
-    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
 
     public qpolyinfoptr
     public poly_linked_list_40ED6
     public word_411F6
     public qpolyinfoptrs
 
-qpolyinfoptr     dw 700
+qpolyinfoptr     dw 16
 ; poly_linked_list_40ED6: MAX_POLY_INFO_COUNT times dw
 poly_linked_list_40ED6 dw 190h dup(0)
 ; terminator for the list? In doubt, we copy that here

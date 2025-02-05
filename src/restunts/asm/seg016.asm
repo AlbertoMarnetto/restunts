@@ -46,7 +46,7 @@ nosmart
     include seg041.inc
 seg016 segment byte public 'STUNTSC' use16
     assume cs:seg016
-    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
     public ported_locate_many_resources_
     public nopsub_367E4
     public nopsub_36826

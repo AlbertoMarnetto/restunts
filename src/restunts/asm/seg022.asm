@@ -46,7 +46,7 @@ nosmart
     include seg041.inc
 seg022 segment byte public 'STUNTSC' use16
     assume cs:seg022
-    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
     public preRender_wheel
 preRender_wheel proc far
     var_11A = word ptr -282

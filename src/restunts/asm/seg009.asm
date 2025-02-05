@@ -46,7 +46,7 @@ nosmart
     include seg041.inc
 seg009 segment byte public 'STUNTSC' use16
     assume cs:seg009
-    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
     public load_tracks_menu_shapes
     public preRender_icons
     public draw_2DtrackMap

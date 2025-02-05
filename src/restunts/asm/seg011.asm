@@ -46,7 +46,7 @@ nosmart
     include seg041.inc
 seg011 segment byte public 'STUNTSC' use16
     assume cs:seg011
-    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
     public ported_polarRadius3D_
     ; align 2
     db 0

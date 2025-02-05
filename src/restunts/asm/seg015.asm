@@ -46,7 +46,7 @@ nosmart
     include seg041.inc
 seg015 segment byte public 'STUNTSC' use16
     assume cs:seg015
-    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
     public preRender_sphere_helper2
 preRender_sphere_helper2 proc far
     var_1A = word ptr -26

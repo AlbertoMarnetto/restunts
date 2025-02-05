@@ -46,7 +46,7 @@ nosmart
     include seg041.inc
 seg021 segment byte public 'STUNTSC' use16
     assume cs:seg021
-    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
     public ported_heapsort_by_order_
 ported_heapsort_by_order_ proc far
     var_index = word ptr -8

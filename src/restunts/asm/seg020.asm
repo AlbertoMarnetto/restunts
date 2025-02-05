@@ -46,7 +46,7 @@ nosmart
     include seg041.inc
 seg020 segment byte public 'STUNTSC' use16
     assume cs:seg020
-    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
     public preRender_sphere_helper
 algn_36BBD:
     ; align 2

@@ -48,6 +48,6 @@ nosmart
     include seg041.inc
 seg041 segment byte public 'STACK' use16
     assume cs:seg041
-    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:@fardata
 seg041 ends
 end

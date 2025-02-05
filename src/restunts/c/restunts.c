@@ -354,7 +354,6 @@ extern struct RECTANGLE cliprect_unk;
 
 extern int polyinfonumpolys;
 extern unsigned char far* polyinfoptrs[]; // array size = MAX_POLY_INFO_COUNT 
-extern unsigned int poly_linked_list_40ED6[]; // array size = MAX_POLY_INFO_COUNT
 
 extern void preRender_default(int color, int vertlinecount, int* vertlines);
 
