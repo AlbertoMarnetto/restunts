@@ -1051,8 +1051,8 @@ dseg segment byte public 'STUNTSD' use16
     extrn word_40ECE:word
     extrn select_rect_param:word
     extrn polyinfoptr:dword
-    extrn poly_linked_list_40ED6:word
-    extrn word_411F6:word
+    extrn qpoly_linked_list_40ED6:word
+    extrn qword_411F6:word
     extrn polyinfoptrs:dword
     extrn mat_y0:MATRIX
     extrn polyinfoptrnext:word
@@ -1450,3 +1450,8 @@ dseg segment byte public 'STUNTSD' use16
     extrn replaybar_enabled:byte
     extrn word_46486:word
 dseg ends
+fseg segment byte public use16
+    extrn qpoly_linked_list_40ED6:word
+    extrn qword_411F6:word
+fseg ends
+

@@ -30,4 +30,11 @@ SEG000_TEXT ends
 endseg segment byte private 'ENDSEG' use16
 endseg ends
 
+xseg segment byte public use16
+emptyspace db 65534 dup(0)
+xseg ends
+
+fseg segment byte public use16
+fseg ends
+
 end

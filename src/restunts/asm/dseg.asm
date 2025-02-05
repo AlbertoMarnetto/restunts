@@ -1099,8 +1099,8 @@ dseg segment byte public 'STUNTSD' use16
     public word_40ECE
     public select_rect_param
     public polyinfoptr
-    public poly_linked_list_40ED6
-    public word_411F6
+    public qpoly_linked_list_40ED6
+    public qword_411F6
     public polyinfoptrs
     public mat_y0
     public polyinfoptrnext
@@ -41834,24 +41834,29 @@ transformedshape_arg2array db 126 dup(0)
 
 dseg ends
 
-fseg segment byte public use16
+xseg segment byte public use16
 emptyspace db 32768 dup(0)
-fseg ends
+xseg ends
 
 
-FARDATA
+fseg segment byte public use16
+    assume cs:dseg
+    assume es:nothing, ss:nothing, ds:dseg
+
     public qpolyinfoptr
-    public qpoly_linked_list_40ED6
-    public qword_411F6
+    public poly_linked_list_40ED6
+    public word_411F6
     public qpolyinfoptrs
 
 qpolyinfoptr     dw 700
 ; poly_linked_list_40ED6: MAX_POLY_INFO_COUNT times dw
-qpoly_linked_list_40ED6 dw 190h dup(0)
+poly_linked_list_40ED6 dw 190h dup(0)
 ; terminator for the list? In doubt, we copy that here
-qword_411F6     dw 0
+word_411F6     dw 0
 ; polyinfonumpolys: MAX_POLY_INFO_COUNT times dd, plus 6 db
 qpolyinfoptrs dd 300h dup(0)
 	db 6 dup(0)
 
 end
+
+
