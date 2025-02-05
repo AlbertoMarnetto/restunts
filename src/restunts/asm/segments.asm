@@ -1,4 +1,5 @@
 ; this file's compiled counterpart must be placed first in the list of input
+.386
 ; files sent to tlink. tlink orders the segments in the order they are seen.
 ; the following order ensures reversed and patched code, data and stack for the
 ; original game is placed first in the executable image, followed by our ported

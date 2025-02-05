@@ -1,4 +1,5 @@
 .model medium
+.386
 nosmart
     include structs.inc
     include custom.inc
@@ -45,7 +46,7 @@ nosmart
     include seg041.inc
 seg039 segment byte public 'STUNTSD' use16
     assume cs:seg039
-    assume es:nothing, ss:nothing, ds:dseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
     public word_3B1F0
     public word_3B1F2
     public word_3B1F4

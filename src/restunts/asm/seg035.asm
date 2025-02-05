@@ -1,4 +1,5 @@
 .model medium
+.386
 nosmart
     include structs.inc
     include custom.inc
@@ -45,7 +46,7 @@ nosmart
     include seg041.inc
 seg035 segment byte public 'STUNTSC' use16
     assume cs:seg035
-    assume es:nothing, ss:nothing, ds:dseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
     public ported_file_load_shape2d_res_fatal_
     public ported_file_load_shape2d_res_nofatal_
     public ported_file_load_shape2d_res_

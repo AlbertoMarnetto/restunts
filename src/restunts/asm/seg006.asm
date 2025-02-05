@@ -1,4 +1,5 @@
 .model medium
+.386
 nosmart
     include structs.inc
     include custom.inc
@@ -45,7 +46,7 @@ nosmart
     include seg041.inc
 seg006 segment byte public 'STUNTSC' use16
     assume cs:seg006
-    assume es:nothing, ss:nothing, ds:dseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
     public ported_init_polyinfo_
     public ported_copy_material_list_pointers_
     public ported_polyinfo_reset_

@@ -1,4 +1,5 @@
 .model medium
+.386
 nosmart
     include structs.inc
     include custom.inc
@@ -45,7 +46,7 @@ nosmart
     include seg041.inc
 seg030 segment byte public 'STUNTSC' use16
     assume cs:seg030
-    assume es:nothing, ss:nothing, ds:dseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
     public byte_39CCA
     public byte_39CCC
     public audio_make_filename

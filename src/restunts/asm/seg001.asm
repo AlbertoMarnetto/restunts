@@ -1,4 +1,5 @@
 .model medium
+.386
 nosmart
     include structs.inc
     include custom.inc
@@ -45,7 +46,7 @@ nosmart
     include seg041.inc
 seg001 segment byte public 'STUNTSC' use16
     assume cs:seg001
-    assume es:nothing, ss:nothing, ds:dseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
     public opponent_op
     public ported_mat_mul_vector2_
     public ported_update_player_state_

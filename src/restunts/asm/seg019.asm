@@ -1,4 +1,5 @@
 .model medium
+.386
 nosmart
     include structs.inc
     include custom.inc
@@ -45,7 +46,7 @@ nosmart
     include seg041.inc
 seg019 segment byte public 'STUNTSC' use16
     assume cs:seg019
-    assume es:nothing, ss:nothing, ds:dseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
     public preRender_wheel_helper2
 preRender_wheel_helper2 proc far
     var_C = word ptr -12

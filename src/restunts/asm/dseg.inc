@@ -1451,7 +1451,8 @@ dseg segment byte public 'STUNTSD' use16
     extrn word_46486:word
 dseg ends
 fseg segment byte public use16
-    extrn qpoly_linked_list_40ED6:word
-    extrn qword_411F6:word
+    extrn qpolyinfoptr:dword
+    extrn poly_linked_list_40ED6:word
+    extrn word_411F6:word
 fseg ends
 

@@ -1,4 +1,5 @@
 .model medium
+.386
 nosmart
     include structs.inc
     include custom.inc
@@ -46,7 +47,7 @@ nosmart
 DGROUP group dseg
 dseg segment byte public 'STUNTSD' use16
     assume cs:dseg
-    assume es:nothing, ss:nothing, ds:dseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
     public word_3B770
     public word_3B772
     public word_3B774
@@ -22281,7 +22282,7 @@ transshapepolyinfo     dd 0
 word_40ECE     dw 0
 select_rect_param     dw 0
 polyinfoptr     dd 0
-poly_linked_list_40ED6     dw 0
+qpoly_linked_list_40ED6     dw 0
     dw 0
     dw 0
     dw 0
@@ -22681,7 +22682,7 @@ poly_linked_list_40ED6     dw 0
     dw 0
     dw 0
     dw 0
-word_411F6     dw 0
+qword_411F6     dw 0
 polyinfoptrs     dd 0
     dd 0
     dd 0
@@ -41841,7 +41842,7 @@ xseg ends
 
 fseg segment byte public use16
     assume cs:dseg
-    assume es:nothing, ss:nothing, ds:dseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
 
     public qpolyinfoptr
     public poly_linked_list_40ED6
@@ -41856,6 +41857,7 @@ word_411F6     dw 0
 ; polyinfonumpolys: MAX_POLY_INFO_COUNT times dd, plus 6 db
 qpolyinfoptrs dd 300h dup(0)
 	db 6 dup(0)
+ends
 
 end
 

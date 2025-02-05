@@ -1,4 +1,5 @@
 .model medium
+.386
 nosmart
     include structs.inc
     include custom.inc
@@ -45,7 +46,7 @@ nosmart
     include seg041.inc
 seg033 segment byte public 'STUNTSC' use16
     assume cs:seg033
-    assume es:nothing, ss:nothing, ds:dseg
+    assume es:nothing, ss:nothing, ds:dseg, fs:fseg
     public ported_setup_mcgawnd1_
     public ported_setup_mcgawnd2_
 ported_setup_mcgawnd1_ proc far
