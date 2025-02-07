@@ -471,7 +471,7 @@ loc_3A156:
     call    rect_adjust_from_point
     add     sp, 4
     inc     di
-    cmp     di, 190h
+    cmp     di, 380h
     jl      short loc_3A156
     sub     ax, ax
     push    ax

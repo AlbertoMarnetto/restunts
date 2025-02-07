@@ -8,7 +8,7 @@
 #define huge
 #endif
 
-#define MAX_POLY_INFO_COUNT 0x190
+#define MAX_POLY_INFO_COUNT 0x380
 
 #pragma pack (push, 1)
 
@@ -504,6 +504,41 @@ extern void _srand(unsigned int);
 #define FP_SEG(x) 0
 #define FP_OFF(x) (size_t)x
 #endif
+
+extern char is_facing_camera(struct POINT2D far*);
+extern unsigned insert_newest_poly_in_poly_linked_list_40ED6(unsigned, unsigned);
+extern unsigned projectiondata9_times_ratio(unsigned, int);
+extern void __aFuldiv();
+
+extern unsigned word_40ECE;
+extern unsigned transshapenumverts;
+extern unsigned char far* transshapeprimitives;
+extern struct VECTOR far* transshapeverts;
+extern unsigned transshapenumpaints;
+extern unsigned char transshapematerial;
+extern unsigned char transshapeflags;
+extern struct RECTANGLE* transshaperectptr;
+extern struct MATRIX mat_temp;
+extern long invpow2tbl[32];
+extern unsigned char byte_4393D;
+extern unsigned word_4394E;
+extern unsigned poly_linked_list_40ED6_tail;
+extern unsigned word_4554A;
+extern unsigned word_443F2;
+extern unsigned char transshapenumvertscopy;
+extern struct POINT2D* polyvertpointptrtab[];
+extern unsigned select_rect_param;
+extern unsigned char primidxcounttab[];
+extern unsigned char primtypetab[];
+extern char far* transshapeprimptr;
+extern unsigned polyinfoptrnext;
+extern char far* polyinfoptr;
+extern char far* transshapepolyinfo;
+extern int far* polyinfoptrs[];
+extern unsigned polyinfonumpolys;
+extern char transprimitivepaintjob;
+extern unsigned char far* transshapeprimindexptr;
+extern char backlights_paint_override;
 
 extern char display_debug_overlay;
 

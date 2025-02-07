@@ -785,7 +785,7 @@ loc_106E4:
     mov     si, ax
     or      si, si
     jnz     short loc_1077F
-    mov     ax, 190h
+    mov     ax, 380h
     push    ax
     call    input_repeat_check
     add     sp, 2
@@ -813,7 +813,7 @@ loc_106E4:
     mov     si, ax
     or      si, si
     jnz     short loc_1077F
-    mov     ax, 190h
+    mov     ax, 380h
     push    ax
     call    input_repeat_check
     add     sp, 2
