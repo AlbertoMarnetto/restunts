@@ -200,6 +200,13 @@ struct TRACKOBJECT {
 	char  scene_unk5;        // always zero.
 };
 
+struct MEMCHUNK {
+	char resname[12];
+	unsigned ressize;
+	unsigned resofs;
+	unsigned resunk;
+};
+
 #pragma pack (pop)
 
 extern struct GAMEINFO gameconfig;
@@ -366,6 +373,7 @@ extern struct MEMCHUNK* resptr2;
 extern struct MEMCHUNK* resendptr1;
 extern struct MEMCHUNK* resendptr2;
 extern unsigned short resmaxsize;
+extern struct MEMCHUNK resources[];
 
 extern unsigned long timer_callback_counter;
 extern unsigned long last_timer_callback_counter;

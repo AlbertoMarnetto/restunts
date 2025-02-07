@@ -4917,6 +4917,7 @@ void shape3d_load_car_shapes(char arg_playercarid[], char arg_opponentcarid[]) {
 	int i;
 	struct VECTOR far* var_E;
 	unsigned long var_6;
+
 	aStxxx[2] = arg_playercarid[0];
 	aStxxx[3] = arg_playercarid[1];
 	aStxxx[4] = arg_playercarid[2];

@@ -1,7 +1,8 @@
 #ifdef RESTUNTS_DOS
 #include <dos.h>
+#include <stdio.h>
 #endif
-#include <stdlib.h>
+#include <stdlib.h> // / ///
 #include "externs.h"
 #include "memmgr.h"
 
@@ -105,6 +106,14 @@ const char* mmgr_path_to_name(const char* filename) {
 
 extern void far* ported_mmgr_alloc_pages_(const char* arg_0, unsigned short arg_2);
 
+void dump_chunks() {
+	struct MEMCHUNK * it;
+	printf("====================\n");
+	for (it = &resources[0]; it < (&resources[0]) + 49; ++it) {
+	printf("%12s : %5u %5u %1u \n", it->resname, it->resofs, it->ressize, it->resunk);
+	}
+	printf("====================\n");
+}
 void far* mmgr_alloc_pages(const char* arg_0, unsigned short arg_2) {
 	int i;
 	struct MEMCHUNK* resdi;
@@ -146,6 +155,7 @@ void far* mmgr_alloc_pages(const char* arg_0, unsigned short arg_2) {
 	
 		while (rax > ressi->resofs) {
 			if (ressi == resendptr2) {
+				dump_chunks();
 				fatal_error("reservememory - OUT OF MEMORY RESERVING %s P=%x HW=%x\r\n", arg_0, resdi->ressize, resmaxsize);
 			}
 
@@ -155,6 +165,7 @@ void far* mmgr_alloc_pages(const char* arg_0, unsigned short arg_2) {
 		}
 	}
 
+    dump_chunks();
 	return MK_FP(rdx, 0);
 }
 
