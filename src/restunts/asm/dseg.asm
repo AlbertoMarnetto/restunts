@@ -1182,7 +1182,7 @@ dseg segment byte public 'STUNTSD' use16
     public td10_track_check_rel
     public basdres
     public followOpponentFlag_copy
-    public currenttransshape
+    public qcurrenttransshape
     public terraincenterpos
     public carshapevec
     public carshapevec2
@@ -22281,8 +22281,8 @@ mat_y300     db 0
 transshapepolyinfo     dd 0
 word_40ECE     dw 0
 select_rect_param     dw 0
-polyinfoptr     dd 0
-poly_linked_list_40ED6     dw 0
+qpolyinfoptr     dd 0
+qpoly_linked_list_40ED6     dw 0
     dw 0
     dw 0
     dw 0
@@ -22682,8 +22682,8 @@ poly_linked_list_40ED6     dw 0
     dw 0
     dw 0
     dw 0
-word_411F6     dw 0
-polyinfoptrs     dd 0
+qword_411F6     dw 0
+qpolyinfoptrs     dd 0
     dd 0
     dd 0
     dd 0
@@ -41825,7 +41825,7 @@ word_46486     dw 0
     db 0
     db 0
 ; currenttransshape: 20 x TILES_TO_DRAW_COUNT times db 
-currenttransshape db 2210 dup(0)
+; currenttransshape db 2210 dup(0)
 ; transformedshape_zarray: 2 x TILES_TO_DRAW_COUNT times db 
 transformedshape_zarray db 250 dup(0)
 ; transformedshape_indices: 2 x TILES_TO_DRAW_COUNT times db 
@@ -41835,14 +41835,14 @@ transformedshape_arg2array db 126 dup(0)
 
 display_debug_overlay db 0
 ;ALIGN 4
-;qpolyinfoptr     dd 0
+polyinfoptr     dd 0
 ;; poly_linked_list_40ED6: MAX_POLY_INFO_COUNT times dw
-;qpoly_linked_list_40ED6 dw 190h dup(0)
+poly_linked_list_40ED6 dw 380h dup(0)
 ;; terminator for the list? In doubt, we copy that here
-;qword_411F6     dw 0
+word_411F6     dw 0
 ;; polyinfonumpolys: MAX_POLY_INFO_COUNT times dd, plus 6 db
-;qpolyinfoptrs dd 300h dup(0)
-;	db 6 dup(0)
+polyinfoptrs dd 380h dup(0)
+	db 6 dup(0)
 
 
 dseg ends
