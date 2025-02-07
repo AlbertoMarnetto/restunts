@@ -32,7 +32,7 @@ extern int terrainHeight;
 extern int planindex;
 extern int planindex_copy;
 extern char byte_4392C;
-extern struct TRANSFORMEDSHAPE3D currenttransshape[TILES_TO_DRAW_COUNT + 5];
+struct TRANSFORMEDSHAPE3D currenttransshape[TILES_TO_DRAW_COUNT + 5];
 //extern struct TRANSFORMEDSHAPE3D transshapeunk;
 extern struct TRANSFORMEDSHAPE3D* curtransshape_ptr;
 extern struct TRACKOBJECT trkObjectList[215]; // 215 entries
