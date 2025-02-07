@@ -408,7 +408,7 @@ loc_21F0F:
     jnz     short loc_21F19
     jmp     loc_21FF6
 loc_21F19:
-    mov     dashbmp_y_copy, 0C8h ; 'È'
+    mov     dashbmp_y_copy, 0C8h ; 'ï¿½'
 loc_21F1F:
     mov     ax, roofbmpheight_copy
     cmp     [bp+var_2], ax
@@ -473,7 +473,7 @@ loc_21FB8:
     jnz     short loc_21FC2
     jmp     loc_22064
 loc_21FC2:
-    mov     ax, 0C8h ; 'È'
+    mov     ax, 0C8h ; 'ï¿½'
     push    ax
     sub     ax, ax
     push    ax
@@ -505,10 +505,10 @@ loc_21FF6:
     jnz     short loc_2201A
     cmp     replaybar_enabled, 0
     jz      short loc_2201A
-    mov     height_above_replaybar, 97h ; '—'; 151 = height of render area above the replay menu bar
+    mov     height_above_replaybar, 97h ; 'ï¿½'; 151 = height of render area above the replay menu bar
     jmp     short loc_22020
 loc_2201A:
-    mov     height_above_replaybar, 0C8h ; 'È'; 200 = height of render area without the replay menu bar
+    mov     height_above_replaybar, 0C8h ; 'ï¿½'; 200 = height of render area without the replay menu bar
 loc_22020:
     mov     byte_449E2, 1
     mov     ax, roofbmpheight
@@ -525,7 +525,7 @@ loc_2203E:
     jnz     short loc_22048
     jmp     loc_21F19
 loc_22048:
-    mov     dashbmp_y_copy, 97h ; '—'
+    mov     dashbmp_y_copy, 97h ; 'ï¿½'
     jmp     loc_21F1F
     ; align 2
     db 144
@@ -593,7 +593,7 @@ loc_220DB:
     push    cs
     call near ptr setup_car_shapes
     add     sp, 2
-    mov     ax, 0C8h ; 'È'
+    mov     ax, 0C8h ; 'ï¿½'
     push    ax
     sub     ax, ax
     push    ax
@@ -761,7 +761,7 @@ loc_22298:
     call    setup_mcgawnd2
     sub     ax, ax
     push    ax
-    mov     ax, 0C8h ; 'È'  ; 200
+    mov     ax, 0C8h ; 'ï¿½'  ; 200
     push    ax
     mov     ax, 140h        ; 320
     push    ax
@@ -1044,6 +1044,7 @@ loc_22528:
     jmp     loc_2244E
 supersight_handle_f5:
     cmp     ax, 3F00h ; F5 pressed
+  
     jnz     short loc_22530
     jmp     supersight_toggle_debug
 loc_22530:
@@ -1295,7 +1296,7 @@ loc_22736:
     call    mouse_get_state
     add     sp, 6
     mov     di, mouse_xpos
-    sub     di, 0A0h ; ' '
+    sub     di, 0A0h ; 'ï¿½'
     push    di              ; int
     call    _abs
     add     sp, 2
@@ -1655,7 +1656,7 @@ loc_22A1E:
     jnz     short loc_22A40
     cmp     [bx+CARSTATE.car_trackdata3_index], 0FFFFh
     jz      short loc_22A40
-    cmp     [bp+var_E], 80h ; '€'
+    cmp     [bp+var_E], 80h ; 'ï¿½'
     jle     short loc_22A4D
     cmp     [bp+var_E], 380h
     jge     short loc_22A4D
@@ -1745,9 +1746,9 @@ loc_22A96:
     mov     di, 78h ; 'x'
     jmp     short loc_22B0D
 loc_22B04:
-    cmp     di, 0F0h ; 'ð'
+    cmp     di, 0F0h ; 'ï¿½'
     jle     short loc_22B0D
-    mov     di, 0F0h ; 'ð'
+    mov     di, 0F0h ; 'ï¿½'
 loc_22B0D:
     push    [bp+var_10]
     call    sin_fast
@@ -2634,10 +2635,10 @@ loc_23349:
     jmp     loc_23456
 loc_2338C:
     mov     [bp+var_8], 0
-    cmp     si, 0C8h ; 'È'
+    cmp     si, 0C8h ; 'ï¿½'
     jl      short loc_233B2
     mov     [bp+var_8], 2
-    sub     si, 0C8h ; 'È'
+    sub     si, 0C8h ; 'ï¿½'
     jmp     short loc_233BF
 loc_233A2:
     mov     [bp+var_6], 1
@@ -3223,7 +3224,7 @@ loc_2394E:
 loc_23988:
     mov     ax, 0Fh
     push    ax
-    mov     ax, 0C8h ; 'È'
+    mov     ax, 0C8h ; 'ï¿½'
     push    ax
     mov     ax, 140h
     push    ax
@@ -3297,7 +3298,7 @@ mouse_minmax_position proc far
     mov     bp, sp
     cmp     [bp+arg_0], 0
     jz      short loc_23A82
-    mov     ax, 0C8h ; 'È'
+    mov     ax, 0C8h ; 'ï¿½'
     push    ax
     mov     ax, 131h
     push    ax
@@ -3309,14 +3310,14 @@ mouse_minmax_position proc far
     add     sp, 8
     mov     ax, 64h ; 'd'
     push    ax
-    mov     ax, 0A0h ; ' '
+    mov     ax, 0A0h ; 'ï¿½'
     push    ax
     call    mouse_set_position
     add     sp, 4
     pop     bp
     retf
 loc_23A82:
-    mov     ax, 0C8h ; 'È'
+    mov     ax, 0C8h ; 'ï¿½'
     push    ax
     mov     ax, 140h
     push    ax
@@ -3548,9 +3549,9 @@ loc_23C10:
     push    word ptr fontledresptr
     call    font_set_fontdef2
     add     sp, 4
-    mov     ax, 0BBh ; '»'
+    mov     ax, 0BBh ; 'ï¿½'
     push    ax
-    mov     ax, 0D8h ; 'Ø'
+    mov     ax, 0D8h ; 'ï¿½'
     push    ax
     mov     ax, offset resID_byte1
     push    ax
@@ -3588,9 +3589,9 @@ loc_23C66:
     push    word ptr fontledresptr
     call    font_set_fontdef2
     add     sp, 4
-    mov     ax, 0BBh ; '»'
+    mov     ax, 0BBh ; 'ï¿½'
     push    ax
-    mov     ax, 98h ; '˜'
+    mov     ax, 98h ; 'ï¿½'
     push    ax
     mov     ax, offset resID_byte1
     push    ax
@@ -3706,9 +3707,9 @@ loc_23DAB:
     push    ax
     mov     ax, 74h ; 't'
     push    ax
-    mov     ax, 0B1h ; '±'
+    mov     ax, 0B1h ; 'ï¿½'
     push    ax
-    mov     ax, 9Ah ; 'š'
+    mov     ax, 9Ah ; 'ï¿½'
     push    ax
     call    sprite_1_unk
     add     sp, 0Ah
@@ -3716,18 +3717,18 @@ loc_23DAB:
     mov     ax, 6
     push    ax
     push    ax
-    mov     ax, 0B1h ; '±'
+    mov     ax, 0B1h ; 'ï¿½'
     push    ax
     lea     ax, [si+9Ah]
     push    ax
     call    sprite_1_unk
     add     sp, 0Ah
     push    word_407FE
-    mov     ax, 0B6h ; '¶'
+    mov     ax, 0B6h ; 'ï¿½'
     push    ax
     lea     ax, [di+9Fh]
     push    ax
-    mov     ax, 0B1h ; '±'
+    mov     ax, 0B1h ; 'ï¿½'
     push    ax
     lea     ax, [di+9Ah]
     push    ax
@@ -3994,7 +3995,7 @@ loc_24082:
     push    ax
     call    polarAngle
     add     sp, 4
-    add     ax, 80h ; '€'
+    add     ax, 80h ; 'ï¿½'
 smart
     and     ah, 3
 nosmart
@@ -4503,7 +4504,7 @@ loc_2450A:
     jnz     short loc_24548
     jmp     loc_24828
 loc_24548:
-    mov     waitflag, 96h ; '–'
+    mov     waitflag, 96h ; 'ï¿½'
     call    show_waiting
     push    si
     push    di
@@ -4521,7 +4522,7 @@ loc_24548:
     mov     [bp+var_4], ax
     mov     ax, 140h
     push    ax
-    mov     ax, 0EEh ; 'î'
+    mov     ax, 0EEh ; 'ï¿½'
     push    ax              ; char *
     push    cs
     call near ptr ported_file_load_replay_
@@ -4617,7 +4618,7 @@ loc_24642:
     push    ax              ; int
     mov     ax, 140h
     push    ax
-    mov     ax, 0EEh ; 'î'
+    mov     ax, 0EEh ; 'ï¿½'
     push    ax              ; char *
     call    do_savefile_dialog
     add     sp, 8
@@ -4631,7 +4632,7 @@ loc_2466F:
     push    ax              ; int
     mov     ax, 140h
     push    ax
-    mov     ax, 0EEh ; 'î'
+    mov     ax, 0EEh ; 'ï¿½'
     push    ax              ; char *
     call    file_build_path
     add     sp, 8
