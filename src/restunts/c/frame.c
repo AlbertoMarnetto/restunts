@@ -3,7 +3,6 @@
 #include "shape3d.h"
 
 #define TILES_TO_DRAW_COUNT 110
-#define DISPLAY_DEBUG_INFO 1
 
 extern struct RECTANGLE* rectptr_unk2;
 extern struct RECTANGLE rect_array_unk[];
@@ -1391,14 +1390,15 @@ start_rendering:
 		}
 	}
 
-#if DISPLAY_DEBUG_INFO
-	// Debug: print discarded tiles
-	_sprintf(discarded_tiles_str, "Disc: %d", discarded_tiles);
-	font_set_fontdef2(fontnptr);
-	si = discarded_tiles == 0 ? 11 : discarded_tiles < 30 ? 14 : 12; // cyan, yellow, red
-	rect_union(intro_draw_text(discarded_tiles_str, 0x0C, roofbmpheight + 2, si, 0), &rect_unk11, &rect_unk11);
-	font_set_fontdef();
-#endif
+	if (display_debug_overlay)
+	{
+		// Debug: print discarded tiles
+		_sprintf(discarded_tiles_str, "Disc: %d", discarded_tiles);
+		font_set_fontdef2(fontnptr);
+		si = discarded_tiles == 0 ? 11 : discarded_tiles < 30 ? 14 : 12; // cyan, yellow, red
+		rect_union(intro_draw_text(discarded_tiles_str, 0x0C, roofbmpheight + 2, si, 0), &rect_unk11, &rect_unk11);
+		font_set_fontdef();
+	}
 
 	if (is_sprite_rendering_slow_copy != 0) {
 		rect_union(draw_ingame_text(), rect_unk, rect_unk);

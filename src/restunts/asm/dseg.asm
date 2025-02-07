@@ -1497,6 +1497,7 @@ dseg segment byte public 'STUNTSD' use16
     public mat_x_rot
     public replaybar_enabled
     public word_46486
+    public display_debug_overlay
 word_3B770     dw 0
 word_3B772     dw 0
 word_3B774     dw 0
@@ -41831,15 +41832,17 @@ transformedshape_zarray db 250 dup(0)
 transformedshape_indices db 250 dup(0)
 ; transformedshape_arg2array: 1 x TILES_TO_DRAW_COUNT times db 
 transformedshape_arg2array db 126 dup(0)
-ALIGN 4
-qpolyinfoptr     dd 0
-; poly_linked_list_40ED6: MAX_POLY_INFO_COUNT times dw
-qpoly_linked_list_40ED6 dw 190h dup(0)
-; terminator for the list? In doubt, we copy that here
-qword_411F6     dw 0
-; polyinfonumpolys: MAX_POLY_INFO_COUNT times dd, plus 6 db
-qpolyinfoptrs dd 300h dup(0)
-	db 6 dup(0)
+
+display_debug_overlay db 0
+;ALIGN 4
+;qpolyinfoptr     dd 0
+;; poly_linked_list_40ED6: MAX_POLY_INFO_COUNT times dw
+;qpoly_linked_list_40ED6 dw 190h dup(0)
+;; terminator for the list? In doubt, we copy that here
+;qword_411F6     dw 0
+;; polyinfonumpolys: MAX_POLY_INFO_COUNT times dd, plus 6 db
+;qpolyinfoptrs dd 300h dup(0)
+;	db 6 dup(0)
 
 
 dseg ends

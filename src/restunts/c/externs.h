@@ -505,4 +505,6 @@ extern void _srand(unsigned int);
 #define FP_OFF(x) (size_t)x
 #endif
 
+extern char display_debug_overlay;
+
 #endif

@@ -1449,4 +1449,5 @@ dseg segment byte public 'STUNTSD' use16
     extrn mat_x_rot:MATRIX
     extrn replaybar_enabled:byte
     extrn word_46486:word
+    extrn display_debug_overlay:byte
 dseg ends
