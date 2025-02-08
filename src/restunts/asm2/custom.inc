@@ -9,5 +9,6 @@ endseg ends
 
 ; externs for implementations in frame.c
 extrn update_frame:proc
+extrn currenttransshape:TRANSFORMEDSHAPE
 
 extrn stuntsmain:proc
