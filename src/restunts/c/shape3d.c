@@ -726,7 +726,7 @@ loc_25282:
 
 	transshapepolyinfo = polyinfoptr + polyinfoptrnext;
 	polyinfoptrs[polyinfonumpolys] = transshapepolyinfo;
-	_printf("P %x %p\n", polyinfonumpolys, transshapepolyinfo);
+	// _printf("P %x %p\n", polyinfonumpolys, transshapepolyinfo);
 
 	transprimitivepaintjob = transshapeprimitives[2 + transshapematerial];
 	transshapeprimitives += 2 + transshapenumpaints; // <- skip header and materials, -> point at indices
