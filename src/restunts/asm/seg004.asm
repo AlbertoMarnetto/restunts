@@ -1251,7 +1251,7 @@ loc_1EC62:
     jmp     code_bto_blank
 loc_1EC79:
     mov     ax, loopSurface_XBounds1[di]
-    add     ax, 380h
+    add     ax, 190h
     cmp     ax, [bp+var_06effX]
     jge     short loc_1EC88
     jmp     code_bto_blank
@@ -1260,7 +1260,7 @@ loc_1EC88:
     cmp     loopSurface_XBounds1[di], ax
     jge     short loc_1EC9D
     mov     ax, loopSurface_XBounds0[di]
-    add     ax, 380h
+    add     ax, 190h
     cmp     ax, [bp+var_06effX]
     jg      short loc_1ECF3
 loc_1EC9D:
@@ -1295,7 +1295,7 @@ loc_1EC9D:
     jmp     code_bto_blank
 loc_1ECE5:
     mov     ax, [bp+var_misc3C]
-    add     ax, 380h
+    add     ax, 190h
     cmp     ax, [bp+var_06effX]
     jg      short loc_1ECF3
     jmp     code_bto_blank
@@ -1324,14 +1324,14 @@ loc_1ED1B:
     jmp     code_bto_loopBase
 loc_1ED2B:
     mov     ax, loopSurface_XBounds1[di]
-    add     ax, 380h
+    add     ax, 190h
     cmp     ax, [bp+var_06effX]
     jl      short code_bto_loopBase
     mov     ax, [bp+var_06effX]
     cmp     loopSurface_XBounds1[di], ax
     jge     short loc_1ED4C
     mov     ax, loopSurface_XBounds0[di]
-    add     ax, 380h
+    add     ax, 190h
     cmp     ax, [bp+var_06effX]
     jg      short loc_1ECF3
 loc_1ED4C:
@@ -1369,7 +1369,7 @@ loc_1ED4C:
     cmp     [bp+var_misc3C], ax
     jge     short code_bto_loopBase
     mov     ax, [bp+var_misc3C]
-    add     ax, 380h
+    add     ax, 190h
     cmp     ax, [bp+var_06effX]
     jle     short code_bto_loopBase
     jmp     loc_1ECF3
