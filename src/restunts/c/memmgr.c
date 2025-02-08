@@ -2,7 +2,6 @@
 #include <dos.h>
 #include <stdio.h>
 #endif
-#include <stdlib.h> // / ///
 #include "externs.h"
 #include "memmgr.h"
 
@@ -91,6 +90,7 @@ struct MEMCHUNK* resptr2 = resources;
 const char* mmgr_path_to_name(const char* filename) {
 	const char* c;
 	const char* result;
+	return ported_mmgr_path_to_name_(filename);
 
 	pushregs();
 	
@@ -120,6 +120,7 @@ void far* mmgr_alloc_pages(const char* arg_0, unsigned short arg_2) {
 	struct MEMCHUNK* ressi;
 	const char* chunkname;
 	unsigned rax, rdx;
+	return ported_mmgr_alloc_pages_(arg_0, arg_2);
 
 	resdi = resptr2;
 	ressi = resendptr1;
@@ -170,6 +171,7 @@ void far* mmgr_alloc_pages(const char* arg_0, unsigned short arg_2) {
 }
 
 void far* mmgr_alloc_resbytes(const char* name, long int size) {
+	return ported_mmgr_alloc_resbytes_(name, size);
 	return mmgr_alloc_pages(name, size / 16);
 }
 
@@ -179,6 +181,7 @@ void mmgr_alloc_resmem(unsigned short arg_0) {
 	unsigned maxblocks;
 	struct MEMCHUNK* rp;
 	char* tempptr;
+	return ported_mmgr_alloc_resmem_(arg_0);
 
 #ifdef RESTUNTS_DOS
 	psp = dos_get_psp();
@@ -218,10 +221,12 @@ void mmgr_alloc_resmem(unsigned short arg_0) {
 }
 
 void mmgr_alloc_a000(void) {
+	return ported_mmgr_alloc_a000_();
 	mmgr_alloc_resmem(0xa000);
 }
 
 unsigned short mmgr_get_ofs_diff(void) {
+	return ported_mmgr_get_ofs_diff_();
 	return resendptr2->resofs - resptr2->resofs - resptr2->ressize;
 }
 
@@ -231,6 +236,7 @@ void far* mmgr_free(char far* ptr) {
 	unsigned ptrseg;
 	struct MEMCHUNK* ressi;
 	struct MEMCHUNK* resbx;
+	return ported_mmgr_free_(ptr);
 
 	ressi = resptr2;
 	ptrseg = FP_SEG(ptr);
@@ -277,7 +283,8 @@ void mmgr_copy_paras(unsigned short srcseg, unsigned short destseg, short paras)
 	unsigned short count; // number of words to copy
 	unsigned short far * srcptr;
 	unsigned short far * destptr;
-	
+	return ported_mmgr_copy_paras_(srcseg, destseg, paras);
+
 	while (paras != 0) {
 		count = 0x8000; // 64k in words
 		paras -= 0x1000; // 64k in paras
@@ -305,6 +312,7 @@ void copy_paras_reverse(unsigned short srcseg, unsigned short destseg, short par
 	unsigned short count, ofs;
 	unsigned short far* destptr;
 	unsigned short far* srcptr;
+return ported_copy_paras_reverse_(srcseg, destseg, paras);
 
 	pushregs();
 
@@ -340,6 +348,7 @@ void mmgr_find_free(void) {
 	unsigned short regax, regdx;
 	struct MEMCHUNK* ressi;
 	struct MEMCHUNK* resdi;
+	return ported_mmgr_find_free_();
 
 	pushregs();
 
@@ -384,7 +393,8 @@ void far* mmgr_get_chunk_by_name(const char* name) {
 	int regbx, regax;
 	struct MEMCHUNK* ressi;
 	int found = 0;
-	
+	return ported_mmgr_get_chunk_by_name_(name);
+
 	ressi = resendptr1;
 	pcdi = mmgr_path_to_name(name);
 
@@ -433,6 +443,7 @@ void mmgr_release(char far* ptr) {
 	char* strdi;
 	struct MEMCHUNK* ressi;
 	struct MEMCHUNK* resdi;
+	return ported_mmgr_release_(ptr);
 
 	pushregs();
 	__asm {
@@ -469,6 +480,7 @@ unsigned short mmgr_get_chunk_size(char far* ptr) {
 	char* strdi;
 	struct MEMCHUNK* ressi;
 	struct MEMCHUNK* resdi;
+	return ported_mmgr_get_chunk_size_(ptr);
 
 	regax = FP_SEG(ptr);
 	ressi = resptr2;
@@ -488,6 +500,7 @@ unsigned short mmgr_resize_memory(unsigned short arg_0, unsigned short arg_2, un
 	char* strdi;
 	struct MEMCHUNK* ressi;
 	struct MEMCHUNK* resdi;
+	return ported_mmgr_resize_memory_(arg_0, arg_2, arg_4);
 
 	pushregs();
 
@@ -545,6 +558,7 @@ void far* mmgr_op_unk(char far* ptr) {
 	char* strdi;
 	struct MEMCHUNK* ressi;
 	struct MEMCHUNK* resdi;
+	return ported_mmgr_op_unk_(ptr);
 
 	regax = FP_SEG(ptr);
 	ressi = resptr2;
@@ -588,11 +602,13 @@ void far* mmgr_op_unk(char far* ptr) {
 
 unsigned long mmgr_get_res_ofs_diff_scaled(void) {
 	unsigned long result = mmgr_get_ofs_diff();
+	return ported_mmgr_get_res_ofs_diff_scaled_();
 	return result << 4;
 }
 
 unsigned long mmgr_get_chunk_size_bytes(char far* ptr) {
 	unsigned long result = mmgr_get_chunk_size(ptr);
+	return ported_mmgr_get_chunk_size_bytes_();
 	return result << 4;
 }
 //#endif
