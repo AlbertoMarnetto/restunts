@@ -8,6 +8,11 @@ restunts-original: asmorig
 	if exist makefile make /DTARGET=original
 	cd ..
 
+sight: asm2 c2
+	cd dos
+	if exist makefile make /DTARGET=sight
+	cd ..
+
 asm:
 	cd asm
 	if exist makefile make
@@ -18,8 +23,18 @@ asmorig:
 	if exist makefile make
 	cd ..
 
+asm2:
+	cd asm2
+	if exist makefile make
+	cd ..
+
 c:
 	cd c
+	if exist makefile make
+	cd ..
+
+c2:
+	cd c2
 	if exist makefile make
 	cd ..
 
@@ -45,10 +60,16 @@ clean:
 	cd c
 	if exist makefile make clean
 	cd ..
+	cd c2
+	if exist makefile make clean
+	cd ..
 	cd asm
 	if exist makefile make clean
 	cd ..
 	cd asmorig
+	if exist makefile make clean
+	cd ..
+	cd asm2
 	if exist makefile make clean
 	cd ..
 	cd sdl
