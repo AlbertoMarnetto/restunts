@@ -2720,7 +2720,11 @@ loc_23456:
     mov     ax, si
     shl     ax, 1
     mov     [bp+var_20], ax
-    push    meter_needle_color
+    ; Patch #1 ----*
+    ; Replaced needle colour for speed-o-meter
+    ; Original code:
+    ;push    meter_needle_color
+	push    simd_player.field_A6+8
     mov     bx, ax
     mov     al, (simd_player.spdpoints+1)[bx]
     sub     ah, ah
@@ -2735,7 +2739,26 @@ loc_23485:
     mov     ax, di
     shl     ax, 1
     mov     [bp+var_20], ax
-    push    meter_needle_color
+
+    ; Replaced needle colour for RPM meter
+    ; Original code:
+    ;push    meter_needle_color
+
+    ; This line is for the first version of the patch
+    ;push    simd_player.field_A6+8
+
+   ; This block is the new version of the patch   
+    cmp     byte ptr [simd_player.field_A6+9], 0  ; Check to see if the high byte is zero
+    jz      use_the_same_colour
+    push    simd_player.field_A6+9                ; It's not, so push this high byte as the colour
+    jmp     needle_value_successfully_set         ; Continue with the old code
+use_the_same_colour:
+    push    simd_player.field_A6+8                ; It is, so push the low byte as the colour
+needle_value_successfully_set:
+    nop                                           ; Alignment bytes
+    nop
+    nop
+
     mov     bx, ax
     mov     al, (simd_player.revpoints+1)[bx]
     sub     ah, ah
