@@ -1398,6 +1398,14 @@ start_rendering:
 		si = discarded_tiles == 0 ? 11 : discarded_tiles < 30 ? 14 : 12; // cyan, yellow, red
 		rect_union(intro_draw_text(discarded_tiles_str, 0x0C, roofbmpheight + 2, si, 0), &rect_unk11, &rect_unk11);
 		font_set_fontdef();
+
+		// Debug: print discarded tiles
+		font_set_fontdef2(fontnptr);
+		rect_union(intro_draw_text(printme1, 0x0C, roofbmpheight + 12, 14, 0), &rect_unk11, &rect_unk11);
+		font_set_fontdef();
+		font_set_fontdef2(fontnptr);
+		rect_union(intro_draw_text(printme2, 0x0C, roofbmpheight + 22, 14, 0), &rect_unk11, &rect_unk11);
+		font_set_fontdef();
 	}
 
 	if (is_sprite_rendering_slow_copy != 0) {

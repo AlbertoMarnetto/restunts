@@ -1498,6 +1498,9 @@ dseg segment byte public 'STUNTSD' use16
     public replaybar_enabled
     public word_46486
     public display_debug_overlay
+    public printme1
+    public printme2
+	public donttouch
 word_3B770     dw 0
 word_3B772     dw 0
 word_3B774     dw 0
@@ -41837,12 +41840,15 @@ display_debug_overlay db 0
 ;ALIGN 4
 polyinfoptr     dd 0
 ;; poly_linked_list_40ED6: MAX_POLY_INFO_COUNT times dw
-poly_linked_list_40ED6 dw 380h dup(0)
+poly_linked_list_40ED6 dw 260h dup(0)
 ;; terminator for the list? In doubt, we copy that here
 word_411F6     dw 0
 ;; polyinfonumpolys: MAX_POLY_INFO_COUNT times dd, plus 6 db
-polyinfoptrs dd 380h dup(0)
+polyinfoptrs dd 260h dup(0)
 	db 6 dup(0)
+donttouch db 10 dup(0)
+printme1 db 70 dup(0)
+printme2 db 70 dup(0)
 
 
 dseg ends

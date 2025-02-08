@@ -2600,6 +2600,10 @@ extern unsigned insert_newest_poly_in_poly_linked_list_40ED6(unsigned arg_0, uns
 	if (polyinfonumpolys == MAX_POLY_INFO_COUNT) {
 		return 1;
 	}
+	_sprintf(printme1, "# = %3d, base = %p, used = %4d,",
+		polyinfonumpolys, polyinfoptr, polyinfoptrnext);
+	_sprintf(printme2, "linkend = %p, danger = %p",
+		&poly_linked_list_40ED6[MAX_POLY_INFO_COUNT], &donttouch);
 	if (polyinfoptrnext <= 0x2872) return 0;
 	printf("End of memory: polyinfoptrnext");
 	return 1;
@@ -2652,6 +2656,7 @@ void polyinfo_reset(void) {
 	polyinfoptrnext = 0;
 	word_40ECE = 0;
 	poly_linked_list_40ED6[MAX_POLY_INFO_COUNT] = 0xFFFF;
+	poly_linked_list_40ED6[MAX_POLY_INFO_COUNT + 1] = 0xFFFF;
 	word_443F2 = MAX_POLY_INFO_COUNT;
 }
 
@@ -2663,7 +2668,7 @@ void calc_sincos80(void) {
 }
 
 void init_polyinfo(void) {
-	polyinfoptr = mmgr_alloc_resbytes("polyinfo", 0x28A0);
+	polyinfoptr = mmgr_alloc_resbytes("polyinfo", MAX_POLY_INFO_COUNT * 26);
 	
 	mat_rot_y(&mat_y0, 0);
 	mat_rot_y(&mat_y100, 0x100);

@@ -1450,4 +1450,7 @@ dseg segment byte public 'STUNTSD' use16
     extrn replaybar_enabled:byte
     extrn word_46486:word
     extrn display_debug_overlay:byte
+    extrn printme1:byte
+    extrn printme2:byte
+    extrn donttouch:byte
 dseg ends

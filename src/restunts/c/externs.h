@@ -8,7 +8,7 @@
 #define huge
 #endif
 
-#define MAX_POLY_INFO_COUNT 0x190
+#define MAX_POLY_INFO_COUNT 0x250
 
 #pragma pack (push, 1)
 
@@ -506,5 +506,8 @@ extern void _srand(unsigned int);
 #endif
 
 extern char display_debug_overlay;
+extern char printme1[];
+extern char printme2[];
+extern char donttouch[];
 
 #endif
