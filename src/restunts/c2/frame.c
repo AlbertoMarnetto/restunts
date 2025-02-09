@@ -264,6 +264,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 
 	unsigned discarded_tiles;
 	char discarded_tiles_str[50];
+	char is_first_attempt;
 	char is_last_attempt;
 	char has_attempt_failed;
 
@@ -712,6 +713,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	si = 0;
 
 	discarded_tiles = 0;
+	is_first_attempt = 1;
 	is_last_attempt = 0;
 start_rendering:
 	// With the information collected by the previus tile-scan algorithm,
@@ -728,7 +730,7 @@ start_rendering:
 		terr_map_value = tiles_to_draw_terr_type_vec[si];
 		// On the first attempt, draw everything at max resolution. If it fails
 		// (too many polygons), use the given detail level
-		tile_det_level = (discarded_tiles == 0 ? 0 : tile_detail_level[si]);  // Ghidra: 19f1:208d
+		tile_det_level = (is_first_attempt ? 0 : tile_detail_level[si]);
 		var_12A = 0;
 		if (elem_map_value == 0) {
 			var_counter = 1;
@@ -1290,16 +1292,33 @@ start_rendering:
 	}
 	if ((si < TILES_TO_DRAW_COUNT || has_attempt_failed > 0) && ! is_last_attempt)
 	{
-		// Rendering failed (due to out-of-memory). Retry with less tiles.
-		discarded_tiles += 20;
-		if (discarded_tiles > TILES_TO_DRAW_COUNT - 4) {
-			discarded_tiles = TILES_TO_DRAW_COUNT - 4;
-			is_last_attempt = 1;
+		// Rendering failed (due to out-of-memory).
+		// If first attempt (drawing everything with max detail, try to just
+		// drop the deatil (this should lead to a 30% drop of the # of polygons
+		// needed). Otherwise, start to drop tiles
+		if (is_first_attempt) {
+			is_first_attempt = 0;
+		}
+		else
+		{
+			discarded_tiles += 20;
+			if (discarded_tiles > TILES_TO_DRAW_COUNT - 4) {
+				discarded_tiles = TILES_TO_DRAW_COUNT - 4;
+				is_last_attempt = 1;
+			}
 		}
 		polyinfo_reset();
 		goto start_rendering;
 	}
-	//printf("%d\n", si);
+
+	if (display_debug_overlay)
+	{
+		// Debug: print discarded tiles
+		_sprintf(
+			discarded_tiles_str,
+			"Polys: %3u, memory: %5u, disc: %2u",
+			polyinfonumpolys, polyinfoptrnext, discarded_tiles);
+	}
 
 	// Draw the skybox
 	var_132 = skybox_op(arg_0, arg_cliprectptr, skybox_parameter, &var_mat, car_rot_z_3, car_rot_x_2, cam_pos.y);
@@ -1391,10 +1410,8 @@ start_rendering:
 
 	if (display_debug_overlay)
 	{
-		// Debug: print discarded tiles
-		_sprintf(discarded_tiles_str, "Disc: %d", discarded_tiles);
 		font_set_fontdef2(fontnptr);
-		si = discarded_tiles == 0 ? 11 : discarded_tiles < 30 ? 14 : 12; // cyan, yellow, red
+		si = is_first_attempt ? 11 : discarded_tiles < 30 ? 14 : 12; // cyan, yellow, red
 		rect_union(intro_draw_text(discarded_tiles_str, 0x0C, roofbmpheight + 2, si, 0), &rect_unk11, &rect_unk11);
 		font_set_fontdef();
 	}
