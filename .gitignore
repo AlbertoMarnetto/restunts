@@ -30,6 +30,7 @@ stunts/*.PVS
 stunts/*.RES
 stunts/*.RPL
 stunts/*.TRK
+stunts/*.TXT
 stunts/*.VSH
 stunts/*.3sh
 stunts/*.bni
@@ -37,4 +38,5 @@ stunts/*.hig
 stunts/*.res
 stunts/*.rpl
 stunts/*.trk
+stunts/*.txt
 stunts/*.vsh
