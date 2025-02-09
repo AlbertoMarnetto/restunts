@@ -826,15 +826,15 @@ loc_1A585:
     jz      short loc_1A58F
     jmp     loc_1A66D
 loc_1A58F:
-    mov     currenttransshape.ts_rectptr, offset rect_unk9
+    mov     ex_currenttransshape.ts_rectptr, offset rect_unk9
     mov     al, [bp+var_122]
     or      al, 7
-    mov     currenttransshape.ts_flags, al
-    mov     currenttransshape.ts_rotvec.vx, 0
+    mov     ex_currenttransshape.ts_flags, al
+    mov     ex_currenttransshape.ts_rotvec.vx, 0
 loc_1A5A4:
-    mov     currenttransshape.ts_rotvec.vy, 0
-    mov     currenttransshape.ts_unk, 400h
-    mov     currenttransshape.ts_material, 0
+    mov     ex_currenttransshape.ts_rotvec.vy, 0
+    mov     ex_currenttransshape.ts_unk, 400h
+    mov     ex_currenttransshape.ts_material, 0
     mov     [bp+var_counter], 0
 loc_1A5BA:
     mov     bx, [bp+var_counter]
@@ -870,7 +870,7 @@ loc_1A5DD:
     call    mat_mul_vector
     add     sp, 6
     mov     [bp+var_vec7.vz], 3A98h; 15000
-    mov     ax, offset currenttransshape
+    mov     ax, offset ex_currenttransshape
     push    ax
     lea     ax, [bp+var_mat]
     push    ax
@@ -878,16 +878,16 @@ loc_1A5DD:
     push    ax
     call    mat_mul_vector
     add     sp, 6
-    cmp     currenttransshape.ts_pos.vz, 0C8h ; 'È'
+    cmp     ex_currenttransshape.ts_pos.vz, 0C8h ; 'È'
     jle     short loc_1A661
     mov     bx, [bp+var_counter]
     shl     bx, 1
     mov     ax, off_3BE44[bx]
-    mov     currenttransshape.ts_shapeptr, ax
+    mov     ex_currenttransshape.ts_shapeptr, ax
     mov     ax, [bp+var_angY]
     neg     ax
-    mov     currenttransshape.ts_rotvec.vz, ax
-    mov     ax, offset currenttransshape
+    mov     ex_currenttransshape.ts_rotvec.vz, ax
+    mov     ax, offset ex_currenttransshape
     push    ax
     call    transformed_shape_op
     add     sp, 2
@@ -1705,37 +1705,37 @@ loc_1ADF6:
     mov     bx, [bp+var_trkobjectptr]
     mov     ax, [bx+TRACKOBJECT.ss_loShapePtr]
 loc_1ADFC:
-    mov     currenttransshape.ts_shapeptr, ax
+    mov     ex_currenttransshape.ts_shapeptr, ax
     mov     al, [bp+var_pos2lookupadjust]
     cbw
     mov     bx, ax
     shl     bx, 1
     mov     ax, trackcenterpos2[bx]
     sub     ax, [bp+var_vec4.vx]
-    mov     currenttransshape.ts_pos.vx, ax
+    mov     ex_currenttransshape.ts_pos.vx, ax
     mov     ax, [bp+var_vec4.vy]
     neg     ax
-    mov     currenttransshape.ts_pos.vy, ax
+    mov     ex_currenttransshape.ts_pos.vy, ax
     mov     al, [bp+var_poslookupadjust]
     cbw
     mov     bx, ax
     shl     bx, 1
     mov     ax, trackcenterpos[bx]
     sub     ax, [bp+var_vec4.vz]
-    mov     currenttransshape.ts_pos.vz, ax
-    mov     currenttransshape.ts_rectptr, offset rect_unk2
+    mov     ex_currenttransshape.ts_pos.vz, ax
+    mov     ex_currenttransshape.ts_rectptr, offset rect_unk2
     mov     al, [bp+var_122]
     or      al, 5
-    mov     currenttransshape.ts_flags, al
-    mov     currenttransshape.ts_rotvec.vx, 0
-    mov     currenttransshape.ts_rotvec.vy, 0
+    mov     ex_currenttransshape.ts_flags, al
+    mov     ex_currenttransshape.ts_rotvec.vx, 0
+    mov     ex_currenttransshape.ts_rotvec.vy, 0
     mov     bx, di
     shl     bx, 1
     mov     ax, word_3C0D6[bx]
-    mov     currenttransshape.ts_rotvec.vz, ax
-    mov     currenttransshape.ts_unk, 400h
-    mov     currenttransshape.ts_material, 0
-    mov     ax, offset currenttransshape
+    mov     ex_currenttransshape.ts_rotvec.vz, ax
+    mov     ex_currenttransshape.ts_unk, 400h
+    mov     ex_currenttransshape.ts_material, 0
+    mov     ax, offset ex_currenttransshape
     push    ax
     call    transformed_shape_op
     add     sp, 2
@@ -1802,29 +1802,29 @@ loc_1AEEE:
     mov     [bp+var_trkobject_ptr], ax
     mov     bx, ax
     mov     ax, [bx+TRACKOBJECT.ss_shapePtr]
-    mov     currenttransshape.ts_shapeptr, ax
+    mov     ex_currenttransshape.ts_shapeptr, ax
     mov     al, [bp+var_pos2lookup]
     cbw
     mov     bx, ax
     shl     bx, 1
     mov     ax, trackcenterpos2[bx]
     sub     ax, [bp+var_vec4.vx]
-    mov     currenttransshape.ts_pos.vx, ax
+    mov     ex_currenttransshape.ts_pos.vx, ax
     mov     ax, [bp+var_hillheight]
     sub     ax, [bp+var_vec4.vy]
-    mov     currenttransshape.ts_pos.vy, ax
+    mov     ex_currenttransshape.ts_pos.vy, ax
     mov     al, [bp+var_poslookup]
     cbw
     mov     bx, ax
     shl     bx, 1
     mov     ax, trackcenterpos[bx]
     sub     ax, [bp+var_vec4.vz]
-    mov     currenttransshape.ts_pos.vz, ax
+    mov     ex_currenttransshape.ts_pos.vz, ax
     cmp     [bp+var_hillheight], 0
     jz      short loc_1AF47
     jmp     loc_1B0D4
 loc_1AF47:
-    mov     currenttransshape.ts_rectptr, offset rect_unk2
+    mov     ex_currenttransshape.ts_rectptr, offset rect_unk2
     jmp     loc_1B0DA
 loc_1AF50:
     mov     [bp+var_hillheight], 0
@@ -1875,31 +1875,31 @@ loc_1AFB4:
     mov     [bp+var_trkobject_ptr], ax
     mov     bx, ax
     mov     ax, [bx+TRACKOBJECT.ss_shapePtr]
-    mov     currenttransshape.ts_shapeptr, ax
+    mov     ex_currenttransshape.ts_shapeptr, ax
     mov     bx, word ptr [bp+var_lastpos2lookup]
     shl     bx, 1
     mov     ax, trackcenterpos2[bx]
     sub     ax, [bp+var_vec4.vx]
-    mov     currenttransshape.ts_pos.vx, ax
+    mov     ex_currenttransshape.ts_pos.vx, ax
     mov     ax, [bp+var_vec4.vy]
     neg     ax
-    mov     currenttransshape.ts_pos.vy, ax
+    mov     ex_currenttransshape.ts_pos.vy, ax
     mov     bx, [bp+var_lastposlookupw]
     mov     ax, trackcenterpos[bx]
     sub     ax, [bp+var_vec4.vz]
-    mov     currenttransshape.ts_pos.vz, ax
-    mov     currenttransshape.ts_rectptr, offset rect_unk2
+    mov     ex_currenttransshape.ts_pos.vz, ax
+    mov     ex_currenttransshape.ts_rectptr, offset rect_unk2
     mov     al, [bp+var_122]
     or      al, 5
-    mov     currenttransshape.ts_flags, al
-    mov     currenttransshape.ts_rotvec.vx, 0
-    mov     currenttransshape.ts_rotvec.vy, 0
+    mov     ex_currenttransshape.ts_flags, al
+    mov     ex_currenttransshape.ts_rotvec.vx, 0
+    mov     ex_currenttransshape.ts_rotvec.vy, 0
     mov     bx, [bp+var_trkobject_ptr]
     mov     ax, [bx+TRACKOBJECT.ss_rotY]
-    mov     currenttransshape.ts_rotvec.vz, ax
-    mov     currenttransshape.ts_unk, 400h
-    mov     currenttransshape.ts_material, 0
-    mov     ax, offset currenttransshape
+    mov     ex_currenttransshape.ts_rotvec.vz, ax
+    mov     ex_currenttransshape.ts_unk, 400h
+    mov     ex_currenttransshape.ts_material, 0
+    mov     ax, offset ex_currenttransshape
     push    ax
     call    transformed_shape_op
     add     sp, 2
@@ -1977,19 +1977,19 @@ loc_1B0C1:
     ; align 2
     db 144
 loc_1B0D4:
-    mov     currenttransshape.ts_rectptr, offset rect_unk6
+    mov     ex_currenttransshape.ts_rectptr, offset rect_unk6
 loc_1B0DA:
     mov     al, [bp+var_122]
     or      al, 5
-    mov     currenttransshape.ts_flags, al
-    mov     currenttransshape.ts_rotvec.vx, 0
-    mov     currenttransshape.ts_rotvec.vy, 0
+    mov     ex_currenttransshape.ts_flags, al
+    mov     ex_currenttransshape.ts_rotvec.vx, 0
+    mov     ex_currenttransshape.ts_rotvec.vy, 0
     mov     bx, [bp+var_trkobject_ptr]
     mov     ax, [bx+TRACKOBJECT.ss_rotY]
-    mov     currenttransshape.ts_rotvec.vz, ax
-    mov     currenttransshape.ts_unk, 400h
-    mov     currenttransshape.ts_material, 0
-    mov     ax, offset currenttransshape
+    mov     ex_currenttransshape.ts_rotvec.vz, ax
+    mov     ex_currenttransshape.ts_unk, 400h
+    mov     ex_currenttransshape.ts_material, 0
+    mov     ax, offset ex_currenttransshape
     push    ax
     call    transformed_shape_op
     add     sp, 2
@@ -2000,7 +2000,7 @@ loc_1B0DA:
     jmp     loc_1B03C
 loc_1B11C:
     mov     transformedshape_counter, 0
-    mov     curtransshape_ptr, offset currenttransshape
+    mov     curtransshape_ptr, offset ex_currenttransshape
     cmp     [bp+elem_map_value], 0
     jnz     short loc_1B130
     jmp     loc_1B71E
@@ -2121,25 +2121,25 @@ loc_1B236:
     add     [bp+var_DA], 2
     mov     ax, [bx]
     add     ax, [bp+var_vec8.vx]
-    mov     currenttransshape.ts_pos.vx, ax
+    mov     ex_currenttransshape.ts_pos.vx, ax
     mov     ax, [bp+var_vec8.vy]
-    mov     currenttransshape.ts_pos.vy, ax
+    mov     ex_currenttransshape.ts_pos.vy, ax
     mov     bx, [bp+var_DA]
     add     [bp+var_DA], 2
     mov     ax, [bx]
     add     ax, [bp+var_vec8.vz]
-    mov     currenttransshape.ts_pos.vz, ax
-    mov     currenttransshape.ts_shapeptr, (offset game3dshapes.shape3d_numverts+3B2h)
-    mov     currenttransshape.ts_rectptr, offset rect_unk6
+    mov     ex_currenttransshape.ts_pos.vz, ax
+    mov     ex_currenttransshape.ts_shapeptr, (offset game3dshapes.shape3d_numverts+3B2h)
+    mov     ex_currenttransshape.ts_rectptr, offset rect_unk6
     mov     al, [bp+var_122]
     or      al, 5
-    mov     currenttransshape.ts_flags, al
-    mov     currenttransshape.ts_rotvec.vx, 0
-    mov     currenttransshape.ts_rotvec.vy, 0
-    mov     currenttransshape.ts_rotvec.vz, 0
-    mov     currenttransshape.ts_unk, 800h
-    mov     currenttransshape.ts_material, 0
-    mov     ax, offset currenttransshape
+    mov     ex_currenttransshape.ts_flags, al
+    mov     ex_currenttransshape.ts_rotvec.vx, 0
+    mov     ex_currenttransshape.ts_rotvec.vy, 0
+    mov     ex_currenttransshape.ts_rotvec.vz, 0
+    mov     ex_currenttransshape.ts_unk, 800h
+    mov     ex_currenttransshape.ts_material, 0
+    mov     ax, offset ex_currenttransshape
     push    ax
     call    transformed_shape_op
     add     sp, 2
@@ -2173,14 +2173,14 @@ loc_1B2E0:
     mov     bx, [bp+var_trkobjectptr]
     mov     ax, [bx+TRACKOBJECT.ss_shapePtr]
 loc_1B2E6:
-    mov     currenttransshape.ts_shapeptr+14h, ax
+    mov     ex_currenttransshape.ts_shapeptr+14h, ax
     or      ax, ax
     jnz     short loc_1B2F0
     jmp     loc_1B374
 loc_1B2F0:
     push    si
     push    di
-    mov     di, (offset currenttransshape.ts_pos.vy+12h)
+    mov     di, (offset ex_currenttransshape.ts_pos.vy+12h)
     lea     si, [bp+var_vec8]
     push    ds
     pop     es
@@ -2189,18 +2189,18 @@ loc_1B2F0:
     movsw
     pop     di
     pop     si
-    mov     currenttransshape.ts_rotvec.vy+12h, 0
-    mov     currenttransshape.ts_rotvec.vz+12h, 0
+    mov     ex_currenttransshape.ts_rotvec.vy+12h, 0
+    mov     ex_currenttransshape.ts_rotvec.vz+12h, 0
     mov     ax, [bx+TRACKOBJECT.ss_rotY]
-    mov     currenttransshape.ts_rotvec.vx+18h, ax
+    mov     ex_currenttransshape.ts_rotvec.vx+18h, ax
     cmp     [bx+TRACKOBJECT.ss_multiTileFlag], 0
     jz      short loc_1B320
-    mov     currenttransshape.ts_unk+14h, 400h
+    mov     ex_currenttransshape.ts_unk+14h, 400h
     jmp     short loc_1B326
     ; align 2
     db 144
 loc_1B320:
-    mov     currenttransshape.ts_unk+14h, 800h
+    mov     ex_currenttransshape.ts_unk+14h, 800h
 loc_1B326:
     cmp     [bx+TRACKOBJECT.ss_surfaceType], 0
     jl      short loc_1B332
@@ -2211,15 +2211,15 @@ loc_1B326:
 loc_1B332:
     mov     al, [bp+var_E4]
 loc_1B336:
-    mov     currenttransshape.ts_material+14h, al
+    mov     ex_currenttransshape.ts_material+14h, al
     mov     al, [bx+TRACKOBJECT.ss_ignoreZBias]
     or      al, [bp+var_122]
     or      al, 4
-    mov     currenttransshape.ts_flags+14h, al
-    test    currenttransshape.ts_flags+14h, 1
+    mov     ex_currenttransshape.ts_flags+14h, al
+    test    ex_currenttransshape.ts_flags+14h, 1
     jz      short loc_1B36A
-    mov     currenttransshape.ts_rectptr+14h, offset rect_unk2
-    mov     ax, (offset currenttransshape.ts_pos.vy+12h)
+    mov     ex_currenttransshape.ts_rectptr+14h, offset rect_unk2
+    mov     ax, (offset ex_currenttransshape.ts_pos.vy+12h)
     push    ax
     call    transformed_shape_op
     add     sp, 2
@@ -2229,7 +2229,7 @@ loc_1B336:
     jle     short loc_1B374
     jmp     loc_1B03C
 loc_1B36A:
-    mov     currenttransshape.ts_rectptr+14h, offset rect_unk6
+    mov     ex_currenttransshape.ts_rectptr+14h, offset rect_unk6
     mov     [bp+var_4E], 1
 loc_1B374:
     cmp     [bp+var_FC], 0
@@ -2241,10 +2241,10 @@ loc_1B384:
     mov     bx, [bp+var_trkobject_ptr]
     mov     ax, [bx+TRACKOBJECT.ss_shapePtr]
 loc_1B38B:
-    mov     currenttransshape.ts_shapeptr, ax
+    mov     ex_currenttransshape.ts_shapeptr, ax
     push    si
     push    di
-    mov     di, offset currenttransshape
+    mov     di, offset ex_currenttransshape
     lea     si, [bp+var_vec8]
     push    ds
     pop     es
@@ -2253,23 +2253,23 @@ loc_1B38B:
     movsw
     pop     di
     pop     si
-    mov     currenttransshape.ts_rotvec.vx, 0
-    mov     currenttransshape.ts_rotvec.vy, 0
+    mov     ex_currenttransshape.ts_rotvec.vx, 0
+    mov     ex_currenttransshape.ts_rotvec.vy, 0
     mov     ax, [bx+TRACKOBJECT.ss_rotY]
-    mov     currenttransshape.ts_rotvec.vz, ax
+    mov     ex_currenttransshape.ts_rotvec.vz, ax
     cmp     [bx+TRACKOBJECT.ss_multiTileFlag], 0
     jz      short loc_1B3BE
-    mov     currenttransshape.ts_unk, 400h
+    mov     ex_currenttransshape.ts_unk, 400h
     jmp     short loc_1B3C4
     ; align 2
     db 144
 loc_1B3BE:
-    mov     currenttransshape.ts_unk, 800h
+    mov     ex_currenttransshape.ts_unk, 800h
 loc_1B3C4:
     mov     al, [bx+TRACKOBJECT.ss_ignoreZBias]
     or      al, [bp+var_122]
     or      al, 4
-    mov     currenttransshape.ts_flags, al
+    mov     ex_currenttransshape.ts_flags, al
     cmp     [bx+TRACKOBJECT.ss_surfaceType], 0
     jl      short loc_1B3DC
     mov     al, [bx+TRACKOBJECT.ss_surfaceType]
@@ -2279,11 +2279,11 @@ loc_1B3C4:
 loc_1B3DC:
     mov     al, [bp+var_E4]
 loc_1B3E0:
-    mov     currenttransshape.ts_material, al
+    mov     ex_currenttransshape.ts_material, al
     test    [bx+TRACKOBJECT.ss_ignoreZBias], 1
     jz      short loc_1B408
-    mov     currenttransshape.ts_rectptr, offset rect_unk2
-    mov     ax, offset currenttransshape
+    mov     ex_currenttransshape.ts_rectptr, offset rect_unk2
+    mov     ax, offset ex_currenttransshape
     push    ax
     call    transformed_shape_op
     add     sp, 2
@@ -2295,7 +2295,7 @@ loc_1B3E0:
     ; align 2
     db 144
 loc_1B408:
-    mov     currenttransshape.ts_rectptr, offset rect_unk6
+    mov     ex_currenttransshape.ts_rectptr, offset rect_unk6
     sub     ax, ax
     push    ax
     push    ax
@@ -3320,7 +3320,7 @@ loc_1BEDF:
 loc_1BEE4:
     mov     ax, 14h
     imul    di
-    add     ax, offset currenttransshape
+    add     ax, offset ex_currenttransshape
     push    ax
     call    transformed_shape_op
     add     sp, 2

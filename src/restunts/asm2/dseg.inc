@@ -1134,7 +1134,7 @@ dseg segment byte public 'STUNTSD' use16
     extrn td10_track_check_rel:dword
     extrn basdres:dword
     extrn followOpponentFlag_copy:byte
-    extrn currenttransshape:TRANSFORMEDSHAPE
+    extrn ex_currenttransshape:TRANSFORMEDSHAPE
     extrn terraincenterpos:word
     extrn carshapevec:VECTOR
     extrn carshapevec2:VECTOR
