@@ -1299,7 +1299,15 @@ start_rendering:
 		polyinfo_reset();
 		goto start_rendering;
 	}
-	//printf("%d\n", si);
+
+	// We don't have fopen & C. Either using fileio.c or nothing. Use nothing
+	// file = _fopen("frapeop.txt", "a");  // Open file in append mode
+    printf("# : %u ptr: %p  ptrsend: %p  ptrsend+1: %p"
+    	" 40ED6: %u 40ED6[189]: %u 40ED6[190]: %u \n",
+    	polyinfonumpolys,
+    	polyinfoptr, polyinfoptrs[189], polyinfoptrs[190],
+    	poly_linked_list_40ED6[189], poly_linked_list_40ED6[190]);  // Append string to file
+    // _fclose(file);  // Close the file
 
 	// Draw the skybox
 	var_132 = skybox_op(arg_0, arg_cliprectptr, skybox_parameter, &var_mat, car_rot_z_3, car_rot_x_2, cam_pos.y);
