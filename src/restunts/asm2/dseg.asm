@@ -41837,11 +41837,11 @@ display_debug_overlay db 0
 ;ALIGN 4
 polyinfoptr     dd 0
 ;; poly_linked_list_40ED6: MAX_POLY_INFO_COUNT times dw
-poly_linked_list_40ED6 dw 380h dup(0)
+poly_linked_list_40ED6 dw 190h dup(0)
 ;; terminator for the list? In doubt, we copy that here
 word_411F6     dw 0
 ;; polyinfonumpolys: MAX_POLY_INFO_COUNT times dd, plus 6 db
-polyinfoptrs dd 380h dup(0)
+polyinfoptrs dd 190h dup(0)
 	db 6 dup(0)
 
 
