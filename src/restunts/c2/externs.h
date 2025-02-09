@@ -565,5 +565,6 @@ extern void _srand(unsigned int);
 #endif
 
 extern char display_debug_overlay;
+extern char reveal_illusions;
 
 #endif

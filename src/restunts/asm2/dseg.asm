@@ -1498,6 +1498,7 @@ dseg segment byte public 'STUNTSD' use16
     public replaybar_enabled
     public word_46486
     public display_debug_overlay
+    public reveal_illusions
 word_3B770     dw 0
 word_3B772     dw 0
 word_3B774     dw 0
@@ -41833,7 +41834,10 @@ transformedshape_indices db 250 dup(0)
 ; transformedshape_arg2array: 1 x TILES_TO_DRAW_COUNT times db 
 transformedshape_arg2array db 126 dup(0)
 
-display_debug_overlay db 0
+marker db 'ZakS'  ; A string to make this point easily searhabe in the .exe
+display_debug_overlay db 0  ; prints rendering engine status on the top of the screeen
+reveal_illusions db 0    ; shoes illusion tiles
+
 ;ALIGN 4
 polyinfoptr     dd 0
 ;; poly_linked_list_40ED6: MAX_POLY_INFO_COUNT times dw

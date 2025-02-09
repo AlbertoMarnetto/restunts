@@ -932,9 +932,6 @@ loc_22446:
 loc_2244E:
     mov     cameramode, 3
     jmp     loc_224E9
-supersight_toggle_debug:
-    xor     [display_debug_overlay], 1h
-    jmp     loc_224E9
 loc_22456:
     xor     HKeyFlag, 1
     jmp     loc_224E9
@@ -1044,10 +1041,15 @@ loc_22528:
     jmp     loc_2244E
 supersight_handle_f5:
     cmp     ax, 3F00h ; F5 pressed
+    jnz     short supersight_handle_f6
+    xor     [display_debug_overlay], 1h
+supersight_handle_f6:
+    cmp     ax, 4000h ; F6 pressed
     jnz     short loc_22530
-    jmp     supersight_toggle_debug
+    xor     [reveal_illusions], 1h
 loc_22530:
-    jmp     short loc_224C0
+    jmp     loc_224C0
+	db 11 dup(144)  ; alignment
 handle_ingame_kb_shortcuts endp
 init_unknown proc far
      s = byte ptr 0

@@ -263,7 +263,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	char width_idx;
 
 	unsigned discarded_tiles;
-	char discarded_tiles_str[50];
+	char discarded_tiles_str[60];
 	char is_first_attempt;
 	char is_last_attempt;
 	char has_attempt_failed;
@@ -503,12 +503,13 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		terr_map_value = td15_terr_map_main[tile_east + terrainrows[tile_south]];
 
 		if (elem_map_value != 0) {
-
 			if (terr_map_value >= 7 && terr_map_value < 0xB) {
 				elem_map_value = subst_hillroad_track(terr_map_value, elem_map_value);
 				terr_map_value = 0;
 			}
+		}
 
+		if (reveal_illusions == 0) {
 			// Found a filler tile (non-main tile of a multitile component)
 			// Process the main tile of the component instead (the NW one)
 			if (elem_map_value == 0xFD) {
@@ -530,6 +531,17 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			offset_east = tile_east - cam_tile_east;
 			offset_south = tile_south - cam_tile_south;
 		}
+		else
+		{
+			// Reveal illusions on: just skip the filler tile -- the main tile
+			// will be processed when the scan process finds it
+			if (   elem_map_value == 0xFD
+				|| elem_map_value == 0xFE
+				|| elem_map_value == 0xFF)
+			{
+				should_skip_tile[si] = 1;
+			}
+		}
 
 		tiles_to_draw_terr_type_vec[si] = terr_map_value;
 
@@ -549,7 +561,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		}
 
 		idx = trkObjectList[elem_map_value].ss_multiTileFlag;
-		if (idx == 0) {
+		if (idx == 0 || reveal_illusions > 0) {
 			continue;
 		}
 
@@ -1316,8 +1328,9 @@ start_rendering:
 		// Debug: print discarded tiles
 		_sprintf(
 			discarded_tiles_str,
-			"Polys: %3u, memory: %5u, disc: %2u",
-			polyinfonumpolys, polyinfoptrnext, discarded_tiles);
+			"Polys: %3u, memory: %5u, disc: %2u, reveal: %s",
+			polyinfonumpolys, polyinfoptrnext, discarded_tiles,
+			reveal_illusions ? "on" : "off");
 	}
 
 	// Draw the skybox
