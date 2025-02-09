@@ -1,3 +1,4 @@
+src/restunts/c2/build/dos/frame.obj
 src/restunts/asm/build/*OBJ
 src/restunts/asm/TASMBOX.OUT
 src/restunts/asm2/build/*OBJ
@@ -30,6 +31,7 @@ stunts/*.PVS
 stunts/*.RES
 stunts/*.RPL
 stunts/*.TRK
+stunts/*.TXT
 stunts/*.VSH
 stunts/*.3sh
 stunts/*.bni
@@ -37,4 +39,5 @@ stunts/*.hig
 stunts/*.res
 stunts/*.rpl
 stunts/*.trk
+stunts/*.txt
 stunts/*.vsh
