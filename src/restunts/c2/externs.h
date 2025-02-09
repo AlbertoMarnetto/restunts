@@ -8,7 +8,7 @@
 #define huge
 #endif
 
-#define MAX_POLY_INFO_COUNT 0x190
+#define MAX_POLY_INFO_COUNT 0x250
 
 #pragma pack (push, 1)
 
