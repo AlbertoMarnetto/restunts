@@ -70,7 +70,9 @@ seg006 segment byte public 'STUNTSC' use16
     public rect_array_sort_by_top
 init_polyinfo proc far
 
-    mov     ax, 28A0h       ; bytes to reserve
+    mov     ax, 28A0h ; this equals 26 times 400 (original max poly).
+                      ; Since we changed the # of poly we should allocate more,
+                      ; but the game crashes if we try to make use of the extra space
     cwd
 loc_24D68:
     push    dx
@@ -156,7 +158,7 @@ loc_24DEC:
     mov     polyinfoptrnext, 0
     mov     word_40ECE, 0
     mov     word_411F6, 0FFFFh
-    mov     word_443F2, 190h
+    mov     word_443F2, 250h
     retf
     ; align 2
     db 144
@@ -396,7 +398,7 @@ loc_24F9F:
     sub     ax, ax
     mov     word ptr [bp+var_A+2], ax
     mov     word ptr [bp+var_A], ax
-    jmp     loc_250A3       ; initialized to 190h in polyinfo_reset()
+    jmp     loc_250A3       ; initialized to 250h in polyinfo_reset()
 loc_24FB6:
     sub     ax, ax
     push    ax
@@ -481,7 +483,7 @@ loc_25077:
     mov     word ptr [bp+var_A], ax
     mov     word ptr [bp+var_A+2], dx
 loc_250A3:
-    mov     ax, word_443F2  ; initialized to 190h in polyinfo_reset()
+    mov     ax, word_443F2  ; initialized to 250h in polyinfo_reset()
     mov     word_4394E, ax
     mov     poly_linked_list_40ED6_tail, ax
     mov     word_4554A, 0
@@ -1886,7 +1888,7 @@ loc_25EA0:
     shl     ax, 1
     add     ax, 6
     add     polyinfoptrnext, ax
-    cmp     polyinfonumpolys, 190h
+    cmp     polyinfonumpolys, 250h
     jz      short loc_25ED1
     cmp     polyinfoptrnext, 2872h
     jle     short loc_25EDA
@@ -2077,7 +2079,7 @@ get_a_poly_info proc far
     sub     sp, 40h
     push    di
     push    si
-    mov     di, 190h
+    mov     di, 250h
     sub     si, si
     jmp     loc_260AC
 _fill_type0:
