@@ -1406,6 +1406,15 @@ start_rendering:
 		}
 	}
 
+	if (display_debug_overlay)
+	{
+		font_set_fontdef2(fontnptr);
+		si = is_first_attempt ? 15 : discarded_tiles < 30 ? 14 : 12; // white, yellow, red
+		rect_union(intro_draw_text(discarded_tiles_str, 0x0C, roofbmpheight + 12, si, 0), &rect_unk11, &rect_unk11);
+		rect_union(intro_draw_text(" ", 0x0C, roofbmpheight + 2, 0, 0), &rect_unk11, &rect_unk11);
+		font_set_fontdef();
+	}
+
 	// Show elapsed time
 	if (game_replay_mode == 0) {
 		if (state.game_inputmode != 0) {
@@ -1419,14 +1428,6 @@ start_rendering:
 
 			font_set_fontdef();
 		}
-	}
-
-	if (display_debug_overlay)
-	{
-		font_set_fontdef2(fontnptr);
-		si = is_first_attempt ? 11 : discarded_tiles < 30 ? 14 : 12; // cyan, yellow, red
-		rect_union(intro_draw_text(discarded_tiles_str, 0x0C, roofbmpheight + 2, si, 0), &rect_unk11, &rect_unk11);
-		font_set_fontdef();
 	}
 
 	if (is_sprite_rendering_slow_copy != 0) {
