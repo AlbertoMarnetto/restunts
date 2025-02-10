@@ -1,3 +1,32 @@
+SuperSight - a Restunts-based mod.
+
+https://forum.stunts.hu/index.php?topic=4400.msg
+
+SuperSight adds the following directories:
+
+	src\restunts\asm2
+		Assembly files used in SuperSight. They are almost identical to the
+		original ones (in asmorig) but with some patches to accommodate
+		SuperSight's modifications.
+		
+	src\restunts\c2
+		C source for SuperSight. Basically only a modified `update_frame`
+		function is provided.
+	
+	src\tiles_gen
+		A Python script producing the coordinates of the tiles to render.
+
+To build: prepare your environment as described in the Restunts Readme, then
+run:
+
+	make sight
+
+The mod will be build as RESTUNT2.EXE.
+
+The original Restunts Readme follows:
+
+---
+
 Restunts - The Stunts reverse engineering project
 
 https://wiki.stunts.hu/wiki/Restunts
