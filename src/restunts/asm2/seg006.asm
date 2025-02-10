@@ -70,9 +70,14 @@ seg006 segment byte public 'STUNTSC' use16
     public rect_array_sort_by_top
 init_polyinfo proc far
 
-    mov     ax, 28A0h ; this equals 26 times 400 (original max poly).
-                      ; Since we changed the # of poly we should allocate more,
-                      ; but the game crashes if we try to make use of the extra space
+    ; Allocate 13000 Bytes for the 3d primitives.
+    ; The original code allocated 10400 Bytes here (400 max primitives,
+    ; up to 26 Bytes per primitive). We raised the limit to 592 primitives,
+    ; but allocating 15392 would eat too much in the resources buffer, which
+    ; would lead to out-of-memory errors when racing with high-detail cars.
+    ; Moreover, the average size of the primitives is about 21.7 Bytes, so
+    ; this buffer should usually not be a limit
+    mov     ax, 13000 
     cwd
 loc_24D68:
     push    dx
@@ -1890,7 +1895,11 @@ loc_25EA0:
     add     polyinfoptrnext, ax
     cmp     polyinfonumpolys, 250h
     jz      short loc_25ED1
-    cmp     polyinfoptrnext, 2872h
+    ; The original code check here for 2872h = 10354, i.e. 46 bytes less than
+    ; the buffer allocated to polyinfoptr. We allocated 13000 bytes, so change
+    ; the number correspondingly, and round down for good measure (this check
+    ; would probably never fire in the original program)
+    cmp     polyinfoptrnext, 12950
     jle     short loc_25EDA
 loc_25ED1:
     mov     ax, 1           ; return 1 if error
