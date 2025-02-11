@@ -1,9 +1,10 @@
 #! python3
 
 import math
+import sys
 
-# Ensure this is the same as in frame.c
-TILES_TO_DRAW_COUNT = 110
+# Call this script with the same # of tiles as in frame.c
+TILES_TO_DRAW_COUNT = int(sys.argv[1])
 
 # Function to calculate the distance from the origin
 def distance_from_origin(x, y):
