@@ -2973,17 +2973,17 @@ loc_11BC3:
     db 144
 highscore_write_b endp
 run_car_menu proc far
-    var_10C = dword ptr -268
-    var_108 = byte ptr -264
-    var_106 = byte ptr -262
-    var_104_rc = RECTANGLE ptr -260
-    var_FC = dword ptr -252
-    var_carpospolarangle = word ptr -248
-    var_F6 = byte ptr -246
-    var_findfile = word ptr -244
-    var_F2 = byte ptr -242
-    var_caridindex = byte ptr -240
-    var_carids = byte ptr -238
+    var_10C = dword ptr -348
+    var_108 = byte ptr -344
+    var_106 = byte ptr -342
+    var_104_rc = RECTANGLE ptr -340
+    var_FC = dword ptr -332
+    var_carpospolarangle = word ptr -328
+    var_F6 = byte ptr -326
+    var_findfile = word ptr -324
+    var_F2 = byte ptr -322
+    var_caridindex = byte ptr -320
+    var_carids = byte ptr -318
     var_rotationdelta = word ptr -76
     var_4A = word ptr -74
     var_48 = word ptr -72
@@ -3014,7 +3014,7 @@ run_car_menu proc far
 
     push    bp
     mov     bp, sp
-    sub     sp, 10Ch
+    sub     sp, 348
     push    di
     push    si
     push    si
@@ -3107,7 +3107,7 @@ loc_11CE1:
     add     di, ax
     mov     [bp+di+var_carids+4], 0
     inc     [bp+var_46]
-    cmp     [bp+var_46], 20h ; ' '
+    cmp     [bp+var_46], 30h ; ' '
     jnz     short loc_11CE1
 loc_11D44:
     call    nullsub_1
