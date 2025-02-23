@@ -262,7 +262,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	// detail threshold). A tile is drawn only if its detail threshold is lower
 	// enough (0 = draw always, 1 = only if graphic detail is MEDIUM or FULL,
 	// 2 = only if graphic detail is FULL).
-	// There are 8 possible vectors, but they are all rotations/reflecions of a
+	// There are 8 possible vectors, but they are all rotations/reflections of a
 	// basic schema. Which is chosen depends on the heading of the car. For a
 	// car heading north ($), the schema is the following:
 	//
@@ -536,7 +536,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	si = 0;
 	
 	// With the information collected by the previus tile-scan algorithm,
-	// procees to draw the shapes in each tile. Start from the farthest
+	// proceed to draw the shapes in each tile. Start from the farthest
 	// (painter's algorithm)
 	for (si = 0; si < 0x17; si++) {
 		if (should_skip_tile[si] != 0) {

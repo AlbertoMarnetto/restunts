@@ -63,6 +63,8 @@ How to build restunts on Windows:
 		make
 
 How to build restunts on Linux:
+	0) You might want to set `git config --worktree core.autocrlf=false` before
+	   you make any change, lest git meddles with the DOS newlines
 	1) Install Wine
 	2) Mount the restunts dir as drive S using winecfg
 	3) In the Linux console type `wineconsole cmd`
