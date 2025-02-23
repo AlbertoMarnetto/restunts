@@ -7328,13 +7328,13 @@ loc_146E2:
 security_check endp
 set_default_car proc far
 
-    mov     gameconfig.game_playercarid, 43h ; 'C'
+    mov     gameconfig.game_playercarid, 102 ; 'F'
 loc_146E9:
-    mov     gameconfig.game_playercarid+1, 4Fh ; 'O'
+    mov     gameconfig.game_playercarid+1, 103 ; 'G'
 loc_146EE:
-    mov     gameconfig.game_playercarid+2, 55h ; 'U'
+    mov     gameconfig.game_playercarid+2, 116 ; 'T'
 loc_146F3:
-    mov     gameconfig.game_playercarid+3, 4Eh ; 'N'
+    mov     gameconfig.game_playercarid+3, 111 ; 'O'
 loc_146F8:
     mov     gameconfig.game_playermaterial, 0
 loc_146FD:
