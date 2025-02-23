@@ -46,8 +46,8 @@ nosmart
 seg021 segment byte public 'STUNTSC' use16
     assume cs:seg021
     assume es:nothing, ss:nothing, ds:dseg
-    public ported_heapsort_by_order_
-ported_heapsort_by_order_ proc far
+    public heapsort_by_order
+heapsort_by_order proc far
     var_index = word ptr -8
     var_counter = word ptr -6
     var_halfindex = word ptr -4
@@ -133,6 +133,6 @@ loc_36C78:
     mov     sp, bp
     pop     bp
     retf
-ported_heapsort_by_order_ endp
+heapsort_by_order endp
 seg021 ends
 end

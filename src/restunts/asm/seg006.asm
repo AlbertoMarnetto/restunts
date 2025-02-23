@@ -46,31 +46,38 @@ nosmart
 seg006 segment byte public 'STUNTSC' use16
     assume cs:seg006
     assume es:nothing, ss:nothing, ds:dseg
-    public ported_init_polyinfo_
-    public ported_copy_material_list_pointers_
-    public ported_polyinfo_reset_
-    public ported_select_cliprect_rotate_
-    public ported_transformed_shape_op_
-    public ported_insert_newest_poly_in_poly_linked_list_40ED6_
-    public ported_rect_compare_point_
-    public ported_is_facing_camera_
+    public init_polyinfo
+    public copy_material_list_pointers
+    public polyinfo_reset
+    public select_cliprect_rotate
+    public transformed_shape_op
+    public insert_newest_poly_in_poly_linked_list_40ED6
+    public rect_compare_point
+    public is_facing_camera
     public get_a_poly_info
-    public ported_mat_rot_zxy_
-    public ported_rect_adjust_from_point_
-    public ported_vector_op_unk2_
-    public ported_calc_sincos80_
+    public mat_rot_zxy
+    public rect_adjust_from_point
+    public vector_op_unk2
+    public calc_sincos80
     public nopsub_26552
-    public ported_rect_union_
-    public ported_rect_intersect_
-    public ported_rectlist_add_rect_
-    public ported_rect_is_overlapping_
-    public ported_rect_is_inside_
-    public ported_rect_is_adjacent_
-    public ported_rectlist_add_rects_
-    public ported_rect_array_sort_by_top_
-ported_init_polyinfo_ proc far
+    public rect_union
+    public rect_intersect
+    public rectlist_add_rect
+    public rect_is_overlapping
+    public rect_is_inside
+    public rect_is_adjacent
+    public rectlist_add_rects
+    public rect_array_sort_by_top
+init_polyinfo proc far
 
-    mov     ax, 28A0h       ; bytes to reserve
+    ; Allocate 13000 Bytes for the 3d primitives.
+    ; The original code allocated 10400 Bytes here (400 max primitives,
+    ; up to 26 Bytes per primitive). We raised the limit to 592 primitives,
+    ; but allocating 15392 would eat too much in the resources buffer, which
+    ; would lead to out-of-memory errors when racing with high-detail cars.
+    ; Moreover, the average size of the primitives is about 21.7 Bytes, so
+    ; this buffer should usually not be a limit
+    mov     ax, 13000
     cwd
 loc_24D68:
     push    dx
@@ -114,12 +121,12 @@ loc_24DB4:
     add     sp, 4
 loc_24DBC:
     push    cs
-    call near ptr ported_calc_sincos80_
+    call near ptr calc_sincos80
     retf
     ; align 2
     db 144
-ported_init_polyinfo_ endp
-ported_copy_material_list_pointers_ proc far
+init_polyinfo endp
+copy_material_list_pointers proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -148,20 +155,20 @@ loc_24DD7:
     retf
     ; align 2
     db 144
-ported_copy_material_list_pointers_ endp
-ported_polyinfo_reset_ proc far
+copy_material_list_pointers endp
+polyinfo_reset proc far
 
     mov     polyinfonumpolys, 0
 loc_24DEC:
     mov     polyinfoptrnext, 0
     mov     word_40ECE, 0
     mov     word_411F6, 0FFFFh
-    mov     word_443F2, 190h
+    mov     word_443F2, 250h
     retf
     ; align 2
     db 144
-ported_polyinfo_reset_ endp
-ported_select_cliprect_rotate_ proc far
+polyinfo_reset endp
+select_cliprect_rotate proc far
     var_vec = VECTOR ptr -14
     var_matptr = word ptr -8
     var_vec2 = VECTOR ptr -6
@@ -184,7 +191,7 @@ ported_select_cliprect_rotate_ proc far
     push    [bp+arg_angX]
     push    [bp+arg_angZ]
     push    cs
-    call near ptr ported_mat_rot_zxy_
+    call near ptr mat_rot_zxy
     add     sp, 8
     mov     di, offset mat_temp
     mov     si, ax
@@ -193,7 +200,7 @@ ported_select_cliprect_rotate_ proc far
     mov     cx, 9
     repne movsw
     push    cs
-    call near ptr ported_polyinfo_reset_
+    call near ptr polyinfo_reset
     mov     ax, [bp+arg_cliprectptr]
     mov     di, offset select_rect_rc
     mov     si, ax
@@ -217,7 +224,7 @@ ported_select_cliprect_rotate_ proc far
     neg     ax
     push    ax
     push    cs
-    call near ptr ported_mat_rot_zxy_
+    call near ptr mat_rot_zxy
     add     sp, 8
     mov     [bp+var_matptr], ax
     mov     [bp+var_vec.vz], 2710h
@@ -242,8 +249,8 @@ nosmart
     mov     sp, bp
     pop     bp
     retf
-ported_select_cliprect_rotate_ endp
-ported_transformed_shape_op_ proc far
+select_cliprect_rotate endp
+transformed_shape_op proc far
     var_B7C = word ptr -2940
     var_polyvertunktabptr = word ptr -2938
     var_cull1 = dword ptr -2936
@@ -368,7 +375,7 @@ loc_24F50:
     push    [bx+TRANSFORMEDSHAPE.ts_rotvec.vy]
     push    [bx+TRANSFORMEDSHAPE.ts_rotvec.vx]
     push    cs
-    call near ptr ported_mat_rot_zxy_
+    call near ptr mat_rot_zxy
     add     sp, 8
     mov     [bp+var_rotmatptr], ax
     lea     ax, [bp+var_mat2]
@@ -396,7 +403,7 @@ loc_24F9F:
     sub     ax, ax
     mov     word ptr [bp+var_A+2], ax
     mov     word ptr [bp+var_A], ax
-    jmp     loc_250A3       ; initialized to 190h in polyinfo_reset()
+    jmp     loc_250A3       ; initialized to 250h in polyinfo_reset()
 loc_24FB6:
     sub     ax, ax
     push    ax
@@ -405,7 +412,7 @@ loc_24FB6:
     push    [bx+TRANSFORMEDSHAPE.ts_rotvec.vy]
     push    [bx+TRANSFORMEDSHAPE.ts_rotvec.vx]
     push    cs
-    call near ptr ported_mat_rot_zxy_
+    call near ptr mat_rot_zxy
     add     sp, 8
     mov     [bp+var_rotmatptr], ax
     lea     ax, [bp+var_vec]
@@ -467,7 +474,7 @@ loc_25077:
     lea     ax, [bp+var_vec3]
     push    ax
     push    cs
-    call near ptr ported_vector_op_unk2_
+    call near ptr vector_op_unk2
     add     sp, 2
     mov     byte_4393D, al
     cbw
@@ -481,7 +488,7 @@ loc_25077:
     mov     word ptr [bp+var_A], ax
     mov     word ptr [bp+var_A+2], dx
 loc_250A3:
-    mov     ax, word_443F2  ; initialized to 190h in polyinfo_reset()
+    mov     ax, word_443F2  ; initialized to 250h in polyinfo_reset()
     mov     word_4394E, ax
     mov     poly_linked_list_40ED6_tail, ax
     mov     word_4554A, 0
@@ -523,7 +530,7 @@ loc_250FA:
     shl     bx, 1
     push    polyvertpointptrtab[bx]
     push    cs
-    call near ptr ported_rect_compare_point_
+    call near ptr rect_compare_point
     add     sp, 2
     and     [bp+var_ptrectflag], al
 loc_25134:
@@ -713,7 +720,7 @@ loc_2530A:
     shl     bx, 1
     push    polyvertpointptrtab[bx]
     push    cs
-    call near ptr ported_rect_compare_point_
+    call near ptr rect_compare_point
     add     sp, 2
     and     [bp+var_ptrectflag], al
 loc_25325:
@@ -917,7 +924,7 @@ loc_254B3:
     mov     bx, [bp+var_polyvertunktabptr]
     push    word ptr [bx]
     push    cs
-    call near ptr ported_rect_compare_point_
+    call near ptr rect_compare_point
     add     sp, 2
     and     [bp+var_ptrectflag], al
 loc_25511:
@@ -987,7 +994,7 @@ loc_255B4:
     lea     ax, [bp+var_574]
     push    ax
     push    cs
-    call near ptr ported_rect_compare_point_
+    call near ptr rect_compare_point
     add     sp, 2
     and     [bp+var_ptrectflag], al
 loc_255CB:
@@ -1079,7 +1086,7 @@ loc_256A5:
     lea     ax, [bp+var_574]
     push    ax
     push    cs
-    call near ptr ported_rect_compare_point_
+    call near ptr rect_compare_point
     add     sp, 2
     and     [bp+var_ptrectflag], al
 loc_256BC:
@@ -1109,7 +1116,7 @@ loc_25700:
     mov     bx, [bp+var_B7C]
     push    word ptr [bx]
     push    cs
-    call near ptr ported_rect_compare_point_
+    call near ptr rect_compare_point
     add     sp, 2
     and     [bp+var_ptrectflag], al
     jmp     loc_255DE
@@ -1140,7 +1147,7 @@ loc_2572E:
     push    dx
     push    ax
     push    cs
-    call near ptr ported_is_facing_camera_
+    call near ptr is_facing_camera
     add     sp, 4
     or      al, al
     jz      short loc_25763
@@ -1350,13 +1357,13 @@ loc_2590D:
     push    transshaperectptr
     push    polyvertpointptrtab
     push    cs
-    call near ptr ported_rect_adjust_from_point_
+    call near ptr rect_adjust_from_point
     add     sp, 4
     push    transshaperectptr
     push    polyvertpointptrtab+2
 loc_2597C:
     push    cs
-    call near ptr ported_rect_adjust_from_point_
+    call near ptr rect_adjust_from_point
     add     sp, 4
 loc_25983:
     mov     transshapenumvertscopy, 2
@@ -1398,7 +1405,7 @@ loc_25997:
     push    dx
     push    ax
     push    cs
-    call near ptr ported_is_facing_camera_
+    call near ptr is_facing_camera
     add     sp, 4
     or      al, al
     jnz     short loc_25A7C
@@ -1506,7 +1513,7 @@ loc_25AF4:
     lea     ax, [bp+var_450]
     push    ax
     push    cs
-    call near ptr ported_rect_adjust_from_point_
+    call near ptr rect_adjust_from_point
     add     sp, 4
     les     bx, transshapepolyinfo
     mov     ax, es:[bx+8]
@@ -1521,7 +1528,7 @@ loc_25AF4:
     lea     ax, [bp+var_450]
     push    ax
     push    cs
-    call near ptr ported_rect_adjust_from_point_
+    call near ptr rect_adjust_from_point
     add     sp, 4
     les     bx, transshapepolyinfo
     mov     ax, es:[bx+12h]
@@ -1536,7 +1543,7 @@ loc_25AF4:
     lea     ax, [bp+var_450]
     push    ax
     push    cs
-    call near ptr ported_rect_adjust_from_point_
+    call near ptr rect_adjust_from_point
     add     sp, 4
     les     bx, transshapepolyinfo
     mov     ax, es:[bx+14h]
@@ -1551,7 +1558,7 @@ loc_25AF4:
     lea     ax, [bp+var_450]
     push    ax
     push    cs
-    call near ptr ported_rect_adjust_from_point_
+    call near ptr rect_adjust_from_point
     add     sp, 4
 loc_25B9C:
     mov     transshapenumvertscopy, 4
@@ -1658,7 +1665,7 @@ loc_25C92:
     lea     ax, [bp+var_450]
     push    ax
     push    cs
-    call near ptr ported_rect_adjust_from_point_
+    call near ptr rect_adjust_from_point
     add     sp, 4
     mov     ax, [bp+var_462]
     mov     bx, polyvertpointptrtab
@@ -1700,7 +1707,7 @@ loc_25CF4:
     push    transshaperectptr
     push    polyvertpointptrtab
     push    cs
-    call near ptr ported_rect_adjust_from_point_
+    call near ptr rect_adjust_from_point
     add     sp, 4
 loc_25D34:
     mov     transshapenumvertscopy, 1
@@ -1792,7 +1799,7 @@ loc_25DF1:
     push    ax
     push    si
     push    cs
-    call near ptr ported_insert_newest_poly_in_poly_linked_list_40ED6_
+    call near ptr insert_newest_poly_in_poly_linked_list_40ED6
     add     sp, 4
     mov     word_40ECE, ax
     or      ax, ax
@@ -1816,8 +1823,8 @@ _done_ret_0:
     retf
     ; align 2
     db 144
-ported_transformed_shape_op_ endp
-ported_insert_newest_poly_in_poly_linked_list_40ED6_ proc far
+transformed_shape_op endp
+insert_newest_poly_in_poly_linked_list_40ED6 proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -1886,9 +1893,13 @@ loc_25EA0:
     shl     ax, 1
     add     ax, 6
     add     polyinfoptrnext, ax
-    cmp     polyinfonumpolys, 190h
+    cmp     polyinfonumpolys, 250h
     jz      short loc_25ED1
-    cmp     polyinfoptrnext, 2872h
+    ; The original code check here for 2872h = 10354, i.e. 46 bytes less than
+    ; the buffer allocated to polyinfoptr. We allocated 13000 bytes, so change
+    ; the number correspondingly, and round down for good measure (this check
+    ; would probably never fire in the original program)
+    cmp     polyinfoptrnext, 12950
     jle     short loc_25EDA
 loc_25ED1:
     mov     ax, 1           ; return 1 if error
@@ -1904,8 +1915,8 @@ loc_25EDA:
     mov     sp, bp
     pop     bp
     retf
-ported_insert_newest_poly_in_poly_linked_list_40ED6_ endp
-ported_rect_compare_point_ proc far
+insert_newest_poly_in_poly_linked_list_40ED6 endp
+rect_compare_point proc far
     var_flags = byte ptr -4
      s = byte ptr 0
      r = byte ptr 2
@@ -1953,8 +1964,8 @@ loc_25F25:
     mov     sp, bp
     pop     bp
     retf
-ported_rect_compare_point_ endp
-ported_is_facing_camera_ proc far
+rect_compare_point endp
+is_facing_camera proc far
     var_10 = dword ptr -16
     var_C = dword ptr -12
     var_8 = dword ptr -8
@@ -2058,7 +2069,7 @@ loc_25FEE:
     mov     sp, bp
     pop     bp
     retf
-ported_is_facing_camera_ endp
+is_facing_camera endp
 get_a_poly_info proc far
     var_pattype2 = word ptr -64
     var_polyinfoptrdata = dword ptr -62
@@ -2077,7 +2088,7 @@ get_a_poly_info proc far
     sub     sp, 40h
     push    di
     push    si
-    mov     di, 190h
+    mov     di, 250h
     sub     si, si
     jmp     loc_260AC
 _fill_type0:
@@ -2283,14 +2294,14 @@ _fill_pixel:
     jmp     _fill_next_eop6
 _get_a_poly_info_done:
     push    cs
-    call near ptr ported_polyinfo_reset_
+    call near ptr polyinfo_reset
     pop     si
     pop     di
     mov     sp, bp
     pop     bp
     retf
 get_a_poly_info endp
-ported_mat_rot_zxy_ proc far
+mat_rot_zxy proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_angleZ = word ptr 6
@@ -2503,8 +2514,8 @@ loc_26372:
     mov     sp, bp
     pop     bp
     retf
-ported_mat_rot_zxy_ endp
-ported_rect_adjust_from_point_ proc far
+mat_rot_zxy endp
+rect_adjust_from_point proc far
     var_6 = word ptr -6
      s = byte ptr 0
      r = byte ptr 2
@@ -2548,8 +2559,8 @@ loc_263C0:
     mov     sp, bp
     pop     bp
     retf
-ported_rect_adjust_from_point_ endp
-ported_vector_op_unk2_ proc far
+rect_adjust_from_point endp
+vector_op_unk2 proc far
     var_y = dword ptr -14
     var_A = byte ptr -10
     var_8 = word ptr -8
@@ -2698,8 +2709,8 @@ loc_264EB:
     mov     sp, bp
     pop     bp
     retf
-ported_vector_op_unk2_ endp
-ported_calc_sincos80_ proc far
+vector_op_unk2 endp
+calc_sincos80 proc far
 
     mov     ax, 80h
     push    ax
@@ -2732,7 +2743,7 @@ ported_calc_sincos80_ proc far
     retf
     ; align 2
     db 144
-ported_calc_sincos80_ endp
+calc_sincos80 endp
 nopsub_26552 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -2756,7 +2767,7 @@ loc_2656A:
     pop     bp
     retf
 nopsub_26552 endp
-ported_rect_union_ proc far
+rect_union proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_rectptr1 = word ptr 6
@@ -2815,8 +2826,8 @@ loc_265E9:
     pop     si
     pop     bp
     retf
-ported_rect_union_ endp
-ported_rect_intersect_ proc far
+rect_union endp
+rect_intersect proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_rectptr1 = word ptr 6
@@ -2884,8 +2895,8 @@ loc_2666B:
     pop     si
     pop     bp
     retf
-ported_rect_intersect_ endp
-ported_rectlist_add_rect_ proc far
+rect_intersect endp
+rectlist_add_rect proc far
     var_22 = byte ptr -34
     var_rect2 = RECTANGLE ptr -32
     var_18 = byte ptr -24
@@ -2964,14 +2975,14 @@ loc_266D6:
     push    ax
     push    [bp+arg_rectptr]
     push    cs
-    call near ptr ported_rect_is_overlapping_
+    call near ptr rect_is_overlapping
     add     sp, 4
     or      al, al
     jz      short loc_266C6
     push    [bp+var_rectptr]
     push    [bp+arg_rectptr]
     push    cs
-    call near ptr ported_rect_is_inside_
+    call near ptr rect_is_inside
     add     sp, 4
     or      al, al
     jz      short loc_26704
@@ -2980,7 +2991,7 @@ loc_26704:
     push    [bp+arg_rectptr]
     push    [bp+var_rectptr]
     push    cs
-    call near ptr ported_rect_is_inside_
+    call near ptr rect_is_inside
     add     sp, 4
     or      al, al
     jz      short loc_2671E
@@ -3143,7 +3154,7 @@ loc_26825:
     push    [bp+arg_rect_array_ptr]
     push    [bp+arg_rect_array_length_ptr]
     push    cs
-    call near ptr ported_rectlist_add_rect_
+    call near ptr rectlist_add_rect
     add     sp, 6
 loc_2684F:
     lea     ax, [bp+var_rect]
@@ -3151,7 +3162,7 @@ loc_2684F:
     push    [bp+arg_rect_array_ptr]
     push    [bp+arg_rect_array_length_ptr]
     push    cs
-    call near ptr ported_rectlist_add_rect_
+    call near ptr rectlist_add_rect
     add     sp, 6
     cmp     [bp+var_22], 0
     jnz     short loc_26869
@@ -3163,7 +3174,7 @@ loc_2686C:
     push    [bp+arg_rect_array_ptr]
     push    [bp+arg_rect_array_length_ptr]
     push    cs
-    call near ptr ported_rectlist_add_rect_
+    call near ptr rectlist_add_rect
     add     sp, 6
     pop     si
     pop     di
@@ -3220,7 +3231,7 @@ loc_268BB:
     push    [bp+arg_rectptr]
     push    ax
     push    cs
-    call near ptr ported_rect_is_adjacent_
+    call near ptr rect_is_adjacent
     add     sp, 4
     or      al, al
     jz      short loc_268B8
@@ -3288,8 +3299,8 @@ loc_26957:
     retf
     ; align 2
     db 144
-ported_rectlist_add_rect_ endp
-ported_rect_is_overlapping_ proc far
+rectlist_add_rect endp
+rect_is_overlapping proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_rectptr1 = word ptr 6
@@ -3327,8 +3338,8 @@ loc_26989:
     pop     si
     pop     bp
     retf
-ported_rect_is_overlapping_ endp
-ported_rect_is_inside_ proc far
+rect_is_overlapping endp
+rect_is_inside proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_rectptr1 = word ptr 6
@@ -3362,8 +3373,8 @@ loc_269CA:
     retf
     ; align 2
     db 144
-ported_rect_is_inside_ endp
-ported_rect_is_adjacent_ proc far
+rect_is_inside endp
+rect_is_adjacent proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_rectptr1 = word ptr 6
@@ -3436,8 +3447,8 @@ loc_26A3E:
     mov     bx, si
     mov     si, [bp+arg_rectptr2]
     jmp     short loc_26A2D
-ported_rect_is_adjacent_ endp
-ported_rectlist_add_rects_ proc far
+rect_is_adjacent endp
+rectlist_add_rects proc far
     var_rectptr3 = word ptr -28
     var_rectptr = word ptr -26
     var_rectcounter = byte ptr -24
@@ -3499,7 +3510,7 @@ loc_26A92:
     lea     ax, [bp+var_rect]
     push    ax
     push    cs
-    call near ptr ported_rect_intersect_
+    call near ptr rect_intersect
 loc_26AA5:
     add     sp, 4
     or      al, al
@@ -3510,7 +3521,7 @@ loc_26AAC:
     push    [bp+arg_rect_array_ptr]
     push    [bp+arg_rect_array_length_ptr]
     push    cs
-    call near ptr ported_rectlist_add_rect_
+    call near ptr rectlist_add_rect
     add     sp, 6
 loc_26ABD:
     inc     [bp+var_rectcounter]
@@ -3570,7 +3581,7 @@ loc_26B2E:
     push    bx
     push    [bp+var_rectptr]
     push    cs
-    call near ptr ported_rect_union_
+    call near ptr rect_union
     add     sp, 6
     lea     ax, [bp+var_rect2]
     jmp     loc_26A63
@@ -3582,8 +3593,8 @@ loc_26B44:
     mov     sp, bp
     pop     bp
     retf
-ported_rectlist_add_rects_ endp
-ported_rect_array_sort_by_top_ proc far
+rectlist_add_rects endp
+rect_array_sort_by_top proc far
     var_intbuffer = word ptr -514
      s = byte ptr 0
      r = byte ptr 2
@@ -3645,6 +3656,6 @@ loc_26BA0:
     mov     sp, bp
     pop     bp
     retf
-ported_rect_array_sort_by_top_ endp
+rect_array_sort_by_top endp
 seg006 ends
 end

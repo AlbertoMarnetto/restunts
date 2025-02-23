@@ -1,13 +1,13 @@
 seg012 segment byte public 'STUNTSC' use16
     extrn fatal_error:proc
-    extrn ported_polarAngle_:proc
+    extrn polarAngle:proc
     extrn off_2EA9B:word
     extrn sub_2EAD4:proc
     extrn set_add_value:proc
     extrn sub_2EB07:proc
     extrn sub_2EB1E:proc
-    extrn ported_draw_line_related_alt_:proc
-    extrn ported_draw_line_related_:proc
+    extrn draw_line_related_alt:proc
+    extrn draw_line_related:proc
     extrn loc_2EB62:proc
     extrn off_2ECB9:word
     extrn word_2ECF8:word
@@ -23,7 +23,7 @@ seg012 segment byte public 'STUNTSC' use16
     extrn criterr_interrupt_handler:proc
     extrn set_criterr_handler:proc
     extrn criterr_exithandler:proc
-    extrn ported_preRender_unk_:proc
+    extrn preRender_unk:proc
     extrn nopsub_2F424:proc
     extrn nopsub_2F436:proc
     extrn word_2F448:word
@@ -82,17 +82,17 @@ seg012 segment byte public 'STUNTSC' use16
     extrn add_exit_handler:proc
     extrn call_exitlist:proc
     extrn call_exitlist2:proc
-    extrn ported_file_paras_:proc
-    extrn ported_file_paras_nofatal_:proc
-    extrn ported_file_paras_fatal_:proc
-    extrn ported_file_decomp_paras_:proc
-    extrn ported_file_decomp_paras_nofatal_:proc
-    extrn ported_file_decomp_paras_fatal_:proc
-    extrn ported_file_find_:proc
-    extrn ported_file_find_next_:proc
-    extrn ported_multiply_and_scale_:proc
+    extrn file_paras:proc
+    extrn file_paras_nofatal:proc
+    extrn file_paras_fatal:proc
+    extrn file_decomp_paras:proc
+    extrn file_decomp_paras_nofatal:proc
+    extrn file_decomp_paras_fatal:proc
+    extrn file_find:proc
+    extrn file_find_next:proc
+    extrn multiply_and_scale:proc
     extrn video_set_mode4:proc
-    extrn ported_polarRadius2D_:proc
+    extrn polarRadius2D:proc
     extrn video_set_mode7:proc
     extrn nopsub_30180:proc
     extrn timer_setup_interrupt:proc
@@ -116,61 +116,61 @@ seg012 segment byte public 'STUNTSC' use16
     extrn sub_307D2:proc
     extrn sub_307E3:proc
     extrn nopsub_307FA:proc
-    extrn ported_kb_init_interrupt_:proc
-    extrn ported_kb_exit_handler_:proc
-    extrn ported_kb_int9_handler_:proc
-    extrn ported_kb_int16_handler_:proc
-    extrn ported_kb_get_key_state_:proc
-    extrn ported_kb_call_readchar_callback_:proc
-    extrn ported_kb_read_char_:proc
-    extrn ported_kb_checking_:proc
+    extrn kb_init_interrupt:proc
+    extrn kb_exit_handler:proc
+    extrn kb_int9_handler:proc
+    extrn kb_int16_handler:proc
+    extrn kb_get_key_state:proc
+    extrn kb_call_readchar_callback:proc
+    extrn kb_read_char:proc
+    extrn kb_checking:proc
     extrn nopsub_kb_set_readchar_callback:proc
     extrn nopsub_kb_get_readchar_callback:proc
-    extrn ported_flush_stdin_:proc
-    extrn ported_kb_check_:proc
+    extrn flush_stdin:proc
+    extrn kb_check:proc
     extrn nopsub_30A77:proc
     extrn nopsub_30A97:proc
-    extrn ported_file_read_:proc
-    extrn ported_file_read_nofatal_:proc
-    extrn ported_file_read_fatal_:proc
-    extrn ported_file_decomp_rle_:proc
-    extrn ported_file_decomp_rle_single_:proc
-    extrn ported_file_decomp_rle_seq_:proc
-    extrn ported_file_load_binary_:proc
-    extrn ported_file_load_binary_nofatal_:proc
-    extrn ported_file_decomp_:proc
-    extrn ported_file_decomp_nofatal_:proc
-    extrn ported_file_decomp_fatal_:proc
-    extrn ported_locate_shape_nofatal_:proc
-    extrn ported_locate_shape_fatal_:proc
-    extrn ported_locate_sound_fatal_:proc
-    extrn ported_mmgr_alloc_resmem_:proc
+    extrn file_read:proc
+    extrn file_read_nofatal:proc
+    extrn file_read_fatal:proc
+    extrn file_decomp_rle:proc
+    extrn file_decomp_rle_single:proc
+    extrn file_decomp_rle_seq:proc
+    extrn file_load_binary:proc
+    extrn file_load_binary_nofatal:proc
+    extrn file_decomp:proc
+    extrn file_decomp_nofatal:proc
+    extrn file_decomp_fatal:proc
+    extrn locate_shape_nofatal:proc
+    extrn locate_shape_fatal:proc
+    extrn locate_sound_fatal:proc
+    extrn mmgr_alloc_resmem:proc
     extrn loc_310CD:proc
-    extrn ported_mmgr_alloc_a000_:proc
+    extrn mmgr_alloc_a000:proc
     extrn nopsub_310FE:proc
     extrn nopsub_3111D:proc
     extrn nopsub_31157:proc
     extrn nopsub_31169:proc
-    extrn ported_mmgr_get_ofs_diff_:proc
-    extrn ported_mmgr_copy_paras_:proc
-    extrn ported_copy_paras_reverse_:proc
-    extrn ported_mmgr_path_to_name_:proc
-    extrn ported_mmgr_alloc_pages_:proc
-    extrn ported_mmgr_find_free_:proc
-    extrn ported_mmgr_get_chunk_by_name_:proc
+    extrn mmgr_get_ofs_diff:proc
+    extrn mmgr_copy_paras:proc
+    extrn copy_paras_reverse:proc
+    extrn mmgr_path_to_name:proc
+    extrn mmgr_alloc_pages:proc
+    extrn mmgr_find_free:proc
+    extrn mmgr_get_chunk_by_name:proc
     extrn nopsub_31429:proc
-    extrn ported_mmgr_free_:proc
+    extrn mmgr_free:proc
     extrn loc_31498:proc
     extrn nopsub_31525:proc
-    extrn ported_mmgr_release_:proc
-    extrn ported_mmgr_get_chunk_size_:proc
-    extrn ported_mmgr_resize_memory_:proc
-    extrn ported_mmgr_op_unk_:proc
-    extrn ported_preRender_default_:proc
-    extrn ported_preRender_default_alt_:proc
+    extrn mmgr_release:proc
+    extrn mmgr_get_chunk_size:proc
+    extrn mmgr_resize_memory:proc
+    extrn mmgr_op_unk:proc
+    extrn preRender_default:proc
+    extrn preRender_default_alt:proc
     extrn loc_317CE:proc
-    extrn ported_skybox_op_helper_:proc
-    extrn ported_preRender_wheel_helper4_:proc
+    extrn skybox_op_helper:proc
+    extrn preRender_wheel_helper4:proc
     extrn loc_317FB:proc
     extrn loc_3180A:proc
     extrn preRender_helper:proc
@@ -188,60 +188,60 @@ seg012 segment byte public 'STUNTSC' use16
     extrn nopsub_322B4:proc
     extrn nopsub_322C0:proc
     extrn nopsub_322DF:proc
-    extrn ported_set_projection_:proc
+    extrn set_projection:proc
     extrn loc_32334:proc
-    extrn ported_vector_to_point_:proc
-    extrn ported_sprite_free_wnd_:proc
-    extrn ported_file_write_nofatal_:proc
-    extrn ported_file_write_fatal_:proc
+    extrn vector_to_point:proc
+    extrn sprite_free_wnd:proc
+    extrn file_write_nofatal:proc
+    extrn file_write_fatal:proc
     extrn video_add_exithandler:proc
     extrn video_on_exit:proc
-    extrn ported_sprite_copy_both_to_arg_:proc
-    extrn ported_sprite_copy_arg_to_both_:proc
-    extrn ported_file_get_res_shape_count_:proc
-    extrn ported_file_get_shape2d_:proc
+    extrn sprite_copy_both_to_arg:proc
+    extrn sprite_copy_arg_to_both:proc
+    extrn file_get_res_shape_count:proc
+    extrn file_get_shape2d:proc
     extrn nopsub_326BA:proc
-    extrn ported_sin_fast_:proc
+    extrn sin_fast:proc
     extrn off_326F2:word
-    extrn ported_cos_fast_:proc
+    extrn cos_fast:proc
     extrn nopsub_32738:proc
     extrn nopsub_32746:proc
     extrn nopsub_32751:proc
-    extrn ported_projectiondata9_times_ratio_:proc
+    extrn projectiondata9_times_ratio:proc
     extrn nopsub_3276A:proc
-    extrn ported_timer_get_counter_:proc
-    extrn ported_timer_custom_delta_:proc
-    extrn ported_timer_get_delta_:proc
-    extrn ported_timer_reset_:proc
-    extrn ported_timer_copy_counter_:proc
-    extrn ported_timer_wait_for_dx_:proc
-    extrn ported_timer_compare_dx_:proc
-    extrn ported_timer_get_counter_unk_:proc
+    extrn timer_get_counter:proc
+    extrn timer_custom_delta:proc
+    extrn timer_get_delta:proc
+    extrn timer_reset:proc
+    extrn timer_copy_counter:proc
+    extrn timer_wait_for_dx:proc
+    extrn timer_compare_dx:proc
+    extrn timer_get_counter_unk:proc
     extrn font_op:proc
     extrn font_op2:proc
     extrn loc_3284A:proc
     extrn loc_32882:proc
-    extrn ported_preRender_patterned_:proc
+    extrn preRender_patterned:proc
     extrn nopsub_328C9:proc
     extrn nopsub_328DB:proc
-    extrn ported_mat_mul_vector_:proc
-    extrn ported_mat_multiply_:proc
-    extrn ported_mat_invert_:proc
+    extrn mat_mul_vector:proc
+    extrn mat_multiply:proc
+    extrn mat_invert:proc
     extrn fliphandlers:word
-    extrn ported_file_unflip_shape2d_:proc
+    extrn file_unflip_shape2d:proc
     extrn vle_esc1:word
     extrn vle_esc2:byte
-    extrn ported_file_decomp_vle_:proc
+    extrn file_decomp_vle:proc
     extrn nopsub_32FEE:proc
-    extrn ported_video_get_status_:proc
+    extrn video_get_status:proc
     extrn nopsub_33006:proc
-    extrn ported_vector_op_unk_:proc
+    extrn vector_op_unk:proc
     extrn loc_3301F:proc
     extrn preRender_sphere:proc
     extrn nopsub_3320E:proc
     extrn sprite_set_1_size:proc
     extrn video_clear_color:proc
-    extrn ported_sprite_clear_1_color_:proc
+    extrn sprite_clear_1_color:proc
     extrn nopsub_33330:proc
     extrn draw_unknown_lines:proc
     extrn putpixel_line1_maybe:proc
@@ -319,11 +319,11 @@ seg012 segment byte public 'STUNTSC' use16
     extrn font_set_unk:proc
     extrn set_fontdefseg:proc
     extrn draw_patterned_lines:proc
-    extrn ported_sprite_make_wnd_:proc
+    extrn sprite_make_wnd:proc
     extrn next_wnd_def:word
     extrn wnd_defs:byte
-    extrn ported_sprite_set_1_from_argptr_:proc
-    extrn ported_sprite_copy_2_to_1_:proc
+    extrn sprite_set_1_from_argptr:proc
+    extrn sprite_copy_2_to_1:proc
     extrn putpixel_single_maybe:proc
     extrn sub_35B76:proc
     extrn sub_35C4E:proc
@@ -332,7 +332,7 @@ seg012 segment byte public 'STUNTSC' use16
     extrn sub_35DE6:proc
     extrn sub_35E08:proc
     extrn loc_35ED9:proc
-    extrn ported_file_load_shape2d_palmap_apply_:proc
-    extrn ported_file_load_shape2d_expand_:proc
-    extrn ported_file_unflip_shape2d_pes_:proc
+    extrn file_load_shape2d_palmap_apply:proc
+    extrn file_load_shape2d_expand:proc
+    extrn file_unflip_shape2d_pes:proc
 seg012 ends

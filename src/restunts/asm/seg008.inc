@@ -3,15 +3,15 @@ seg008 segment byte public 'STUNTSC' use16
     extrn sub_275C6:proc
     extrn show_dialog:proc
     extrn do_fileselect_dialog:proc
-    extrn ported_file_build_path_:proc
+    extrn file_build_path:proc
     extrn do_savefile_dialog:proc
     extrn parse_filepath_separators:proc
     extrn input_checking:proc
     extrn input_do_checking:proc
-    extrn ported_file_load_resfile_:proc
-    extrn ported_unload_resource_:proc
-    extrn ported_locate_shape_alt_:proc
-    extrn ported_locate_text_res_:proc
+    extrn file_load_resfile:proc
+    extrn unload_resource:proc
+    extrn locate_shape_alt:proc
+    extrn locate_text_res:proc
     extrn copy_string:proc
     extrn mouse_track_op:proc
     extrn mouse_draw_transparent_check:proc
@@ -21,30 +21,30 @@ seg008 segment byte public 'STUNTSC' use16
     extrn mouse_multi_hittest:proc
     extrn check_input:proc
     extrn nopsub_28F26:proc
-    extrn ported_sprite_copy_2_to_1_2_:proc
-    extrn ported_sprite_copy_2_to_1_clear_:proc
-    extrn ported_sprite_copy_wnd_to_1_:proc
-    extrn ported_sprite_copy_wnd_to_1_clear_:proc
+    extrn sprite_copy_2_to_1_2:proc
+    extrn sprite_copy_2_to_1_clear:proc
+    extrn sprite_copy_wnd_to_1:proc
+    extrn sprite_copy_wnd_to_1_clear:proc
     extrn intro_draw_text:proc
     extrn hiscore_draw_text:proc
     extrn call_read_line:proc
     extrn input_repeat_check:proc
     extrn draw_lines_unk:proc
     extrn draw_button:proc
-    extrn ported_shape3d_init_shape_:proc
+    extrn shape3d_init_shape:proc
     extrn font_op2_alt:proc
     extrn sprite_blit_to_video:proc
     extrn show_waiting:proc
     extrn print_int_as_string_maybe:proc
     extrn sub_29772:proc
     extrn mouse_timer_sprite_unk:proc
-    extrn ported_file_load_audiores_:proc
+    extrn file_load_audiores:proc
     extrn audio_unload:proc
     extrn font_set_fontdef2:proc
     extrn font_set_fontdef:proc
     extrn format_frame_as_string:proc
-    extrn ported_get_super_random_:proc
-    extrn ported_file_load_resource_:proc
+    extrn get_super_random:proc
+    extrn file_load_resource:proc
     extrn off_29A4E:word
     extrn sub_29A86:proc
     extrn input_push_status:proc
@@ -60,6 +60,6 @@ seg008 segment byte public 'STUNTSC' use16
     extrn do_dea_textres:proc
     extrn ensure_file_exists:proc
     extrn do_mer_restext:proc
-    extrn ported_timer_get_delta_alt_:proc
-    extrn ported_file_load_3dres_:proc
+    extrn timer_get_delta_alt:proc
+    extrn file_load_3dres:proc
 seg008 ends

@@ -46,19 +46,19 @@ nosmart
 seg031 segment byte public 'STUNTSC' use16
     assume cs:seg031
     assume es:nothing, ss:nothing, ds:dseg
-    public ported_file_load_shape2d_nofatal2_
-    public ported_file_combine_and_find_
-    public ported_file_find_next_alt_
+    public file_load_shape2d_nofatal2
+    public file_combine_and_find
+    public file_find_next_alt
     public nullsub_1
     public nullsub_2
-    public ported_init_main_
-    public ported_random_wait_
+    public init_main
+    public random_wait
     public load_palandcursor
-    public ported_get_0_
-    public ported_mmgr_alloc_resbytes_
-    public ported_mmgr_get_res_ofs_diff_scaled_
-    public ported_mmgr_get_chunk_size_bytes_
-ported_file_load_shape2d_nofatal2_ proc far
+    public get_0
+    public mmgr_alloc_resbytes
+    public mmgr_get_res_ofs_diff_scaled
+    public mmgr_get_chunk_size_bytes
+file_load_shape2d_nofatal2 proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -74,8 +74,8 @@ loc_39E1F:
     add     sp, 2
     pop     bp
     retf
-ported_file_load_shape2d_nofatal2_ endp
-ported_file_combine_and_find_ proc far
+file_load_shape2d_nofatal2 endp
+file_combine_and_find proc far
     var_50 = byte ptr -80
      s = byte ptr 0
      r = byte ptr 2
@@ -111,12 +111,12 @@ loc_39E48:
 loc_39E4A:
     pop     bp
     retf
-ported_file_combine_and_find_ endp
-ported_file_find_next_alt_ proc far
+file_combine_and_find endp
+file_find_next_alt proc far
 
     call    file_find_next
     retf
-ported_file_find_next_alt_ endp
+file_find_next_alt endp
 nullsub_1 proc far
 
     retf
@@ -129,7 +129,7 @@ nullsub_2 proc far
     ; align 2
     db 144
 nullsub_2 endp
-ported_init_main_ proc far
+init_main proc far
     var_argcmd = word ptr -30
     var_timerdelta3 = word ptr -28
     var_1A = word ptr -26
@@ -561,7 +561,7 @@ loc_3A22B:
     mov     ax, slow_video_mgmt
     mov     slow_video_mgmt_copy, ax
     push    cs
-    call near ptr ported_random_wait_
+    call near ptr random_wait
     sub     ax, ax
     push    ax
     push    material_patlist2_ptr
@@ -575,8 +575,8 @@ loc_3A22B:
     mov     sp, bp
     pop     bp
     retf
-ported_init_main_ endp
-ported_random_wait_ proc far
+init_main endp
+random_wait proc far
      s = byte ptr 0
      r = byte ptr 2
 
@@ -636,7 +636,7 @@ loc_3A2B2:
     retf
     ; align 2
     db 144
-ported_random_wait_ endp
+random_wait endp
 load_palandcursor proc far
     var_312 = word ptr -786
     var_310 = dword ptr -784
@@ -792,14 +792,14 @@ loc_3A438:
     pop     bp
     retf
 load_palandcursor endp
-ported_get_0_ proc far
+get_0 proc far
 
     sub     ax, ax
     retf
     ; align 2
     db 144
-ported_get_0_ endp
-ported_mmgr_alloc_resbytes_ proc far
+get_0 endp
+mmgr_alloc_resbytes proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -830,8 +830,8 @@ locret_3A482:
     retf
     ; align 2
     db 144
-ported_mmgr_alloc_resbytes_ endp
-ported_mmgr_get_res_ofs_diff_scaled_ proc far
+mmgr_alloc_resbytes endp
+mmgr_get_res_ofs_diff_scaled proc far
 
     call    mmgr_get_ofs_diff
 loc_3A489:
@@ -845,8 +845,8 @@ loc_3A491:
     dec     cl
     jnz     short loc_3A48D
     retf
-ported_mmgr_get_res_ofs_diff_scaled_ endp
-ported_mmgr_get_chunk_size_bytes_ proc far
+mmgr_get_res_ofs_diff_scaled endp
+mmgr_get_chunk_size_bytes proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -879,6 +879,6 @@ loc_3A4B3:
     pop     bp
 locret_3A4B4:
     retf
-ported_mmgr_get_chunk_size_bytes_ endp
+mmgr_get_chunk_size_bytes endp
 seg031 ends
 end

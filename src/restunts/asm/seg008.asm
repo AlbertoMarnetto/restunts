@@ -50,15 +50,15 @@ seg008 segment byte public 'STUNTSC' use16
     public sub_275C6
     public show_dialog
     public do_fileselect_dialog
-    public ported_file_build_path_
+    public file_build_path
     public do_savefile_dialog
     public parse_filepath_separators
     public input_checking
     public input_do_checking
-    public ported_file_load_resfile_
-    public ported_unload_resource_
-    public ported_locate_shape_alt_
-    public ported_locate_text_res_
+    public file_load_resfile
+    public unload_resource
+    public locate_shape_alt
+    public locate_text_res
     public copy_string
     public mouse_track_op
     public mouse_draw_transparent_check
@@ -68,30 +68,30 @@ seg008 segment byte public 'STUNTSC' use16
     public mouse_multi_hittest
     public check_input
     public nopsub_28F26
-    public ported_sprite_copy_2_to_1_2_
-    public ported_sprite_copy_2_to_1_clear_
-    public ported_sprite_copy_wnd_to_1_
-    public ported_sprite_copy_wnd_to_1_clear_
+    public sprite_copy_2_to_1_2
+    public sprite_copy_2_to_1_clear
+    public sprite_copy_wnd_to_1
+    public sprite_copy_wnd_to_1_clear
     public intro_draw_text
     public hiscore_draw_text
     public call_read_line
     public input_repeat_check
     public draw_lines_unk
     public draw_button
-    public ported_shape3d_init_shape_
+    public shape3d_init_shape
     public font_op2_alt
     public sprite_blit_to_video
     public show_waiting
     public print_int_as_string_maybe
     public sub_29772
     public mouse_timer_sprite_unk
-    public ported_file_load_audiores_
+    public file_load_audiores
     public audio_unload
     public font_set_fontdef2
     public font_set_fontdef
     public format_frame_as_string
-    public ported_get_super_random_
-    public ported_file_load_resource_
+    public get_super_random
+    public file_load_resource
     public off_29A4E
     public sub_29A86
     public input_push_status
@@ -107,8 +107,8 @@ seg008 segment byte public 'STUNTSC' use16
     public do_dea_textres
     public ensure_file_exists
     public do_mer_restext
-    public ported_timer_get_delta_alt_
-    public ported_file_load_3dres_
+    public timer_get_delta_alt
+    public file_load_3dres
 sub_274B0 proc far
     var_40 = byte ptr -64
     var_22 = byte ptr -34
@@ -848,7 +848,7 @@ loc_27B92:
     jmp     short loc_27BCD
 loc_27B98:
     push    cs
-    call near ptr ported_timer_get_delta_alt_
+    call near ptr timer_get_delta_alt
     push    ax
     push    cs
     call near ptr input_checking
@@ -887,7 +887,7 @@ loc_27BD4:
     mov     [bp+var_1D4], al
     mov     [bp+var_1C0], 0FFh
     push    cs
-    call near ptr ported_timer_get_delta_alt_
+    call near ptr timer_get_delta_alt
     push    cs
     call near ptr mouse_draw_opaque_check
     cmp     [bp+var_140], 2
@@ -1040,7 +1040,7 @@ loc_27D65:
     mov     [bp+var_1C0], al
 loc_27D6D:
     push    cs
-    call near ptr ported_timer_get_delta_alt_
+    call near ptr timer_get_delta_alt
     push    ax
     push    cs
     call near ptr input_checking
@@ -1258,7 +1258,7 @@ do_fileselect_dialog proc far
     push    word ptr mainresptr+2
     push    word ptr mainresptr
     push    cs
-    call near ptr ported_locate_text_res_
+    call near ptr locate_text_res
     add     sp, 6
     push    dx
     push    ax
@@ -1556,7 +1556,7 @@ loc_281CC:
     push    word ptr mainresptr+2
     push    word ptr mainresptr
     push    cs
-    call near ptr ported_locate_text_res_
+    call near ptr locate_text_res
     add     sp, 6
     push    dx
     push    ax
@@ -1581,7 +1581,7 @@ loc_281CC:
     push    word ptr mainresptr+2
     push    word ptr mainresptr
     push    cs
-    call near ptr ported_locate_text_res_
+    call near ptr locate_text_res
     add     sp, 6
     push    dx
     push    ax
@@ -1609,7 +1609,7 @@ loc_2824D:
     mov     [bp+var_6E4], 0FFh
     mov     [bp+var_718], 0FFh
     push    cs
-    call near ptr ported_timer_get_delta_alt_
+    call near ptr timer_get_delta_alt
     mov     [bp+var_2], 0
 loc_28269:
     mov     al, [bp+var_6E4]
@@ -1721,7 +1721,7 @@ loc_2836C:
     call near ptr mouse_draw_transparent_check
 loc_28370:
     push    cs
-    call near ptr ported_timer_get_delta_alt_
+    call near ptr timer_get_delta_alt
     push    ax
     push    cs
     call near ptr input_checking
@@ -1982,7 +1982,7 @@ loc_285AC:
     ; align 2
     db 144
 do_fileselect_dialog endp
-ported_file_build_path_ proc far
+file_build_path proc far
     var_2 = byte ptr -2
      s = byte ptr 0
      r = byte ptr 2
@@ -2039,7 +2039,7 @@ loc_28618:
     retf
     ; align 2
     db 144
-ported_file_build_path_ endp
+file_build_path endp
 do_savefile_dialog proc far
     var_12 = word ptr -18
     var_10 = word ptr -16
@@ -2072,7 +2072,7 @@ do_savefile_dialog proc far
     push    word ptr mainresptr+2
     push    word ptr mainresptr
     push    cs
-    call near ptr ported_locate_text_res_
+    call near ptr locate_text_res
     add     sp, 6
     push    dx
     push    ax
@@ -2470,7 +2470,7 @@ input_do_checking proc far
     ; align 2
     db 144
 input_do_checking endp
-ported_file_load_resfile_ proc far
+file_load_resfile proc far
     var_54 = byte ptr -84
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -2498,7 +2498,7 @@ loc_289F8:
     mov     ax, 1
     push    ax              ; int
     push    cs
-    call near ptr ported_file_load_resource_
+    call near ptr file_load_resource
     add     sp, 4
     mov     [bp+var_4], ax
     mov     [bp+var_2], dx
@@ -2520,7 +2520,7 @@ loc_289F8:
     mov     ax, 7
     push    ax              ; int
     push    cs
-    call near ptr ported_file_load_resource_
+    call near ptr file_load_resource
     add     sp, 4
 loc_28A5E:
     mov     [bp+var_4], ax
@@ -2536,8 +2536,8 @@ loc_28A6E:
     mov     sp, bp
     pop     bp
     retf
-ported_file_load_resfile_ endp
-ported_unload_resource_ proc far
+file_load_resfile endp
+unload_resource proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -2553,8 +2553,8 @@ ported_unload_resource_ proc far
     retf
     ; align 2
     db 144
-ported_unload_resource_ endp
-ported_locate_shape_alt_ proc far
+unload_resource endp
+locate_shape_alt proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -2570,8 +2570,8 @@ ported_locate_shape_alt_ proc far
     add     sp, 6
     pop     bp
     retf
-ported_locate_shape_alt_ endp
-ported_locate_text_res_ proc far
+locate_shape_alt endp
+locate_text_res proc far
     var_4 = byte ptr -4
     var_3 = byte ptr -3
     var_2 = byte ptr -2
@@ -2604,7 +2604,7 @@ ported_locate_text_res_ proc far
     retf
     ; align 2
     db 144
-ported_locate_text_res_ endp
+locate_text_res endp
 copy_string proc far
     var_4 = dword ptr -4
      s = byte ptr 0
@@ -2758,7 +2758,7 @@ loc_28BE2:
     jle     short loc_28C26
 loc_28BED:
     push    cs
-    call near ptr ported_timer_get_delta_alt_
+    call near ptr timer_get_delta_alt
     push    ax
     push    cs
     call near ptr input_checking
@@ -2787,7 +2787,7 @@ loc_28C26:
     mov     [bp+var_C], si
 loc_28C2E:
     push    cs
-    call near ptr ported_timer_get_delta_alt_
+    call near ptr timer_get_delta_alt
     push    ax
     push    cs
     call near ptr input_checking
@@ -3125,7 +3125,7 @@ loc_28EF3:
     db 144
 loc_28EFA:
     push    cs
-    call near ptr ported_timer_get_delta_alt_
+    call near ptr timer_get_delta_alt
     push    ax
     push    cs
     call near ptr input_checking
@@ -3148,7 +3148,7 @@ check_input endp
 nopsub_28F26 proc far
 
     push    cs
-    call near ptr ported_timer_get_delta_alt_
+    call near ptr timer_get_delta_alt
     push    ax
     push    cs
     call near ptr input_checking
@@ -3161,7 +3161,7 @@ nopsub_28F26 proc far
     ; align 2
     db 144
 nopsub_28F26 endp
-ported_sprite_copy_2_to_1_2_ proc far
+sprite_copy_2_to_1_2 proc far
 
     mov     ax, offset sprite2
     mov     dx, seg seg012
@@ -3172,8 +3172,8 @@ ported_sprite_copy_2_to_1_2_ proc far
     retf
     ; align 2
     db 144
-ported_sprite_copy_2_to_1_2_ endp
-ported_sprite_copy_2_to_1_clear_ proc far
+sprite_copy_2_to_1_2 endp
+sprite_copy_2_to_1_clear proc far
 
     mov     ax, offset sprite2
     mov     dx, seg seg012
@@ -3186,8 +3186,8 @@ ported_sprite_copy_2_to_1_clear_ proc far
     call    sprite_clear_1_color
     add     sp, 2
     retf
-ported_sprite_copy_2_to_1_clear_ endp
-ported_sprite_copy_wnd_to_1_ proc far
+sprite_copy_2_to_1_clear endp
+sprite_copy_wnd_to_1 proc far
 
     push    word ptr wndsprite+2
     push    word ptr wndsprite
@@ -3196,8 +3196,8 @@ ported_sprite_copy_wnd_to_1_ proc far
     retf
     ; align 2
     db 144
-ported_sprite_copy_wnd_to_1_ endp
-ported_sprite_copy_wnd_to_1_clear_ proc far
+sprite_copy_wnd_to_1 endp
+sprite_copy_wnd_to_1_clear proc far
 
     push    word ptr wndsprite+2
     push    word ptr wndsprite
@@ -3208,7 +3208,7 @@ ported_sprite_copy_wnd_to_1_clear_ proc far
     call    sprite_clear_1_color
     add     sp, 2
     retf
-ported_sprite_copy_wnd_to_1_clear_ endp
+sprite_copy_wnd_to_1_clear endp
 intro_draw_text proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -3425,11 +3425,11 @@ input_repeat_check proc far
     push    si
     sub     di, di
     push    cs
-    call near ptr ported_timer_get_delta_alt_
+    call near ptr timer_get_delta_alt
     jmp     short loc_29161
 loc_2914A:
     push    cs
-    call near ptr ported_timer_get_delta_alt_
+    call near ptr timer_get_delta_alt
     mov     [bp+var_4], ax
     add     di, ax
     push    ax
@@ -3895,7 +3895,7 @@ loc_29554:
     pop     bp
     retf
 draw_button endp
-ported_shape3d_init_shape_ proc far
+shape3d_init_shape proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = dword ptr 6
@@ -3970,7 +3970,7 @@ ported_shape3d_init_shape_ proc far
     pop     si
     pop     bp
     retf
-ported_shape3d_init_shape_ endp
+shape3d_init_shape endp
 font_op2_alt proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -4001,7 +4001,7 @@ sprite_blit_to_video proc far
     push    di
     push    si
     push    cs
-    call near ptr ported_sprite_copy_2_to_1_2_
+    call near ptr sprite_copy_2_to_1_2
     push    cs
     call near ptr mouse_draw_opaque_check
     cmp     [bp+arg_4], 0FFFEh
@@ -4038,7 +4038,7 @@ loc_29670:
     cmp     si, 4
     jge     short loc_29648
     push    cs
-    call near ptr ported_timer_get_delta_alt_
+    call near ptr timer_get_delta_alt
     push    ax
     push    cs
     call near ptr input_do_checking
@@ -4047,7 +4047,7 @@ loc_29670:
     or      di, di
     jz      short loc_2965C
     push    cs
-    call near ptr ported_sprite_copy_2_to_1_2_
+    call near ptr sprite_copy_2_to_1_2
     les     bx, [bp+arg_0]
     push    word ptr es:[bx+2]
     push    word ptr es:[bx]
@@ -4078,7 +4078,7 @@ show_waiting proc far
     push    word ptr mainresptr+2
     push    word ptr mainresptr
     push    cs
-    call near ptr ported_locate_text_res_
+    call near ptr locate_text_res
     add     sp, 6
     push    dx
     push    ax
@@ -4216,7 +4216,7 @@ mouse_timer_sprite_unk proc far
     push    di
     push    si
     push    cs
-    call near ptr ported_timer_get_delta_alt_
+    call near ptr timer_get_delta_alt
     mov     si, ax
     add     word_45D1C, si
     jmp     short loc_2979F
@@ -4269,7 +4269,7 @@ loc_297F4:
     pop     bp
     retf
 mouse_timer_sprite_unk endp
-ported_file_load_audiores_ proc far
+file_load_audiores proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
      s = byte ptr 0
@@ -4285,7 +4285,7 @@ ported_file_load_audiores_ proc far
     mov     ax, 5
     push    ax              ; int
     push    cs
-    call near ptr ported_file_load_resource_
+    call near ptr file_load_resource
     add     sp, 4
     mov     word ptr voicefileptr, ax
     mov     word ptr voicefileptr+2, dx
@@ -4293,7 +4293,7 @@ ported_file_load_audiores_ proc far
     mov     ax, 4
     push    ax              ; int
     push    cs
-    call near ptr ported_file_load_resource_
+    call near ptr file_load_resource
     add     sp, 4
     mov     word ptr songfileptr, ax
     mov     word ptr songfileptr+2, dx
@@ -4315,7 +4315,7 @@ ported_file_load_audiores_ proc far
     retf
     ; align 2
     db 144
-ported_file_load_audiores_ endp
+file_load_audiores endp
 audio_unload proc far
 
     mov     ax, 2
@@ -4462,7 +4462,7 @@ loc_29988:
     pop     bp
     retf
 format_frame_as_string endp
-ported_get_super_random_ proc far
+get_super_random proc far
     var_4 = word ptr -4
      s = byte ptr 0
      r = byte ptr 2
@@ -4499,8 +4499,8 @@ loc_299C2:
     mov     sp, bp
     pop     bp
     retf
-ported_get_super_random_ endp
-ported_file_load_resource_ proc far
+get_super_random endp
+file_load_resource proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
      s = byte ptr 0
@@ -4602,7 +4602,7 @@ loc_29A7E:
     retf
     ; align 2
     db 144
-ported_file_load_resource_ endp
+file_load_resource endp
 sub_29A86 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -4764,7 +4764,7 @@ do_joy_restext proc far
     push    word ptr mainresptr+2
     push    word ptr mainresptr
     push    cs
-    call near ptr ported_locate_text_res_
+    call near ptr locate_text_res
 loc_29B69:
     add     sp, 6
 loc_29B6C:
@@ -4963,7 +4963,7 @@ loc_29D3A:
     push    word ptr mainresptr+2
     push    word ptr mainresptr
     push    cs
-    call near ptr ported_locate_text_res_
+    call near ptr locate_text_res
     add     sp, 6
     push    dx
     push    ax
@@ -5009,7 +5009,7 @@ do_key_restext proc far
     push    word ptr mainresptr+2
     push    word ptr mainresptr
     push    cs
-    call near ptr ported_locate_text_res_
+    call near ptr locate_text_res
     add     sp, 6
     push    dx
     push    ax
@@ -5047,7 +5047,7 @@ do_mou_restext proc far
     push    word ptr mainresptr+2
     push    word ptr mainresptr
     push    cs
-    call near ptr ported_locate_text_res_
+    call near ptr locate_text_res
     add     sp, 6
     push    dx
     push    ax
@@ -5084,7 +5084,7 @@ do_pau_restext proc far
     push    word ptr mainresptr+2
     push    word ptr mainresptr
     push    cs
-    call near ptr ported_locate_text_res_
+    call near ptr locate_text_res
     add     sp, 6
     push    dx
     push    ax
@@ -5136,7 +5136,7 @@ loc_29ECE:
     push    word ptr mainresptr+2
     push    word ptr mainresptr
     push    cs
-    call near ptr ported_locate_text_res_
+    call near ptr locate_text_res
     add     sp, 6
     push    dx
     push    ax
@@ -5189,7 +5189,7 @@ loc_29F30:
     push    word ptr mainresptr+2
     push    word ptr mainresptr
     push    cs
-    call near ptr ported_locate_text_res_
+    call near ptr locate_text_res
     add     sp, 6
     push    dx
     push    ax
@@ -5223,7 +5223,7 @@ do_dos_restext proc far
     push    word ptr mainresptr+2
     push    word ptr mainresptr
     push    cs
-    call near ptr ported_locate_text_res_
+    call near ptr locate_text_res
     add     sp, 6
     push    dx
     push    ax
@@ -5273,7 +5273,7 @@ loc_29FD9:
     push    word ptr mainresptr+2
     push    word ptr mainresptr
     push    cs
-    call near ptr ported_locate_text_res_
+    call near ptr locate_text_res
     add     sp, 6
     push    dx
     push    ax
@@ -5399,7 +5399,7 @@ loc_2A0EA:
     push    word ptr mainresptr
 loc_2A0EE:
     push    cs
-    call near ptr ported_locate_text_res_
+    call near ptr locate_text_res
     add     sp, 6
     push    dx
     push    ax
@@ -5444,7 +5444,7 @@ do_dea_textres proc far
     push    word ptr mainresptr+2
     push    word ptr mainresptr
     push    cs
-    call near ptr ported_locate_text_res_
+    call near ptr locate_text_res
     add     sp, 6
     push    dx
     push    ax
@@ -5476,7 +5476,7 @@ loc_2A170:
     push    word ptr mainresptr
     push    cs
 loc_2A182:
-    call near ptr ported_locate_text_res_
+    call near ptr locate_text_res
     add     sp, 6
     push    dx
     push    ax
@@ -5524,7 +5524,7 @@ loc_2A1BE:
     push    word ptr mainresptr+2
     push    word ptr mainresptr
     push    cs
-    call near ptr ported_locate_text_res_
+    call near ptr locate_text_res
     add     sp, 6
     push    dx
 loc_2A1D2:
@@ -5565,7 +5565,7 @@ do_mer_restext proc far
     push    word ptr mainresptr+2
     push    word ptr mainresptr
     push    cs
-    call near ptr ported_locate_text_res_
+    call near ptr locate_text_res
     add     sp, 6
     push    dx
     push    ax
@@ -5579,12 +5579,12 @@ do_mer_restext proc far
     ; align 2
     db 144
 do_mer_restext endp
-ported_timer_get_delta_alt_ proc far
+timer_get_delta_alt proc far
 
     call    timer_get_delta
     retf
-ported_timer_get_delta_alt_ endp
-ported_file_load_3dres_ proc far
+timer_get_delta_alt endp
+file_load_3dres proc far
     var_54 = byte ptr -84
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -5614,7 +5614,7 @@ loc_2A23C:
     push    ax              ; int
     push    cs
 loc_2A264:
-    call near ptr ported_file_load_resource_
+    call near ptr file_load_resource
     add     sp, 4
     mov     [bp+var_4], ax
     mov     [bp+var_2], dx
@@ -5651,7 +5651,7 @@ loc_2A29A:
     push    ax              ; int
     push    cs
 loc_2A29C:
-    call near ptr ported_file_load_resource_
+    call near ptr file_load_resource
 loc_2A29F:
     add     sp, 4
 loc_2A2A2:
@@ -5677,6 +5677,6 @@ loc_2A2B8:
 loc_2A2BA:
     pop     bp
     retf
-ported_file_load_3dres_ endp
+file_load_3dres endp
 seg008 ends
 end

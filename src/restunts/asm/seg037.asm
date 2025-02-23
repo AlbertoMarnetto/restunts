@@ -46,8 +46,8 @@ nosmart
 seg037 segment byte public 'STUNTSC' use16
     assume cs:seg037
     assume es:nothing, ss:nothing, ds:dseg
-    public ported_file_load_shape2d_expandedsize_
-ported_file_load_shape2d_expandedsize_ proc far
+    public file_load_shape2d_expandedsize
+file_load_shape2d_expandedsize proc far
     var_sizelo = word ptr -14
     var_sizehi = word ptr -12
     var_shapecount = word ptr -10
@@ -132,6 +132,6 @@ loc_3B191:
     db 0
     db 0
     db 0
-ported_file_load_shape2d_expandedsize_ endp
+file_load_shape2d_expandedsize endp
 seg037 ends
 end

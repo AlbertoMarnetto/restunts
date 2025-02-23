@@ -46,14 +46,14 @@ nosmart
 seg034 segment byte public 'STUNTSC' use16
     assume cs:seg034
     assume es:nothing, ss:nothing, ds:dseg
-    public ported_file_load_shape2d_fatal_
-    public ported_file_load_shape2d_nofatal_
-    public ported_file_load_shape2d_
-    public ported_file_load_shape2d_palmap_init_
+    public file_load_shape2d_fatal
+    public file_load_shape2d_nofatal
+    public file_load_shape2d
+    public file_load_shape2d_palmap_init
 algn_3A9D5:
     ; align 2
     db 144
-ported_file_load_shape2d_fatal_ proc far
+file_load_shape2d_fatal proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_shapename = word ptr 6
@@ -70,7 +70,7 @@ loc_3A9DD:
 loc_3A9E0:
     push    cs
 loc_3A9E1:
-    call near ptr ported_file_load_shape2d_
+    call near ptr file_load_shape2d
 loc_3A9E4:
     add     sp, 4
     pop     bp
@@ -78,8 +78,8 @@ locret_3A9E8:
     retf
     ; align 2
     db 144
-ported_file_load_shape2d_fatal_ endp
-ported_file_load_shape2d_nofatal_ proc far
+file_load_shape2d_fatal endp
+file_load_shape2d_nofatal proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -94,14 +94,14 @@ loc_3A9F0:
     push    [bp+arg_0]
     push    cs
 loc_3A9F4:
-    call near ptr ported_file_load_shape2d_
+    call near ptr file_load_shape2d
 loc_3A9F7:
     add     sp, 4
 loc_3A9FA:
     pop     bp
     retf
-ported_file_load_shape2d_nofatal_ endp
-ported_file_load_shape2d_ proc far
+file_load_shape2d_nofatal endp
+file_load_shape2d proc far
     var_strchar = byte ptr -128
     var_expandedsize = word ptr -126
     var_str = byte ptr -124
@@ -321,7 +321,7 @@ loc_3ABB7:
     push    dx
     push    ax
     push    cs
-    call near ptr ported_file_load_shape2d_palmap_init_
+    call near ptr file_load_shape2d_palmap_init
     add     sp, 4
 loc_3ABF3:
     push    [bp+var_expandedsize]
@@ -400,8 +400,8 @@ loc_3AC97:
     call    file_load_shape2d_palmap_apply
     add     sp, 6
     jmp     _end_load_2dshape
-ported_file_load_shape2d_ endp
-ported_file_load_shape2d_palmap_init_ proc far
+file_load_shape2d endp
+file_load_shape2d_palmap_init proc far
     var_2 = word ptr -2
      s = byte ptr 0
      r = byte ptr 2
@@ -437,6 +437,6 @@ loc_3ACD5:
     pop     bp
 locret_3ACD6:
     retf
-ported_file_load_shape2d_palmap_init_ endp
+file_load_shape2d_palmap_init endp
 seg034 ends
 end

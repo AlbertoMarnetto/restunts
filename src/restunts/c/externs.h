@@ -8,7 +8,7 @@
 #define huge
 #endif
 
-#define MAX_POLY_INFO_COUNT 0x190
+#define MAX_POLY_INFO_COUNT 0x250
 
 #pragma pack (push, 1)
 
@@ -198,6 +198,33 @@ struct TRACKOBJECT {
 	char  ss_multiTileFlag;  // 0 = one-tile, 1 = two-tile vertical, 2 = two-tile horizontal, 3 = four-tile.
 	char  ss_physicalModel;  // sets the physical model in build_track_object
 	char  scene_unk5;        // always zero.
+};
+
+struct SHAPE3D {
+	unsigned short shape3d_numverts;
+	struct VECTOR far* shape3d_verts;
+	unsigned short shape3d_numprimitives;
+	unsigned short shape3d_numpaints;
+	char far* shape3d_primitives;
+	char far* shape3d_cull1;
+	char far* shape3d_cull2;
+};
+
+struct SHAPE3DHEADER {
+	unsigned char header_numverts;
+	unsigned char header_numprimitives;
+	unsigned char header_numpaints;
+	unsigned char header_reserved;
+};
+
+struct TRANSFORMEDSHAPE3D {
+	struct VECTOR pos;
+	struct SHAPE3D* shapeptr;
+	struct RECTANGLE* rectptr;
+	struct VECTOR rotvec;
+	unsigned short unk;
+	unsigned char ts_flags;
+	unsigned char material;
 };
 
 #pragma pack (pop)
@@ -403,6 +430,38 @@ extern int* material_patlist2_ptr;
 extern int* material_patlist2_ptr_cpy;
 extern unsigned short someZeroVideoConst;
 
+extern int poly_linked_list_40ED6[];
+extern unsigned word_40ECE;
+extern unsigned transshapenumverts;
+extern unsigned char far* transshapeprimitives;
+extern struct VECTOR far* transshapeverts;
+extern unsigned transshapenumpaints;
+extern unsigned char transshapematerial;
+extern unsigned char transshapeflags;
+extern struct RECTANGLE* transshaperectptr;
+extern struct MATRIX mat_temp;
+extern long invpow2tbl[32];
+extern unsigned char byte_4393D;
+extern unsigned word_4394E;
+extern unsigned poly_linked_list_40ED6_tail;
+extern unsigned word_4554A;
+extern unsigned word_443F2;
+extern unsigned char transshapenumvertscopy;
+extern struct POINT2D* polyvertpointptrtab[];
+extern unsigned select_rect_param;
+extern unsigned char primidxcounttab[];
+extern unsigned char primtypetab[];
+extern char far* transshapeprimptr;
+extern unsigned polyinfoptrnext;
+extern char far* polyinfoptr;
+extern char far* transshapepolyinfo;
+struct POINT2D far* transshapepolyinfopts;
+extern int far* polyinfoptrs[];
+extern unsigned polyinfonumpolys;
+extern char transprimitivepaintjob;
+extern unsigned char far* transshapeprimindexptr;
+extern char backlights_paint_override;
+
 extern short sub_18D60(short car_trackdata3_index, struct VECTOR* car_vec_unk3, short field_CE, short* unk);
 extern void font_set_fontdef(void);
 extern void init_polyinfo(void);
@@ -506,5 +565,6 @@ extern void _srand(unsigned int);
 #endif
 
 extern char display_debug_overlay;
+extern char reveal_illusions;
 
 #endif

@@ -1,6 +1,5 @@
 #include "externs.h"
 #include "math.h"
-#include "shape3d.h"
 
 #define TILES_TO_DRAW_COUNT 110
 
@@ -32,7 +31,7 @@ extern int terrainHeight;
 extern int planindex;
 extern int planindex_copy;
 extern char byte_4392C;
-extern struct TRANSFORMEDSHAPE3D currenttransshape[TILES_TO_DRAW_COUNT + 5];
+struct TRANSFORMEDSHAPE3D currenttransshape[29];
 //extern struct TRANSFORMEDSHAPE3D transshapeunk;
 extern struct TRANSFORMEDSHAPE3D* curtransshape_ptr;
 extern struct TRACKOBJECT trkObjectList[215]; // 215 entries
@@ -60,9 +59,9 @@ extern short word_4448A[];
 extern char backlights_paint_override;
 extern int word_449FC[];
 extern int word_463D6;
-extern int transformedshape_zarray[TILES_TO_DRAW_COUNT + 5];
-extern int transformedshape_indices[TILES_TO_DRAW_COUNT + 5];
-extern char transformedshape_arg2array[TILES_TO_DRAW_COUNT + 5];
+extern int transformedshape_zarray[29];
+extern int transformedshape_indices[29];
+extern char transformedshape_arg2array[29];
 extern int sdgame2_widths[];
 extern void far* sdgame2shapes[];
 extern void far* fontledresptr;
@@ -264,7 +263,8 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	char width_idx;
 
 	unsigned discarded_tiles;
-	char discarded_tiles_str[50];
+	char discarded_tiles_str[60];
+	char is_first_attempt;
 	char is_last_attempt;
 	char has_attempt_failed;
 
@@ -503,12 +503,13 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		terr_map_value = td15_terr_map_main[tile_east + terrainrows[tile_south]];
 
 		if (elem_map_value != 0) {
-
 			if (terr_map_value >= 7 && terr_map_value < 0xB) {
 				elem_map_value = subst_hillroad_track(terr_map_value, elem_map_value);
 				terr_map_value = 0;
 			}
+		}
 
+		if (reveal_illusions == 0) {
 			// Found a filler tile (non-main tile of a multitile component)
 			// Process the main tile of the component instead (the NW one)
 			if (elem_map_value == 0xFD) {
@@ -530,6 +531,17 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			offset_east = tile_east - cam_tile_east;
 			offset_south = tile_south - cam_tile_south;
 		}
+		else
+		{
+			// Reveal illusions on: just skip the filler tile -- the main tile
+			// will be processed when the scan process finds it
+			if (   elem_map_value == 0xFD
+				|| elem_map_value == 0xFE
+				|| elem_map_value == 0xFF)
+			{
+				should_skip_tile[si] = 1;
+			}
+		}
 
 		tiles_to_draw_terr_type_vec[si] = terr_map_value;
 
@@ -549,7 +561,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		}
 
 		idx = trkObjectList[elem_map_value].ss_multiTileFlag;
-		if (idx == 0) {
+		if (idx == 0 || reveal_illusions > 0) {
 			continue;
 		}
 
@@ -713,6 +725,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	si = 0;
 
 	discarded_tiles = 0;
+	is_first_attempt = 1;
 	is_last_attempt = 0;
 start_rendering:
 	// With the information collected by the previus tile-scan algorithm,
@@ -729,7 +742,7 @@ start_rendering:
 		terr_map_value = tiles_to_draw_terr_type_vec[si];
 		// On the first attempt, draw everything at max resolution. If it fails
 		// (too many polygons), use the given detail level
-		tile_det_level = (discarded_tiles == 0 ? 0 : tile_detail_level[si]);  // Ghidra: 19f1:208d
+		tile_det_level = (is_first_attempt ? 0 : tile_detail_level[si]);
 		var_12A = 0;
 		if (elem_map_value == 0) {
 			var_counter = 1;
@@ -1291,16 +1304,34 @@ start_rendering:
 	}
 	if ((si < TILES_TO_DRAW_COUNT || has_attempt_failed > 0) && ! is_last_attempt)
 	{
-		// Rendering failed (due to out-of-memory). Retry with less tiles.
-		discarded_tiles += 20;
-		if (discarded_tiles > TILES_TO_DRAW_COUNT - 4) {
-			discarded_tiles = TILES_TO_DRAW_COUNT - 4;
-			is_last_attempt = 1;
+		// Rendering failed (due to out-of-memory).
+		// If first attempt (drawing everything with max detail, try to just
+		// drop the deatil (this should lead to a 30% drop of the # of polygons
+		// needed). Otherwise, start to drop tiles
+		if (is_first_attempt) {
+			is_first_attempt = 0;
+		}
+		else
+		{
+			discarded_tiles += 20;
+			if (discarded_tiles > TILES_TO_DRAW_COUNT - 4) {
+				discarded_tiles = TILES_TO_DRAW_COUNT - 4;
+				is_last_attempt = 1;
+			}
 		}
 		polyinfo_reset();
 		goto start_rendering;
 	}
-	//printf("%d\n", si);
+
+	if (display_debug_overlay)
+	{
+		// Debug: print discarded tiles
+		_sprintf(
+			discarded_tiles_str,
+			"Polys: %3u, memory: %5u, disc: %2u, reveal: %s",
+			polyinfonumpolys, polyinfoptrnext, discarded_tiles,
+			reveal_illusions ? "on" : "off");
+	}
 
 	// Draw the skybox
 	var_132 = skybox_op(arg_0, arg_cliprectptr, skybox_parameter, &var_mat, car_rot_z_3, car_rot_x_2, cam_pos.y);
@@ -1375,6 +1406,15 @@ start_rendering:
 		}
 	}
 
+	if (display_debug_overlay)
+	{
+		font_set_fontdef2(fontnptr);
+		si = is_first_attempt ? 15 : discarded_tiles < 30 ? 14 : 12; // white, yellow, red
+		rect_union(intro_draw_text(discarded_tiles_str, 0x0C, roofbmpheight + 12, si, 0), &rect_unk11, &rect_unk11);
+		rect_union(intro_draw_text(" ", 0x0C, roofbmpheight + 2, 0, 0), &rect_unk11, &rect_unk11);
+		font_set_fontdef();
+	}
+
 	// Show elapsed time
 	if (game_replay_mode == 0) {
 		if (state.game_inputmode != 0) {
@@ -1388,16 +1428,6 @@ start_rendering:
 
 			font_set_fontdef();
 		}
-	}
-
-	if (display_debug_overlay)
-	{
-		// Debug: print discarded tiles
-		_sprintf(discarded_tiles_str, "Disc: %d", discarded_tiles);
-		font_set_fontdef2(fontnptr);
-		si = discarded_tiles == 0 ? 11 : discarded_tiles < 30 ? 14 : 12; // cyan, yellow, red
-		rect_union(intro_draw_text(discarded_tiles_str, 0x0C, roofbmpheight + 2, si, 0), &rect_unk11, &rect_unk11);
-		font_set_fontdef();
 	}
 
 	if (slow_video_mgmt_copy != 0) {

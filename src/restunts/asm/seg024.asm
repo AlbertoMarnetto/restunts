@@ -46,13 +46,13 @@ nosmart
 seg024 segment byte public 'STUNTSC' use16
     assume cs:seg024
     assume es:nothing, ss:nothing, ds:dseg
-    public ported_mat_rot_x_
-    public ported_mat_rot_y_
-    public ported_mat_rot_z_
+    public mat_rot_x
+    public mat_rot_y
+    public mat_rot_z
 algn_36F29:
     ; align 2
     db 144
-ported_mat_rot_x_ proc far
+mat_rot_x proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
      s = byte ptr 0
@@ -96,8 +96,8 @@ loc_36F7B:
     retf
     ; align 2
     db 144
-ported_mat_rot_x_ endp
-ported_mat_rot_y_ proc far
+mat_rot_x endp
+mat_rot_y proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
      s = byte ptr 0
@@ -135,8 +135,8 @@ loc_36F89:
     mov     sp, bp
     pop     bp
     retf
-ported_mat_rot_y_ endp
-ported_mat_rot_z_ proc far
+mat_rot_y endp
+mat_rot_z proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
      s = byte ptr 0
@@ -180,6 +180,6 @@ loc_37029:
     pop     bp
 locret_3702C:
     retf
-ported_mat_rot_z_ endp
+mat_rot_z endp
 seg024 ends
 end

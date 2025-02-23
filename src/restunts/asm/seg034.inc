@@ -1,6 +1,6 @@
 seg034 segment byte public 'STUNTSC' use16
-    extrn ported_file_load_shape2d_fatal_:proc
-    extrn ported_file_load_shape2d_nofatal_:proc
-    extrn ported_file_load_shape2d_:proc
-    extrn ported_file_load_shape2d_palmap_init_:proc
+    extrn file_load_shape2d_fatal:proc
+    extrn file_load_shape2d_nofatal:proc
+    extrn file_load_shape2d:proc
+    extrn file_load_shape2d_palmap_init:proc
 seg034 ends

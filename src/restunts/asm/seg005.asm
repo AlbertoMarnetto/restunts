@@ -46,19 +46,19 @@ nosmart
 seg005 segment byte public 'STUNTSC' use16
     assume cs:seg005
     assume es:nothing, ss:nothing, ds:dseg
-    public ported_run_game_
+    public run_game
     public handle_ingame_kb_shortcuts
-    public ported_init_unknown_
+    public init_unknown
     public set_frame_callback
     public remove_frame_callback
     public frame_callback
     public replay_unk2
     public sub_2298C
-    public ported_file_load_replay_
-    public ported_file_write_replay_
+    public file_load_replay
+    public file_write_replay
     public setup_car_shapes
-    public ported_setup_player_cars_
-    public ported_free_player_cars_
+    public setup_player_cars
+    public free_player_cars
     public mouse_minmax_position
     public replay_unk
     public loop_game
@@ -71,7 +71,7 @@ seg005 segment byte public 'STUNTSC' use16
 algn_21B79:
     ; align 2
     db 144
-ported_run_game_ proc far
+run_game proc far
     var_16 = dword ptr -22
     var_12 = word ptr -18
     var_E = word ptr -14
@@ -109,7 +109,7 @@ loc_21BCA:
     sub     ax, ax
     push    ax              ; char *
     push    cs
-    call near ptr ported_file_load_replay_
+    call near ptr file_load_replay
     add     sp, 4
     or      al, al
     jz      short loc_21BE4
@@ -133,11 +133,11 @@ loc_21C00:
     mov     is_in_replay, 1
 loc_21C0F:
     push    cs
-    call near ptr ported_setup_player_cars_
+    call near ptr setup_player_cars
     or      ax, ax
     jz      short loc_21C24
     push    cs
-    call near ptr ported_free_player_cars_
+    call near ptr free_player_cars
     call    do_mer_restext
     jmp     loc_223E4
     ; align 2
@@ -874,7 +874,7 @@ loc_223CD:
     push    cs
     call near ptr remove_frame_callback
     push    cs
-    call near ptr ported_free_player_cars_
+    call near ptr free_player_cars
 loc_223E4:
     mov     waitflag, 64h ; 'd'
     call    check_input
@@ -886,7 +886,7 @@ loc_223F4:
     retf
     ; align 2
     db 144
-ported_run_game_ endp
+run_game endp
 handle_ingame_kb_shortcuts proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -931,9 +931,6 @@ loc_22446:
     jmp     loc_224E9
 loc_2244E:
     mov     cameramode, 3
-    jmp     loc_224E9
-supersight_toggle_debug:
-    xor     [display_debug_overlay], 1h
     jmp     loc_224E9
 loc_22456:
     xor     HKeyFlag, 1
@@ -1044,12 +1041,17 @@ loc_22528:
     jmp     loc_2244E
 supersight_handle_f5:
     cmp     ax, 3F00h ; F5 pressed
+    jnz     short supersight_handle_f6
+    xor     [display_debug_overlay], 1h
+supersight_handle_f6:
+    cmp     ax, 4000h ; F6 pressed
     jnz     short loc_22530
-    jmp     supersight_toggle_debug
+    xor     [reveal_illusions], 1h
 loc_22530:
-    jmp     short loc_224C0
+    jmp     loc_224C0
+	db 11 dup(144)  ; alignment
 handle_ingame_kb_shortcuts endp
-ported_init_unknown_ proc far
+init_unknown proc far
      s = byte ptr 0
      r = byte ptr 2
 
@@ -1069,7 +1071,7 @@ ported_init_unknown_ proc far
     mov     sp, bp
     pop     bp
     retf
-ported_init_unknown_ endp
+init_unknown endp
 set_frame_callback proc far
 
     mov     word_46468, 0
@@ -1929,7 +1931,7 @@ loc_22C8C:
     pop     bp
     retf
 sub_2298C endp
-ported_file_load_replay_ proc far
+file_load_replay proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = dword ptr 6
@@ -1970,8 +1972,8 @@ ported_file_load_replay_ proc far
     pop     di
     pop     bp
     retf
-ported_file_load_replay_ endp
-ported_file_write_replay_ proc far
+file_load_replay endp
+file_write_replay proc far
     var_6 = word ptr -6
     var_4 = word ptr -4
      s = byte ptr 0
@@ -2012,7 +2014,7 @@ ported_file_write_replay_ proc far
     retf
     ; align 2
     db 144
-ported_file_write_replay_ endp
+file_write_replay endp
 setup_car_shapes proc far
     var_20 = word ptr -32
     var_1E = word ptr -30
@@ -2724,7 +2726,7 @@ loc_23456:
     ; Replaced needle colour for speed-o-meter
     ; Original code:
     ;push    meter_needle_color
-    push    simd_player.field_A6+8
+	push    simd_player.field_A6+8
     mov     bx, ax
     mov     al, (simd_player.spdpoints+1)[bx]
     sub     ah, ah
@@ -2987,7 +2989,7 @@ loc_236AC:
     pop     bp
     retf
 setup_car_shapes endp
-ported_setup_player_cars_ proc far
+setup_player_cars proc far
     var_8 = word ptr -8
     var_6 = word ptr -6
     var_4 = word ptr -4
@@ -3240,8 +3242,8 @@ loc_239A3:
     retf
     ; align 2
     db 144
-ported_setup_player_cars_ endp
-ported_free_player_cars_ proc far
+setup_player_cars endp
+free_player_cars proc far
 
     cmp     video_flag5_is0, 0
     jnz     short loc_239D4
@@ -3287,7 +3289,7 @@ loc_23A15:
     add     sp, 4
     call    shape3d_free_car_shapes
     retf
-ported_free_player_cars_ endp
+free_player_cars endp
 mouse_minmax_position proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -4524,7 +4526,7 @@ loc_24548:
     mov     ax, 0EEh ; 'î'
     push    ax              ; char *
     push    cs
-    call near ptr ported_file_load_replay_
+    call near ptr file_load_replay
     add     sp, 4
     or      al, al
     jz      short loc_2458B
@@ -4584,9 +4586,9 @@ loc_2460D:
     or      si, si
     jz      short loc_24619
     push    cs
-    call near ptr ported_free_player_cars_
+    call near ptr free_player_cars
     push    cs
-    call near ptr ported_setup_player_cars_
+    call near ptr setup_player_cars
 loc_24619:
     mov     al, byte ptr gameconfig.game_framespersec
     cbw
@@ -4690,7 +4692,7 @@ loc_246FD:
     mov     ax, offset g_path_buf
     push    ax
     push    cs
-    call near ptr ported_file_write_replay_
+    call near ptr file_write_replay
     add     sp, 2
     mov     [bp+var_counter], al
     or      al, al

@@ -46,8 +46,8 @@ nosmart
 seg026 segment byte public 'STUNTSC' use16
     assume cs:seg026
     assume es:nothing, ss:nothing, ds:dseg
-    public ported_toupper_
-ported_toupper_ proc far
+    public toupper
+toupper proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -63,6 +63,6 @@ loc_370CD:
     mov     ax, [bp+arg_0]
     pop     bp
     retf
-ported_toupper_ endp
+toupper endp
 seg026 ends
 end

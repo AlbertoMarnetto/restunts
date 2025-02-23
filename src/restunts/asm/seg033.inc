@@ -1,4 +1,4 @@
 seg033 segment byte public 'STUNTSC' use16
-    extrn ported_setup_mcgawnd1_:proc
-    extrn ported_setup_mcgawnd2_:proc
+    extrn setup_mcgawnd1:proc
+    extrn setup_mcgawnd2:proc
 seg033 ends

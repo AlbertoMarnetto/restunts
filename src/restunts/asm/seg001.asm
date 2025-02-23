@@ -47,15 +47,15 @@ seg001 segment byte public 'STUNTSC' use16
     assume cs:seg001
     assume es:nothing, ss:nothing, ds:dseg
     public opponent_op
-    public ported_mat_mul_vector2_
-    public ported_update_player_state_
-    public ported_init_carstate_from_simd_
-    public ported_init_game_state_
-    public ported_restore_gamestate_
-    public ported_update_gamestate_
-    public ported_player_op_
+    public mat_mul_vector2
+    public update_player_state
+    public init_carstate_from_simd
+    public init_game_state
+    public restore_gamestate
+    public update_gamestate
+    public player_op
     public detect_penalty
-    public ported_update_car_speed_
+    public update_car_speed
     public update_grip
     public car_car_speed_adjust_maybe
     public carState_rc_op
@@ -67,13 +67,13 @@ seg001 segment byte public 'STUNTSC' use16
     public car_car_coll_detect_maybe
     public init_plantrak
     public do_opponent_op
-    public ported_update_crash_state_
-    public ported_plane_rotate_op_
-    public ported_plane_origin_op_
-    public ported_vec_normalInnerProduct_
+    public update_crash_state
+    public plane_rotate_op
+    public plane_origin_op
+    public vec_normalInnerProduct
     public state_op_unk
     public sub_19BA0
-    public ported_setup_aero_trackdata_
+    public setup_aero_trackdata
 opponent_op proc far
     var_40 = word ptr -64
     var_3E = word ptr -62
@@ -653,7 +653,7 @@ loc_14BFA:
     cbw
     push    ax
     push    cs
-    call near ptr ported_update_car_speed_
+    call near ptr update_car_speed
     add     sp, 8
     sub     ax, ax
     push    ax
@@ -675,7 +675,7 @@ loc_14BFA:
     mov     ax, offset state.opponentstate
     push    ax
     push    cs
-    call near ptr ported_update_player_state_
+    call near ptr update_player_state
     add     sp, 0Ah
     cmp     state.opponentstate.car_crashBmpFlag, 0
     jz      short loc_14C49
@@ -800,7 +800,7 @@ loc_14D33:
     mov     ax, 3
     push    ax
     push    cs
-    call near ptr ported_update_crash_state_
+    call near ptr update_crash_state
     add     sp, 4
 loc_14D66:
     pop     si
@@ -809,7 +809,7 @@ loc_14D66:
     pop     bp
     retf
 opponent_op endp
-ported_mat_mul_vector2_ proc far
+mat_mul_vector2 proc far
     var_mat = byte ptr -18
      s = byte ptr 0
      r = byte ptr 2
@@ -845,8 +845,8 @@ ported_mat_mul_vector2_ proc far
     mov     sp, bp
     pop     bp
     retf
-ported_mat_mul_vector2_ endp
-ported_update_player_state_ proc far
+mat_mul_vector2 endp
+update_player_state proc far
     vec_1E4 = VECTOR ptr -484
     vec_1DE = VECTOR ptr -478
     vec_1C6 = VECTOR ptr -454
@@ -1098,7 +1098,7 @@ loc_14FAC:
     mov     ax, pState_f36Mminf40sar2
     mov     [bp+di+var_140someWhlData], ax
     push    cs
-    call near ptr ported_plane_rotate_op_
+    call near ptr plane_rotate_op
     mov     ax, vec_planerotopresult.vx
     cwd
     mov     bx, [bp+var_DEptrTo1C0]
@@ -1254,7 +1254,7 @@ loc_15142:
     mov     ax, 1
     push    ax
     push    cs
-    call near ptr ported_update_crash_state_
+    call near ptr update_crash_state
     add     sp, 4
 loc_15163:
     mov     bx, [bp+arg_pState]; grip data...
@@ -1272,7 +1272,7 @@ loc_15163:
     mov     ax, 2
     push    ax
     push    cs
-    call near ptr ported_update_crash_state_
+    call near ptr update_crash_state
     add     sp, 4
 loc_15192:
     lea     ax, [bp+vecl_1C0]
@@ -1347,7 +1347,7 @@ loc_15240:
     push    [bp+vec_1C6.vx]
     push    planindex
     push    cs
-    call near ptr ported_plane_origin_op_
+    call near ptr plane_origin_op
     add     sp, 8
 loc_15257:
     mov     nextPosAndNormalIP, ax
@@ -1622,7 +1622,7 @@ loc_154FA:
     mov     ax, 1
     push    ax
     push    cs
-    call near ptr ported_update_crash_state_
+    call near ptr update_crash_state
     add     sp, 4
 loc_15513:
     mov     bx, [bp+arg_pState]
@@ -1798,7 +1798,7 @@ loc_156AF:
     push    [bp+vec_1C6.vx]
     push    planindex
     push    cs
-    call near ptr ported_plane_origin_op_
+    call near ptr plane_origin_op
     add     sp, 8
 loc_156D6:
     mov     nextPosAndNormalIP, ax
@@ -1957,7 +1957,7 @@ loc_157DC:
     mov     ax, 5
     push    ax
     push    cs
-    call near ptr ported_update_crash_state_
+    call near ptr update_crash_state
     add     sp, 4
     mov     [bp+var_136], 1
 loc_15879:
@@ -1977,7 +1977,7 @@ loc_15882:
     mov     ax, [bp+di+var_140someWhlData]
     mov     pState_f36Mminf40sar2, ax
     push    cs
-    call near ptr ported_plane_rotate_op_
+    call near ptr plane_rotate_op
     mov     ax, vec_planerotopresult.vx
     cwd
     mov     bx, [bp+var_DEptrTo1C0]
@@ -2037,7 +2037,7 @@ loc_1592E:
     sub     ax, ax
     push    ax
     push    cs
-    call near ptr ported_plane_origin_op_
+    call near ptr plane_origin_op
     add     sp, 8
     mov     nextPosAndNormalIP, ax
 loc_15950:
@@ -2091,7 +2091,7 @@ loc_159AD:
     mov     ax, [bp+di+var_140someWhlData]
     mov     pState_f36Mminf40sar2, ax
     push    cs
-    call near ptr ported_plane_rotate_op_
+    call near ptr plane_rotate_op
     mov     ax, vec_planerotopresult.vx
     cwd
     mov     bx, [bp+var_146ptrTo176]
@@ -2250,7 +2250,7 @@ loc_15A30:
     mov     ax, [bp+di+var_140someWhlData]
     mov     pState_f36Mminf40sar2, ax
     push    cs
-    call near ptr ported_plane_rotate_op_
+    call near ptr plane_rotate_op
     mov     bx, [bp+var_146ptrTo176]
     mov     ax, word ptr [bx+VECTORLONG.lx]
     mov     dx, word ptr [bx+(VECTORLONG.lx+2)]
@@ -2338,7 +2338,7 @@ loc_15C3F:
     push    [bp+vec_1C6.vx]
     push    planindex
     push    cs
-    call near ptr ported_plane_origin_op_
+    call near ptr plane_origin_op
     add     sp, 8
     mov     nextPosAndNormalIP, ax
     or      ax, ax
@@ -2368,7 +2368,7 @@ loc_15C75:
     lea     ax, [bp+vec_1C6]
     push    ax
     push    cs
-    call near ptr ported_mat_mul_vector2_
+    call near ptr mat_mul_vector2
     add     sp, 8
     mov     ax, [bp+vec_FC.vx]
     cwd
@@ -2412,7 +2412,7 @@ loc_15CF7:
     mov     ax, 1
     push    ax
     push    cs
-    call near ptr ported_update_crash_state_
+    call near ptr update_crash_state
     add     sp, 4
 loc_15D1A:
     mov     al, [bp+var_wheelIndex]
@@ -2962,7 +2962,7 @@ loc_16288:
     push    [bp+vec_1C6.vx]
     push    ax
     push    cs
-    call near ptr ported_plane_origin_op_
+    call near ptr plane_origin_op
     add     sp, 8
     mov     [bp+var_138], ax
     cmp     game_replay_mode, 1
@@ -2983,7 +2983,7 @@ loc_162F9:
     mov     ax, 5
     push    ax
     push    cs
-    call near ptr ported_update_crash_state_
+    call near ptr update_crash_state
     add     sp, 4
 loc_16309:
     mov     al, [bp+var_wheelIndex]
@@ -3096,7 +3096,7 @@ loc_163BF:
     push    [bp+vec_1C6.vx]
     push    planindex
     push    cs
-    call near ptr ported_plane_origin_op_
+    call near ptr plane_origin_op
     add     sp, 8
     mov     si, ax
     cmp     planindex, 4
@@ -3232,7 +3232,7 @@ loc_16550:
     mov     ax, 1
     push    ax
     push    cs
-    call near ptr ported_update_crash_state_
+    call near ptr update_crash_state
     add     sp, 4
     mov     al, [bp+arg_MplayerFlag]
     cbw
@@ -3242,7 +3242,7 @@ loc_16566:
     mov     ax, 1
     push    ax
     push    cs
-    call near ptr ported_update_crash_state_
+    call near ptr update_crash_state
     add     sp, 4
     pop     si
     pop     di
@@ -3568,8 +3568,8 @@ loc_16892:
     mov     sp, bp
     pop     bp
     retf
-ported_update_player_state_ endp
-ported_init_carstate_from_simd_ proc far
+update_player_state endp
+init_carstate_from_simd proc far
     var_E = word ptr -14
     var_C = word ptr -12
     var_initX = word ptr -10
@@ -3819,8 +3819,8 @@ loc_16A37:
     retf
     ; align 2
     db 144
-ported_init_carstate_from_simd_ endp
-ported_init_game_state_ proc far
+init_carstate_from_simd endp
+init_game_state proc far
     var_A = word ptr -10
     var_8 = word ptr -8
     var_2 = word ptr -2
@@ -4120,7 +4120,7 @@ loc_16DA4:
     mov     ax, offset state.playerstate; dseg: state.playerstate
     push    ax
     push    cs
-    call near ptr ported_init_carstate_from_simd_
+    call near ptr init_carstate_from_simd
     add     sp, 14h
     mov     state.field_2F2, si
     mov     ax, si
@@ -4251,7 +4251,7 @@ loc_16EDB:
     mov     ax, offset state.opponentstate
     push    ax
     push    cs
-    call near ptr ported_init_carstate_from_simd_
+    call near ptr init_carstate_from_simd
     add     sp, 14h
     cmp     gameconfig.game_opponenttype, 0
     jz      short loc_16F2F
@@ -4282,8 +4282,8 @@ loc_16F34:
     mov     sp, bp
     pop     bp
     retf
-ported_init_game_state_ endp
-ported_restore_gamestate_ proc far
+init_game_state endp
+restore_gamestate proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_frame = word ptr 6
@@ -4300,7 +4300,7 @@ ported_restore_gamestate_ proc far
     sub     ax, ax
     push    ax
     push    cs
-    call near ptr ported_init_game_state_
+    call near ptr init_game_state
     add     sp, 2
 loc_16F59:
     mov     ax, [bp+arg_frame]
@@ -4391,8 +4391,8 @@ loc_17002:
     mov     sp, bp
     pop     bp
     retf
-ported_restore_gamestate_ endp
-ported_update_gamestate_ proc far
+restore_gamestate endp
+update_gamestate proc far
     var_carInputByte = byte ptr -4
      s = byte ptr 0
      r = byte ptr 2
@@ -4474,7 +4474,7 @@ loc_170BE:
     cbw
     push    ax
     push    cs
-    call near ptr ported_player_op_
+    call near ptr player_op
     add     sp, 2
     cmp     gameconfig.game_opponenttype, 0
     jz      short loc_170DC
@@ -4573,7 +4573,7 @@ loc_1718A:
 loc_171BD:
     push    ax
     push    cs
-    call near ptr ported_player_op_
+    call near ptr player_op
     add     sp, 2
     pop     si
     pop     di
@@ -4600,8 +4600,8 @@ loc_171E1:
     retf
     ; align 2
     db 144
-ported_update_gamestate_ endp
-ported_player_op_ proc far
+update_gamestate endp
+player_op proc far
     var_52 = VECTOR ptr -82
     var_3A = byte ptr -58
     var_38 = VECTOR ptr -56
@@ -4657,7 +4657,7 @@ loc_17242:
     cbw
     push    ax
     push    cs
-    call near ptr ported_update_car_speed_
+    call near ptr update_car_speed
     add     sp, 8
     mov     al, [bp+arg_carInputByte]
     cbw
@@ -4690,7 +4690,7 @@ nosmart
     mov     ax, offset state.playerstate; player CARSTATE
     push    ax
     push    cs
-    call near ptr ported_update_player_state_
+    call near ptr update_player_state
     add     sp, 0Ah
     mov     ax, state.playerstate.car_speed2
     sub     dx, dx
@@ -5295,7 +5295,7 @@ loc_177DE:
     mov     ax, 3
     push    ax
     push    cs
-    call near ptr ported_update_crash_state_
+    call near ptr update_crash_state
     add     sp, 4
 loc_17810:
     pop     si
@@ -5303,7 +5303,7 @@ loc_17810:
     mov     sp, bp
     pop     bp
     retf
-ported_player_op_ endp
+player_op endp
 detect_penalty proc far
     var_5A4 = word ptr -1444
     var_5A2 = byte ptr -1442
@@ -5585,7 +5585,7 @@ loc_17A71:
     ; align 2
     db 144
 detect_penalty endp
-ported_update_car_speed_ proc far
+update_car_speed proc far
     var_currTorque = byte ptr -10
     var_deltaSpeed = word ptr -8
     var_updatedSpeed = word ptr -6
@@ -6167,7 +6167,7 @@ loc_17FD0:
     mov     sp, bp
     pop     bp
     retf
-ported_update_car_speed_ endp
+update_car_speed endp
 update_grip proc far
     var_addf20f36Initial = word ptr -16
     var_E = byte ptr -14
@@ -8538,7 +8538,7 @@ init_plantrak proc far
     mov     ax, 0FFFDh
     push    ax
     push    cs
-    call near ptr ported_init_game_state_
+    call near ptr init_game_state
     add     sp, 2
     sub     si, si
     mov     state.game_inputmode, 2
@@ -8657,7 +8657,7 @@ loc_1958C:
     mov     ax, offset state.opponentstate
     push    ax
     push    cs
-    call near ptr ported_init_carstate_from_simd_
+    call near ptr init_carstate_from_simd
     add     sp, 14h
     mov     ax, offset state.field_3F9
     push    ax
@@ -8688,7 +8688,7 @@ do_opponent_op proc far
     ; align 2
     db 144
 do_opponent_op endp
-ported_update_crash_state_ proc far
+update_crash_state proc far
     var_cState = word ptr -4
     var_2 = byte ptr -2
      s = byte ptr 0
@@ -8883,8 +8883,8 @@ loc_1978D:
     retf
     ; align 2
     db 144
-ported_update_crash_state_ endp
-ported_plane_rotate_op_ proc far
+update_crash_state endp
+plane_rotate_op proc far
     var_planptr = dword ptr -54
     var_32 = VECTOR ptr -50
     var_2C = MATRIX ptr -44
@@ -9001,7 +9001,7 @@ loc_19866:
 loc_19895:
     push    ax
     push    cs
-    call near ptr ported_mat_mul_vector2_
+    call near ptr mat_mul_vector2
     add     sp, 8
     pop     si
     pop     di
@@ -9071,8 +9071,8 @@ loc_19917:
     mov     sp, bp
     pop     bp
     retf
-ported_plane_rotate_op_ endp
-ported_plane_origin_op_ proc far
+plane_rotate_op endp
+plane_origin_op proc far
     var_10 = VECTOR ptr -16
     var_A = VECTOR ptr -10
     var_4 = dword ptr -4
@@ -9131,14 +9131,14 @@ loc_1994C:
     push    [bp+var_A.vy]
     push    [bp+var_A.vx]
     push    cs
-    call near ptr ported_vec_normalInnerProduct_
+    call near ptr vec_normalInnerProduct
     add     sp, 0Ah
 loc_199AE:
     mov     sp, bp
     pop     bp
     retf
-ported_plane_origin_op_ endp
-ported_vec_normalInnerProduct_ proc far
+plane_origin_op endp
+vec_normalInnerProduct proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
      s = byte ptr 0
@@ -9211,7 +9211,7 @@ ported_vec_normalInnerProduct_ proc far
     retf
     ; align 2
     db 144
-ported_vec_normalInnerProduct_ endp
+vec_normalInnerProduct endp
 state_op_unk proc far
     var_18 = word ptr -24
     var_16 = word ptr -22
@@ -9505,7 +9505,7 @@ loc_19C96:
     pop     bp
     retf
 sub_19BA0 endp
-ported_setup_aero_trackdata_ proc far
+setup_aero_trackdata proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_carresptr = dword ptr 6
@@ -9651,6 +9651,6 @@ loc_19DB6:
     mov     sp, bp
     pop     bp
     retf
-ported_setup_aero_trackdata_ endp
+setup_aero_trackdata endp
 seg001 ends
 end

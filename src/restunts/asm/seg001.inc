@@ -1,14 +1,14 @@
 seg001 segment byte public 'STUNTSC' use16
     extrn opponent_op:proc
-    extrn ported_mat_mul_vector2_:proc
-    extrn ported_update_player_state_:proc
-    extrn ported_init_carstate_from_simd_:proc
-    extrn ported_init_game_state_:proc
-    extrn ported_restore_gamestate_:proc
-    extrn ported_update_gamestate_:proc
-    extrn ported_player_op_:proc
+    extrn mat_mul_vector2:proc
+    extrn update_player_state:proc
+    extrn init_carstate_from_simd:proc
+    extrn init_game_state:proc
+    extrn restore_gamestate:proc
+    extrn update_gamestate:proc
+    extrn player_op:proc
     extrn detect_penalty:proc
-    extrn ported_update_car_speed_:proc
+    extrn update_car_speed:proc
     extrn update_grip:proc
     extrn car_car_speed_adjust_maybe:proc
     extrn carState_rc_op:proc
@@ -20,11 +20,11 @@ seg001 segment byte public 'STUNTSC' use16
     extrn car_car_coll_detect_maybe:proc
     extrn init_plantrak:proc
     extrn do_opponent_op:proc
-    extrn ported_update_crash_state_:proc
-    extrn ported_plane_rotate_op_:proc
-    extrn ported_plane_origin_op_:proc
-    extrn ported_vec_normalInnerProduct_:proc
+    extrn update_crash_state:proc
+    extrn plane_rotate_op:proc
+    extrn plane_origin_op:proc
+    extrn vec_normalInnerProduct:proc
     extrn state_op_unk:proc
     extrn sub_19BA0:proc
-    extrn ported_setup_aero_trackdata_:proc
+    extrn setup_aero_trackdata:proc
 seg001 ends

@@ -46,21 +46,21 @@ nosmart
 seg002 segment byte public 'STUNTSC' use16
     assume cs:seg002
     assume es:nothing, ss:nothing, ds:dseg
-    public ported_update_rpm_from_speed_
+    public update_rpm_from_speed
     public nopsub_19DE8
     public nopsub_19DFF
     public nopsub_19E09
     public nopsub_19E13
-    public ported_init_kevinrandom_
-    public ported_get_kevinrandom_seed_
-    public ported_get_kevinrandom_
+    public init_kevinrandom
+    public get_kevinrandom_seed
+    public get_kevinrandom
     public intr0_handler
-    public ported_init_div0_
+    public init_div0
     public byte_19F07
 algn_19DC5:
     ; align 2
     db 144
-ported_update_rpm_from_speed_ proc far
+update_rpm_from_speed proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_currRpm = word ptr 6
@@ -87,7 +87,7 @@ loc_19DE3:
     pop     bp
     pop     bp
     retf
-ported_update_rpm_from_speed_ endp
+update_rpm_from_speed endp
 nopsub_19DE8 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -172,7 +172,7 @@ loc_19E1E:
     pop     bp
     retf
 nopsub_19E13 endp
-ported_init_kevinrandom_ proc far
+init_kevinrandom proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -202,8 +202,8 @@ loc_19E36:
 loc_19E4C:
     pop     bp
     retf
-ported_init_kevinrandom_ endp
-ported_get_kevinrandom_seed_ proc far
+init_kevinrandom endp
+get_kevinrandom_seed proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -228,8 +228,8 @@ loc_19E72:
     pop     bp
     pop     bp
     retf
-ported_get_kevinrandom_seed_ endp
-ported_get_kevinrandom_ proc far
+get_kevinrandom_seed endp
+get_kevinrandom proc far
 
     mov     al, g_kevinrandom_seed+5
 loc_19E7E:
@@ -264,7 +264,7 @@ loc_19EC3:
     mov     al, g_kevinrandom_seed
     xor     ah, ah
     retf
-ported_get_kevinrandom_ endp
+get_kevinrandom endp
 intr0_handler proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -293,7 +293,7 @@ loc_19EE3:
     pop     bp
     iret
 intr0_handler endp
-ported_init_div0_ proc far
+init_div0 proc far
 
     push    ds
 loc_19EE9:
@@ -330,6 +330,6 @@ byte_19F07     db 30
     db 0
     db 205
     db 33
-ported_init_div0_ endp
+init_div0 endp
 seg002 ends
 end

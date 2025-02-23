@@ -1,5 +1,5 @@
 seg024 segment byte public 'STUNTSC' use16
-    extrn ported_mat_rot_x_:proc
-    extrn ported_mat_rot_y_:proc
-    extrn ported_mat_rot_z_:proc
+    extrn mat_rot_x:proc
+    extrn mat_rot_y:proc
+    extrn mat_rot_z:proc
 seg024 ends

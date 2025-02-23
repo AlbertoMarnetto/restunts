@@ -49,11 +49,11 @@ seg004 segment byte public 'STUNTSC' use16
     public build_track_object
     public off_1F87E
     public bto_auxiliary1
-    public ported_shape3d_load_all_
-    public ported_shape3d_free_all_
-    public ported_shape3d_load_car_shapes_
-    public ported_shape3d_free_car_shapes_
-    public ported_sub_204AE_
+    public shape3d_load_all
+    public shape3d_free_all
+    public shape3d_load_car_shapes
+    public shape3d_free_car_shapes
+    public sub_204AE
     public track_setup
     public off_2147C
     public load_opponent_data
@@ -3180,7 +3180,7 @@ loc_1FE8C:
     pop     bp
     retf
 bto_auxiliary1 endp
-ported_shape3d_load_all_ proc far
+shape3d_load_all proc far
      s = byte ptr 0
      r = byte ptr 2
 
@@ -3267,8 +3267,8 @@ loc_1FF38:
     mov     sp, bp
     pop     bp
     retf
-ported_shape3d_load_all_ endp
-ported_shape3d_free_all_ proc far
+shape3d_load_all endp
+shape3d_free_all proc far
 
     mov     ax, word ptr game1ptr
     or      ax, word ptr game1ptr+2
@@ -3289,8 +3289,8 @@ locret_1FF90:
     retf
     ; align 2
     db 144
-ported_shape3d_free_all_ endp
-ported_shape3d_load_car_shapes_ proc far
+shape3d_free_all endp
+shape3d_load_car_shapes proc far
     var_10 = byte ptr -16
     var_E = dword ptr -14
     var_A = dword ptr -10
@@ -3774,8 +3774,8 @@ loc_2042A:
     mov     sp, bp
     pop     bp
     retf
-ported_shape3d_load_car_shapes_ endp
-ported_shape3d_free_car_shapes_ proc far
+shape3d_load_car_shapes endp
+shape3d_free_car_shapes proc far
 
     mov     ax, word ptr car2resptr
     or      ax, word ptr car2resptr+2
@@ -3796,7 +3796,7 @@ ported_shape3d_free_car_shapes_ proc far
     push    dx
     push    ax
     push    cs
-    call near ptr ported_sub_204AE_
+    call near ptr sub_204AE
     add     sp, 0Eh
     push    word ptr car2resptr+2
     push    word ptr car2resptr
@@ -3819,15 +3819,15 @@ loc_20477:
     push    dx
     push    ax
     push    cs
-    call near ptr ported_sub_204AE_
+    call near ptr sub_204AE
     add     sp, 0Eh
     push    word ptr carresptr+2
     push    word ptr carresptr
     call    mmgr_free
     add     sp, 4
     retf
-ported_shape3d_free_car_shapes_ endp
-ported_sub_204AE_ proc far
+shape3d_free_car_shapes endp
+sub_204AE proc far
     var_14 = word ptr -20
     var_12 = word ptr -18
     var_10 = word ptr -16
@@ -4073,7 +4073,7 @@ loc_206CE:
     mov     sp, bp
     pop     bp
     retf
-ported_sub_204AE_ endp
+sub_204AE endp
 track_setup proc far
     var_AF0 = dword ptr -2800
     var_AEC = word ptr -2796

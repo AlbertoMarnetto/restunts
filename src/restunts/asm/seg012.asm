@@ -47,14 +47,14 @@ seg012 segment byte public 'STUNTSC' use16
     assume cs:seg012
     assume es:nothing, ss:nothing, ds:dseg
     public fatal_error
-    public ported_polarAngle_
+    public polarAngle
     public off_2EA9B
     public sub_2EAD4
     public set_add_value
     public sub_2EB07
     public sub_2EB1E
-    public ported_draw_line_related_alt_
-    public ported_draw_line_related_
+    public draw_line_related_alt
+    public draw_line_related
     public loc_2EB62
     public off_2ECB9
     public word_2ECF8
@@ -70,7 +70,7 @@ seg012 segment byte public 'STUNTSC' use16
     public criterr_interrupt_handler
     public set_criterr_handler
     public criterr_exithandler
-    public ported_preRender_unk_
+    public preRender_unk
     public nopsub_2F424
     public nopsub_2F436
     public word_2F448
@@ -129,17 +129,17 @@ seg012 segment byte public 'STUNTSC' use16
     public add_exit_handler
     public call_exitlist
     public call_exitlist2
-    public ported_file_paras_
-    public ported_file_paras_nofatal_
-    public ported_file_paras_fatal_
-    public ported_file_decomp_paras_
-    public ported_file_decomp_paras_nofatal_
-    public ported_file_decomp_paras_fatal_
-    public ported_file_find_
-    public ported_file_find_next_
-    public ported_multiply_and_scale_
+    public file_paras
+    public file_paras_nofatal
+    public file_paras_fatal
+    public file_decomp_paras
+    public file_decomp_paras_nofatal
+    public file_decomp_paras_fatal
+    public file_find
+    public file_find_next
+    public multiply_and_scale
     public video_set_mode4
-    public ported_polarRadius2D_
+    public polarRadius2D
     public video_set_mode7
     public nopsub_30180
     public timer_setup_interrupt
@@ -163,61 +163,61 @@ seg012 segment byte public 'STUNTSC' use16
     public sub_307D2
     public sub_307E3
     public nopsub_307FA
-    public ported_kb_init_interrupt_
-    public ported_kb_exit_handler_
-    public ported_kb_int9_handler_
-    public ported_kb_int16_handler_
-    public ported_kb_get_key_state_
-    public ported_kb_call_readchar_callback_
-    public ported_kb_read_char_
-    public ported_kb_checking_
+    public kb_init_interrupt
+    public kb_exit_handler
+    public kb_int9_handler
+    public kb_int16_handler
+    public kb_get_key_state
+    public kb_call_readchar_callback
+    public kb_read_char
+    public kb_checking
     public nopsub_kb_set_readchar_callback
     public nopsub_kb_get_readchar_callback
-    public ported_flush_stdin_
-    public ported_kb_check_
+    public flush_stdin
+    public kb_check
     public nopsub_30A77
     public nopsub_30A97
-    public ported_file_read_
-    public ported_file_read_nofatal_
-    public ported_file_read_fatal_
-    public ported_file_decomp_rle_
-    public ported_file_decomp_rle_single_
-    public ported_file_decomp_rle_seq_
-    public ported_file_load_binary_
-    public ported_file_load_binary_nofatal_
-    public ported_file_decomp_
-    public ported_file_decomp_nofatal_
-    public ported_file_decomp_fatal_
-    public ported_locate_shape_nofatal_
-    public ported_locate_shape_fatal_
-    public ported_locate_sound_fatal_
-    public ported_mmgr_alloc_resmem_
+    public file_read
+    public file_read_nofatal
+    public file_read_fatal
+    public file_decomp_rle
+    public file_decomp_rle_single
+    public file_decomp_rle_seq
+    public file_load_binary
+    public file_load_binary_nofatal
+    public file_decomp
+    public file_decomp_nofatal
+    public file_decomp_fatal
+    public locate_shape_nofatal
+    public locate_shape_fatal
+    public locate_sound_fatal
+    public mmgr_alloc_resmem
     public loc_310CD
-    public ported_mmgr_alloc_a000_
+    public mmgr_alloc_a000
     public nopsub_310FE
     public nopsub_3111D
     public nopsub_31157
     public nopsub_31169
-    public ported_mmgr_get_ofs_diff_
-    public ported_mmgr_copy_paras_
-    public ported_copy_paras_reverse_
-    public ported_mmgr_path_to_name_
-    public ported_mmgr_alloc_pages_
-    public ported_mmgr_find_free_
-    public ported_mmgr_get_chunk_by_name_
+    public mmgr_get_ofs_diff
+    public mmgr_copy_paras
+    public copy_paras_reverse
+    public mmgr_path_to_name
+    public mmgr_alloc_pages
+    public mmgr_find_free
+    public mmgr_get_chunk_by_name
     public nopsub_31429
-    public ported_mmgr_free_
+    public mmgr_free
     public loc_31498
     public nopsub_31525
-    public ported_mmgr_release_
-    public ported_mmgr_get_chunk_size_
-    public ported_mmgr_resize_memory_
-    public ported_mmgr_op_unk_
-    public ported_preRender_default_
-    public ported_preRender_default_alt_
+    public mmgr_release
+    public mmgr_get_chunk_size
+    public mmgr_resize_memory
+    public mmgr_op_unk
+    public preRender_default
+    public preRender_default_alt
     public loc_317CE
-    public ported_skybox_op_helper_
-    public ported_preRender_wheel_helper4_
+    public skybox_op_helper
+    public preRender_wheel_helper4
     public loc_317FB
     public loc_3180A
     public preRender_helper
@@ -235,60 +235,60 @@ seg012 segment byte public 'STUNTSC' use16
     public nopsub_322B4
     public nopsub_322C0
     public nopsub_322DF
-    public ported_set_projection_
+    public set_projection
     public loc_32334
-    public ported_vector_to_point_
-    public ported_sprite_free_wnd_
-    public ported_file_write_nofatal_
-    public ported_file_write_fatal_
+    public vector_to_point
+    public sprite_free_wnd
+    public file_write_nofatal
+    public file_write_fatal
     public video_add_exithandler
     public video_on_exit
-    public ported_sprite_copy_both_to_arg_
-    public ported_sprite_copy_arg_to_both_
-    public ported_file_get_res_shape_count_
-    public ported_file_get_shape2d_
+    public sprite_copy_both_to_arg
+    public sprite_copy_arg_to_both
+    public file_get_res_shape_count
+    public file_get_shape2d
     public nopsub_326BA
-    public ported_sin_fast_
+    public sin_fast
     public off_326F2
-    public ported_cos_fast_
+    public cos_fast
     public nopsub_32738
     public nopsub_32746
     public nopsub_32751
-    public ported_projectiondata9_times_ratio_
+    public projectiondata9_times_ratio
     public nopsub_3276A
-    public ported_timer_get_counter_
-    public ported_timer_custom_delta_
-    public ported_timer_get_delta_
-    public ported_timer_reset_
-    public ported_timer_copy_counter_
-    public ported_timer_wait_for_dx_
-    public ported_timer_compare_dx_
-    public ported_timer_get_counter_unk_
+    public timer_get_counter
+    public timer_custom_delta
+    public timer_get_delta
+    public timer_reset
+    public timer_copy_counter
+    public timer_wait_for_dx
+    public timer_compare_dx
+    public timer_get_counter_unk
     public font_op
     public font_op2
     public loc_3284A
     public loc_32882
-    public ported_preRender_patterned_
+    public preRender_patterned
     public nopsub_328C9
     public nopsub_328DB
-    public ported_mat_mul_vector_
-    public ported_mat_multiply_
-    public ported_mat_invert_
+    public mat_mul_vector
+    public mat_multiply
+    public mat_invert
     public fliphandlers
-    public ported_file_unflip_shape2d_
+    public file_unflip_shape2d
     public vle_esc1
     public vle_esc2
-    public ported_file_decomp_vle_
+    public file_decomp_vle
     public nopsub_32FEE
-    public ported_video_get_status_
+    public video_get_status
     public nopsub_33006
-    public ported_vector_op_unk_
+    public vector_op_unk
     public loc_3301F
     public preRender_sphere
     public nopsub_3320E
     public sprite_set_1_size
     public video_clear_color
-    public ported_sprite_clear_1_color_
+    public sprite_clear_1_color
     public nopsub_33330
     public draw_unknown_lines
     public putpixel_line1_maybe
@@ -366,11 +366,11 @@ seg012 segment byte public 'STUNTSC' use16
     public font_set_unk
     public set_fontdefseg
     public draw_patterned_lines
-    public ported_sprite_make_wnd_
+    public sprite_make_wnd
     public next_wnd_def
     public wnd_defs
-    public ported_sprite_set_1_from_argptr_
-    public ported_sprite_copy_2_to_1_
+    public sprite_set_1_from_argptr
+    public sprite_copy_2_to_1
     public putpixel_single_maybe
     public sub_35B76
     public sub_35C4E
@@ -379,9 +379,9 @@ seg012 segment byte public 'STUNTSC' use16
     public sub_35DE6
     public sub_35E08
     public loc_35ED9
-    public ported_file_load_shape2d_palmap_apply_
-    public ported_file_load_shape2d_expand_
-    public ported_file_unflip_shape2d_pes_
+    public file_load_shape2d_palmap_apply
+    public file_load_shape2d_expand
+    public file_unflip_shape2d_pes
 algn_2EA29:
     ; align 2
     db 144
@@ -406,7 +406,7 @@ loc_2EA48:
     ; align 2
     db 0
 fatal_error endp
-ported_polarAngle_ proc far
+polarAngle proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_z = word ptr 6
@@ -493,7 +493,7 @@ loc_2EAC8:
 loc_2EACF:
     sub     ah, 2
     jmp     short loc_2EAB0
-ported_polarAngle_ endp
+polarAngle endp
 sub_2EAD4 proc far
 
     cli
@@ -572,7 +572,7 @@ loc_2EB35:
     pop     bp
     retf
 sub_2EB1E endp
-ported_draw_line_related_alt_ proc far
+draw_line_related_alt proc far
     var_4 = byte ptr -4
      s = byte ptr 0
      r = byte ptr 2
@@ -584,8 +584,8 @@ ported_draw_line_related_alt_ proc far
     push    di
     mov     [bp+var_4], 1
     jmp     short loc_2EB62
-ported_draw_line_related_alt_ endp
-ported_draw_line_related_ proc far
+draw_line_related_alt endp
+draw_line_related proc far
     var_4 = byte ptr -4
     var_2 = word ptr -2
      s = byte ptr 0
@@ -1463,7 +1463,7 @@ loc_2F30C:
 loc_2F30F:
     sub     [si+8], dx
     jmp     short loc_2F2B0
-ported_draw_line_related_ endp
+draw_line_related endp
 parse_shape2d_helper proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -1591,7 +1591,7 @@ loc_2F3D8:
     pop     ds
     retf
 criterr_exithandler endp
-ported_preRender_unk_ proc far
+preRender_unk proc far
     var_A = byte ptr -10
      s = byte ptr 0
      r = byte ptr 2
@@ -1630,7 +1630,7 @@ loc_2F3FD:
     mov     ax, offset preRender_line
     mov     imagefunc, ax
     jmp     loc_3180A
-ported_preRender_unk_ endp
+preRender_unk endp
 nopsub_2F424 proc far
     var_A = byte ptr -10
      s = byte ptr 0
@@ -2987,7 +2987,7 @@ call_exitlist2 proc near
     ; align 2
     db 0
 call_exitlist2 endp
-ported_file_paras_ proc far
+file_paras proc far
     var_fatal = word ptr -6
     var_length = word ptr -4
     var_filehandle = word ptr -2
@@ -3007,8 +3007,8 @@ ported_file_paras_ proc far
     jmp     short _file_paras
     ; align 2
     db 144
-ported_file_paras_ endp
-ported_file_paras_nofatal_ proc far
+file_paras endp
+file_paras_nofatal proc far
     var_6 = word ptr -6
      s = byte ptr 0
      r = byte ptr 2
@@ -3022,8 +3022,8 @@ ported_file_paras_nofatal_ proc far
     mov     [bp+var_6], 0
     jmp     short _file_paras
     db 144
-ported_file_paras_nofatal_ endp
-ported_file_paras_fatal_ proc near
+file_paras_nofatal endp
+file_paras_fatal proc near
     var_fatal = word ptr -6
      s = byte ptr 0
      r = byte ptr 2
@@ -3103,8 +3103,8 @@ loc_2FF00:
     mov     sp, bp
     pop     bp
     retf
-ported_file_paras_fatal_ endp
-ported_file_decomp_paras_ proc far
+file_paras_fatal endp
+file_decomp_paras proc far
     var_fatal = word ptr -8
     var_6 = byte ptr -6
     var_5 = word ptr -5
@@ -3125,8 +3125,8 @@ ported_file_decomp_paras_ proc far
     jmp     short _file_decomp_paras
     ; align 2
     db 144
-ported_file_decomp_paras_ endp
-ported_file_decomp_paras_nofatal_ proc far
+file_decomp_paras endp
+file_decomp_paras_nofatal proc far
     var_fatal = word ptr -8
      s = byte ptr 0
      r = byte ptr 2
@@ -3140,8 +3140,8 @@ ported_file_decomp_paras_nofatal_ proc far
     mov     [bp+var_fatal], 0
     jmp     short _file_decomp_paras
     db 144
-ported_file_decomp_paras_nofatal_ endp
-ported_file_decomp_paras_fatal_ proc near
+file_decomp_paras_nofatal endp
+file_decomp_paras_fatal proc near
     var_fatal = word ptr -8
      s = byte ptr 0
      r = byte ptr 2
@@ -3236,8 +3236,8 @@ loc_2FFC4:
     push    ax
 loc_2FFCF:
     call    far ptr fatal_error
-ported_file_decomp_paras_fatal_ endp
-ported_file_find_ proc far
+file_decomp_paras_fatal endp
+file_find proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -3292,8 +3292,8 @@ loc_30025:
 _file_find_err:
     xor     ax, ax
     jmp     short loc_30025
-ported_file_find_ endp
-ported_file_find_next_ proc far
+file_find endp
+file_find_next proc far
      s = byte ptr 0
      r = byte ptr 2
 
@@ -3311,8 +3311,8 @@ ported_file_find_next_ proc far
     jmp     short _file_find_ok
     ; align 2
     db 0
-ported_file_find_next_ endp
-ported_multiply_and_scale_ proc far
+file_find_next endp
+multiply_and_scale proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -3331,7 +3331,7 @@ ported_multiply_and_scale_ proc far
     mov     ax, dx
     pop     bp
     retf
-ported_multiply_and_scale_ endp
+multiply_and_scale endp
 video_set_mode4 proc far
      r = byte ptr 0
 
@@ -3381,7 +3381,7 @@ loc_30091:
     ; align 2
     db 0
 video_set_mode4 endp
-ported_polarRadius2D_ proc far
+polarRadius2D proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_z = word ptr 6
@@ -3439,7 +3439,7 @@ loc_30112:
     div     bx
     pop     bp
     retf
-ported_polarRadius2D_ endp
+polarRadius2D endp
 video_set_mode7 proc far
      r = byte ptr 0
 
@@ -4340,7 +4340,7 @@ loc_30805:
     ; align 2
     db 0
 nopsub_307FA endp
-ported_kb_init_interrupt_ proc far
+kb_init_interrupt proc far
      r = byte ptr 0
 
     push    di
@@ -4381,8 +4381,8 @@ loc_30861:
     add     sp, 4
     pop     di
     retf
-ported_kb_init_interrupt_ endp
-ported_kb_exit_handler_ proc far
+kb_init_interrupt endp
+kb_exit_handler proc far
 
     in      al, 21h         ; Interrupt controller, 8259A.
     mov     ah, al
@@ -4409,8 +4409,8 @@ loc_308C1:
     mov     al, ah
     out     21h, al         ; Interrupt controller, 8259A.
     retf
-ported_kb_exit_handler_ endp
-ported_kb_int9_handler_ proc far
+kb_exit_handler endp
+kb_int9_handler proc far
 
     sti
     push    ax
@@ -4520,8 +4520,8 @@ loc_30992:
 loc_3099D:
     mov     kbinput[bx], 0
     jmp     loc_308EA
-ported_kb_int9_handler_ endp
-ported_kb_int16_handler_ proc far
+kb_int9_handler endp
+kb_int16_handler proc far
      r = byte ptr 0
 
     push    bx
@@ -4570,8 +4570,8 @@ loc_30A04:
     mov     al, kbinput+2Ah
     or      al, kbinput+36h
     jmp     short loc_309BD
-ported_kb_int16_handler_ endp
-ported_kb_get_key_state_ proc far
+kb_int16_handler endp
+kb_get_key_state proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -4585,13 +4585,13 @@ ported_kb_get_key_state_ proc far
     retf
     ; align 2
     db 0
-ported_kb_get_key_state_ endp
-ported_kb_call_readchar_callback_ proc far
+kb_get_key_state endp
+kb_call_readchar_callback proc far
 
     call    dword ptr readchar_callback_ofs
     retf
-ported_kb_call_readchar_callback_ endp
-ported_kb_read_char_ proc far
+kb_call_readchar_callback endp
+kb_read_char proc far
 
     mov     ah, 1
     int     16h             ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR
@@ -4606,8 +4606,8 @@ loc_30A2A:
     xor     ah, ah
 locret_30A34:
     retf
-ported_kb_read_char_ endp
-ported_kb_checking_ proc far
+kb_read_char endp
+kb_checking proc far
 
     mov     ah, 1
     int     16h             ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR
@@ -4619,7 +4619,7 @@ loc_30A3D:
     xor     ah, ah
 locret_30A43:
     retf
-ported_kb_checking_ endp
+kb_checking endp
 nopsub_kb_set_readchar_callback proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -4641,14 +4641,14 @@ nopsub_kb_get_readchar_callback proc far
     mov     dx, readchar_callback_seg
     retf
 nopsub_kb_get_readchar_callback endp
-ported_flush_stdin_ proc far
+flush_stdin proc far
 
     call    kb_call_readchar_callback
     cmp     ax, 0
-    jz short near ptr ported_flush_stdin_ ; (fixed jump to ported self)
+    jz      short near ptr flush_stdin
     retf
-ported_flush_stdin_ endp
-ported_kb_check_ proc far
+flush_stdin endp
+kb_check proc far
 
     mov     ah, 1
     int     16h             ; KEYBOARD - CHECK BUFFER, DO NOT CLEAR
@@ -4658,8 +4658,8 @@ ported_kb_check_ proc far
 loc_30A71:
     mov     ah, 0
     int     16h             ; KEYBOARD - READ CHAR FROM BUFFER, WAIT IF EMPTY
-    jmp short near ptr ported_kb_check_ ; (fixed jump to ported self)
-ported_kb_check_ endp
+    jmp     short near ptr kb_check
+kb_check endp
 nopsub_30A77 proc far
 
     call    kb_call_readchar_callback
@@ -4712,7 +4712,7 @@ loc_30ACB:
     ; align 2
     db 0
 nopsub_30A97 endp
-ported_file_read_ proc far
+file_read proc far
     var_fatal = word ptr -8
      s = byte ptr 0
      r = byte ptr 2
@@ -4727,8 +4727,8 @@ ported_file_read_ proc far
     jmp     short _file_read
     ; align 2
     db 144
-ported_file_read_ endp
-ported_file_read_nofatal_ proc far
+file_read endp
+file_read_nofatal proc far
     var_fatal = word ptr -8
      s = byte ptr 0
      r = byte ptr 2
@@ -4740,8 +4740,8 @@ ported_file_read_nofatal_ proc far
     mov     [bp+var_fatal], 0
     jmp     short _file_read
     db 144
-ported_file_read_nofatal_ endp
-ported_file_read_fatal_ proc far
+file_read_nofatal endp
+file_read_fatal proc far
     var_fatal = word ptr -8
     var_curseg = word ptr -6
     var_curoff = word ptr -4
@@ -4804,8 +4804,8 @@ fatal:
     push    [bp+arg_filename]
     push    ax
     call    far ptr fatal_error
-ported_file_read_fatal_ endp
-ported_file_decomp_rle_ proc far
+file_read_fatal endp
+file_decomp_rle proc far
     var_lenlo = word ptr -26
     var_lenhi = word ptr -24
     var_16 = word ptr -22
@@ -4848,7 +4848,7 @@ nosmart
     mov     [bp+arg_srcoff], si; Skip escape codes
     cmp     byte ptr [bp+var_esclen], 80h ; '€'; Skip seq pass flag
     ja      short skip_seq_pass
-    call near ptr ported_file_decomp_rle_seq_
+    call near ptr file_decomp_rle_seq
     mov     [bp+var_16], ax
     mov     [bp+var_14], dx
     mov     si, ax          ; paras = len / 16
@@ -4876,7 +4876,7 @@ no_remainder:
     xor     si, si
     mov     [bp+arg_srcoff], si
 skip_seq_pass:
-    call near ptr ported_file_decomp_rle_single_
+    call near ptr file_decomp_rle_single
     mov     ax, [bp+var_lenlo]; Return length
     mov     dx, [bp+var_lenhi]
     add     sp, 116h
@@ -4885,8 +4885,8 @@ skip_seq_pass:
     pop     ds
     pop     bp
     retf
-ported_file_decomp_rle_ endp
-ported_file_decomp_rle_single_ proc near
+file_decomp_rle endp
+file_decomp_rle_single proc near
 
     mov     cx, 80h ; '€'
     lea     di, [bp-11Ch]
@@ -4995,8 +4995,8 @@ loc_30CC1:
     add     ax, 800h
     mov     es, ax
     jmp     loc_30C48
-ported_file_decomp_rle_single_ endp
-ported_file_decomp_rle_seq_ proc near
+file_decomp_rle_single endp
+file_decomp_rle_seq proc near
 
     cmp     byte ptr [bp-12h], 1; file_decomp_rle::var_esclen
     jnz     short has_codes
@@ -5087,8 +5087,8 @@ loc_30D5A:
     or      dx, bx
     jz      short loc_30D29
     jmp     loc_30CED
-ported_file_decomp_rle_seq_ endp
-ported_file_load_binary_ proc far
+file_decomp_rle_seq endp
+file_load_binary proc far
     var_fatal = word ptr -2
      s = byte ptr 0
      r = byte ptr 2
@@ -5102,8 +5102,8 @@ ported_file_load_binary_ proc far
     jmp     short _file_load_binary
     ; align 2
     db 144
-ported_file_load_binary_ endp
-ported_file_load_binary_nofatal_ proc far
+file_load_binary endp
+file_load_binary_nofatal proc far
     var_fatal = word ptr -2
      s = byte ptr 0
      r = byte ptr 2
@@ -5149,8 +5149,8 @@ loc_30DDE:
 emptyfile:
     xor     dx, dx
     jmp     short loc_30DDE
-ported_file_load_binary_nofatal_ endp
-ported_file_decomp_ proc far
+file_load_binary_nofatal endp
+file_decomp proc far
     var_fatal = word ptr -12
      s = byte ptr 0
      r = byte ptr 2
@@ -5165,8 +5165,8 @@ ported_file_decomp_ proc far
     mov     [bp+var_fatal], ax
     jmp     short _file_decomp
     db 144
-ported_file_decomp_ endp
-ported_file_decomp_nofatal_ proc far
+file_decomp endp
+file_decomp_nofatal proc far
     var_fatal = word ptr -12
      s = byte ptr 0
      r = byte ptr 2
@@ -5179,8 +5179,8 @@ ported_file_decomp_nofatal_ proc far
     mov     [bp+var_fatal], 0
     jmp     short _file_decomp
     db 144
-ported_file_decomp_nofatal_ endp
-ported_file_decomp_fatal_ proc far
+file_decomp_nofatal endp
+file_decomp_fatal proc far
     var_fatal = word ptr -12
     var_nextsrcseg = word ptr -10
     var_passes = word ptr -8
@@ -5368,8 +5368,8 @@ loc_30F7E:
     mov     sp, bp
     pop     bp
     retf
-ported_file_decomp_fatal_ endp
-ported_locate_shape_nofatal_ proc far
+file_decomp_fatal endp
+locate_shape_nofatal proc far
      s = byte ptr 0
      r = byte ptr 2
 
@@ -5381,8 +5381,8 @@ ported_locate_shape_nofatal_ proc far
     xor     dx, dx
     jmp     short _alt_locate_resource
     db 144
-ported_locate_shape_nofatal_ endp
-ported_locate_shape_fatal_ proc far
+locate_shape_nofatal endp
+locate_shape_fatal proc far
      s = byte ptr 0
      r = byte ptr 2
 
@@ -5394,8 +5394,8 @@ ported_locate_shape_fatal_ proc far
     mov     dx, 1
     jmp     short _alt_locate_resource
     db 144
-ported_locate_shape_fatal_ endp
-ported_locate_sound_fatal_ proc far
+locate_shape_fatal endp
+locate_sound_fatal proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -5517,8 +5517,8 @@ loc_31075:
     pop     ds
     pop     bp
     retf
-ported_locate_sound_fatal_ endp
-ported_mmgr_alloc_resmem_ proc far
+locate_sound_fatal endp
+mmgr_alloc_resmem proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -5573,15 +5573,15 @@ loc_310ED:
     pop     si
     pop     bp
     retf
-ported_mmgr_alloc_resmem_ endp
-ported_mmgr_alloc_a000_ proc far
+mmgr_alloc_resmem endp
+mmgr_alloc_a000 proc far
 
     mov     ax, 0A000h
     push    ax
     call    mmgr_alloc_resmem
     add     sp, 2
     retf
-ported_mmgr_alloc_a000_ endp
+mmgr_alloc_a000 endp
 nopsub_310FE proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -5647,7 +5647,7 @@ nopsub_31169 proc far
     sub     ax, [bx+MEMCHUNK.resofs]
     retf
 nopsub_31169 endp
-ported_mmgr_get_ofs_diff_ proc far
+mmgr_get_ofs_diff proc far
 
     mov     bx, resendptr2
     mov     ax, [bx+MEMCHUNK.resofs]
@@ -5655,8 +5655,8 @@ ported_mmgr_get_ofs_diff_ proc far
     sub     ax, [bx+MEMCHUNK.resofs]
     sub     ax, [bx+MEMCHUNK.ressize]
     retf
-ported_mmgr_get_ofs_diff_ endp
-ported_mmgr_copy_paras_ proc far
+mmgr_get_ofs_diff endp
+mmgr_copy_paras proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -5702,8 +5702,8 @@ loc_311D0:
     pop     ds
     pop     bp
     retf
-ported_mmgr_copy_paras_ endp
-ported_copy_paras_reverse_ proc far
+mmgr_copy_paras endp
+copy_paras_reverse proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -5757,8 +5757,8 @@ loc_31222:
     pop     ds
     pop     bp
     retf
-ported_copy_paras_reverse_ endp
-ported_mmgr_path_to_name_ proc far
+copy_paras_reverse endp
+mmgr_path_to_name proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_filename = word ptr 6
@@ -5785,8 +5785,8 @@ loc_31243:
     pop     si
     pop     bp
     retf
-ported_mmgr_path_to_name_ endp
-ported_mmgr_alloc_pages_ proc far
+mmgr_path_to_name endp
+mmgr_alloc_pages proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -5867,8 +5867,8 @@ loc_312E9:
     mov     ax, offset aReservememoryOutOfMemory; "reservememory - OUT OF MEMORY RESERVING"...
     push    ax
     call    far ptr fatal_error
-ported_mmgr_alloc_pages_ endp
-ported_mmgr_find_free_ proc far
+mmgr_alloc_pages endp
+mmgr_find_free proc far
      r = byte ptr 0
 
     push    si
@@ -5922,8 +5922,8 @@ loc_31359:
     call    copy_paras_reverse
     add     sp, 6
     jmp     short loc_31319
-ported_mmgr_find_free_ endp
-ported_mmgr_get_chunk_by_name_ proc far
+mmgr_find_free endp
+mmgr_get_chunk_by_name proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -6011,7 +6011,7 @@ loc_3141F:
     call    mmgr_find_free
     mov     dx, [di+MEMCHUNK.resofs]
     jmp     short loc_313B0
-ported_mmgr_get_chunk_by_name_ endp
+mmgr_get_chunk_by_name endp
 nopsub_31429 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -6065,7 +6065,7 @@ loc_31475:
     pop     bp
     retf
 nopsub_31429 endp
-ported_mmgr_free_ proc far
+mmgr_free proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -6141,7 +6141,7 @@ loc_3151B:
     pop     si
     pop     bp
     retf
-ported_mmgr_free_ endp
+mmgr_free endp
 nopsub_31525 proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
@@ -6267,7 +6267,7 @@ loc_31635:
     pop     bp
     retf
 nopsub_31525 endp
-ported_mmgr_release_ proc far
+mmgr_release proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_2 = word ptr 8
@@ -6301,8 +6301,8 @@ loc_31678:
     pop     si
     pop     bp
     retf
-ported_mmgr_release_ endp
-ported_mmgr_get_chunk_size_ proc far
+mmgr_release endp
+mmgr_get_chunk_size proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_2 = word ptr 8
@@ -6328,8 +6328,8 @@ loc_3169B:
     pop     si
     pop     bp
     retf
-ported_mmgr_get_chunk_size_ endp
-ported_mmgr_resize_memory_ proc far
+mmgr_get_chunk_size endp
+mmgr_resize_memory proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_2 = word ptr 8
@@ -6401,8 +6401,8 @@ loc_31724:
     mov     ax, offset aResizememoryNo; "resizememory - NO MEMORY LEFT TO EXPAND"...
     push    ax
     call    far ptr fatal_error
-ported_mmgr_resize_memory_ endp
-ported_mmgr_op_unk_ proc far
+mmgr_resize_memory endp
+mmgr_op_unk proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_2 = word ptr 8
@@ -6467,8 +6467,8 @@ loc_317AD:
     jmp     short loc_317A4
     ; align 2
     db 0
-ported_mmgr_op_unk_ endp
-ported_preRender_default_ proc far
+mmgr_op_unk endp
+preRender_default proc far
     var_A = byte ptr -10
      s = byte ptr 0
      r = byte ptr 2
@@ -6480,8 +6480,8 @@ ported_preRender_default_ proc far
     push    di
     mov     [bp+var_A], 1
     jmp     short loc_317CE
-ported_preRender_default_ endp
-ported_preRender_default_alt_ proc far
+preRender_default endp
+preRender_default_alt proc far
     var_A = byte ptr -10
      s = byte ptr 0
      r = byte ptr 2
@@ -6500,8 +6500,8 @@ loc_317CE:
     mov     imagefunc, ax
     mov     si, [bp+arg_6]
     jmp     short loc_3180A
-ported_preRender_default_alt_ endp
-ported_skybox_op_helper_ proc far
+preRender_default_alt endp
+skybox_op_helper proc far
     var_A = byte ptr -10
      s = byte ptr 0
      r = byte ptr 2
@@ -6513,8 +6513,8 @@ ported_skybox_op_helper_ proc far
     push    di
     mov     [bp+var_A], 1
     jmp     short loc_317FB
-ported_skybox_op_helper_ endp
-ported_preRender_wheel_helper4_ proc far
+skybox_op_helper endp
+preRender_wheel_helper4 proc far
     var_7D0 = word ptr -2000
     var_798 = word ptr -1944
     var_3D8 = word ptr -984
@@ -6756,7 +6756,7 @@ loc_319C7:
     mov     sp, bp
     pop     bp
     retf
-ported_preRender_wheel_helper4_ endp
+preRender_wheel_helper4 endp
 preRender_helper proc near
     var_18 = word ptr -24
      s = byte ptr 0
@@ -8041,7 +8041,7 @@ nopsub_322DF proc far
     jmp     short loc_32334
     db 144
 nopsub_322DF endp
-ported_set_projection_ proc far
+set_projection proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -8145,8 +8145,8 @@ loc_323B4:
     pop     si
     pop     bp
     retf
-ported_set_projection_ endp
-ported_vector_to_point_ proc far
+set_projection endp
+vector_to_point proc far
     var_8000 = byte ptr -32768
      s = byte ptr 0
      r = byte ptr 2
@@ -8267,8 +8267,8 @@ loc_324A2:
     mov     ax, 7D00h
     mov     [di+2], ax
     jmp     short loc_32472
-ported_vector_to_point_ endp
-ported_sprite_free_wnd_ proc far
+vector_to_point endp
+sprite_free_wnd proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -8310,8 +8310,8 @@ loc_324EC:
     lea     ax, aWindowReleased; "Window Released Out of Order\r\n"
     push    ax
     call    far ptr fatal_error
-ported_sprite_free_wnd_ endp
-ported_file_write_nofatal_ proc far
+sprite_free_wnd endp
+file_write_nofatal proc far
     var_fatal = word ptr -4
      s = byte ptr 0
      r = byte ptr 2
@@ -8325,8 +8325,8 @@ ported_file_write_nofatal_ proc far
     mov     [bp+var_fatal], 0
     jmp     short _file_write
     db 144
-ported_file_write_nofatal_ endp
-ported_file_write_fatal_ proc far
+file_write_nofatal endp
+file_write_fatal proc far
     var_errno = word ptr -6
     var_fatal = word ptr -4
     var_filehandle = word ptr -2
@@ -8411,7 +8411,7 @@ loc_325A7:
     mov     sp, bp
     pop     bp
     retf
-ported_file_write_fatal_ endp
+file_write_fatal endp
 video_add_exithandler proc far
 
     cmp     currentvideomode, 0
@@ -8459,7 +8459,7 @@ loc_32606:
     int     10h             ; - VIDEO - 
     retf
 video_on_exit endp
-ported_sprite_copy_both_to_arg_ proc far
+sprite_copy_both_to_arg proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -8483,8 +8483,8 @@ ported_sprite_copy_both_to_arg_ proc far
     pop     ds
     pop     bp
     retf
-ported_sprite_copy_both_to_arg_ endp
-ported_sprite_copy_arg_to_both_ proc far
+sprite_copy_both_to_arg endp
+sprite_copy_arg_to_both proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -8506,8 +8506,8 @@ ported_sprite_copy_arg_to_both_ proc far
     pop     ds
     pop     bp
     retf
-ported_sprite_copy_arg_to_both_ endp
-ported_file_get_res_shape_count_ proc far
+sprite_copy_arg_to_both endp
+file_get_res_shape_count proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -8522,8 +8522,8 @@ ported_file_get_res_shape_count_ proc far
     pop     si
     pop     bp
     retf
-ported_file_get_res_shape_count_ endp
-ported_file_get_shape2d_ proc far
+file_get_res_shape_count endp
+file_get_shape2d proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -8576,7 +8576,7 @@ nosmart
     pop     si
     pop     bp
     retf
-ported_file_get_shape2d_ endp
+file_get_shape2d endp
 nopsub_326BA proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -8602,7 +8602,7 @@ nopsub_326BA proc far
     pop     bp
     retf
 nopsub_326BA endp
-ported_sin_fast_ proc far
+sin_fast proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -8650,8 +8650,8 @@ loc_3271D:
     neg     ax
     pop     bp
     retf
-ported_sin_fast_ endp
-ported_cos_fast_ proc far
+sin_fast endp
+cos_fast proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -8663,7 +8663,7 @@ ported_cos_fast_ proc far
     jmp     short code_sin_fast_main
     ; align 2
     db 0
-ported_cos_fast_ endp
+cos_fast endp
 nopsub_32738 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -8703,7 +8703,7 @@ nopsub_32751 proc far
     pop     bp
     retf
 nopsub_32751 endp
-ported_projectiondata9_times_ratio_ proc far
+projectiondata9_times_ratio proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -8716,7 +8716,7 @@ ported_projectiondata9_times_ratio_ proc far
     div     [bp+arg_2]
     pop     bp
     retf
-ported_projectiondata9_times_ratio_ endp
+projectiondata9_times_ratio endp
 nopsub_3276A proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -8731,15 +8731,15 @@ nopsub_3276A proc far
     pop     bp
     retf
 nopsub_3276A endp
-ported_timer_get_counter_ proc far
+timer_get_counter proc far
 
     cli
     mov     ax, word ptr timer_callback_counter
     mov     dx, word ptr timer_callback_counter+2
     sti
     retf
-ported_timer_get_counter_ endp
-ported_timer_custom_delta_ proc far
+timer_get_counter endp
+timer_custom_delta proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_ticksl = word ptr 6
@@ -8757,8 +8757,8 @@ ported_timer_custom_delta_ proc far
     sbb     dx, cx
     pop     bp
     retf
-ported_timer_custom_delta_ endp
-ported_timer_get_delta_ proc far
+timer_custom_delta endp
+timer_get_delta proc far
 
     mov     bx, word ptr last_timer_callback_counter
     mov     cx, word ptr last_timer_callback_counter+2
@@ -8771,15 +8771,15 @@ ported_timer_get_delta_ proc far
     sub     ax, bx
     sbb     dx, cx
     retf
-ported_timer_get_delta_ endp
-ported_timer_reset_ proc far
+timer_get_delta endp
+timer_reset proc far
 
     xor     ax, ax
     mov     word ptr timer_callback_counter, ax
     mov     word ptr timer_callback_counter+2, ax
     retf
-ported_timer_reset_ endp
-ported_timer_copy_counter_ proc far
+timer_reset endp
+timer_copy_counter proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_ticksl = word ptr 6
@@ -8794,19 +8794,19 @@ ported_timer_copy_counter_ proc far
     mov     word ptr timer_copy_unk+2, dx
     pop     bp
     retf
-ported_timer_copy_counter_ endp
-ported_timer_wait_for_dx_ proc far
+timer_copy_counter endp
+timer_wait_for_dx proc far
 
     call    timer_get_counter
     cmp     dx, word ptr timer_copy_unk+2
-    jb short near ptr ported_timer_wait_for_dx_ ; (fixed jump to ported self)
+    jb      short near ptr timer_wait_for_dx
     ja      short locret_327EA
     cmp     ax, word ptr timer_copy_unk
-    jb short near ptr ported_timer_wait_for_dx_ ; (fixed jump to ported self)
+    jb      short near ptr timer_wait_for_dx
 locret_327EA:
     retf
-ported_timer_wait_for_dx_ endp
-ported_timer_compare_dx_ proc far
+timer_wait_for_dx endp
+timer_compare_dx proc far
 
     call    timer_get_counter
     cmp     dx, word ptr timer_copy_unk+2
@@ -8820,8 +8820,8 @@ loc_327FE:
 loc_32802:
     xor     ax, ax
     retf
-ported_timer_compare_dx_ endp
-ported_timer_get_counter_unk_ proc far
+timer_compare_dx endp
+timer_get_counter_unk proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
      s = byte ptr 0
@@ -8850,7 +8850,7 @@ loc_3282D:
     retf
     ; align 2
     db 0
-ported_timer_get_counter_unk_ endp
+timer_get_counter_unk endp
 font_op proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -8909,7 +8909,7 @@ loc_32882:
     pop     bp
     retf
 font_op2 endp
-ported_preRender_patterned_ proc far
+preRender_patterned proc far
     var_A = byte ptr -10
      s = byte ptr 0
      r = byte ptr 2
@@ -8945,7 +8945,7 @@ loc_328A8:
     mov     ax, offset preRender_line
     mov     imagefunc, ax
     jmp     loc_3180A
-ported_preRender_patterned_ endp
+preRender_patterned endp
 nopsub_328C9 proc far
     var_A = byte ptr -10
      s = byte ptr 0
@@ -8978,7 +8978,7 @@ nopsub_328DB proc far
     ; align 2
     db 0
 nopsub_328DB endp
-ported_mat_mul_vector_ proc far
+mat_mul_vector proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_inpVector = word ptr 6
@@ -9116,8 +9116,8 @@ loc_329EE:
     pop     si
     pop     bp
     retf
-ported_mat_mul_vector_ endp
-ported_mat_multiply_ proc far
+mat_mul_vector endp
+mat_multiply proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_rightMatrix = word ptr 6
@@ -9189,8 +9189,8 @@ loc_32A66:
     pop     si
     pop     bp
     retf
-ported_mat_multiply_ endp
-ported_mat_invert_ proc far
+mat_multiply endp
+mat_invert proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_mat_in = word ptr 6
@@ -9246,8 +9246,8 @@ loc_32AA3:
 fliphandlers     dw offset fliptype0
     dw offset fliptype1
     dw offset fliptype2
-ported_mat_invert_ endp
-ported_file_unflip_shape2d_ proc far
+mat_invert endp
+file_unflip_shape2d proc far
     var_height = word ptr -14
     var_width = word ptr -12
     var_A = word ptr -10
@@ -9736,8 +9736,8 @@ vle_esc2     db 0
     db 0
     db 0
     db 0
-ported_file_unflip_shape2d_ endp
-ported_file_decomp_vle_ proc far
+file_unflip_shape2d endp
+file_decomp_vle proc far
     var_lengths = byte ptr -528
     var_symbols = byte ptr -272
     var_codoff = word ptr -14
@@ -10068,7 +10068,7 @@ loc_32FE1:
     jmp     short loc_32FDD
     ; align 2
     db 0
-ported_file_decomp_vle_ endp
+file_decomp_vle endp
 nopsub_32FEE proc far
 
     mov     dx, 3DAh
@@ -10082,7 +10082,7 @@ loc_32FF6:
     jz      short loc_32FF6
     retf
 nopsub_32FEE endp
-ported_video_get_status_ proc far
+video_get_status proc far
 
     mov     dx, 3DAh
     in      al, dx          ; Video status bits:
@@ -10093,7 +10093,7 @@ nosmart
     retf
     ; align 2
     db 0
-ported_video_get_status_ endp
+video_get_status endp
 nopsub_33006 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -10108,7 +10108,7 @@ nopsub_33006 proc far
     ; align 2
     db 144
 nopsub_33006 endp
-ported_vector_op_unk_ proc far
+vector_op_unk proc far
     var_4 = word ptr -4
     var_2 = word ptr -2
      s = byte ptr 0
@@ -10160,7 +10160,7 @@ loc_33040:
     mov     bp, sp
     mov     ax, [bp+6]
     mov     ds:4E92h, ax
-ported_vector_op_unk_ endp
+vector_op_unk endp
 preRender_sphere proc far
     var_79A = byte ptr -1946
     var_3DA = byte ptr -986
@@ -10463,7 +10463,7 @@ video_clear_color proc far
     ; align 2
     db 0
 video_clear_color endp
-ported_sprite_clear_1_color_ proc far
+sprite_clear_1_color proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = byte ptr 6
@@ -10524,7 +10524,7 @@ loc_33325:
     jmp     short loc_3330D
     ; align 2
     db 0
-ported_sprite_clear_1_color_ endp
+sprite_clear_1_color endp
 nopsub_33330 proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -14151,7 +14151,7 @@ loc_34C06:
     ; align 2
     db 0
 draw_patterned_lines endp
-ported_sprite_make_wnd_ proc far
+sprite_make_wnd proc far
     var_8 = word ptr -8
     var_6 = word ptr -6
     var_4 = word ptr -4
@@ -17843,8 +17843,8 @@ wnd_defs     db 0
     db 0
     db 0
     db 0
-ported_sprite_make_wnd_ endp
-ported_sprite_set_1_from_argptr_ proc far
+sprite_make_wnd endp
+sprite_set_1_from_argptr proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -17868,8 +17868,8 @@ ported_sprite_set_1_from_argptr_ proc far
     pop     ds
     pop     bp
     retf
-ported_sprite_set_1_from_argptr_ endp
-ported_sprite_copy_2_to_1_ proc far
+sprite_set_1_from_argptr endp
+sprite_copy_2_to_1 proc far
 
     mov     ax, seg seg012
     push    ax
@@ -17880,7 +17880,7 @@ ported_sprite_copy_2_to_1_ proc far
     retf
     ; align 2
     db 0
-ported_sprite_copy_2_to_1_ endp
+sprite_copy_2_to_1 endp
 putpixel_single_maybe proc far
      s = byte ptr 0
      r = byte ptr 2
@@ -18614,7 +18614,7 @@ loc_35F40:
     ; align 2
     db 0
 sub_35E08 endp
-ported_file_load_shape2d_palmap_apply_ proc far
+file_load_shape2d_palmap_apply proc far
     shapecounter = word ptr -4
     var_shapecount = word ptr -2
      s = byte ptr 0
@@ -18666,8 +18666,8 @@ loc_35F94:
     jmp     short loc_35F65
     ; align 2
     db 0
-ported_file_load_shape2d_palmap_apply_ endp
-ported_file_load_shape2d_expand_ proc far
+file_load_shape2d_palmap_apply endp
+file_load_shape2d_expand proc far
     var_dstshapeoff = word ptr -16
     var_length = word ptr -14
     var_srcshapeoff = word ptr -12
@@ -18844,8 +18844,8 @@ loc_360EF:
     jmp     loc_35FD9
     ; align 2
     db 0
-ported_file_load_shape2d_expand_ endp
-ported_file_unflip_shape2d_pes_ proc far
+file_load_shape2d_expand endp
+file_unflip_shape2d_pes proc far
     var_val = byte ptr -20
     var_iterations = byte ptr -18
     var_dataptr = word ptr -16
@@ -18975,6 +18975,6 @@ loc_361B8:
     jnz     short loc_36177
 loc_361BA:
     jmp     short loc_3614E
-ported_file_unflip_shape2d_pes_ endp
+file_unflip_shape2d_pes endp
 seg012 ends
 end

@@ -46,14 +46,14 @@ nosmart
 seg035 segment byte public 'STUNTSC' use16
     assume cs:seg035
     assume es:nothing, ss:nothing, ds:dseg
-    public ported_file_load_shape2d_res_fatal_
-    public ported_file_load_shape2d_res_nofatal_
-    public ported_file_load_shape2d_res_
+    public file_load_shape2d_res_fatal
+    public file_load_shape2d_res_nofatal
+    public file_load_shape2d_res
     public parse_shape2d
     public parse_shape2d_helper3
     ; align 2
     db 144
-ported_file_load_shape2d_res_fatal_ proc far
+file_load_shape2d_res_fatal proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -70,7 +70,7 @@ loc_3ACDF:
 loc_3ACE2:
     push    cs
 loc_3ACE3:
-    call near ptr ported_file_load_shape2d_res_
+    call near ptr file_load_shape2d_res
 loc_3ACE6:
     add     sp, 4
     pop     bp
@@ -78,8 +78,8 @@ locret_3ACEA:
     retf
     ; align 2
     db 144
-ported_file_load_shape2d_res_fatal_ endp
-ported_file_load_shape2d_res_nofatal_ proc far
+file_load_shape2d_res_fatal endp
+file_load_shape2d_res_nofatal proc far
      s = byte ptr 0
      r = byte ptr 2
     arg_0 = word ptr 6
@@ -94,14 +94,14 @@ loc_3ACF2:
     push    [bp+arg_0]
     push    cs
 loc_3ACF6:
-    call near ptr ported_file_load_shape2d_res_
+    call near ptr file_load_shape2d_res
 loc_3ACF9:
     add     sp, 4
 loc_3ACFC:
     pop     bp
     retf
-ported_file_load_shape2d_res_nofatal_ endp
-ported_file_load_shape2d_res_ proc far
+file_load_shape2d_res_nofatal endp
+file_load_shape2d_res proc far
     var_A = word ptr -10
     var_8 = word ptr -8
     var_6 = word ptr -6
@@ -180,7 +180,7 @@ loc_3AD4A:
     mov     sp, bp
     pop     bp
     retf
-ported_file_load_shape2d_res_ endp
+file_load_shape2d_res endp
 parse_shape2d proc far
     var_chunkptr = dword ptr -56
     var_34 = word ptr -52
