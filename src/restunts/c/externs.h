@@ -352,8 +352,8 @@ extern char aDos[];
 
 extern unsigned short framespersec;
 extern unsigned short framespersec2;
-extern unsigned short is_sprite_rendering_slow;
-extern unsigned short is_sprite_rendering_slow_copy;
+extern unsigned short slow_video_mgmt;
+extern unsigned short slow_video_mgmt_copy;
 extern unsigned char detail_level;
 
 extern unsigned short pspofs;
@@ -443,7 +443,7 @@ extern void kb_exit_handler(void);
 extern void kb_shift_checking1(void);
 extern void kb_shift_checking2(void);
 extern void kb_reg_callback(int code, void (far* callback)(void));
-extern void do_mrl_textres(void);
+extern void show_graphic_levels_menu(void);
 extern void do_joy_restext(void);
 extern void do_key_restext(void);
 extern void do_mof_restext(void);

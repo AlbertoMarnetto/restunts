@@ -1218,7 +1218,7 @@ dseg segment byte public 'STUNTSD' use16
     extrn oppcarshapevecs2:VECTOR
     extrn oppcarshapevecs3:VECTOR
     extrn oppcarshapevecs4:VECTOR
-    extrn is_sprite_rendering_slow_copy:word
+    extrn slow_video_mgmt_copy:word
     extrn pState_minusRotate_x_1:word
     extrn elRdWallRelated:word
     extrn regs_x86:REGS
@@ -1272,7 +1272,7 @@ dseg segment byte public 'STUNTSD' use16
     extrn idle_expired:byte
     extrn video_flag1_is1:word
     extrn td11_highscores:dword
-    extrn is_sprite_rendering_slow:word
+    extrn slow_video_mgmt:word
     extrn mainresptr:dword
     extrn bravshape:SHAPE3D
     extrn byte_44D06:byte

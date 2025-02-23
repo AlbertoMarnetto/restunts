@@ -1266,7 +1266,7 @@ dseg segment byte public 'STUNTSD' use16
     public oppcarshapevecs2
     public oppcarshapevecs3
     public oppcarshapevecs4
-    public is_sprite_rendering_slow_copy
+    public slow_video_mgmt_copy
     public pState_minusRotate_x_1
     public elRdWallRelated
     public regs_x86
@@ -1320,7 +1320,7 @@ dseg segment byte public 'STUNTSD' use16
     public idle_expired
     public video_flag1_is1
     public td11_highscores
-    public is_sprite_rendering_slow
+    public slow_video_mgmt
     public mainresptr
     public bravshape
     public byte_44D06
@@ -35327,7 +35327,7 @@ oppcarshapevecs4     db 0
     db 0
     db 0
     db 0
-is_sprite_rendering_slow_copy     dw 0
+slow_video_mgmt_copy     dw 0
 pState_minusRotate_x_1     dw 0
 elRdWallRelated     dw 0
 regs_x86     db 0
@@ -36113,7 +36113,7 @@ video_flag1_is1     dw 0
     db 0
     db 0
 td11_highscores     dd 0
-is_sprite_rendering_slow     dw 0
+slow_video_mgmt     dw 0
 mainresptr     dd 0
 bravshape     db 0
     db 0

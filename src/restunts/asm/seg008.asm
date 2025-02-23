@@ -103,7 +103,7 @@ seg008 segment byte public 'STUNTSC' use16
     public do_mof_restext
     public do_sonsof_restext
     public do_dos_restext
-    public do_mrl_textres
+    public show_graphic_levels_menu
     public do_dea_textres
     public ensure_file_exists
     public do_mer_restext
@@ -5244,7 +5244,7 @@ loc_29FA6:
     call near ptr input_pop_status
     retf
 do_dos_restext endp
-do_mrl_textres proc far
+show_graphic_levels_menu proc far
     var_212 = word ptr -530
     var_20C = byte ptr -524
     var_205 = byte ptr -517
@@ -5292,7 +5292,7 @@ loc_29FFC:
     sub     bh, bh
     add     bx, bp
     mov     byte ptr [bx-20Ch], 1
-    mov     bx, is_sprite_rendering_slow
+    mov     bx, slow_video_mgmt
     add     bx, bp
     mov     byte ptr [bx-207h], 1
     cmp     framespersec2, 0Ah
@@ -5362,12 +5362,12 @@ loc_2A098:
     ; align 2
     db 144
 loc_2A0A4:
-    mov     is_sprite_rendering_slow, 0
+    mov     slow_video_mgmt, 0
     jmp     loc_29FD9
     ; align 2
     db 144
 loc_2A0AE:
-    mov     is_sprite_rendering_slow, 1
+    mov     slow_video_mgmt, 1
     jmp     loc_29FD9
     ; align 2
     db 144
@@ -5419,7 +5419,7 @@ loc_2A103:
     mov     sp, bp
     pop     bp
     retf
-do_mrl_textres endp
+show_graphic_levels_menu endp
 do_dea_textres proc far
     var_2 = word ptr -2
      s = byte ptr 0
