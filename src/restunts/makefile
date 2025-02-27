@@ -1,3 +1,7 @@
+!if ($(CONFIG)!=debug)
+CONFIG=release
+!endif
+
 restunts: asm c
 	cd dos
 	if exist makefile make 
@@ -5,22 +9,22 @@ restunts: asm c
 
 restunts-original: asmorig
 	cd dos
-	if exist makefile make /DTARGET=original
+	if exist makefile make /DTARGET=original /DCONFIG=$(CONFIG)
 	cd ..
 
 asm:
 	cd asm
-	if exist makefile make
+	if exist makefile make /DCONFIG=$(CONFIG)
 	cd ..
 
 asmorig:
 	cd asmorig
-	if exist makefile make
+	if exist makefile make /DCONFIG=$(CONFIG)
 	cd ..
 
 c:
 	cd c
-	if exist makefile make
+	if exist makefile make /DCONFIG=$(CONFIG)
 	cd ..
 
 restunts-sdl:
@@ -30,7 +34,7 @@ restunts-sdl:
 
 repldump: asm c
 	cd repldump
-	if exist makefile make
+	if exist makefile make /DCONFIG=$(CONFIG)
 	cd ..
 
 repldump-original: asmorig
