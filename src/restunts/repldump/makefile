@@ -35,14 +35,24 @@ OUTFILE = repldumo.exe
 !error Unsupported DOS target: $(TARGET)
 !endif
 
-ASM = tasmbox /m2 /s
+TFLAGS=/zn
+!if ($(CONFIG)==debug)
+TFLAGS=/zi
+!endif
+
+ASM = tasmbox /m2 /s $(TFLAGS)
 CC = bcc  $(RESTUNTS_CFLAGS) $(CFLAGS)
 LINK = call tlinkbox
+
+LFLAGS=
+!if ($(CONFIG)==debug)
+LFLAGS=/v
+!endif
 
 repldump.exe: $(OBJDIR)\repldump.obj $(RESTUNTS_OBJFILES)
 	echo $(CTARGETS) > restunts.lnk
 	echo $(OUTFILE) >> restunts.lnk
-	$(LINK) /s /P- /v /js:\tools\lib\ @restunts.lnk
+	$(LINK) /s /P- $(LFLAGS) /js:\tools\lib\ @restunts.lnk
 	del restunts.lnk
 	copy $(OUTFILE) s:\stunts
 

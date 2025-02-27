@@ -140,13 +140,14 @@ symbols in case a symbol was renamed in IDA, but not in the C files.
 
 Restunts can be debugged with Turbo Debugger inside DOSBox. In orger to do
 that, the target program must be built with debug symbols, which is possible
-by adding the option `/DCONFIG=debug` when calling make. E.g. to build a debuggable
+by setting the option `/DCONFIG=debug` as first parameter when calling make. E.g. to build a debuggable
 copy of Restunts, type
 
-	make restunts /DCONFIG=debug
+	make /DCONFIG=debug restunts 
 
 The DOSBox debugging environment is an extension of the build environment
 described above:
+
 	1) Double click tools\mount_stunts_to_s.bat (only needed once per reboot)
 	2) Start DOSBox and enter the following commands:
 		mount S S:
