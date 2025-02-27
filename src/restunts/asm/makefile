@@ -8,7 +8,12 @@ OBJDIR = build
 !error Unsupported ASM target: $(TARGET)
 !endif
 
-ASM = tasmbox /m2 /s /zi
+TFLAGS=/zn
+!if ($(CONFIG)==debug)
+TFLAGS=/zi
+!endif
+
+ASM = tasmbox /m2 /s $(TFLAGS)
 
 INCLUDES = structs.inc
 

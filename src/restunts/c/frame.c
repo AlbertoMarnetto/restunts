@@ -729,7 +729,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	is_last_attempt = 0;
 start_rendering:
 	// With the information collected by the previus tile-scan algorithm,
-	// procees to draw the shapes in each tile. Start from the farthest
+	// proceed to draw the shapes in each tile. Start from the farthest
 	// (painter's algorithm)
 	has_attempt_failed = 0;
 	for (si = discarded_tiles; si < TILES_TO_DRAW_COUNT; si++) {
