@@ -7,7 +7,7 @@ RESTUNTS_OBJFILES = $(RESTUNTS_OBJDIR)\fileio.obj $(RESTUNTS_OBJDIR)\math.obj $(
 
 ASM_DIR = ..\asm
 ASM_OBJDIR = ..\asm\build
-ASM_OBJFILES = $(ASM_OBJDIR)\segments.obj $(ASM_OBJDIR)\seg000.obj $(ASM_OBJDIR)\seg001.obj $(ASM_OBJDIR)\seg002.obj $(ASM_OBJDIR)\seg003.obj $(ASM_OBJDIR)\seg004.obj $(ASM_OBJDIR)\seg005.obj $(ASM_OBJDIR)\seg006.obj $(ASM_OBJDIR)\seg007.obj $(ASM_OBJDIR)\seg008.obj $(ASM_OBJDIR)\seg009.obj $(ASM_OBJDIR)\seg010.obj $(ASM_OBJDIR)\seg011.obj $(ASM_OBJDIR)\seg012.obj $(ASM_OBJDIR)\seg013.obj $(ASM_OBJDIR)\seg014.obj $(ASM_OBJDIR)\seg015.obj $(ASM_OBJDIR)\seg016.obj $(ASM_OBJDIR)\seg017.obj $(ASM_OBJDIR)\seg018.obj $(ASM_OBJDIR)\seg019.obj $(ASM_OBJDIR)\seg020.obj $(ASM_OBJDIR)\seg021.obj $(ASM_OBJDIR)\seg022.obj $(ASM_OBJDIR)\seg023.obj $(ASM_OBJDIR)\seg024.obj $(ASM_OBJDIR)\seg025.obj $(ASM_OBJDIR)\seg026.obj $(ASM_OBJDIR)\seg027.obj $(ASM_OBJDIR)\seg028.obj $(ASM_OBJDIR)\seg029.obj $(ASM_OBJDIR)\seg030.obj $(ASM_OBJDIR)\seg031.obj $(ASM_OBJDIR)\seg032.obj $(ASM_OBJDIR)\seg033.obj $(ASM_OBJDIR)\seg034.obj $(ASM_OBJDIR)\seg035.obj $(ASM_OBJDIR)\seg036.obj $(ASM_OBJDIR)\seg037.obj $(ASM_OBJDIR)\seg038.obj $(ASM_OBJDIR)\seg039.obj $(ASM_OBJDIR)\dseg.obj $(ASM_OBJDIR)\seg041.obj 
+ASM_OBJFILES = $(ASM_OBJDIR)\segments.obj $(ASM_OBJDIR)\seg000.obj $(ASM_OBJDIR)\seg001.obj $(ASM_OBJDIR)\seg002.obj $(ASM_OBJDIR)\seg003.obj $(ASM_OBJDIR)\seg004.obj $(ASM_OBJDIR)\seg005.obj $(ASM_OBJDIR)\seg006.obj $(ASM_OBJDIR)\seg007.obj $(ASM_OBJDIR)\seg008.obj $(ASM_OBJDIR)\seg009.obj $(ASM_OBJDIR)\seg010.obj $(ASM_OBJDIR)\seg011.obj $(ASM_OBJDIR)\seg012.obj $(ASM_OBJDIR)\seg013.obj $(ASM_OBJDIR)\seg014.obj $(ASM_OBJDIR)\seg015.obj $(ASM_OBJDIR)\seg016.obj $(ASM_OBJDIR)\seg017.obj $(ASM_OBJDIR)\seg018.obj $(ASM_OBJDIR)\seg019.obj $(ASM_OBJDIR)\seg020.obj $(ASM_OBJDIR)\seg021.obj $(ASM_OBJDIR)\seg022.obj $(ASM_OBJDIR)\seg023.obj $(ASM_OBJDIR)\seg024.obj $(ASM_OBJDIR)\seg025.obj $(ASM_OBJDIR)\seg026.obj $(ASM_OBJDIR)\seg027.obj $(ASM_OBJDIR)\seg028.obj $(ASM_OBJDIR)\seg029.obj $(ASM_OBJDIR)\seg030.obj $(ASM_OBJDIR)\seg031.obj $(ASM_OBJDIR)\seg032.obj $(ASM_OBJDIR)\seg033.obj $(ASM_OBJDIR)\seg034.obj $(ASM_OBJDIR)\seg035.obj $(ASM_OBJDIR)\seg036.obj $(ASM_OBJDIR)\seg037.obj $(ASM_OBJDIR)\seg038.obj $(ASM_OBJDIR)\seg039.obj $(ASM_OBJDIR)\dseg.obj $(ASM_OBJDIR)\seg041.obj
 
 ASMORIG_DIR = ..\asmorig
 ASMORIG_OBJDIR = ..\asmorig\build
@@ -20,7 +20,7 @@ RESTUNTS_CFLAGS = /c /u- /mm /n$(OBJDIR) /v /DRESTUNTS_DOS
 
 CTARGETS = $(ASM_OBJFILES) $(RESTUNTS_OBJFILES) $(OBJDIR)\main.obj getvect.obj labs.obj memcpy.obj fmemcpy.obj h_ldiv.obj f_lxmul.obj f_scopy.obj h_lrsh.obj h_padd.obj h_pina.obj h_pada.obj f_pcmp.obj h_lursh.obj h_psbp.obj h_llsh.obj
 OUTFILE = restunts.exe
-CFLAGS = 
+CFLAGS =
 
 !elif ($(TARGET)==original)
 
@@ -53,7 +53,7 @@ $(OBJDIR)\main.obj: main.c
 clean:
 	del build\*.obj
 	del build\ported\*.obj
-	del build\original\*.obj	
+	del build\original\*.obj
 	del restunts.exe
 	del restunts.map
 	del restunto.exe
