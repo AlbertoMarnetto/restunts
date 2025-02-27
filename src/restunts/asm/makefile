@@ -13,7 +13,15 @@ TFLAGS=/zn
 TFLAGS=/zi
 !endif
 
-ASM = tasmbox /m2 /s $(TFLAGS)
+TEXE=tasmbox
+!if ($(TASM)==32)
+!if ($(CONFIG)==debug)
+!error TASM=32 option does not work with CONFIG=debug
+!endif
+TEXE=tasm32
+!endif
+
+ASM = $(TEXE) /m2 /s $(TFLAGS)
 
 INCLUDES = structs.inc
 

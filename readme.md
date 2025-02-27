@@ -140,8 +140,9 @@ symbols in case a symbol was renamed in IDA, but not in the C files.
 
 Restunts can be debugged with Turbo Debugger inside DOSBox. In orger to do
 that, the target program must be built with debug symbols, which is possible
-by setting the option `/DCONFIG=debug` as first parameter when calling make. E.g. to build a debuggable
-copy of Restunts, type
+by setting the option `/DCONFIG=debug` as first parameter when calling make.
+the option `/DTASM=32` does not work in combination with `/DCONFIG=debug`
+E.g. to build a debuggable copy of Restunts, type
 
 	make /DCONFIG=debug restunts 
 
@@ -160,6 +161,16 @@ described above:
 Turbo Debugger is preconfigured to automatically find and show the source code.
 Setting breakpoints, stepping etc works. The TD configuration file is stored in
 stunts\tdconfig.td.
+
+## Faster builds with TASM32
+
+Restunts builds per default with TASMX using dosbox but can be changed to using
+the native TASM32 executable by using option `/DTASM=32` before the target name
+E.g. to build faster with TASM32 of Restunts, type
+
+	make /DTASM=32 restunts 
+
+but beware: `/DCONFIG=debug` is not useable with `/DTASM=32`
 
 ## Notes about the toolchain
 
