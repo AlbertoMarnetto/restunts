@@ -2,32 +2,43 @@
 TARGET=ported
 !endif
 
-RESTUNTS_OBJDIR = ..\c\build\dos
-RESTUNTS_OBJFILES = $(RESTUNTS_OBJDIR)\fileio.obj $(RESTUNTS_OBJDIR)\math.obj $(RESTUNTS_OBJDIR)\memmgr.obj $(RESTUNTS_OBJDIR)\restunts.obj $(RESTUNTS_OBJDIR)\shape3d.obj $(RESTUNTS_OBJDIR)\shape2d.obj $(RESTUNTS_OBJDIR)\keyboard.obj $(RESTUNTS_OBJDIR)\heapsort.obj $(RESTUNTS_OBJDIR)\frame.obj $(RESTUNTS_OBJDIR)\state.obj $(RESTUNTS_OBJDIR)\stateply.obj $(RESTUNTS_OBJDIR)\statecrs.obj $(RESTUNTS_OBJDIR)\statecar.obj
+SRC=s:\src\restunts
 
-ASM_DIR = ..\asm
-ASM_OBJDIR = ..\asm\build
-ASM_OBJFILES = $(ASM_OBJDIR)\segments.obj $(ASM_OBJDIR)\seg000.obj $(ASM_OBJDIR)\seg001.obj $(ASM_OBJDIR)\seg002.obj $(ASM_OBJDIR)\seg003.obj $(ASM_OBJDIR)\seg004.obj $(ASM_OBJDIR)\seg005.obj $(ASM_OBJDIR)\seg006.obj $(ASM_OBJDIR)\seg007.obj $(ASM_OBJDIR)\seg008.obj $(ASM_OBJDIR)\seg009.obj $(ASM_OBJDIR)\seg010.obj $(ASM_OBJDIR)\seg011.obj $(ASM_OBJDIR)\seg012.obj $(ASM_OBJDIR)\seg013.obj $(ASM_OBJDIR)\seg014.obj $(ASM_OBJDIR)\seg015.obj $(ASM_OBJDIR)\seg016.obj $(ASM_OBJDIR)\seg017.obj $(ASM_OBJDIR)\seg018.obj $(ASM_OBJDIR)\seg019.obj $(ASM_OBJDIR)\seg020.obj $(ASM_OBJDIR)\seg021.obj $(ASM_OBJDIR)\seg022.obj $(ASM_OBJDIR)\seg023.obj $(ASM_OBJDIR)\seg024.obj $(ASM_OBJDIR)\seg025.obj $(ASM_OBJDIR)\seg026.obj $(ASM_OBJDIR)\seg027.obj $(ASM_OBJDIR)\seg028.obj $(ASM_OBJDIR)\seg029.obj $(ASM_OBJDIR)\seg030.obj $(ASM_OBJDIR)\seg031.obj $(ASM_OBJDIR)\seg032.obj $(ASM_OBJDIR)\seg033.obj $(ASM_OBJDIR)\seg034.obj $(ASM_OBJDIR)\seg035.obj $(ASM_OBJDIR)\seg036.obj $(ASM_OBJDIR)\seg037.obj $(ASM_OBJDIR)\seg038.obj $(ASM_OBJDIR)\seg039.obj $(ASM_OBJDIR)\dseg.obj $(ASM_OBJDIR)\seg041.obj 
+# just one space or + for tlink
+SEP=+
+!if ($(LINKER)==wlink)
+# and comma for wlink
+SEP=,
+!endif
 
-ASMORIG_DIR = ..\asmorig
-ASMORIG_OBJDIR = ..\asmorig\build
-ASMORIG_OBJFILES = $(ASM_OBJDIR)\segments.obj $(ASMORIG_OBJDIR)\seg000.obj $(ASMORIG_OBJDIR)\seg001.obj $(ASMORIG_OBJDIR)\seg002.obj $(ASMORIG_OBJDIR)\seg003.obj $(ASMORIG_OBJDIR)\seg004.obj $(ASMORIG_OBJDIR)\seg005.obj $(ASMORIG_OBJDIR)\seg006.obj $(ASMORIG_OBJDIR)\seg007.obj $(ASMORIG_OBJDIR)\seg008.obj $(ASMORIG_OBJDIR)\seg009.obj $(ASMORIG_OBJDIR)\seg010.obj $(ASMORIG_OBJDIR)\seg011.obj $(ASMORIG_OBJDIR)\seg012.obj $(ASMORIG_OBJDIR)\seg013.obj $(ASMORIG_OBJDIR)\seg014.obj $(ASMORIG_OBJDIR)\seg015.obj $(ASMORIG_OBJDIR)\seg016.obj $(ASMORIG_OBJDIR)\seg017.obj $(ASMORIG_OBJDIR)\seg018.obj $(ASMORIG_OBJDIR)\seg019.obj $(ASMORIG_OBJDIR)\seg020.obj $(ASMORIG_OBJDIR)\seg021.obj $(ASMORIG_OBJDIR)\seg022.obj $(ASMORIG_OBJDIR)\seg023.obj $(ASMORIG_OBJDIR)\seg024.obj $(ASMORIG_OBJDIR)\seg025.obj $(ASMORIG_OBJDIR)\seg026.obj $(ASMORIG_OBJDIR)\seg027.obj $(ASMORIG_OBJDIR)\seg028.obj $(ASMORIG_OBJDIR)\seg029.obj $(ASMORIG_OBJDIR)\seg030.obj $(ASMORIG_OBJDIR)\seg031.obj $(ASMORIG_OBJDIR)\seg032.obj $(ASMORIG_OBJDIR)\seg033.obj $(ASMORIG_OBJDIR)\seg034.obj $(ASMORIG_OBJDIR)\seg035.obj $(ASMORIG_OBJDIR)\seg036.obj $(ASMORIG_OBJDIR)\seg037.obj $(ASMORIG_OBJDIR)\seg038.obj $(ASMORIG_OBJDIR)\seg039.obj $(ASMORIG_OBJDIR)\dseg.obj $(ASMORIG_OBJDIR)\seg041.obj 
+RESTUNTS_OBJDIR = $(SRC)\c\build\dos
+# problem with $(SEP) this var is also in another way "repldump.exe: $(OBJDIR)\repldump.obj $(RESTUNTS_OBJFILES)"
+RESTUNTS_OBJFILES_LIST = $(RESTUNTS_OBJDIR)\fileio.obj $(RESTUNTS_OBJDIR)\math.obj $(RESTUNTS_OBJDIR)\memmgr.obj $(RESTUNTS_OBJDIR)\restunts.obj $(RESTUNTS_OBJDIR)\shape3d.obj $(RESTUNTS_OBJDIR)\shape2d.obj $(RESTUNTS_OBJDIR)\keyboard.obj $(RESTUNTS_OBJDIR)\heapsort.obj $(RESTUNTS_OBJDIR)\frame.obj $(RESTUNTS_OBJDIR)\state.obj $(RESTUNTS_OBJDIR)\stateply.obj $(RESTUNTS_OBJDIR)\statecrs.obj $(RESTUNTS_OBJDIR)\statecar.obj
+RESTUNTS_OBJFILES = $(RESTUNTS_OBJDIR)\fileio.obj$(SEP)$(RESTUNTS_OBJDIR)\math.obj$(SEP)$(RESTUNTS_OBJDIR)\memmgr.obj$(SEP)$(RESTUNTS_OBJDIR)\restunts.obj$(SEP)$(RESTUNTS_OBJDIR)\shape3d.obj$(SEP)$(RESTUNTS_OBJDIR)\shape2d.obj$(SEP)$(RESTUNTS_OBJDIR)\keyboard.obj$(SEP)$(RESTUNTS_OBJDIR)\heapsort.obj$(SEP)$(RESTUNTS_OBJDIR)\frame.obj$(SEP)$(RESTUNTS_OBJDIR)\state.obj$(SEP)$(RESTUNTS_OBJDIR)\stateply.obj$(SEP)$(RESTUNTS_OBJDIR)\statecrs.obj$(SEP)$(RESTUNTS_OBJDIR)\statecar.obj
 
-OBJDIR = build\$(TARGET)
+ASM_DIR = $(SRC)\asm
+ASM_OBJDIR = $(ASM_DIR)\build
+ASM_OBJFILES = $(ASM_OBJDIR)\segments.obj$(SEP)$(ASM_OBJDIR)\seg000.obj$(SEP)$(ASM_OBJDIR)\seg001.obj$(SEP)$(ASM_OBJDIR)\seg002.obj$(SEP)$(ASM_OBJDIR)\seg003.obj$(SEP)$(ASM_OBJDIR)\seg004.obj$(SEP)$(ASM_OBJDIR)\seg005.obj$(SEP)$(ASM_OBJDIR)\seg006.obj$(SEP)$(ASM_OBJDIR)\seg007.obj$(SEP)$(ASM_OBJDIR)\seg008.obj$(SEP)$(ASM_OBJDIR)\seg009.obj$(SEP)$(ASM_OBJDIR)\seg010.obj$(SEP)$(ASM_OBJDIR)\seg011.obj$(SEP)$(ASM_OBJDIR)\seg012.obj$(SEP)$(ASM_OBJDIR)\seg013.obj$(SEP)$(ASM_OBJDIR)\seg014.obj$(SEP)$(ASM_OBJDIR)\seg015.obj$(SEP)$(ASM_OBJDIR)\seg016.obj$(SEP)$(ASM_OBJDIR)\seg017.obj$(SEP)$(ASM_OBJDIR)\seg018.obj$(SEP)$(ASM_OBJDIR)\seg019.obj$(SEP)$(ASM_OBJDIR)\seg020.obj$(SEP)$(ASM_OBJDIR)\seg021.obj$(SEP)$(ASM_OBJDIR)\seg022.obj$(SEP)$(ASM_OBJDIR)\seg023.obj$(SEP)$(ASM_OBJDIR)\seg024.obj$(SEP)$(ASM_OBJDIR)\seg025.obj$(SEP)$(ASM_OBJDIR)\seg026.obj$(SEP)$(ASM_OBJDIR)\seg027.obj$(SEP)$(ASM_OBJDIR)\seg028.obj$(SEP)$(ASM_OBJDIR)\seg029.obj$(SEP)$(ASM_OBJDIR)\seg030.obj$(SEP)$(ASM_OBJDIR)\seg031.obj$(SEP)$(ASM_OBJDIR)\seg032.obj$(SEP)$(ASM_OBJDIR)\seg033.obj$(SEP)$(ASM_OBJDIR)\seg034.obj$(SEP)$(ASM_OBJDIR)\seg035.obj$(SEP)$(ASM_OBJDIR)\seg036.obj$(SEP)$(ASM_OBJDIR)\seg037.obj$(SEP)$(ASM_OBJDIR)\seg038.obj$(SEP)$(ASM_OBJDIR)\seg039.obj$(SEP)$(ASM_OBJDIR)\dseg.obj$(SEP)$(ASM_OBJDIR)\seg041.obj 
+
+ASMORIG_DIR = $(SRC)\asmorig
+ASMORIG_OBJDIR = $(ASMORIG_DIR)\build
+ASMORIG_OBJFILES = $(ASM_OBJDIR)\segments.obj$(SEP)$(ASMORIG_OBJDIR)\seg000.obj$(SEP)$(ASMORIG_OBJDIR)\seg001.obj$(SEP)$(ASMORIG_OBJDIR)\seg002.obj$(SEP)$(ASMORIG_OBJDIR)\seg003.obj$(SEP)$(ASMORIG_OBJDIR)\seg004.obj$(SEP)$(ASMORIG_OBJDIR)\seg005.obj$(SEP)$(ASMORIG_OBJDIR)\seg006.obj$(SEP)$(ASMORIG_OBJDIR)\seg007.obj$(SEP)$(ASMORIG_OBJDIR)\seg008.obj$(SEP)$(ASMORIG_OBJDIR)\seg009.obj$(SEP)$(ASMORIG_OBJDIR)\seg010.obj$(SEP)$(ASMORIG_OBJDIR)\seg011.obj$(SEP)$(ASMORIG_OBJDIR)\seg012.obj$(SEP)$(ASMORIG_OBJDIR)\seg013.obj$(SEP)$(ASMORIG_OBJDIR)\seg014.obj$(SEP)$(ASMORIG_OBJDIR)\seg015.obj$(SEP)$(ASMORIG_OBJDIR)\seg016.obj$(SEP)$(ASMORIG_OBJDIR)\seg017.obj$(SEP)$(ASMORIG_OBJDIR)\seg018.obj$(SEP)$(ASMORIG_OBJDIR)\seg019.obj$(SEP)$(ASMORIG_OBJDIR)\seg020.obj$(SEP)$(ASMORIG_OBJDIR)\seg021.obj$(SEP)$(ASMORIG_OBJDIR)\seg022.obj$(SEP)$(ASMORIG_OBJDIR)\seg023.obj$(SEP)$(ASMORIG_OBJDIR)\seg024.obj$(SEP)$(ASMORIG_OBJDIR)\seg025.obj$(SEP)$(ASMORIG_OBJDIR)\seg026.obj$(SEP)$(ASMORIG_OBJDIR)\seg027.obj$(SEP)$(ASMORIG_OBJDIR)\seg028.obj$(SEP)$(ASMORIG_OBJDIR)\seg029.obj$(SEP)$(ASMORIG_OBJDIR)\seg030.obj$(SEP)$(ASMORIG_OBJDIR)\seg031.obj$(SEP)$(ASMORIG_OBJDIR)\seg032.obj$(SEP)$(ASMORIG_OBJDIR)\seg033.obj$(SEP)$(ASMORIG_OBJDIR)\seg034.obj$(SEP)$(ASMORIG_OBJDIR)\seg035.obj$(SEP)$(ASMORIG_OBJDIR)\seg036.obj$(SEP)$(ASMORIG_OBJDIR)\seg037.obj$(SEP)$(ASMORIG_OBJDIR)\seg038.obj$(SEP)$(ASMORIG_OBJDIR)\seg039.obj$(SEP)$(ASMORIG_OBJDIR)\dseg.obj$(SEP)$(ASMORIG_OBJDIR)\seg041.obj
+
+OBJDIR = $(SRC)\repldump\build\$(TARGET)
 RESTUNTS_CFLAGS = /c /u- /mm /v /n$(OBJDIR) /DRESTUNTS_DOS
 
 !if ($(TARGET)==ported)
 
-#CTARGETS = $(RESTUNTS_OBJFILES) $(ASM_OBJFILES) $(OBJDIR)\repldump.obj
-CTARGETS = $(ASM_OBJFILES) $(RESTUNTS_OBJFILES) $(OBJDIR)\repldump.obj getvect.obj labs.obj memcpy.obj fmemcpy.obj h_ldiv.obj f_lxmul.obj f_scopy.obj h_lrsh.obj h_padd.obj h_pina.obj h_pada.obj f_pcmp.obj h_lursh.obj h_psbp.obj h_llsh.obj
+#CTARGETS = $(RESTUNTS_OBJFILES)$(SEP)$(ASM_OBJFILES)$(SEP)$(OBJDIR)\repldump.obj
+CTARGETS = $(ASM_OBJFILES)$(SEP)$(RESTUNTS_OBJFILES)$(SEP)$(OBJDIR)\repldump.obj$(SEP)getvect.obj$(SEP)labs.obj$(SEP)memcpy.obj$(SEP)fmemcpy.obj$(SEP)h_ldiv.obj$(SEP)f_lxmul.obj$(SEP)f_scopy.obj$(SEP)h_lrsh.obj$(SEP)h_padd.obj$(SEP)h_pina.obj$(SEP)h_pada.obj$(SEP)f_pcmp.obj$(SEP)h_lursh.obj$(SEP)h_psbp.obj$(SEP)h_llsh.obj
 
 OUTFILE = repldump.exe
 CFLAGS = 
 
 !elif ($(TARGET)==original)
 
-#CTARGETS = $(ASMORIG_OBJFILES) $(OBJDIR)\repldump.obj
-CTARGETS = $(ASMORIG_OBJFILES) $(OBJDIR)\repldump.obj getvect.obj labs.obj memcpy.obj fmemcpy.obj h_ldiv.obj f_lxmul.obj f_scopy.obj h_lrsh.obj h_padd.obj h_pina.obj h_pada.obj f_pcmp.obj h_lursh.obj h_psbp.obj h_llsh.obj
+#CTARGETS = $(ASMORIG_OBJFILES)$(SEP)$(OBJDIR)\repldump.obj
+CTARGETS = $(ASMORIG_OBJFILES)$(SEP)$(OBJDIR)\repldump.obj$(SEP)getvect.obj$(SEP)labs.obj$(SEP)memcpy.obj$(SEP)fmemcpy.obj$(SEP)h_ldiv.obj$(SEP)f_lxmul.obj$(SEP)f_scopy.obj$(SEP)h_lrsh.obj$(SEP)h_padd.obj$(SEP)h_pina.obj$(SEP)h_pada.obj$(SEP)f_pcmp.obj$(SEP)h_lursh.obj$(SEP)h_psbp.obj$(SEP)h_llsh.obj
 CFLAGS = /DRESTUNTS_ORIGINAL
 OUTFILE = repldumo.exe
 
@@ -57,11 +68,17 @@ LFLAGS=
 LFLAGS=/v
 !endif
 
-repldump.exe: $(OBJDIR)\repldump.obj $(RESTUNTS_OBJFILES)
+TOOLS_LIB=s:\tools\lib
+
+repldump.exe: $(OBJDIR)\repldump.obj $(RESTUNTS_OBJFILES_LIST)
+!if ($(LINKER)==wlink)
+	wlink name $(OUTFILE) format dos option NOCASEEXACT PATH $(TOOLS_LIB) file $(CTARGETS)
+!else
 	echo $(CTARGETS) > restunts.lnk
 	echo $(OUTFILE) >> restunts.lnk
-	$(LINK) /s /P- $(LFLAGS) /js:\tools\lib\ @restunts.lnk
+	$(LINK) /s /P- $(LFLAGS) /j$(TOOLS_LIB) @restunts.lnk
 	del restunts.lnk
+!endif  
 	copy $(OUTFILE) s:\stunts
 
 $(OBJDIR)\repldump.obj: repldump.c

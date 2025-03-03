@@ -172,6 +172,16 @@ E.g. to build faster with TASM32 of Restunts, type
 
 but beware: `/DCONFIG=debug` is not useable with `/DTASM=32`
 
+## Using native wlink for linking
+
+Restunts links per default with TLINK using dosbox but that can changed to using
+the native WLINK executable by using option `/DLINKER=wlink` before the target name
+E.g. to build Restunts with wlink, type
+
+	make /DLINKER=wlink restunts 
+
+but beware: `/DCONFIG=debug` is not useable with `/DLINKER=wlink`
+
 ## Notes about the toolchain
 
 ### Notes regarding make
