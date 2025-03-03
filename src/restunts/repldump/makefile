@@ -12,7 +12,7 @@ SEP=,
 !endif
 
 RESTUNTS_OBJDIR = $(SRC)\c\build\dos
-# problem with $(SEP) this var is also in another way "repldump.exe: $(OBJDIR)\repldump.obj $(RESTUNTS_OBJFILES)"
+# RESTUNTS_OBJFILES_LIST and RESTUNTS_OBJFILES are the same list. The first separates the files through spaces (needed by make), the second through $(SEP) (the separator needed by the chosen linker)
 RESTUNTS_OBJFILES_LIST = $(RESTUNTS_OBJDIR)\fileio.obj $(RESTUNTS_OBJDIR)\math.obj $(RESTUNTS_OBJDIR)\memmgr.obj $(RESTUNTS_OBJDIR)\restunts.obj $(RESTUNTS_OBJDIR)\shape3d.obj $(RESTUNTS_OBJDIR)\shape2d.obj $(RESTUNTS_OBJDIR)\keyboard.obj $(RESTUNTS_OBJDIR)\heapsort.obj $(RESTUNTS_OBJDIR)\frame.obj $(RESTUNTS_OBJDIR)\state.obj $(RESTUNTS_OBJDIR)\stateply.obj $(RESTUNTS_OBJDIR)\statecrs.obj $(RESTUNTS_OBJDIR)\statecar.obj
 RESTUNTS_OBJFILES = $(RESTUNTS_OBJDIR)\fileio.obj$(SEP)$(RESTUNTS_OBJDIR)\math.obj$(SEP)$(RESTUNTS_OBJDIR)\memmgr.obj$(SEP)$(RESTUNTS_OBJDIR)\restunts.obj$(SEP)$(RESTUNTS_OBJDIR)\shape3d.obj$(SEP)$(RESTUNTS_OBJDIR)\shape2d.obj$(SEP)$(RESTUNTS_OBJDIR)\keyboard.obj$(SEP)$(RESTUNTS_OBJDIR)\heapsort.obj$(SEP)$(RESTUNTS_OBJDIR)\frame.obj$(SEP)$(RESTUNTS_OBJDIR)\state.obj$(SEP)$(RESTUNTS_OBJDIR)\stateply.obj$(SEP)$(RESTUNTS_OBJDIR)\statecrs.obj$(SEP)$(RESTUNTS_OBJDIR)\statecar.obj
 
