@@ -165,12 +165,12 @@ stunts\tdconfig.td.
 ## Faster builds with TASM32
 
 Restunts builds per default with TASMX using dosbox but can be changed to using
-the native TASM32 executable by using option `/DTASM=32` before the target name
+the native TASM32 executable by using option `/DASSEMBLER=tasm32` before the target name
 E.g. to build faster with TASM32 of Restunts, type
 
-	make /DTASM=32 restunts 
+	make /DASSEMBLER=tasm32 restunts 
 
-but beware: `/DCONFIG=debug` is not useable with `/DTASM=32`
+but beware: `/DCONFIG=debug` is not useable with `/DASSEMBLER=tasm32`
 
 ## Using native wlink for linking
 
