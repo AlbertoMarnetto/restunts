@@ -46,20 +46,18 @@ OUTFILE = repldumo.exe
 !error Unsupported DOS target: $(TARGET)
 !endif
 
+#---------------------
+# assembler selection
+!if ($(ASSEMBLER)==tasmbox) | ($(ASSEMBLER)==tasmx) | ($(ASSEMBLER)==tasm32)
+# tasm alike
 TFLAGS=/zn
 !if ($(CONFIG)==debug)
 TFLAGS=/zi
 !endif
-
-TEXE=tasmbox
-!if ($(TASM)==32)
-!if ($(CONFIG)==debug)
-!error TASM=32 option does not work with CONFIG=debug
+ASM = $(ASSEMBLER) /m2 /s $(TFLAGS)
 !endif
-TEXE=tasm32
-!endif
+#---------------------
 
-ASM = $(TEXE) /m2 /s $(TFLAGS)
 CC = bcc  $(RESTUNTS_CFLAGS) $(CFLAGS)
 LINK = call tlinkbox
 
