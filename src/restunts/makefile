@@ -35,7 +35,7 @@ LINKER=tlink
 
 restunts: asm c
 	cd dos
-	if exist makefile make /DCONFIG=$(CONFIG) /DTASM=$(TASM) /DLINKER=$(LINKER)
+	if exist makefile make /DCONFIG=$(CONFIG) /DASSEMBLER=$(ASSEMBLER) /DLINKER=$(LINKER)
 	cd ..
 
 restunts-original: asmorig
