@@ -2,21 +2,21 @@
 CONFIG=release
 !endif
 !if ($(CONFIG)!=release) & ($(CONFIG)!=debug)
-!error unkown CONFIG value: $(CONFIG)
+!error unknown CONFIG value: $(CONFIG)
 !endif
 
 !ifndef ASSEMBLER
 ASSEMBLER=tasm32
 !endif
 !if ($(ASSEMBLER)!=tasmbox) & ($(ASSEMBLER)!=tasmx) & ($(ASSEMBLER)!=tasm32)
-!error unkown ASSEMBLER value: $(ASSEMBLER)
+!error unknown ASSEMBLER value: $(ASSEMBLER)
 !endif
 
 !ifndef LINKER
 LINKER=tlink
 !endif
 !if ($(LINKER)!=tlink) & ($(LINKER)!=wlink)
-!error unkown LINKER value: $(LINKER)
+!error unknown LINKER value: $(LINKER)
 !endif
 
 !if ($(CONFIG)==debug)

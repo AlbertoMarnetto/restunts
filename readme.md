@@ -2,6 +2,8 @@
 
 https://wiki.stunts.hu/wiki/Restunts
 
+Main repository: https://github.com/4d-stunts/restunts
+
 ## Repository contents:
 	docs
 		Various technical docs related to (re)stunts itself.
@@ -82,39 +84,81 @@ makefiles, and is also mounted inside DOSBox as a fixed point of reference.
 
 The makefile supports the following targets:
 
-	make restunts
+	make <OPTIONS> restunts
 		The default restunts target builds an executable based on ported C code
 		and patched disassembly.
 
-	make restunts-original
+	make <OPTIONS> restunts-original
 		Builds an executable based on unpatched disassembly with the original
 		codepaths intact. Does not use any of the ported C code.
 
-	make repldump
+	make <OPTIONS> repldump
 		Builds the replay dump tool using ported C code and patched
 		disassembly.
 
-	make repldump-original
+	make <OPTIONS> repldump-original
 		Builds the replay dump tool without ported C code.
+
+
+## Build options
+
+### Assembler selection
+
+Restunts builds per default with TASM32 for Windows, but it can be changed to using
+the a 16-bit TASMX by using option `/DASSEMBLER=tasmbox` before the target name (or
+`/DASSEMBLER=tasmx` if one really likes seeing pop-up windows).
+
+E.g. to build restunts with TASMX, type
+
+	make /DASSEMBLER=tasmbox restunts 
+
+Building with TASMX is much slower since DOSBox is involved, but it allows to include 
+debugging symbols (s. below)
+
+### Linker selection
+
+Restunts links per default with TLINK using dosbox but that can changed to using
+the native WLINK executable by using option `/DLINKER=wlink` before the target name
+
+E.g. to build Restunts with wlink, type
+
+	make /DLINKER=wlink restunts 
+
+Note that `WLINK` is experimental, and it does not allow to include debug symbols. Its
+use can slightly speed up the build process since it avoids calling DOSBox.
+
+### Debugging symbols
+
+The executable can be built with debug symbols by means of the `/DCONFIG=debug`
+option. Note that this requires using TASMX as assembler and TLINK as linker
+(TLINK is currently the default but this might change in future)
+
+E.g. to build Restunts with debug symbols, type
+
+	make /DASSEMBLER=tasmbox /DLINKER=tlink /DCONFIG=debug restunts 
 
 
 ## The toolchain
 
-The toolchain has evolved over the years and is now (2014) fully based on
-Borland tools. For various reasons, the build process uses both 16 and 32-bit
-tools. In order to compile on modern 64 bit Windows systems, the 16-bit apps
-run via DOSBox. A DOSBox window pops up multiple times during a build, and
-stays open in case of build errors.
+The toolchain has evolved over the years and it can now (2025) use either
+Borland tools or alternative ones. For various reasons, the build process can
+uses both 16 and 32-bit tools. In order to compile on modern 64 bit systems,
+the 16-bit apps run via DOSBox. A couple of batch files (in
+`tools\bin\*box.bat`) take care of starting DOSBox in headless mode to prevent
+pop-ups, and copy the output into the Windows console.
 
-Tools used:
-	- TASMX + TLINK (16 bit DOS, from Borland Turbo Assembler 4.0)
+### Tools used
+Assemblers:
+	- TASMX (16-bit, from Borland Turbo Assembler 4.0)
+	- TASM32 (32-bit)
+
+Linkers:
+	- TLINK (16-bit)
+	- WLINK (32-bit, experimental)
+
+Other:
 	- Borland C++ 5.2 (Win32)
 	- Borland Make 5.2 (Win32, from Borland C++ 5.5, patched binary)
-
-The 16-bit tools are:
-	tasmx.exe, invoked in DOSBox by tasmbox.bat
-	tlink.exe, invoked in DOSBox by tlinkbox.bat
-
 
 ## Analysis in IDA and the development cycle
 
@@ -139,12 +183,9 @@ symbols in case a symbol was renamed in IDA, but not in the C files.
 ## Debugging restunts.exe
 
 Restunts can be debugged with Turbo Debugger inside DOSBox. In orger to do
-that, the target program must be built with debug symbols, which is possible
-by setting the option `/DCONFIG=debug` as first parameter when calling make.
-the option `/DTASM=32` does not work in combination with `/DCONFIG=debug`
-E.g. to build a debuggable copy of Restunts, type
-
-	make /DCONFIG=debug restunts 
+that, the target program must be built with debug symbols, which is possible by
+setting the option `/DCONFIG=debug` when calling make (see paragraph “Debugging
+symbols” above).
 
 The DOSBox debugging environment is an extension of the build environment
 described above:
@@ -161,26 +202,6 @@ described above:
 Turbo Debugger is preconfigured to automatically find and show the source code.
 Setting breakpoints, stepping etc works. The TD configuration file is stored in
 stunts\tdconfig.td.
-
-## Faster builds with TASM32
-
-Restunts builds per default with TASMX using dosbox but can be changed to using
-the native TASM32 executable by using option `/DASSEMBLER=tasm32` before the target name
-E.g. to build faster with TASM32 of Restunts, type
-
-	make /DASSEMBLER=tasm32 restunts 
-
-but beware: `/DCONFIG=debug` is not useable with `/DASSEMBLER=tasm32`
-
-## Using native wlink for linking
-
-Restunts links per default with TLINK using dosbox but that can changed to using
-the native WLINK executable by using option `/DLINKER=wlink` before the target name
-E.g. to build Restunts with wlink, type
-
-	make /DLINKER=wlink restunts 
-
-but beware: `/DCONFIG=debug` is not useable with `/DLINKER=wlink`
 
 ## Notes about the toolchain
 
