@@ -105,12 +105,12 @@ The makefile supports the following targets:
 ### Assembler selection
 
 Restunts builds per default with TASM32 for Windows, but it can be changed to using
-the a 16-bit TASMX by using option `/DASSEMBLER=tasmbox` before the target name (or
-`/DASSEMBLER=tasmx` if one really likes seeing pop-up windows).
+the a 16-bit TASMX by using option `ASSEMBLER=tasmbox` before the target name (or
+`ASSEMBLER=tasmx` if one really likes seeing pop-up windows).
 
 E.g. to build restunts with TASMX, type
 
-	make /DASSEMBLER=tasmbox restunts 
+	make ASSEMBLER=tasmbox restunts 
 
 Building with TASMX is much slower since DOSBox is involved, but it allows to include 
 debugging symbols (s. below)
@@ -118,24 +118,24 @@ debugging symbols (s. below)
 ### Linker selection
 
 Restunts links per default with TLINK using dosbox but that can changed to using
-the native WLINK executable by using option `/DLINKER=wlink` before the target name
+the native WLINK executable by using option `LINKER=wlink` before the target name
 
 E.g. to build Restunts with wlink, type
 
-	make /DLINKER=wlink restunts 
+	make LINKER=wlink restunts 
 
 Note that `WLINK` is experimental, and it does not allow to include debug symbols. Its
 use can slightly speed up the build process since it avoids calling DOSBox.
 
 ### Debugging symbols
 
-The executable can be built with debug symbols by means of the `/DCONFIG=debug`
+The executable can be built with debug symbols by means of the `CONFIG=debug`
 option. Note that this requires using TASMX as assembler and TLINK as linker
 (TLINK is currently the default but this might change in future)
 
 E.g. to build Restunts with debug symbols, type
 
-	make /DASSEMBLER=tasmbox /DLINKER=tlink /DCONFIG=debug restunts 
+	make ASSEMBLER=tasmbox LINKER=tlink CONFIG=debug restunts 
 
 
 ## The toolchain
@@ -158,7 +158,7 @@ Linkers:
 
 Other:
 	- Borland C++ 5.2 (Win32)
-	- Borland Make 5.2 (Win32, from Borland C++ 5.5, patched binary)
+	- GNU Make 4.4.1 (Win32) - from the Chocolatey Windows Packages
 
 ## Analysis in IDA and the development cycle
 
@@ -184,7 +184,7 @@ symbols in case a symbol was renamed in IDA, but not in the C files.
 
 Restunts can be debugged with Turbo Debugger inside DOSBox. In orger to do
 that, the target program must be built with debug symbols, which is possible by
-setting the option `/DCONFIG=debug` when calling make (see paragraph “Debugging
+setting the option `CONFIG=debug` when calling make (see paragraph “Debugging
 symbols” above).
 
 The DOSBox debugging environment is an extension of the build environment
@@ -204,19 +204,6 @@ Setting breakpoints, stepping etc works. The TD configuration file is stored in
 stunts\tdconfig.td.
 
 ## Notes about the toolchain
-
-### Notes regarding make
-
-Borland Make was chosen because the first makefile was written for the DOS
-version. Ultimately the DOS version ran into memory problems with the largest
-asm-files. Too late and too lazy to find a new make utility, the Windows
-version of Borland Make, included in Borland C++ 5.5, was used instead. But:
-
-Borland Make 5.2 uses MAKEFILE.@@@ as the filename for temporary inline files.
-WLINK interprets @ in a special way on the command line and will not take the
-inline file as a parameter. As such make.exe was patched to use MAKEFILE.!!!
-as the temporary filename instead.
-
 
 ### Notes regarding the linker
 

@@ -1,157 +1,44 @@
-!ifndef TARGET
-TARGET=dos
-!endif
+TARGET ?= dos
+ifneq ($(TARGET),dos)
+  $(error Unsupported TARGET: $(TARGET))
+endif
+
+ifeq ($(ASSEMBLER),)
+  $(error ASSEMBLER is not defined)
+endif
+SUPPORTED_ASSEMBLERS = tasmbox tasmx tasm32
+ifeq ($(filter $(ASSEMBLER), $(SUPPORTED_ASSEMBLERS)),)
+  $(error Unsupported assembler: $(ASSEMBLER))
+endif
 
 OBJDIR = build
 
-!if ($(TARGET)!=dos)
-!error Unsupported ASM target: $(TARGET)
-!endif
+ASM_FILES = segments.asm seg000.asm seg001.asm seg002.asm seg003.asm seg004.asm seg005.asm \
+            seg006.asm seg007.asm seg008.asm seg009.asm seg010.asm seg011.asm seg012.asm \
+            seg013.asm seg014.asm seg015.asm seg016.asm seg017.asm seg018.asm seg019.asm \
+            seg020.asm seg021.asm seg022.asm seg023.asm seg024.asm seg025.asm seg026.asm \
+            seg027.asm seg028.asm seg029.asm seg030.asm seg031.asm seg032.asm seg033.asm \
+            seg034.asm seg035.asm seg036.asm seg037.asm seg038.asm seg039.asm seg041.asm dseg.asm
 
-#---------------------
-# assembler selection
-!if ($(ASSEMBLER)==tasmbox) | ($(ASSEMBLER)==tasmx) | ($(ASSEMBLER)==tasm32)
-# tasm alike
-TFLAGS=/zn
-!if ($(CONFIG)==debug)
-TFLAGS=/zi
-!endif
+OBJ_FILES = $(addprefix $(OBJDIR)/, $(ASM_FILES:.asm=.obj))
+OBJ_FILES_BACKSLASH = $(subst /,\,$(OBJ_FILES))
+
+TFLAGS = /zn
+ifeq ($(CONFIG),debug)
+  TFLAGS = /zi
+endif
+
 ASM = $(ASSEMBLER) /m2 /s $(TFLAGS)
-!endif
-#---------------------
 
-all: $(OBJDIR)\segments.obj $(OBJDIR)\seg000.obj $(OBJDIR)\seg001.obj $(OBJDIR)\seg002.obj $(OBJDIR)\seg003.obj $(OBJDIR)\seg004.obj $(OBJDIR)\seg005.obj $(OBJDIR)\seg006.obj $(OBJDIR)\seg007.obj $(OBJDIR)\seg008.obj $(OBJDIR)\seg009.obj $(OBJDIR)\seg010.obj $(OBJDIR)\seg011.obj $(OBJDIR)\seg012.obj $(OBJDIR)\seg013.obj $(OBJDIR)\seg014.obj $(OBJDIR)\seg015.obj $(OBJDIR)\seg016.obj $(OBJDIR)\seg017.obj $(OBJDIR)\seg018.obj $(OBJDIR)\seg019.obj $(OBJDIR)\seg020.obj $(OBJDIR)\seg021.obj $(OBJDIR)\seg022.obj $(OBJDIR)\seg023.obj $(OBJDIR)\seg024.obj $(OBJDIR)\seg025.obj $(OBJDIR)\seg026.obj $(OBJDIR)\seg027.obj $(OBJDIR)\seg028.obj $(OBJDIR)\seg029.obj $(OBJDIR)\seg030.obj $(OBJDIR)\seg031.obj $(OBJDIR)\seg032.obj $(OBJDIR)\seg033.obj $(OBJDIR)\seg034.obj $(OBJDIR)\seg035.obj $(OBJDIR)\seg036.obj $(OBJDIR)\seg037.obj $(OBJDIR)\seg038.obj $(OBJDIR)\seg039.obj $(OBJDIR)\seg041.obj $(OBJDIR)\dseg.obj
+all: $(OBJ_FILES)
 
-$(OBJDIR)\segments.obj: segments.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg000.obj: seg000.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg001.obj: seg001.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg002.obj: seg002.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg003.obj: seg003.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg004.obj: seg004.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg005.obj: seg005.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg006.obj: seg006.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg007.obj: seg007.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg008.obj: seg008.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg009.obj: seg009.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg010.obj: seg010.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg011.obj: seg011.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg012.obj: seg012.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg013.obj: seg013.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg014.obj: seg014.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg015.obj: seg015.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg016.obj: seg016.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg017.obj: seg017.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg018.obj: seg018.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg019.obj: seg019.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg020.obj: seg020.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg021.obj: seg021.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg022.obj: seg022.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg023.obj: seg023.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg024.obj: seg024.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg025.obj: seg025.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg026.obj: seg026.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg027.obj: seg027.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg028.obj: seg028.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg029.obj: seg029.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg030.obj: seg030.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg031.obj: seg031.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg032.obj: seg032.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg033.obj: seg033.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg034.obj: seg034.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg035.obj: seg035.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg036.obj: seg036.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg037.obj: seg037.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg038.obj: seg038.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg039.obj: seg039.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\seg041.obj: seg041.asm
-	$(ASM) $?, $<
-
-$(OBJDIR)\dseg.obj: dseg.asm
-	$(ASM) $?, $<
-
+$(OBJDIR)/%.obj: %.asm
+  # asm file name
+	$(eval ASM_FILE = $<)
+  # obj filepath (slash replaced with backslash for tasmx)
+	$(eval OBJ_FILE = $(subst /,\,$@))
+  # assembler run
+	$(ASM) $(ASM_FILE), $(OBJ_FILE)
 
 clean:
-	del $(OBJDIR)\seg*.obj
-	del $(OBJDIR)\dseg*.obj
+	del $(OBJ_FILES_BACKSLASH)
