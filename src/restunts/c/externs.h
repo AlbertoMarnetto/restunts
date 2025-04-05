@@ -455,7 +455,7 @@ extern char far* transshapeprimptr;
 extern unsigned polyinfoptrnext;
 extern char far* polyinfoptr;
 extern char far* transshapepolyinfo;
-struct POINT2D far* transshapepolyinfopts;
+extern struct POINT2D far* transshapepolyinfopts;
 extern int far* polyinfoptrs[];
 extern unsigned polyinfonumpolys;
 extern char transprimitivepaintjob;
