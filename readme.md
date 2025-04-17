@@ -1,8 +1,10 @@
-Restunts - The Stunts reverse engineering project
+# Restunts - The Stunts reverse engineering project
 
 https://wiki.stunts.hu/wiki/Restunts
 
-Repository contents:
+Main repository: https://github.com/4d-stunts/restunts
+
+## Repository contents:
 	docs
 		Various technical docs related to (re)stunts itself.
 
@@ -26,7 +28,7 @@ Repository contents:
 		Turbo Debugger, Borland C++, DOSBox, and various other tools.
 
 
-Contents of src\restunts:
+### Contents of src\restunts:
 	src\restunts\game_mod3.idb
 		The analysis database for IDAPro.
 
@@ -39,30 +41,31 @@ Contents of src\restunts:
 	src\restunts\asmorig
 		Contains the same files as src\restunts\asm, but unpatched and does not
 		use any of the ported c code.
-		
+
 	src\restunts\c
 		Contains c functions ported from the disassembly.
-	
+
 	src\restunts\dos
 		Makefile to build restunts for DOS.
-	
+
 	src\restunts\repldump
 		Tool based on the original game code, loads replays and dumps the game
 		state contents at each frame in a file for further analysis.
 
-		
-The build environment
 
-How to build restunts on Windows:
+## How to build
+
+### On Windows
 	1) Double click tools\mount_stunts_to_s.bat (only needed once per reboot)
 	2) Start cmd.exe and enter the following commands:
 		S:
-		cd tools
-		setpath.bat
 		cd \src\restunts
+		setpath
 		make
 
-How to build restunts on Linux:
+### On Linux
+	0) You might want to set `git config --worktree core.autocrlf=false` before
+	   you make any change, lest git meddles with the DOS newlines
 	1) Install Wine
 	2) Mount the restunts dir as drive S using winecfg
 	3) In the Linux console type `wineconsole cmd`
@@ -70,10 +73,10 @@ How to build restunts on Linux:
 	```
 	s:
 	cd src\restunts
-	..\..\tools\setpath
+	setpath
 	```
 
-On both platforms:
+### On both platforms
 
 If everything went fine, there should be a new s:\stunts\restunts.exe which can
 be run in DOSBox. Note that the drive letter S: is hardcoded many places in the
@@ -81,50 +84,92 @@ makefiles, and is also mounted inside DOSBox as a fixed point of reference.
 
 The makefile supports the following targets:
 
-	make restunts
+	make <OPTIONS> restunts
 		The default restunts target builds an executable based on ported C code
 		and patched disassembly.
-		
-	make restunts-original
+
+	make <OPTIONS> restunts-original
 		Builds an executable based on unpatched disassembly with the original
 		codepaths intact. Does not use any of the ported C code.
 
-	make repldump
+	make <OPTIONS> repldump
 		Builds the replay dump tool using ported C code and patched
 		disassembly.
-		
-	make repldump-original
+
+	make <OPTIONS> repldump-original
 		Builds the replay dump tool without ported C code.
-		
 
-The toolchain
 
-The toolchain has evolved over the years and is now (2014) fully based on 
-Borland tools. For various reasons, the build process uses both 16 and 32-bit
-tools. In order to compile on modern 64 bit Windows systems, the 16-bit apps
-run via DOSBox. A DOSBox window pops up multiple times during a build, and
-stays open in case of build errors.
+## Build options
 
-Tools used:
-	- TASMX + TLINK (16 bit DOS, from Borland Turbo Assembler 4.0)
+### Assembler selection
+
+Restunts builds per default with TASM32 for Windows, but it can be changed to using
+the a 16-bit TASMX by using option `ASSEMBLER=tasmbox` before the target name (or
+`ASSEMBLER=tasmx` if one really likes seeing pop-up windows).
+
+E.g. to build restunts with TASMX, type
+
+	make ASSEMBLER=tasmbox restunts 
+
+Building with TASMX is much slower since DOSBox is involved, but it allows to include 
+debugging symbols (s. below)
+
+### Linker selection
+
+Restunts links per default with TLINK using dosbox but that can changed to using
+the native WLINK executable by using option `LINKER=wlink` before the target name
+
+E.g. to build Restunts with wlink, type
+
+	make LINKER=wlink restunts 
+
+Note that `WLINK` is experimental, and it does not allow to include debug symbols. Its
+use can slightly speed up the build process since it avoids calling DOSBox.
+
+### Debugging symbols
+
+The executable can be built with debug symbols by means of the `CONFIG=debug`
+option. Note that this requires using TASMX as assembler and TLINK as linker
+(TLINK is currently the default but this might change in future)
+
+E.g. to build Restunts with debug symbols, type
+
+	make ASSEMBLER=tasmbox LINKER=tlink CONFIG=debug restunts 
+
+
+## The toolchain
+
+The toolchain has evolved over the years and it can now (2025) use either
+Borland tools or alternative ones. For various reasons, the build process can
+uses both 16 and 32-bit tools. In order to compile on modern 64 bit systems,
+the 16-bit apps run via DOSBox. A couple of batch files (in
+`tools\bin\*box.bat`) take care of starting DOSBox in headless mode to prevent
+pop-ups, and copy the output into the Windows console.
+
+### Tools used
+Assemblers:
+	- TASMX (16-bit, from Borland Turbo Assembler 4.0)
+	- TASM32 (32-bit)
+
+Linkers:
+	- TLINK (16-bit)
+	- WLINK (32-bit, experimental)
+
+Other:
 	- Borland C++ 5.2 (Win32)
-	- Borland Make 5.2 (Win32, from Borland C++ 5.5, patched binary)
+	- GNU Make 4.4.1 (Win32) - from the Chocolatey Windows Packages
 
-The 16-bit tools are:
-	tasmx.exe, invoked in DOSBox by tasmbox.bat
-	tlink.exe, invoked in DOSBox by tlinkbox.bat
-
-
-Analysis in IDA and the development cycle
+## Analysis in IDA and the development cycle
 
 Analysis happens continously in IDA 6.1 (Win32). Using a custom script in IDA,
-the entire disassembly is exported to compilable .asm and .inc files in 
+the entire disassembly is exported to compilable .asm and .inc files in
 src\restunts\asm. This allows using latest analysis results in the build
 process. As code is ported manually to C, the custom script is updated and kept
 in sync, such that it generates patched assembly code calling into the ported C
 functions.
 
-The custom script also runs a second pass, where it exports a separate set of 
+The custom script also runs a second pass, where it exports a separate set of
 .asm files to src\restunts\asmorig. These files are unpatched and produce code
 that behaves 100% identically to the original game.
 
@@ -135,10 +180,16 @@ the analysis manually. Obviously, the linker will complain about missing
 symbols in case a symbol was renamed in IDA, but not in the C files.
 
 
-Debugging restunts.exe
+## Debugging restunts.exe
 
-Restunts can be debugged with Turbo Debugger inside DOSBox. The DOSBox
-debugging environment is an extension of the build environment described above:
+Restunts can be debugged with Turbo Debugger inside DOSBox. In orger to do
+that, the target program must be built with debug symbols, which is possible by
+setting the option `CONFIG=debug` when calling make (see paragraph “Debugging
+symbols” above).
+
+The DOSBox debugging environment is an extension of the build environment
+described above:
+
 	1) Double click tools\mount_stunts_to_s.bat (only needed once per reboot)
 	2) Start DOSBox and enter the following commands:
 		mount S S:
@@ -152,28 +203,16 @@ Turbo Debugger is preconfigured to automatically find and show the source code.
 Setting breakpoints, stepping etc works. The TD configuration file is stored in
 stunts\tdconfig.td.
 
+## Notes about the toolchain
 
-Notes regarding make
-
-Borland Make was chosen because the first makefile was written for the DOS
-version. Ultimately the DOS version ran into memory problems with the largest 
-asm-files. Too late and too lazy to find a new make utility, the Windows
-version of Borland Make, included in Borland C++ 5.5, was used instead. But:
-
-Borland Make 5.2 uses MAKEFILE.@@@ as the filename for temporary inline files.
-WLINK interprets @ in a special way on the command line and will not take the 
-inline file as a parameter. As such make.exe was patched to use MAKEFILE.!!!
-as the temporary filename instead.
-
-
-Notes regarding the linker
+### Notes regarding the linker
 
 WLINK from the Open Watcom C/C++ compiler suite was originally chosen because
 it supports detailed control on how to order segment classes in the final
 executable image.
 
 Our requirement is to put the original code and data first in the file, exactly
-as in the original game, only patching up function calls and data access. 
+as in the original game, only patching up function calls and data access.
 TLINK and OPTLINK were tested in the early days, but after having difficulties
 with segment ordering and subsequent crashes, the project settled on WLINK.
 
@@ -186,7 +225,7 @@ be noted that MASM seems a promising TASM replacement candidate: the syntax is
 close to TASM, and it produces CodeView debug format usable by WLINK.
 
 
-Notes regarding 16-bit tasmx, tlink and DOSBox
+### Notes regarding 16-bit tasmx, tlink and DOSBox
 
 The choice of reverting to TLINK was not easy either. Only the 16-bit version
 of TLINK can produce 16-bit executables such as restunts.exe, and it can only
@@ -198,7 +237,7 @@ restunts source files. This was overcome by using the DPMI-enabled tasmx.exe
 instead.
 
 
-Notes regarding the CRT (libc)
+### Notes regarding the CRT (libc)
 
 When linking with cm.lib from Borland C++ 5.1, TLINK is not able to produce an
 executable. To get around this, the tlib tool was used to extract object files
@@ -207,7 +246,7 @@ from cm.lib, and now restunts links with these instead.
 When the project used WLINK, it was able to link with cm.lib from Borland C++
 5.1, but was not able to link correctly with cm.lib from Borland C++ 3.1.
 Before upgrading to Borland C++ 5.1, the makefile would link to single obj
-files from Borland 3.1's CRT. 
+files from Borland 3.1's CRT.
 
 The linker can complain about weird missing symbols f.ex at first time use of
 some compiler feature or CRT function. This can be fixed by extracting the
@@ -250,10 +289,10 @@ To extract the object file
 	   starting with CTARGETS =
 
 
-Porting a function from ASM to C
+## Porting a function from ASM to C
 
-1. Open src\idc\anders.idc in a text editor and locate the PortFuncName() 
-   function. The IDA script needs to be aware of all the functions that have 
+1. Open src\idc\anders.idc in a text editor and locate the PortFuncName()
+   function. The IDA script needs to be aware of all the functions that have
    been ported in order to generate asm that does not conflict with the ported
    code. Add a line in PortFuncName() for the function you've chosen.
 
@@ -261,8 +300,8 @@ Porting a function from ASM to C
    and rename the respective extrn, public and function manually in the .inc
    and asm files)
 
-3. Add a function stub to one of the existing .c files in src\restunts\c 
-3.1 If you want to add a new .c-file to the project, you need to 
+3. Add a function stub to one of the existing .c files in src\restunts\c
+3.1 If you want to add a new .c-file to the project, you need to
 	- add a target for it in c\makefile
 	- add a reference to the obj in RESTUNTS_OBJFILES in dos\makefile
 
@@ -271,4 +310,3 @@ Porting a function from ASM to C
 5. Start make to see if it compiles + links
 
 6. Port to c!
-

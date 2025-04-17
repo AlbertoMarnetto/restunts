@@ -845,7 +845,7 @@ loc_1A5BA:
 smart
     and     si, 3FFh
 nosmart
-    cmp     si, 87h ; '‡'
+    cmp     si, 87h ; 'ï¿½'
     jl      short loc_1A5DD
     cmp     si, 379h
     jg      short loc_1A5DD
@@ -878,7 +878,7 @@ loc_1A5DD:
     push    ax
     call    mat_mul_vector
     add     sp, 6
-    cmp     currenttransshape.ts_pos.vz, 0C8h ; 'È'
+    cmp     currenttransshape.ts_pos.vz, 0C8h ; 'ï¿½'
     jle     short loc_1A661
     mov     bx, [bp+var_counter]
     shl     bx, 1
@@ -1014,9 +1014,9 @@ loc_1A774:
 loc_1A797:
     mov     al, [bp+elem_map_value]
     sub     ah, ah
-    cmp     ax, 0FDh ; 'ý'
+    cmp     ax, 0FDh ; 'ï¿½'
     jz      short loc_1A7B0
-    cmp     ax, 0FEh ; 'þ'
+    cmp     ax, 0FEh ; 'ï¿½'
     jz      short loc_1A7B4
     cmp     ax, 0FFh
     jnz     short loc_1A7AE
@@ -3665,7 +3665,7 @@ loc_1C1DA:
     mov     ax, roofbmpheight
     add     ax, 2
     push    ax
-    mov     ax, 8Ch ; 'Œ'
+    mov     ax, 8Ch ; 'ï¿½'
     push    ax
     mov     ax, offset resID_byte1
     push    ax
@@ -3685,7 +3685,7 @@ loc_1C238:
     mov     ax, roofbmpheight
     add     ax, 2
     push    ax
-    mov     ax, 8Ch ; 'Œ'
+    mov     ax, 8Ch ; 'ï¿½'
     push    ax
     mov     ax, offset resID_byte1
     push    ax
@@ -4250,7 +4250,7 @@ loc_1C720:
 loc_1C728:
     mov     ax, rect_skybox.rc_bottom
     mov     [bp+var_rect.rc_top], ax
-    mov     [bp+var_rect.rc_bottom], 0C8h ; 'È'
+    mov     [bp+var_rect.rc_bottom], 0C8h ; 'ï¿½'
     push    [bp+arg_rectptr]
     lea     ax, [bp+var_rect]
     push    ax
@@ -4872,7 +4872,7 @@ loc_1CC5B:
     push    word ptr skyboxes+0Ch
     call    sprite_putimage_and_alt
     add     sp, 8
-    mov     ax, 0C8h ; 'È'
+    mov     ax, 0C8h ; 'ï¿½'
     push    ax
     push    [bp+var_30]
     mov     ax, 140h
@@ -4884,7 +4884,7 @@ loc_1CC5B:
     push    skybox_grd_color
     call    sprite_clear_1_color
     add     sp, 2
-    mov     ax, 0C8h ; 'È'
+    mov     ax, 0C8h ; 'ï¿½'
     push    ax
     sub     ax, ax
     push    ax
@@ -5335,7 +5335,7 @@ loc_1D0DF:
 loc_1D100:
     mov     al, [bp+var_10]
     sub     ah, ah
-    cmp     ax, 0FDh ; 'ý'
+    cmp     ax, 0FDh ; 'ï¿½'
     jnb     short loc_1D10D
     jmp     loc_1CD3C
 loc_1D10D:
@@ -5398,7 +5398,7 @@ loc_1D14E:
     sub     ax, ax
     push    ax
     push    dialog_fnt_colour
-    mov     ax, 0AAh ; 'ª'
+    mov     ax, 0AAh ; 'ï¿½'
     push    ax
     mov     ax, offset resID_byte1
     push    ax
@@ -5431,7 +5431,7 @@ loc_1D14E:
     sub     ax, ax
     push    ax
     push    dialog_fnt_colour
-    mov     ax, 0B6h ; '¶'
+    mov     ax, 0B6h ; 'ï¿½'
 loc_1D1D5:
     push    ax
     mov     ax, offset resID_byte1
@@ -5553,7 +5553,7 @@ loc_1D2DC:
 loc_1D2F2:
     mov     ax, 5Dh ; ']'
     push    ax
-    mov     ax, 94h ; '”'
+    mov     ax, 94h ; 'ï¿½'
     push    ax
     push    word ptr sdgame2shapes+0Eh; left arrow shape
     push    word ptr sdgame2shapes+0Ch; left arrow shape
@@ -5585,7 +5585,7 @@ loc_1D334:
 loc_1D338:
     mov     ax, 5Dh ; ']'
     push    ax
-    mov     ax, 94h ; '”'
+    mov     ax, 94h ; 'ï¿½'
     push    ax
     push    word ptr sdgame2shapes+12h; right arrow shape
     push    word ptr sdgame2shapes+10h; right arrow shape
@@ -5714,7 +5714,7 @@ loc_1D42C:
 loc_1D47E:
     mov     ax, 71h ; 'q'
     push    ax
-    mov     ax, 0E4h ; 'ä'
+    mov     ax, 0E4h ; 'ï¿½'
     push    ax
     push    word ptr sdgame2shapes+12h; right arrow shape
     push    word ptr sdgame2shapes+10h; right arrow shape
@@ -5940,7 +5940,7 @@ loc_1D636:
     mov     dx, es:[bx+di+6]
     mov     [bp+var_14], ax
     mov     [bp+var_12], dx
-    mov     ax, 0C8h ; 'È'
+    mov     ax, 0C8h ; 'ï¿½'
     cwd
     push    dx
     push    ax
@@ -5957,7 +5957,7 @@ loc_1D636:
     push    ax
     call    __aFldiv
     mov     [bp+var_E], ax
-    mov     ax, 0C8h ; 'È'
+    mov     ax, 0C8h ; 'ï¿½'
     cwd
     push    dx
     push    ax
@@ -6398,7 +6398,7 @@ loc_1D9CF:
     inc     [bp+var_42]
     cmp     [bp+var_42], 64h ; 'd'
     jl      short loc_1D9CF
-    mov     ax, 0C8h ; 'È'
+    mov     ax, 0C8h ; 'ï¿½'
     push    ax
     mov     ax, 140h
     push    ax
@@ -6437,7 +6437,7 @@ loc_1D9CF:
     mov     rect_unk.rc_left, 0
     mov     rect_unk.rc_right, 140h
     mov     rect_unk.rc_top, 0
-    mov     rect_unk.rc_bottom, 0C8h ; 'È'
+    mov     rect_unk.rc_bottom, 0C8h ; 'ï¿½'
     mov     di, offset rect_unk2
     mov     si, offset rect_unk
     push    ds
@@ -6795,7 +6795,7 @@ loc_1DE3E:
     call    setup_mcgawnd2
     sub     ax, ax
     push    ax
-    mov     ax, 0C8h ; 'È'
+    mov     ax, 0C8h ; 'ï¿½'
     push    ax
     mov     ax, 140h
     push    ax
@@ -7096,7 +7096,7 @@ loc_1E0AB:
     push    ax
     call    mat_mul_vector
     add     sp, 6
-    cmp     [bp+var_vec.vz], 0C8h ; 'È'
+    cmp     [bp+var_vec.vz], 0C8h ; 'ï¿½'
     jle     short loc_1E157
     lea     ax, [bp+var_point]
     push    ax

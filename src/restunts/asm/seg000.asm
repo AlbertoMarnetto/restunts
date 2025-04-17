@@ -664,7 +664,7 @@ run_intro_looped proc far
     mov     word ptr tempdataptr+2, dx
     mov     ax, 0Fh
     push    ax
-    mov     ax, 0C8h ; '»'
+    mov     ax, 0C8h ; 'ÔøΩ'
     push    ax
     mov     ax, 140h
     push    ax
@@ -700,7 +700,7 @@ run_intro_looped proc far
     mov     word ptr tempdataptr+2, dx
     mov     ax, 0Fh
     push    ax
-    mov     ax, 0C8h ; '»'
+    mov     ax, 0C8h ; 'ÔøΩ'
     push    ax
     mov     ax, 140h
     push    ax
@@ -761,10 +761,10 @@ run_intro proc far
     mov     es, dx
     cmp     word ptr es:[bx+0Ah], 0
     jz      short loc_106DE
-    mov     waitflag, 0A0h ; '†'
+    mov     waitflag, 0A0h ; 'ÔøΩ'
     jmp     short loc_106E4
 loc_106DE:
-    mov     waitflag, 0B4h ; '¥'
+    mov     waitflag, 0B4h ; 'ÔøΩ'
 loc_106E4:
     mov     ax, offset aProd_0; "prod"
     push    ax
@@ -793,7 +793,7 @@ loc_106E4:
     or      si, si
     jnz     short loc_1077F
     call    sprite_copy_wnd_to_1_clear
-    mov     waitflag, 0B4h ; '¥'
+    mov     waitflag, 0B4h ; 'ÔøΩ'
     mov     ax, offset aTitl_0; "titl"
     push    ax
     push    word ptr tempdataptr+2
@@ -861,7 +861,7 @@ load_intro_resources proc far
     push    word ptr tempdataptr
     call    locate_many_resources
     add     sp, 8
-    mov     waitflag, 96h ; 'ñ'
+    mov     waitflag, 96h ; 'ÔøΩ'
     call    sprite_copy_wnd_to_1_clear
     les     bx, [bp+var_30]
     mov     ax, es:[bx+8]
@@ -1175,7 +1175,7 @@ load_intro_resources proc far
     push    word_407E0
     mov     ax, 20h ; ' '
     push    ax
-    mov     ax, 0ACh ; '¨'
+    mov     ax, 0ACh ; 'ÔøΩ'
     push    ax
     mov     ax, offset resID_byte1
     push    ax
@@ -1197,7 +1197,7 @@ load_intro_resources proc far
     push    word_407D4
     mov     ax, 2Ch ; ','
     push    ax
-    mov     ax, 0ACh ; '¨'
+    mov     ax, 0ACh ; 'ÔøΩ'
     push    ax
     mov     ax, offset resID_byte1
     push    ax
@@ -1219,7 +1219,7 @@ load_intro_resources proc far
     push    word_407E0
     mov     ax, 38h ; '8'
     push    ax
-    mov     ax, 0ACh ; '¨'
+    mov     ax, 0ACh ; 'ÔøΩ'
     push    ax
     mov     ax, offset resID_byte1
     push    ax
@@ -1241,7 +1241,7 @@ load_intro_resources proc far
     push    word_407D4
     mov     ax, 40h ; '@'
     push    ax
-    mov     ax, 0ACh ; '¨'
+    mov     ax, 0ACh ; 'ÔøΩ'
     push    ax
     mov     ax, offset resID_byte1
     push    ax
@@ -1263,7 +1263,7 @@ load_intro_resources proc far
     push    word_407D4
     mov     ax, 48h ; 'H'
     push    ax
-    mov     ax, 0ACh ; '¨'
+    mov     ax, 0ACh ; 'ÔøΩ'
     push    ax
     mov     ax, offset resID_byte1
     push    ax
@@ -1285,7 +1285,7 @@ load_intro_resources proc far
     push    word_407E4
     mov     ax, 54h ; 'T'
     push    ax
-    mov     ax, 0ACh ; '¨'
+    mov     ax, 0ACh ; 'ÔøΩ'
     push    ax
     mov     ax, offset resID_byte1
     push    ax
@@ -1307,7 +1307,7 @@ load_intro_resources proc far
     push    word_407D4
     mov     ax, 60h ; '`'
     push    ax
-    mov     ax, 0ACh ; '¨'
+    mov     ax, 0ACh ; 'ÔøΩ'
     push    ax
     mov     ax, offset resID_byte1
     push    ax
@@ -1329,7 +1329,7 @@ load_intro_resources proc far
     push    word_407D4
     mov     ax, 68h ; 'h'
     push    ax
-    mov     ax, 0ACh ; '¨'
+    mov     ax, 0ACh ; 'ÔøΩ'
     push    ax
     mov     ax, offset resID_byte1
     push    ax
@@ -1351,7 +1351,7 @@ load_intro_resources proc far
     push    word_407D4
     mov     ax, 70h ; 'p'
     push    ax
-    mov     ax, 0ACh ; '¨'
+    mov     ax, 0ACh ; 'ÔøΩ'
     push    ax
     mov     ax, offset resID_byte1
     push    ax
@@ -1373,7 +1373,7 @@ load_intro_resources proc far
     push    word_407D4
     mov     ax, 78h ; 'x'
     push    ax
-    mov     ax, 0ACh ; '¨'
+    mov     ax, 0ACh ; 'ÔøΩ'
     push    ax
     mov     ax, offset resID_byte1
     push    ax
@@ -1440,7 +1440,7 @@ loc_10DA0:
     db 144
 loc_10DEC:
     call    sprite_copy_wnd_to_1
-    mov     ax, 0C8h ; '»'
+    mov     ax, 0C8h ; 'ÔøΩ'
     push    ax
     push    [bp+var_4]
     mov     ax, 140h
@@ -1462,7 +1462,7 @@ loc_10DEC:
     call    sprite_shape_to_1_alt
     add     sp, 4
     call    sprite_copy_2_to_1_2
-    mov     ax, 0C8h ; '»'
+    mov     ax, 0C8h ; 'ÔøΩ'
     push    ax
     push    [bp+var_4]
     mov     ax, 140h
@@ -1499,7 +1499,7 @@ loc_10E83:
     jnz     short loc_10E91
     jmp     loc_10DEC
 loc_10E91:
-    mov     ax, 0C8h ; '»'
+    mov     ax, 0C8h ; 'ÔøΩ'
     push    ax
     sub     ax, ax
     push    ax
@@ -1516,7 +1516,7 @@ loc_10E91:
     call    sprite_clear_shape
     add     sp, 4
     call    sprite_copy_wnd_to_1
-    mov     ax, 0C8h ; '»'
+    mov     ax, 0C8h ; 'ÔøΩ'
     push    ax
     push    [bp+var_4]
     mov     ax, 140h
@@ -1586,10 +1586,10 @@ run_menu proc far
     mov     [bp+var_selectedmenu], 0
     mov     [bp+var_C], 0FFh
     call    show_waiting
-    mov     waitflag, 0B4h ; '¥'
+    mov     waitflag, 0B4h ; 'ÔøΩ'
     mov     ax, 0Fh
     push    ax
-    mov     ax, 0C8h ; '»'
+    mov     ax, 0C8h ; 'ÔøΩ'
     push    ax
     mov     ax, 140h
     push    ax
@@ -1634,7 +1634,7 @@ loc_10FB9:
     push    word ptr wndsprite
     call    sprite_blit_to_video
     add     sp, 6
-    mov     [bp+var_6], 0FEh ; '˛'
+    mov     [bp+var_6], 0FEh ; 'ÔøΩ'
     call    sprite_copy_2_to_1_2
     call    sub_29772
 loc_10FEF:
@@ -1765,10 +1765,10 @@ loc_110ED:
     mov     [bp+var_16], 0
     mov     [bp+var_12], 0FFh
     call    show_waiting
-    mov     waitflag, 9Bh ; 'õ'
+    mov     waitflag, 9Bh ; 'ÔøΩ'
     mov     ax, 0Fh
     push    ax
-    mov     ax, 0C8h ; '»'
+    mov     ax, 0C8h ; 'ÔøΩ'
     push    ax
     mov     ax, 140h
     push    ax
@@ -1783,7 +1783,7 @@ loc_110ED:
     call    load_skybox
     add     sp, 2
     call    shape3d_load_all
-    mov     ax, 0C8h ; '»'
+    mov     ax, 0C8h ; 'ÔøΩ'
     push    ax
     mov     ax, 140h
     push    ax
@@ -1800,7 +1800,7 @@ loc_110ED:
     push    skybox_grd_color
     call    sprite_clear_1_color
     add     sp, 2
-    mov     ax, 0C8h ; '»'
+    mov     ax, 0C8h ; 'ÔøΩ'
     push    ax
     sub     ax, ax
     push    ax
@@ -1927,7 +1927,7 @@ loc_11210:
     add     sp, 6
     mov     ax, 1Eh
     push    ax
-    mov     ax, 0E0h ; '‡'
+    mov     ax, 0E0h ; 'ÔøΩ'
     push    ax
     mov     al, [bp+var_8]
     cbw
@@ -1962,7 +1962,7 @@ loc_112E5:
     push    ax
     mov     ax, 5Eh ; '^'
     push    ax
-    mov     ax, 0ACh ; '¨'
+    mov     ax, 0ACh ; 'ÔøΩ'
     push    ax
     mov     ax, 11h
     push    ax
@@ -1985,7 +1985,7 @@ loc_112E5:
     push    ax
     mov     ax, 5Eh ; '^'
     push    ax
-    mov     ax, 0ACh ; '¨'
+    mov     ax, 0ACh ; 'ÔøΩ'
     push    ax
     mov     ax, 71h ; 'q'
     push    ax
@@ -2008,9 +2008,9 @@ loc_112E5:
     push    ax
     mov     ax, 5Eh ; '^'
     push    ax
-    mov     ax, 0ACh ; '¨'
+    mov     ax, 0ACh ; 'ÔøΩ'
     push    ax
-    mov     ax, 0D1h ; '—'
+    mov     ax, 0D1h ; 'ÔøΩ'
     push    ax
     mov     ax, offset aBmm ; "bmm"
     push    ax
@@ -2039,7 +2039,7 @@ loc_113B4:
     push    word ptr wndsprite
     call    sprite_blit_to_video
     add     sp, 6
-    mov     [bp+var_6], 0FEh ; '˛'
+    mov     [bp+var_6], 0FEh ; 'ÔøΩ'
     call    sprite_copy_2_to_1_2
     call    sub_29772
 loc_113E5:
@@ -2162,7 +2162,7 @@ loc_114E2:
     push    ax              ; int
     mov     ax, offset gameconfig.game_trackname
     push    ax
-    mov     ax, 9Ch ; 'ú'
+    mov     ax, 9Ch ; 'ÔøΩ'
     push    ax              ; char *
     call    do_fileselect_dialog
     add     sp, 0Ah
@@ -2174,7 +2174,7 @@ loc_114E2:
     push    ax              ; int
     mov     ax, offset gameconfig.game_trackname
     push    ax
-    mov     ax, 9Ch ; 'ú'
+    mov     ax, 9Ch ; 'ÔøΩ'
     push    ax              ; char *
     call    file_build_path
     add     sp, 8
@@ -2204,7 +2204,7 @@ loc_1155A:
 loc_1156A:
     call    check_input
     call    show_waiting
-    mov     waitflag, 82h ; 'Ç'
+    mov     waitflag, 82h ; 'ÔøΩ'
     call    track_setup
     call    load_tracks_menu_shapes
     jmp     loc_110ED
@@ -2246,7 +2246,7 @@ loc_115AF:
     push    ax              ; int
     mov     ax, offset gameconfig.game_trackname
     push    ax
-    mov     ax, 9Ch ; 'ú'
+    mov     ax, 9Ch ; 'ÔøΩ'
     push    ax              ; char *
     call    file_build_path
     add     sp, 8
@@ -2453,7 +2453,7 @@ highscore_text_unk proc far
     push    dialog_fnt_colour
     mov     ax, 0Fh
     push    ax
-    mov     ax, 0E0h ; '‡'
+    mov     ax, 0E0h ; 'ÔøΩ'
     push    ax
     mov     ax, offset resID_byte1
     push    ax
@@ -2524,7 +2524,7 @@ loc_1181F:
     call    font_draw_text
     add     sp, 6
     push    [bp+var_8]
-    mov     ax, 0E0h ; '‡'
+    mov     ax, 0E0h ; 'ÔøΩ'
     push    ax
     mov     al, [bp+var_4]
     cbw
@@ -2947,7 +2947,7 @@ loc_11BC3:
     push    ax              ; int
     mov     ax, offset gameconfig.game_trackname
     push    ax
-    mov     ax, 9Ch ; 'ú'
+    mov     ax, 9Ch ; 'ÔøΩ'
     push    ax              ; char *
     call    file_build_path
     add     sp, 8
@@ -3253,7 +3253,7 @@ loc_11EA2:
     jnz     short loc_11EAB
     jmp     loc_11F4A
 loc_11EAB:
-    mov     rect_unk16.rc_right, 0F0h ; ''
+    mov     rect_unk16.rc_right, 0F0h ; 'ÔøΩ'
     cmp     video_flag5_is0, 0
     jnz     short loc_11EBB
     jmp     loc_11F50
@@ -3330,7 +3330,7 @@ loc_11F50:
     call    timer_get_delta_alt
     mov     ax, 0Fh
     push    ax
-    mov     ax, 0C8h ; '»'
+    mov     ax, 0C8h ; 'ÔøΩ'
     push    ax
     mov     ax, 140h
     push    ax
@@ -3361,7 +3361,7 @@ loc_11FC8:
     shl     ax, 1
     add     ax, cx
     add     ax, bp
-    sub     ax, 0EEh ; 'Ó'  ; var_EE = var_carids
+    sub     ax, 0EEh ; 'ÔøΩ'  ; var_EE = var_carids
     push    ax
     call    shape3d_load_car_shapes
     add     sp, 4
@@ -3436,7 +3436,7 @@ loc_11FC8:
     push    word_407F4
     mov     ax, 55h ; 'U'
     push    ax
-    mov     ax, 8Ch ; 'å'
+    mov     ax, 8Ch ; 'ÔøΩ'
 loc_120A3:
     push    ax
     mov     ax, 6Dh ; 'm'
@@ -3475,7 +3475,7 @@ loc_120A3:
     push    ax
     call    font_draw_text
     add     sp, 6
-    mov     ax, 87h ; 'á'
+    mov     ax, 87h ; 'ÔøΩ'
     push    ax
     mov     ax, 9
     push    ax
@@ -3483,7 +3483,7 @@ loc_120A3:
     push    ax
     call    font_draw_text
     add     sp, 6
-    mov     ax, 9Bh ; 'õ'
+    mov     ax, 9Bh ; 'ÔøΩ'
     push    ax
     mov     ax, 9
     push    ax
@@ -3491,7 +3491,7 @@ loc_120A3:
     push    ax
     call    font_draw_text
     add     sp, 6
-    mov     ax, 0AFh ; 'Ø'
+    mov     ax, 0AFh ; 'ÔøΩ'
     push    ax
     mov     ax, 9
     push    ax
@@ -3499,7 +3499,7 @@ loc_120A3:
     push    ax
     call    font_draw_text
     add     sp, 6
-    mov     ax, 0B9h ; 'π'
+    mov     ax, 0B9h ; 'ÔøΩ'
     push    ax
     mov     ax, 1Ah
     push    ax
@@ -3666,7 +3666,7 @@ loc_122CE:
     mov     cl, 8
     shr     ax, cl
     mov     [bp+var_carspeed], ax
-    mov     ax, 96h ; 'ñ'
+    mov     ax, 96h ; 'ÔøΩ'
     cwd
     push    dx
     push    ax
@@ -3681,7 +3681,7 @@ loc_122FB:
     push    dx
     push    ax
     call    __aFuldiv
-    sub     ax, 0B5h ; 'µ'
+    sub     ax, 0B5h ; 'ÔøΩ'
     neg     ax
     mov     [bp+var_48], ax
     cmp     ax, 75h ; 'u'
@@ -3756,7 +3756,7 @@ loc_123CB:
     mov     [bp+var_104_rc.rc_left], 0
     mov     [bp+var_104_rc.rc_right], 140h
     mov     [bp+var_104_rc.rc_top], 0
-    mov     [bp+var_104_rc.rc_bottom], 0C8h ; '»'
+    mov     [bp+var_104_rc.rc_bottom], 0C8h ; 'ÔøΩ'
     mov     [bp+var_108], 0
     mov     [bp+var_6], 3
 loc_12405:
@@ -3832,7 +3832,7 @@ loc_1247A:
     ; align 2
     db 144
 loc_124A6:
-    mov     rect_unk16.rc_bottom, 0C8h ; '»'
+    mov     rect_unk16.rc_bottom, 0C8h ; 'ÔøΩ'
 loc_124AC:
     mov     ax, offset rect_unk16
     push    ax
@@ -4018,7 +4018,7 @@ loc_125FE:
     add     sp, 6
     sub     ax, ax
     push    ax
-    mov     ax, 0F0h ; ''
+    mov     ax, 0F0h ; 'ÔøΩ'
     push    ax
     mov     bx, [bp+arg_opponenttype]
     shl     bx, 1
@@ -4030,7 +4030,7 @@ loc_125FE:
 loc_126B8:
     sub     ax, ax
     push    ax
-    mov     ax, 0F0h ; ''
+    mov     ax, 0F0h ; 'ÔøΩ'
     push    ax
     les     bx, [bp+var_42wnd]
     push    word ptr es:[bx+2]
@@ -4047,7 +4047,7 @@ loc_126D1:
     call    sprite_set_1_size
     add     sp, 8
     call    mouse_draw_opaque_check
-    cmp     [bp+var_3E], 0FEh ; '˛'
+    cmp     [bp+var_3E], 0FEh ; 'ÔøΩ'
     jz      short loc_12710
     mov     al, [bp+var_3E]
     cbw
@@ -4056,7 +4056,7 @@ loc_126D1:
     push    word ptr wndsprite
     call    sprite_blit_to_video
     add     sp, 6
-    mov     [bp+var_3E], 0FEh ; '˛'
+    mov     [bp+var_3E], 0FEh ; 'ÔøΩ'
     jmp     short loc_12723
 loc_12710:
     les     bx, wndsprite
@@ -4368,7 +4368,7 @@ loc_12A10:
 loc_12A14:
     mov     ax, 0Fh
     push    ax
-    mov     ax, 0C8h ; '»'
+    mov     ax, 0C8h ; 'ÔøΩ'
     push    ax
     mov     ax, 140h
     push    ax
@@ -4468,7 +4468,7 @@ loc_12A4D:
     mov     ax, opponentmenu_buttons_y1
     inc     ax
     push    ax
-    mov     ax, 85h ; 'Ö'
+    mov     ax, 85h ; 'ÔøΩ'
     push    ax
     mov     ax, offset aBcl ; "bcl"
     push    ax
@@ -4492,7 +4492,7 @@ loc_12A4D:
     mov     ax, opponentmenu_buttons_y1
     inc     ax
     push    ax
-    mov     ax, 0BDh ; 'Ω'
+    mov     ax, 0BDh ; 'ÔøΩ'
     push    ax
     mov     ax, offset aBca ; "bca"
     push    ax
@@ -4516,7 +4516,7 @@ loc_12A4D:
     mov     ax, opponentmenu_buttons_y1
     inc     ax
     push    ax
-    mov     ax, 0F5h ; 'ı'
+    mov     ax, 0F5h ; 'ÔøΩ'
     push    ax
     mov     ax, offset aBdo ; "bdo"
     push    ax
@@ -4653,7 +4653,7 @@ loc_12CFB:
     push    word ptr wndsprite
     call    sprite_blit_to_video
     add     sp, 6
-    mov     [bp+var_4], 0FEh ; '˛'
+    mov     [bp+var_4], 0FEh ; 'ÔøΩ'
     call    timer_get_delta_alt
     call    sub_29772
 loc_12D2C:
@@ -5078,7 +5078,7 @@ loc_130E2:
     mov     [bp+var_6], al
     or      al, al
     jz      short loc_1315A
-    mov     waitflag, 96h ; 'ñ'
+    mov     waitflag, 96h ; 'ÔøΩ'
     call    show_waiting
     mov     ax, offset aDefault_1; "DEFAULT"
     push    ax
@@ -5204,7 +5204,7 @@ end_hiscore proc far
 loc_131C0:
     mov     ax, 0Fh
     push    ax
-    mov     ax, 0C8h ; '»'
+    mov     ax, 0C8h ; 'ÔøΩ'
     push    ax
     mov     ax, 140h
     push    ax
@@ -5218,7 +5218,7 @@ loc_131C0:
     push    ax
     mov     ax, 64h ; 'd'
     push    ax
-    mov     ax, 0C8h ; '»'
+    mov     ax, 0C8h ; 'ÔøΩ'
     push    ax
     call    sprite_make_wnd
     add     sp, 6
@@ -6347,9 +6347,9 @@ loc_13D13:
     push    ax
     mov     ax, 46h ; 'F'
     push    ax
-    mov     ax, 0AFh ; 'Ø'
+    mov     ax, 0AFh ; 'ÔøΩ'
     push    ax
-    mov     ax, 81h ; 'Å'
+    mov     ax, 81h ; 'ÔøΩ'
     push    ax
     mov     ax, offset aBct ; "bct"
     push    ax
@@ -6368,7 +6368,7 @@ loc_13D13:
     push    word ptr wndsprite
     call    sprite_blit_to_video
     add     sp, 6
-    mov     [bp+var_52], 0FEh ; '˛'
+    mov     [bp+var_52], 0FEh ; 'ÔøΩ'
     call    sub_29772
     call    check_input
     mov     [bp+var_70], 1
@@ -6557,7 +6557,7 @@ loc_13F48:
     call near ptr enter_hiscore
     add     sp, 8
     mov     [bp+var_6E], 0
-    mov     [bp+var_52], 0FEh ; '˛'
+    mov     [bp+var_52], 0FEh ; 'ÔøΩ'
     jmp     short loc_13FDA
 loc_13F84:
     call    mouse_draw_opaque_check
@@ -6641,7 +6641,7 @@ loc_14017:
     push    ax
     mov     ax, 46h ; 'F'
     push    ax
-    mov     ax, 0AFh ; 'Ø'
+    mov     ax, 0AFh ; 'ÔøΩ'
     push    ax
     mov     ax, word_3BCEC
     inc     ax
@@ -6660,7 +6660,7 @@ loc_14058:
     push    ax
     mov     ax, 46h ; 'F'
     push    ax
-    mov     ax, 0AFh ; 'Ø'
+    mov     ax, 0AFh ; 'ÔøΩ'
     push    ax
     mov     ax, [bp+var_9C]
     add     ax, word_3BCEE
@@ -6699,7 +6699,7 @@ loc_140A7:
     push    ax
     mov     ax, 46h ; 'F'
     push    ax
-    mov     ax, 0AFh ; 'Ø'
+    mov     ax, 0AFh ; 'ÔøΩ'
     push    ax
     mov     ax, [bp+var_9C]
     add     ax, word_3BCF0
@@ -6718,7 +6718,7 @@ loc_140A7:
     push    ax
     mov     ax, 46h ; 'F'
     push    ax
-    mov     ax, 0AFh ; 'Ø'
+    mov     ax, 0AFh ; 'ÔøΩ'
     push    ax
     mov     ax, [bp+var_9C]
     add     ax, word_3BCF2
@@ -6764,7 +6764,7 @@ loc_1416E:
     push    word ptr wndsprite
     call    sprite_blit_to_video
     add     sp, 6
-    mov     [bp+var_52], 0FEh ; '˛'
+    mov     [bp+var_52], 0FEh ; 'ÔøΩ'
     call    sprite_copy_2_to_1_2
 loc_14188:
     mov     al, [bp+var_78]

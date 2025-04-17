@@ -1,3 +1,4 @@
+*.md text=crlf
 *.c text=crlf
 *.h text=crlf
 *.asm text=crlf

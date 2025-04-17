@@ -478,7 +478,7 @@ nosmart
 loc_27790:
     cmp     [bp+arg_A], 0FFFFh
     jnz     short loc_277A5
-    mov     ax, 0C8h ; 'È'
+    mov     ax, 0C8h ; 'ï¿½'
     sub     ax, [bp+var_1C6]
     cwd
     sub     ax, dx
@@ -1287,7 +1287,7 @@ loc_27F1E:
     push    dialogarg2
     push    ax
     mov     ax, [bp+var_70A]
-    add     ax, 0ABh ; '«'
+    add     ax, 0ABh ; 'ï¿½'
     push    ax
     push    [bp+var_71C]
     mov     ax, [bp+var_70A]
@@ -1439,7 +1439,7 @@ loc_280A8:
     inc     [bp+var_714]
     mov     al, [bp+var_714]
     cbw
-    cmp     ax, 80h ; '€'
+    cmp     ax, 80h ; 'ï¿½'
     jnz     short loc_280A8
 loc_280E2:
     call    nullsub_1
