@@ -1,19 +1,27 @@
 @echo off
-del tlink.dosbox.conf 2>nul
-copy %~dp0dosbox.tmpl.conf tlink.dosbox.conf >nul
-echo [autoexec] >>tlink.dosbox.conf
-echo MOUNT S S:\ >>tlink.dosbox.conf
-echo S: >>tlink.dosbox.conf
-echo SET PATH=%%PATH%%;s:\tools\bin >>tlink.dosbox.conf
-echo cd %CD% >>tlink.dosbox.conf
-echo tlink %* ^>tlinkbox.out >>tlink.dosbox.conf
-echo if ERRORLEVEL 0 goto noerror >>tlink.dosbox.conf
-echo type tlinkbox.out >>tlink.dosbox.conf
-echo pause >>tlink.dosbox.conf
-echo :noerror >>tlink.dosbox.conf
-echo exit >>tlink.dosbox.conf
+
+set SRC_CFG=%~dp0dosbox.tmpl.conf
+set DST_CFG=%~dp0tlink.dosbox.conf
+
+del %DST_CFG% 2>nul
+copy %SRC_CFG% %DST_CFG% >nul
+
+echo [autoexec] >> %DST_CFG%
+echo MOUNT S S:\ >> %DST_CFG%
+echo S: >> %DST_CFG%
+echo SET PATH=%%PATH%%;s:\tools\bin >> %DST_CFG%
+echo cd %CD% >> %DST_CFG%
+echo tlink %* ^>tlinkbox.out >> %DST_CFG%
+echo if ERRORLEVEL 0 goto noerror >> %DST_CFG%
+echo type tlinkbox.out >> %DST_CFG%
+echo pause >> %DST_CFG%
+echo :noerror >> %DST_CFG%
+echo exit >> %DST_CFG%
+
+
 set SDL_VIDEODRIVER=dummy
-dosbox -conf tlink.dosbox.conf -noconsole
-del tlink.dosbox.conf 2>nul
+dosbox -conf %DST_CFG% -noconsole
+
+del %DST_CFG% 2>nul
 type tlinkbox.out
 del tlinkbox.out 2>nul

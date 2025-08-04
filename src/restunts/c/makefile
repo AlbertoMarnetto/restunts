@@ -1,27 +1,34 @@
-!ifndef TARGET
-TARGET=dos
-!endif
+TARGET ?= dos
 
 OBJDIR = build\$(TARGET)
 
 # Set up tools for DOS
-!if ($(TARGET)==dos)
-CC = bcc /c /u- /mm /v /n$(OBJDIR) /DRESTUNTS_DOS
+ifeq ($(TARGET),dos)
+  CC = bcc /c /u- /mm /v /n$(OBJDIR) /DRESTUNTS_DOS
 
 # Set up tools for SDL
-!elif ($(TARGET)==sdl)
-SDLPATH = s:\src\sdl
-CC = cl  /Zi /MD /c /I$(SDLPATH)\include /DRESTUNTS_SDL /Fo$(OBJDIR)\$?
+else ifeq ($(TARGET),sdl)
+  SDLPATH = s:/src/sdl
+  CC = cl /Zi /MD /c /I$(SDLPATH)/include /DRESTUNTS_SDL /Fo$(OBJDIR)/$?
 
-!else
-!error Unsupported C target: $(TARGET)
-!endif
+# Unsupported target
+else
+  $(error Unsupported C target: $(TARGET))
+endif
 
+C_FILES = fileio.c math.c memmgr.c restunts.c shape3d.c shape2d.c keyboard.c heapsort.c \
+          frame.c state.c stateply.c statecrs.c statecar.c
 
-all: $(OBJDIR)\frame.obj
+OBJ_FILES = $(addprefix $(OBJDIR)/, $(C_FILES:.c=.obj))
+OBJ_FILES_BACKSLASH = $(subst /,\,$(OBJ_FILES))
 
-$(OBJDIR)\frame.obj: frame.c
-	$(CC) $?
+all: $(OBJ_FILES)
+
+$(OBJDIR)/%.obj: %.c
+  # c file name
+	$(eval C_FILE = $<)
+  # compiler run
+	$(CC) $(C_FILE)
 
 clean:
-	del $(OBJDIR)\frame.obj
+	del $(OBJ_FILES_BACKSLASH)

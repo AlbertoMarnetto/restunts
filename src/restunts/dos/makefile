@@ -1,57 +1,81 @@
-!ifndef TARGET
-TARGET=ported
-!endif
+# default target
+TARGET ?= ported
 
-RESTUNTS_OBJDIR = ..\c\build\dos
-RESTUNTS_OBJFILES = $(RESTUNTS_OBJDIR)\frame.obj
+SRC = s:\src\restunts
 
-RESTUNTS_INCLUDES = ..\c
+RESTUNTS_OBJ_FILES = fileio.obj math.obj memmgr.obj restunts.obj \
+                     shape3d.obj shape2d.obj keyboard.obj heapsort.obj \
+                     frame.obj state.obj stateply.obj statecrs.obj \
+                     statecar.obj
 
-ASM_DIR = ..\asm
-ASM_OBJDIR = ..\asm\build
-ASM_OBJFILES = $(ASM_OBJDIR)\segments.obj $(ASM_OBJDIR)\seg000.obj $(ASM_OBJDIR)\seg001.obj $(ASM_OBJDIR)\seg002.obj $(ASM_OBJDIR)\seg003.obj $(ASM_OBJDIR)\seg004.obj $(ASM_OBJDIR)\seg005.obj $(ASM_OBJDIR)\seg006.obj $(ASM_OBJDIR)\seg007.obj $(ASM_OBJDIR)\seg008.obj $(ASM_OBJDIR)\seg009.obj $(ASM_OBJDIR)\seg010.obj $(ASM_OBJDIR)\seg011.obj $(ASM_OBJDIR)\seg012.obj $(ASM_OBJDIR)\seg013.obj $(ASM_OBJDIR)\seg014.obj $(ASM_OBJDIR)\seg015.obj $(ASM_OBJDIR)\seg016.obj $(ASM_OBJDIR)\seg017.obj $(ASM_OBJDIR)\seg018.obj $(ASM_OBJDIR)\seg019.obj $(ASM_OBJDIR)\seg020.obj $(ASM_OBJDIR)\seg021.obj $(ASM_OBJDIR)\seg022.obj $(ASM_OBJDIR)\seg023.obj $(ASM_OBJDIR)\seg024.obj $(ASM_OBJDIR)\seg025.obj $(ASM_OBJDIR)\seg026.obj $(ASM_OBJDIR)\seg027.obj $(ASM_OBJDIR)\seg028.obj $(ASM_OBJDIR)\seg029.obj $(ASM_OBJDIR)\seg030.obj $(ASM_OBJDIR)\seg031.obj $(ASM_OBJDIR)\seg032.obj $(ASM_OBJDIR)\seg033.obj $(ASM_OBJDIR)\seg034.obj $(ASM_OBJDIR)\seg035.obj $(ASM_OBJDIR)\seg036.obj $(ASM_OBJDIR)\seg037.obj $(ASM_OBJDIR)\seg038.obj $(ASM_OBJDIR)\seg039.obj $(ASM_OBJDIR)\dseg.obj $(ASM_OBJDIR)\seg041.obj
+ASM_OBJ_FILES = segments.obj seg000.obj seg001.obj seg002.obj seg003.obj seg004.obj seg005.obj \
+                seg006.obj seg007.obj seg008.obj seg009.obj seg010.obj seg011.obj seg012.obj \
+                seg013.obj seg014.obj seg015.obj seg016.obj seg017.obj seg018.obj seg019.obj \
+                seg020.obj seg021.obj seg022.obj seg023.obj seg024.obj seg025.obj seg026.obj \
+                seg027.obj seg028.obj seg029.obj seg030.obj seg031.obj seg032.obj seg033.obj \
+                seg034.obj seg035.obj seg036.obj seg037.obj seg038.obj seg039.obj seg041.obj dseg.obj
 
+CM_LIB_FILES = getvect.obj labs.obj memcpy.obj \
+               fmemcpy.obj h_ldiv.obj f_lxmul.obj f_scopy.obj \
+               h_lrsh.obj h_padd.obj h_pina.obj h_pada.obj \
+               f_pcmp.obj h_lursh.obj h_psbp.obj h_llsh.obj
 
-ASMORIG_DIR = ..\asmorig
-ASMORIG_OBJDIR = ..\asmorig\build
-ASMORIG_OBJFILES = $(ASMORIG_OBJDIR)\segments.obj $(ASMORIG_OBJDIR)\seg000.obj $(ASMORIG_OBJDIR)\seg001.obj $(ASMORIG_OBJDIR)\seg002.obj $(ASMORIG_OBJDIR)\seg003.obj $(ASMORIG_OBJDIR)\seg004.obj $(ASMORIG_OBJDIR)\seg005.obj $(ASMORIG_OBJDIR)\seg006.obj $(ASMORIG_OBJDIR)\seg007.obj $(ASMORIG_OBJDIR)\seg008.obj $(ASMORIG_OBJDIR)\seg009.obj $(ASMORIG_OBJDIR)\seg010.obj $(ASMORIG_OBJDIR)\seg011.obj $(ASMORIG_OBJDIR)\seg012.obj $(ASMORIG_OBJDIR)\seg013.obj $(ASMORIG_OBJDIR)\seg014.obj $(ASMORIG_OBJDIR)\seg015.obj $(ASMORIG_OBJDIR)\seg016.obj $(ASMORIG_OBJDIR)\seg017.obj $(ASMORIG_OBJDIR)\seg018.obj $(ASMORIG_OBJDIR)\seg019.obj $(ASMORIG_OBJDIR)\seg020.obj $(ASMORIG_OBJDIR)\seg021.obj $(ASMORIG_OBJDIR)\seg022.obj $(ASMORIG_OBJDIR)\seg023.obj $(ASMORIG_OBJDIR)\seg024.obj $(ASMORIG_OBJDIR)\seg025.obj $(ASMORIG_OBJDIR)\seg026.obj $(ASMORIG_OBJDIR)\seg027.obj $(ASMORIG_OBJDIR)\seg028.obj $(ASMORIG_OBJDIR)\seg029.obj $(ASMORIG_OBJDIR)\seg030.obj $(ASMORIG_OBJDIR)\seg031.obj $(ASMORIG_OBJDIR)\seg032.obj $(ASMORIG_OBJDIR)\seg033.obj $(ASMORIG_OBJDIR)\seg034.obj $(ASMORIG_OBJDIR)\seg035.obj $(ASMORIG_OBJDIR)\seg036.obj $(ASMORIG_OBJDIR)\seg037.obj $(ASMORIG_OBJDIR)\seg038.obj $(ASMORIG_OBJDIR)\seg039.obj $(ASMORIG_OBJDIR)\dseg.obj $(ASMORIG_OBJDIR)\seg041.obj
+# prefix with path
+RESTUNTS_OBJDIR = $(SRC)\c\build\dos
+ASM_OBJDIR = $(SRC)\asm\build
+ASMORIG_OBJDIR = $(SRC)\asmorig\build
+OBJDIR = $(SRC)\dos\build\$(TARGET)
 
-OBJDIR = build\$(TARGET)
-RESTUNTS_CFLAGS = /c /u- /mm /n$(OBJDIR) /v /DRESTUNTS_DOS
+RESTUNTS_OBJFILES = $(addprefix $(RESTUNTS_OBJDIR)\, $(RESTUNTS_OBJ_FILES))
+ASM_OBJFILES = $(addprefix $(ASM_OBJDIR)\, $(ASM_OBJ_FILES))
+ASMORIG_OBJFILES = $(addprefix $(ASMORIG_OBJDIR)\, $(ASM_OBJ_FILES))
 
-!if ($(TARGET)==ported)
+# C Compiler Flags und Linker
+RESTUNTS_CFLAGS = -c -u- -mm -n$(OBJDIR) -v -DRESTUNTS_DOS
 
-CTARGETS = $(ASM_OBJFILES) $(RESTUNTS_OBJFILES) $(OBJDIR)\main.obj getvect.obj labs.obj memcpy.obj fmemcpy.obj h_ldiv.obj f_lxmul.obj f_scopy.obj h_lrsh.obj h_padd.obj h_pina.obj h_pada.obj f_pcmp.obj h_lursh.obj h_psbp.obj h_llsh.obj
-OUTFILE = restunts.exe
-CFLAGS =
+ifeq ($(TARGET), ported)
+  ALL_OBJ_FILES = $(ASM_OBJFILES) $(RESTUNTS_OBJFILES) $(OBJDIR)\main.obj $(CM_LIB_FILES)
+  CFLAGS = 
+  OUTFILE = restunts.exe
+endif
 
-!elif ($(TARGET)==original)
+ifeq ($(TARGET), original)
+  ALL_OBJ_FILES = $(ASMORIG_OBJFILES) $(OBJDIR)\main.obj
+  CFLAGS = -DRESTUNTS_ORIGINAL
+  OUTFILE = restunto.exe
+endif
 
-CTARGETS = $(ASMORIG_OBJFILES) $(OBJDIR)\main.obj
-CFLAGS = /DRESTUNTS_ORIGINAL
-OUTFILE = restunto.exe
+# set linker separator
+SEP := +
+ifeq ($(LINKER),wlink)
+  SEP := ,
+endif
+SPACE=$() $()
+CTARGETS = $(subst $(SPACE),$(SEP),$(ALL_OBJ_FILES))
 
-!else
-!error Unsupported DOS target: $(TARGET)
-!endif
+CC = bcc $(RESTUNTS_CFLAGS) $(CFLAGS)
 
-CC = bcc  $(RESTUNTS_CFLAGS) $(CFLAGS)
-LINK = call tlinkbox
+LFLAGS = 
+ifeq ($(CONFIG), debug)
+  LFLAGS = /v
+endif
 
-LFLAGS=
-!if ($(CONFIG)==debug)
-LFLAGS=/v
-!endif
+TOOLS_LIB = s:\tools\lib
 
-restunts: $(OBJDIR)\main.obj
-	echo $(CTARGETS) > restunts.lnk
-	echo $(OUTFILE) >> restunts.lnk
-	$(LINK) /s /P- $(LFLAGS) /js:\tools\lib\ @restunts.lnk
-	del restunts.lnk
+restunts: $(OBJDIR)/main.obj
+  ifeq ($(LINKER), wlink)
+		$(LINKER) name $(OUTFILE) format dos option NOCASEEXACT PATH $(TOOLS_LIB) file $(CTARGETS)
+  else
+    # create linker script for tlink
+		echo $(CTARGETS) > lscript.txt
+		echo $(OUTFILE) >> lscript.txt
+		$(LINKER) /s /P- $(LFLAGS) /j$(TOOLS_LIB) @lscript.txt
+		del lscript.txt
+  endif
 	copy $(OUTFILE) s:\stunts
 
-$(OBJDIR)\main.obj: main.c
-	$(CC) -I$(RESTUNTS_INCLUDES) $?
+$(OBJDIR)/main.obj: main.c
+	$(CC) -I../c $?
 
 clean:
 	del build\*.obj
@@ -61,5 +85,3 @@ clean:
 	del restunts.map
 	del restunto.exe
 	del restunto.map
-	del restunt2.exe
-	del restunt2.map

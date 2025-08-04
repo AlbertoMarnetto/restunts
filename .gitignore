@@ -1,7 +1,10 @@
+src/restunts/asm/build/*obj
 src/restunts/asm/build/*OBJ
 src/restunts/asm/TASMBOX.OUT
+src/restunts/asm2/build/*obj
 src/restunts/asm2/build/*OBJ
 src/restunts/asm2/TASMBOX.OUT
+src/restunts/asmorig/build/*obj
 src/restunts/asmorig/build/*OBJ
 src/restunts/asmorig/TASMBOX.OUT
 src/restunts/*/tasm.dosbox.conf

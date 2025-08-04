@@ -1,79 +1,73 @@
-!if ($(CONFIG)!=debug)
-CONFIG=release
-!endif
+# options
+CONFIG ?= release
+ASSEMBLER ?= tasm32
+LINKER ?= tlinkbox
+
+VALID_CONFIGS = debug release
+
+VALID_ASSEMBLERS = tasmbox tasmx tasm32
+
+BORLAND_LINKERS = tlinkbox tlink
+VALID_LINKERS = $(BORLAND_LINKERS) wlink
+
+# valid CONFIG
+ifeq (,$(findstring $(CONFIG),$(VALID_CONFIGS)))
+  $(error unknown CONFIG value: $(CONFIG))
+endif
+
+# valid ASSEMBLER
+ifeq (,$(findstring $(ASSEMBLER),$(VALID_ASSEMBLERS)))
+  $(error unknown ASSEMBLER value: $(ASSEMBLER))
+endif
+
+# valid LINKER
+ifeq (,$(findstring $(LINKER),$(VALID_LINKERS)))
+  $(error unknown LINKER value: $(LINKER))
+endif
+
+# valid option combination
+ifeq ($(CONFIG),debug)
+  ifeq ($(ASSEMBLER),tasm32)
+    $(error ASSEMBLER $(ASSEMBLER) is not supported for CONFIG $(CONFIG))
+  endif
+  ifeq ($(LINKER),wlink)
+    $(error LINKER $(LINKER) is not supported for CONFIG $(CONFIG))
+  endif
+endif
+
+MAKE_PARAMS = CONFIG=$(CONFIG) ASSEMBLER=$(ASSEMBLER) LINKER=$(LINKER)
 
 restunts: asm c
-	cd dos
-	if exist makefile make 
-	cd ..
+	make -C dos $(MAKE_PARAMS)
 
 restunts-original: asmorig
-	cd dos
-	if exist makefile make /DTARGET=original /DCONFIG=$(CONFIG)
-	cd ..
+	make -C dos TARGET=original $(MAKE_PARAMS)
 
-asm:
-	cd asm
-	if exist makefile make /DCONFIG=$(CONFIG)
-	cd ..
+asm: force_me
+	make -C asm $(MAKE_PARAMS)
 
-asmorig:
-	cd asmorig
-	if exist makefile make /DCONFIG=$(CONFIG)
-	cd ..
+asmorig: force_me
+	make -C asmorig $(MAKE_PARAMS)
 
-asm2:
-	cd asm2
-	if exist makefile make
-	cd ..
-
-c:
-	cd c
-	if exist makefile make /DCONFIG=$(CONFIG)
-	cd ..
-
-c2:
-	cd c2
-	if exist makefile make
-	cd ..
+c: force_me
+	make -C c $(MAKE_PARAMS)
 
 restunts-sdl:
-	cd sdl
-	if exist makefile make
-	cd ..
+	make -C sdl $(MAKE_PARAMS)
 
 repldump: asm c
-	cd repldump
-	if exist makefile make /DCONFIG=$(CONFIG)
-	cd ..
+	make -C repldump $(MAKE_PARAMS)
 
 repldump-original: asmorig
-	cd repldump
-	if exist makefile make /DTARGET=original
-	cd ..
+	make -C repldump TARGET=original $(MAKE_PARAMS)
 
 clean:
-	cd dos
-	if exist makefile make clean
-	cd ..
-	cd c
-	if exist makefile make clean
-	cd ..
-	cd c2
-	if exist makefile make clean
-	cd ..
-	cd asm
-	if exist makefile make clean
-	cd ..
-	cd asmorig
-	if exist makefile make clean
-	cd ..
-	cd asm2
-	if exist makefile make clean
-	cd ..
-	cd sdl
-	if exist makefile make clean
-	cd ..
-	cd repldump
-	if exist makefile make clean
-	cd ..
+	make -C dos $(MAKE_PARAMS) clean
+	make -C asm $(MAKE_PARAMS) clean
+	make -C asmorig $(MAKE_PARAMS) clean
+	make -C c $(MAKE_PARAMS) clean
+	make -C sdl $(MAKE_PARAMS) clean
+	make -C repldump clean
+
+# i have no idea why i need to force pre-targets with an empty target
+force_me: ;

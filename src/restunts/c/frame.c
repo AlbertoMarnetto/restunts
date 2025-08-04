@@ -198,7 +198,6 @@ void format_frame_as_string(char* s, int time, int c);
 void shape_op_explosion(int a, void far* shp, int x, int y);
 void heapsort_by_order(int n, int* heap, int* data);
 
-
 void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	int si;
 	char var_122;
