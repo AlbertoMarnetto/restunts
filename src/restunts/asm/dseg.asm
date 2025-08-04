@@ -1182,7 +1182,7 @@ dseg segment byte public 'STUNTSD' use16
     public td10_track_check_rel
     public basdres
     public followOpponentFlag_copy
-    public qcurrenttransshape
+    public currenttransshape
     public terraincenterpos
     public carshapevec
     public carshapevec2
@@ -27515,7 +27515,7 @@ td10_track_check_rel     dd 0
 basdres     dd 0
 followOpponentFlag_copy     db 0
     db 0
-qcurrenttransshape     db 0
+currenttransshape     db 0
     db 0
     db 0
     db 0
