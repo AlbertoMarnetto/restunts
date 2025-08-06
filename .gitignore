@@ -21,8 +21,8 @@ src/restunts/repldump/build/original/*obj
 src/restunts/repldump/build/ported/*obj
 **/stderr.txt
 **/stdout.txt
-stunts/REPLDUM*.EXE
-stunts/RESTUNT*.EXE
+stunts/*.EXE
+stunts/*.exe
 stunts/*.3SH
 stunts/*.BIN
 stunts/*.BNI

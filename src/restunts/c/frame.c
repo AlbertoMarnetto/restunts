@@ -1304,9 +1304,9 @@ start_rendering:
 	if ((si < TILES_TO_DRAW_COUNT || has_attempt_failed > 0) && ! is_last_attempt)
 	{
 		// Rendering failed (due to out-of-memory).
-		// If first attempt (drawing everything with max detail, try to just
-		// drop the deatil (this should lead to a 30% drop of the # of polygons
-		// needed). Otherwise, start to drop tiles
+        // If this was the first attempt (i.e. drawing everything with max
+        // detail), try to just drop the detail: this alone should reduce the #
+        // of polygons needed by about 30%. Otherwise, start to drop tiles.
 		if (is_first_attempt) {
 			is_first_attempt = 0;
 		}
@@ -1327,7 +1327,7 @@ start_rendering:
 		// Debug: print discarded tiles
 		_sprintf(
 			discarded_tiles_str,
-			"Polys: %3u, memory: %5u, disc: %2u, reveal: %s",
+			"Polys: %3u, mem: %5u, discards: %2u, reveal: %s",
 			polyinfonumpolys, polyinfoptrnext, discarded_tiles,
 			reveal_illusions ? "on" : "off");
 	}
