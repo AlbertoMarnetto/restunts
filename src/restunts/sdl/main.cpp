@@ -164,10 +164,10 @@ unsigned char transshapeflags;
 struct RECTANGLE* transshaperectptr;
 
 unsigned char byte_4393D;
-unsigned word_4394E;
-unsigned word_45D98;
-unsigned word_4554A;
-unsigned word_443F2;
+unsigned poly_linklist_40ED6_iter1;
+unsigned poly_linklist_40ED6_iter4;
+unsigned poly_linklist_40ED6_iter3;
+unsigned poly_linklist_40ED6_iter2;
 unsigned char transshapenumvertscopy;
 unsigned select_rect_param;
 char far* transshapeprimptr;
