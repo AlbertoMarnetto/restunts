@@ -1212,7 +1212,7 @@ dseg segment byte public 'STUNTSD' use16
     public snarres
     public trackdata3
     public tommres
-    public word_4394E
+    public poly_linklist_40ED6_iter1
     public dashb_toggle
     public mat_z_rot
     public word_43964
@@ -1253,7 +1253,7 @@ dseg segment byte public 'STUNTSD' use16
     public gnam_string
     public terrainrows
     public word_443E8
-    public word_443F2
+    public poly_linklist_40ED6_iter2
     public word_443F4
     public td20_trk_file_appnd
     public carshapevecs
@@ -1385,7 +1385,7 @@ dseg segment byte public 'STUNTSD' use16
     public rect_array_unk_indices
     public byte_4552F
     public gameconfigcopy
-    public word_4554A
+    public poly_linklist_40ED6_iter3
     public rect_array_unk
     public mouseunkspriteptr
     public miscptr
@@ -1436,7 +1436,7 @@ dseg segment byte public 'STUNTSD' use16
     public material_patlist2_ptr_cpy
     public word_45D94
     public wallOrientation
-    public poly_linked_list_40ED6_tail
+    public poly_linklist_40ED6_iter4
     public byte_45D9A
     public game_replay_mode
     public td08_direction_related
@@ -31245,7 +31245,7 @@ trackdata3     dd 0
     db 0
     db 0
 tommres     dd 0
-word_4394E     dw 0
+poly_linklist_40ED6_iter1     dw 0
 dashb_toggle     db 0
     db 0
 mat_z_rot     db 0
@@ -33906,7 +33906,7 @@ word_443E8     dw 0
     db 0
     db 0
     db 0
-word_443F2     dw 0
+poly_linklist_40ED6_iter2     dw 0
 word_443F4     dw 0
 td20_trk_file_appnd     dd 0
 carshapevecs     db 0
@@ -38172,7 +38172,7 @@ gameconfigcopy     db 0
     db 0
     db 0
     db 0
-word_4554A     dw 0
+poly_linklist_40ED6_iter3     dw 0
 rect_array_unk     db 0
     db 0
     db 0
@@ -40165,7 +40165,7 @@ byte_45D90     db 0
 material_patlist2_ptr_cpy     dw 0
 word_45D94     dw 0
 wallOrientation     dw 0
-poly_linked_list_40ED6_tail     dw 0
+poly_linklist_40ED6_iter4     dw 0
 byte_45D9A     db 0
     db 0
     db 0

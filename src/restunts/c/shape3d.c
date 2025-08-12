@@ -107,10 +107,17 @@ extern struct RECTANGLE* transshaperectptr;
 extern struct MATRIX mat_temp;
 extern long invpow2tbl[32];
 extern unsigned char byte_4393D;
-extern unsigned word_4394E;
-extern unsigned poly_linked_list_40ED6_tail;
-extern unsigned word_4554A;
-extern unsigned word_443F2;
+
+// Four iterators in the linked list. Their roles are just the best guess
+// Starting index for some kinds of scans
+extern unsigned poly_linklist_40ED6_iter1;
+// Unknown
+extern unsigned poly_linklist_40ED6_iter2;
+// Scan counter
+extern unsigned poly_linklist_40ED6_iter3;
+// After insertion, contains the index of the newly inserted primitive
+extern unsigned poly_linklist_40ED6_iter4;
+
 extern unsigned char transshapenumvertscopy;
 extern struct POINT2D* polyvertpointptrtab[];
 extern unsigned select_rect_param;
@@ -253,9 +260,9 @@ unsigned transformed_shape_op(struct TRANSFORMEDSHAPE3D* arg_transshapeptr) {
 	}
 	
 // loc_250A3:
-	word_4394E = word_443F2;
-	poly_linked_list_40ED6_tail = word_443F2;
-	word_4554A = 0;
+	poly_linklist_40ED6_iter1 = poly_linklist_40ED6_iter2;
+	poly_linklist_40ED6_iter4 = poly_linklist_40ED6_iter2;
+	poly_linklist_40ED6_iter3 = 0;
 	var_45E = 0;
 	
 	if (transshapenumverts <= 8) {
@@ -518,10 +525,10 @@ loc_25077:
     mov     word ptr [var_A+2], dx
 
 loc_250A3:
-    mov     ax, word_443F2
-    mov     word_4394E, ax
-    mov     poly_linked_list_40ED6_tail, ax
-    mov     word_4554A, 0
+    mov     ax, poly_linklist_40ED6_iter2
+    mov     poly_linklist_40ED6_iter1, ax
+    mov     poly_linklist_40ED6_iter4, ax
+    mov     poly_linklist_40ED6_iter3, 0
     mov     word ptr [var_45E], 0
     cmp     transshapenumverts, 8
     jbe     short loc_250C6
@@ -2571,29 +2578,29 @@ extern unsigned insert_newest_poly_in_poly_linked_list_40ED6(unsigned arg_0, uns
 	//return ported_insert_newest_poly_in_poly_linked_list_40ED6_(arg_0, arg_2);
 
 	if (arg_2 == 0) {
-		regdi = poly_linked_list_40ED6[poly_linked_list_40ED6_tail];
+		regdi = poly_linked_list_40ED6[poly_linklist_40ED6_iter4];
 	} else {
-		poly_linked_list_40ED6_tail = word_4394E;
-		regdi = poly_linked_list_40ED6[word_4394E];
-		regsi = word_4554A;
+		poly_linklist_40ED6_iter4 = poly_linklist_40ED6_iter1;
+		regdi = poly_linked_list_40ED6[poly_linklist_40ED6_iter1];
+		regsi = poly_linklist_40ED6_iter3;
 
 		while (regdi >= 0) {
 			regax = regsi;
 			regsi--;
 			if (regax == 0) break;
 			if (polyinfoptrs[regdi][0] < (int)arg_0) break;
-			poly_linked_list_40ED6_tail = regdi;
+			poly_linklist_40ED6_iter4 = regdi;
 			regdi = poly_linked_list_40ED6[regdi];
 		}
 	}
 
 	poly_linked_list_40ED6[polyinfonumpolys] = regdi;
-	poly_linked_list_40ED6[poly_linked_list_40ED6_tail] = polyinfonumpolys;
-	word_4554A++;
+	poly_linked_list_40ED6[poly_linklist_40ED6_iter4] = polyinfonumpolys;
+	poly_linklist_40ED6_iter3++;
 	if (regdi < 0) {
-		word_443F2 = polyinfonumpolys;
+		poly_linklist_40ED6_iter2 = polyinfonumpolys;
 	}
-	poly_linked_list_40ED6_tail = poly_linked_list_40ED6[poly_linked_list_40ED6_tail];
+	poly_linklist_40ED6_iter4 = poly_linked_list_40ED6[poly_linklist_40ED6_iter4];
 	polyinfonumpolys++;
 	polyinfoptrnext += (transshapenumvertscopy * sizeof(struct POINT2D)) + 6; // TODO: sizeof POINT2D?
 	if (polyinfonumpolys == 0x190) return 1;
@@ -2648,7 +2655,7 @@ void polyinfo_reset(void) {
 	polyinfoptrnext = 0;
 	word_40ECE = 0;
 	poly_linked_list_40ED6[0x190] = 0xFFFF;
-	word_443F2 = 0x190;
+	poly_linklist_40ED6_iter2 = 0x190;
 }
 
 void calc_sincos80(void) {
