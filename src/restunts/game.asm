@@ -40422,7 +40422,7 @@ sub_24DE6	proc far		; CODE XREF: sub_24E06+29p
 		mov	word_41850, 0
 		mov	word_40ECE, 0
 		mov	word_411F6, 0FFFFh
-		mov	word_443F2, 190h
+		mov	poly_linklist_40ED6_iter2, 190h
 		retf
 sub_24DE6	endp
 
@@ -40789,10 +40789,10 @@ loc_25077:				; CODE XREF: sub_24E9E+1BDj
 		mov	[bp+var_8], dx
 
 loc_250A3:				; CODE XREF: sub_24E9E+115j
-		mov	ax, word_443F2
-		mov	word_4394E, ax
-		mov	poly_linked_list_40ED6_tail, ax
-		mov	word_4554A, 0
+		mov	ax, poly_linklist_40ED6_iter2
+		mov	poly_linklist_40ED6_iter1, ax
+		mov	poly_linklist_40ED6_iter4, ax
+		mov	poly_linklist_40ED6_iter3, 0
 		mov	[bp+var_45E], 0
 		cmp	word_4187C, 8
 		jbe	short loc_250C6
@@ -42316,19 +42316,19 @@ arg_2		= word ptr  8
 		push	si
 		cmp	[bp+arg_2], 0
 		jnz	short loc_25E3E
-		mov	bx, poly_linked_list_40ED6_tail
+		mov	bx, poly_linklist_40ED6_iter4
 		shl	bx, 1
 		mov	di, [bx+5766h]
 		jmp	short loc_25E7B
 ; ---------------------------------------------------------------------------
 
 loc_25E3E:				; CODE XREF: sub_25E24+Cj
-		mov	ax, word_4394E
-		mov	poly_linked_list_40ED6_tail, ax
+		mov	ax, poly_linklist_40ED6_iter1
+		mov	poly_linklist_40ED6_iter4, ax
 		mov	bx, ax
 		shl	bx, 1
 		mov	di, [bx+5766h]
-		mov	si, word_4554A
+		mov	si, poly_linklist_40ED6_iter3
 		jmp	short loc_25E77
 ; ---------------------------------------------------------------------------
 
@@ -42344,7 +42344,7 @@ loc_25E52:				; CODE XREF: sub_25E24+55j
 		mov	ax, [bp+arg_0]
 		cmp	es:[bx], ax
 		jl	short loc_25E7B
-		mov	poly_linked_list_40ED6_tail, di
+		mov	poly_linklist_40ED6_iter4, di
 		mov	bx, di
 		shl	bx, 1
 		mov	di, [bx+5766h]
@@ -42358,21 +42358,21 @@ loc_25E7B:				; CODE XREF: sub_25E24+18j
 		mov	bx, word_442E6
 		shl	bx, 1
 		mov	[bx+5766h], di
-		mov	bx, poly_linked_list_40ED6_tail
+		mov	bx, poly_linklist_40ED6_iter4
 		shl	bx, 1
 		mov	ax, word_442E6
 		mov	[bx+5766h], ax
-		inc	word_4554A
+		inc	poly_linklist_40ED6_iter3
 		or	di, di
 		jge	short loc_25EA0
 		mov	ax, word_442E6
-		mov	word_443F2, ax
+		mov	poly_linklist_40ED6_iter2, ax
 
 loc_25EA0:				; CODE XREF: sub_25E24+74j
-		mov	bx, poly_linked_list_40ED6_tail
+		mov	bx, poly_linklist_40ED6_iter4
 		shl	bx, 1
 		mov	ax, [bx+5766h]
-		mov	poly_linked_list_40ED6_tail, ax
+		mov	poly_linklist_40ED6_iter4, ax
 		inc	word_442E6
 		mov	al, byte_449F4
 		sub	ah, ah
@@ -121257,7 +121257,7 @@ word_4394A	dw ?			; DATA XREF: sub_37EC0+10Bw
 					; sub_38DE6:loc_38E74r
 word_4394C	dw ?			; DATA XREF: sub_37EC0+10Ew
 					; sub_38DE6+91r
-word_4394E	dw ?			; DATA XREF: sub_24E9E+208w
+poly_linklist_40ED6_iter1	dw ?			; DATA XREF: sub_24E9E+208w
 					; sub_25E24:loc_25E3Er
 byte_43950	db ?			; DATA XREF: sub_21B7A+D1w
 					; sub_21B7A+103w ...
@@ -123980,7 +123980,7 @@ word_44382	dw ?			; DATA XREF: sub_1069C+3Aw
 		db    ?	;
 		db    ?	;
 		db    ?	;
-word_443F2	dw ?			; DATA XREF: sub_24DE6+18w
+poly_linklist_40ED6_iter2	dw ?			; DATA XREF: sub_24DE6+18w
 					; sub_24E9E:loc_250A3r	...
 word_443F4	dw ?			; DATA XREF: seg005:loc_225BAw
 					; seg005:0A51r	...
@@ -128382,7 +128382,7 @@ byte_4552F	db ?			; DATA XREF: sub_22532+Cw
 		db    ?	;
 		db    ?	;
 		db    ?	;
-word_4554A	dw ?			; DATA XREF: sub_24E9E+20Ew
+poly_linklist_40ED6_iter3	dw ?			; DATA XREF: sub_24E9E+20Ew
 					; sub_25E24+28r ...
 		db    ?	;
 		db    ?	;
@@ -130488,7 +130488,7 @@ word_45D92	dw ?			; DATA XREF: sub_24DC2+18w
 word_45D94	dw ?			; DATA XREF: sub_21B7A+125w
 word_45D96	dw ?			; DATA XREF: sub_14DA2+545r
 					; sub_14DA2+66Fr ...
-poly_linked_list_40ED6_tail	dw ?			; DATA XREF: sub_24E9E+20Bw
+poly_linklist_40ED6_iter4	dw ?			; DATA XREF: sub_24E9E+20Bw
 					; sub_25E24+Er	...
 		db    ?	;
 		db    ?	;

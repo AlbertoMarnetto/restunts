@@ -1164,7 +1164,7 @@ dseg segment byte public 'STUNTSD' use16
     extrn snarres:dword
     extrn trackdata3:dword
     extrn tommres:dword
-    extrn word_4394E:word
+    extrn poly_linklist_40ED6_iter1:word
     extrn dashb_toggle:byte
     extrn mat_z_rot:MATRIX
     extrn word_43964:word
@@ -1205,7 +1205,7 @@ dseg segment byte public 'STUNTSD' use16
     extrn gnam_string:byte
     extrn terrainrows:word
     extrn word_443E8:word
-    extrn word_443F2:word
+    extrn poly_linklist_40ED6_iter2:word
     extrn word_443F4:word
     extrn td20_trk_file_appnd:dword
     extrn carshapevecs:VECTOR
@@ -1337,7 +1337,7 @@ dseg segment byte public 'STUNTSD' use16
     extrn rect_array_unk_indices:byte
     extrn byte_4552F:byte
     extrn gameconfigcopy:GAMEINFO
-    extrn word_4554A:word
+    extrn poly_linklist_40ED6_iter3:word
     extrn rect_array_unk:RECTANGLE
     extrn mouseunkspriteptr:dword
     extrn miscptr:dword
@@ -1388,7 +1388,7 @@ dseg segment byte public 'STUNTSD' use16
     extrn material_patlist2_ptr_cpy:word
     extrn word_45D94:word
     extrn wallOrientation:word
-    extrn poly_linked_list_40ED6_tail:word
+    extrn poly_linklist_40ED6_iter4:word
     extrn byte_45D9A:byte
     extrn game_replay_mode:byte
     extrn td08_direction_related:dword
