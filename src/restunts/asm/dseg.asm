@@ -87,7 +87,7 @@ dseg segment byte public 'STUNTSD' use16
     public byte_3B8F7
     public kbormouse
     public mouse_isdirty
-    public detail_level
+    public graphic_level
     public g_is_busy
     public byte_3B8FC
     public aKevin
@@ -1882,7 +1882,7 @@ byte_3B8F6     db 0
 byte_3B8F7     db 0
 kbormouse     db 0
 mouse_isdirty     db 0
-detail_level     db 0
+graphic_level     db 0
 g_is_busy     db 0
 byte_3B8FC     db 0
     db 0

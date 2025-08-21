@@ -96,7 +96,7 @@ loc_19F41:
     inc     si
     cmp     si, 0Fh
     jl      short loc_19F41
-    cmp     detail_level, 4
+    cmp     graphic_level, 4
     jnz     short loc_19F59
     mov     ax, word_463D6
     mov     word_449FE, ax
@@ -822,7 +822,7 @@ loc_1A512:
 loc_1A580:
     mov     [bp+var_2], 0FFFFh
 loc_1A585:
-    cmp     detail_level, 0
+    cmp     graphic_level, 0
     jz      short loc_1A58F
     jmp     loc_1A66D
 loc_1A58F:
@@ -908,7 +908,7 @@ loc_1A66D:
     sub     al, 1Dh
     neg     al
     mov     [bp+var_posadjust], al
-    cmp     detail_level, 0
+    cmp     graphic_level, 0
     jz      short loc_1A69D
     mov     al, byte ptr state.playerstate.car_posWorld1.lx+2
     mov     [bp+var_D8], al
@@ -922,7 +922,7 @@ loc_1A69F:
     inc     si
     cmp     si, 17h
     jl      short loc_1A69F
-    mov     bl, detail_level
+    mov     bl, graphic_level
     sub     bh, bh
     mov     al, detail_threshold_by_level[bx]
     mov     [bp+var_130], al
@@ -1062,7 +1062,7 @@ loc_1A7FF:
     mov     [bp+si+var_BC], al
     cmp     [bp+elem_map_value], 0
     jz      short loc_1A857
-    cmp     detail_level, 0
+    cmp     graphic_level, 0
     jz      short loc_1A857
     mov     al, [bp+elem_map_value]
     sub     ah, ah
@@ -1761,7 +1761,7 @@ loc_1AE7A:
     mov     al, [bx+1]
     add     al, [bp+var_poslookup]
     mov     [bp+var_poslookupadjust], al
-    cmp     detail_level, 0
+    cmp     graphic_level, 0
     jnz     short loc_1AEB2
     jmp     loc_1AD5E
 loc_1AEB2:
@@ -2765,7 +2765,7 @@ loc_1B8E7:
     mov     [bx+TRANSFORMEDSHAPE.ts_pos.vz], ax
     cmp     [bp+var_FC], 0
     jnz     short loc_1B903
-    cmp     detail_level, 2
+    cmp     graphic_level, 2
     jbe     short loc_1B914
 loc_1B903:
     mov     bx, [bp+var_trkobject_ptr]
@@ -3026,7 +3026,7 @@ loc_1BB94:
     mov     [bx+TRANSFORMEDSHAPE.ts_pos.vz], ax
     cmp     [bp+var_FC], 0
     jnz     short loc_1BBB0
-    cmp     detail_level, 2
+    cmp     graphic_level, 2
     jbe     short loc_1BBC0
 loc_1BBB0:
     mov     bx, [bp+var_trkobject_ptr]
@@ -3801,7 +3801,7 @@ skybox_op_helper2 proc far
     sub     sp, 4
     push    di
     push    si
-    cmp     detail_level, 4
+    cmp     graphic_level, 4
     jz      short loc_1C320
     mov     si, [bp+arg_4]
     mov     bx, [bp+arg_rectptr]
@@ -3834,7 +3834,7 @@ loc_1C339:
     call    sprite_clear_1_color
     add     sp, 2
 loc_1C35F:
-    cmp     detail_level, 4
+    cmp     graphic_level, 4
     jnz     short loc_1C369
     jmp     loc_1C432
 loc_1C369:
@@ -4098,7 +4098,7 @@ loc_1C58A:
     db 144
 loc_1C5A6:
     mov     [bp+var_5A], 0
-    cmp     detail_level, 4
+    cmp     graphic_level, 4
     jz      short loc_1C61D
     cmp     [bp+var_point2.x2], 0
     jge     short loc_1C61D
@@ -4537,7 +4537,7 @@ loc_1C9E4:
 loc_1C9ED:
     cmp     slow_video_mgmt_copy, 0
     jz      short loc_1CA25
-    cmp     detail_level, 4
+    cmp     graphic_level, 4
     jnz     short loc_1CA02
     mov     ax, [bp+var_skyheight]
     dec     ax
@@ -4578,7 +4578,7 @@ loc_1CA54:
     inc     si
     cmp     si, 0Fh
     jl      short loc_1CA54
-    cmp     detail_level, 4
+    cmp     graphic_level, 4
     jnz     short loc_1CA72
     mov     bx, [bp+arg_0]
     shl     bx, 1
