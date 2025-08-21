@@ -3,6 +3,10 @@
 
 #define TILES_TO_DRAW_COUNT 110
 
+// Level of detail customization
+#define TILES_TO_DRAW_MAX 110
+char low_detail_priority_array[] = { 99, 20, 18, 16, 14, 12, 10 };
+
 extern struct RECTANGLE* rectptr_unk2;
 extern struct RECTANGLE rect_array_unk[];
 extern struct RECTANGLE rect_array_unk2[];
@@ -69,121 +73,128 @@ extern int dialog_fnt_colour;
 extern char transformedshape_counter;
 
 struct TILE_REL_COORDS {
-	char width, depth;
+	char width;
+	char depth;
+	// A metric representing how acceptable it is to use the low-polygon
+	// version of the models in this square in case the program needs to reduce the
+	// memory consumption
+	char low_detail_priority;
 };
 
-struct TILE_REL_COORDS lookahead_tiles_supersight[TILES_TO_DRAW_COUNT] = {
-{  -6,   4 },
-{   0,  10 },
-{   5,   6 },
-{  -5,   6 },
-{   6,   3 },
-{  -6,   3 },
-{   2,   9 },
-{  -2,   9 },
-{   6,   2 },
-{  -6,   2 },
-{   4,   7 },
-{  -4,   7 },
-{   3,   8 },
-{  -3,   8 },
-{   5,   5 },
-{  -5,   5 },
-{   1,   9 },
-{  -1,   9 },
-{   6,   1 },
-{  -6,   1 },
-{   0,   9 },
-{   5,   4 },
-{  -5,   4 },
-{   4,   6 },
-{  -4,   6 },
-{   2,   8 },
-{  -2,   8 },
-{   3,   7 },
-{  -3,   7 },
-{   5,   3 },
-{  -5,   3 },
-{   1,   8 },
-{  -1,   8 },
-{   0,   8 },
-{   4,   5 },
-{  -4,   5 },
-{   5,   2 },
-{  -5,   2 },
-{   2,   7 },
-{  -2,   7 },
-{   5,   1 },
-{  -5,   1 },
-{   3,   6 },
-{  -3,   6 },
-{   4,   4 },
-{  -4,   4 },
-{   1,   7 },
-{  -1,   7 },
-{   0,   7 },
-{   3,   5 },
-{  -3,   5 },
-{   4,   3 },
-{  -4,   3 },
-{   2,   6 },
-{  -2,   6 },
-{   4,   2 },
-{  -4,   2 },
-{   1,   6 },
-{  -1,   6 },
-{   3,   4 },
-{  -3,   4 },
-{   4,   1 },
-{  -4,   1 },
-{   0,   6 },
-{   4,   0 },
-{  -4,   0 },
-{   2,   5 },
-{  -2,   5 },
-{   3,   3 },
-{  -3,   3 },
-{   1,   5 },
-{  -1,   5 },
-{   2,   4 },
-{  -2,   4 },
-{   0,   5 },
-{   3,   2 },
-{  -3,   2 },
-{   3,   1 },
-{  -3,   1 },
-{   3,   0 },
-{  -3,   0 },
-{   1,   4 },
-{  -1,   4 },
-{   2,   3 },
-{  -2,   3 },
-{   0,   4 },
-{   2,   2 },
-{  -2,   2 },
-{   1,   3 },
-{  -1,   3 },
-{   2,   1 },
-{  -2,   1 },
-{   0,   3 },
-{   2,  -1 },
-{  -2,  -1 },
-{   2,   0 },
-{  -2,   0 },
-{   1,   2 },
-{  -1,   2 },
-{   0,   2 },
-{   1,   1 },
-{  -1,   1 },
-{   1,  -1 },
-{  -1,  -1 },
-{   1,   0 },
-{  -1,   0 },
-{   0,  -2 },
-{   0,   1 },
-{   0,  -1 },
-{   0,   0 }
+
+struct TILE_REL_COORDS lookahead_tiles_supersight_full[TILES_TO_DRAW_COUNT] = {
+{  -6,   4,  26 },
+{   0,  10,  20 },
+{   5,   6,  27 },
+{  -5,   6,  27 },
+{   6,   3,  24 },
+{  -6,   3,  24 },
+{   2,   9,  24 },
+{  -2,   9,  24 },
+{   6,   2,  22 },
+{  -6,   2,  22 },
+{   4,   7,  26 },
+{  -4,   7,  26 },
+{   3,   8,  25 },
+{  -3,   8,  25 },
+{   5,   5,  25 },
+{  -5,   5,  25 },
+{   1,   9,  21 },
+{  -1,   9,  21 },
+{   6,   1,  20 },
+{  -6,   1,  20 },
+{   0,   9,  18 },
+{   5,   4,  23 },
+{  -5,   4,  23 },
+{   4,   6,  24 },
+{  -4,   6,  24 },
+{   2,   8,  22 },
+{  -2,   8,  22 },
+{   3,   7,  23 },
+{  -3,   7,  23 },
+{   5,   3,  21 },
+{  -5,   3,  21 },
+{   1,   8,  19 },
+{  -1,   8,  19 },
+{   0,   8,  16 },
+{   4,   5,  22 },
+{  -4,   5,  22 },
+{   5,   2,  19 },
+{  -5,   2,  19 },
+{   2,   7,  20 },
+{  -2,   7,  20 },
+{   5,   1,  17 },
+{  -5,   1,  17 },
+{   3,   6,  21 },
+{  -3,   6,  21 },
+{   4,   4,  20 },
+{  -4,   4,  20 },
+{   1,   7,  17 },
+{  -1,   7,  17 },
+{   0,   7,  14 },
+{   3,   5,  19 },
+{  -3,   5,  19 },
+{   4,   3,  18 },
+{  -4,   3,  18 },
+{   2,   6,  18 },
+{  -2,   6,  18 },
+{   4,   2,  16 },
+{  -4,   2,  16 },
+{   1,   6,  15 },
+{  -1,   6,  15 },
+{   3,   4,  17 },
+{  -3,   4,  17 },
+{   4,   1,  14 },
+{  -4,   1,  14 },
+{   0,   6,  12 },
+{   4,   0,  12 },
+{  -4,   0,  12 },
+{   2,   5,  16 },
+{  -2,   5,  16 },
+{   3,   3,  15 },
+{  -3,   3,  15 },
+{   1,   5,  13 },
+{  -1,   5,  13 },
+{   2,   4,  14 },
+{  -2,   4,  14 },
+{   0,   5,  10 },
+{   3,   2,  13 },
+{  -3,   2,  13 },
+{   3,   1,  11 },
+{  -3,   1,  11 },
+{   3,   0,   9 },
+{  -3,   0,   9 },
+{   1,   4,  11 },
+{  -1,   4,  11 },
+{   2,   3,  12 },
+{  -2,   3,  12 },
+{   0,   4,   8 },
+{   2,   2,  10 },
+{  -2,   2,  10 },
+{   1,   3,   9 },
+{  -1,   3,   9 },
+{   2,   1,   8 },
+{  -2,   1,   8 },
+{   0,   3,   6 },
+{   2,  -1,   8 },
+{  -2,  -1,   8 },
+{   2,   0,   6 },
+{  -2,   0,   6 },
+{   1,   2,   7 },
+{  -1,   2,   7 },
+{   0,   2,   4 },
+{   1,   1,   5 },
+{  -1,   1,   5 },
+{   1,  -1,   5 },
+{  -1,  -1,   5 },
+{   1,   0,   3 },
+{  -1,   0,   3 },
+{   0,  -2,   4 },
+{   0,   1,   2 },
+{   0,  -1,   2 },
+{   0,   0,   0 }
 };
+
 
 void build_track_object(struct VECTOR* a, struct VECTOR* b);
 void transformed_shape_add_for_sort(int a, int b);
@@ -197,6 +208,14 @@ void font_set_fontdef2(void far* data);
 void format_frame_as_string(char* s, int time, int c);
 void shape_op_explosion(int a, void far* shp, int x, int y);
 void heapsort_by_order(int n, int* heap, int* data);
+
+char get_low_detail_threshold_at_attempt(char attempt)
+{
+    if (attempt >= sizeof(low_detail_priority_array)) {
+        attempt = sizeof(low_detail_priority_array) - 1;
+    }
+    return low_detail_priority_array[attempt];
+}
 
 void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	int si;
@@ -222,7 +241,6 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	char car_tile_east, car_tile_y;
 	unsigned char tiles_to_draw_terr_type_vec[TILES_TO_DRAW_COUNT];
 	char should_skip_tile[TILES_TO_DRAW_COUNT];
-	char tile_detail_level[TILES_TO_DRAW_COUNT];
 	char tiles_to_draw_south[TILES_TO_DRAW_COUNT];
 	char tiles_to_draw_east[TILES_TO_DRAW_COUNT];
 	unsigned char tiles_to_draw_elem_type_vec[TILES_TO_DRAW_COUNT];
@@ -238,7 +256,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	int idx;
 	struct TRACKOBJECT* var_trkobjectptr;
 	struct TRACKOBJECT* var_trkobject_ptr; // NOTE: beware of similar names!!
-	char tile_det_level;
+	char use_low_poly_version;
 	char* var_10E;
 	int di;
 	int var_132;
@@ -261,11 +279,16 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	char M_width_south;
 	char width_idx;
 
+	char low_detail_priority; // for the tile being processed
+	char low_detail_threshold; // for this rendering attempt
 	unsigned discarded_tiles;
 	char discarded_tiles_str[60];
-	char is_first_attempt;
+	char attempts_count;
 	char is_last_attempt;
 	char has_attempt_failed;
+	struct TILE_REL_COORDS * lookahead_tiles_supersight
+		= lookahead_tiles_supersight_full
+		+ (TILES_TO_DRAW_COUNT - TILES_TO_DRAW_MAX);
 
 	var_DC[0] = 0;
 	var_DC[1] = 0;
@@ -480,14 +503,6 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		offset_south
 			= lookahead_tiles_supersight[si].depth * M_depth_south
 			+ lookahead_tiles_supersight[si].width * M_width_south;
-
-		if (lookahead_tiles_supersight[si].depth
-			+ 2*lookahead_tiles_supersight[si].width <= 6)
-		{
-			tile_detail_level[si] = 0;
-		} else {
-			tile_detail_level[si] = 1;
-		}
 
 		tile_east = cam_tile_east + offset_east;
 		tile_south = cam_tile_south + offset_south;
@@ -724,9 +739,10 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	si = 0;
 
 	discarded_tiles = 0;
-	is_first_attempt = 1;
+	attempts_count = 0;
 	is_last_attempt = 0;
 start_rendering:
+	low_detail_threshold = get_low_detail_threshold_at_attempt(attempts_count);
 	// With the information collected by the previus tile-scan algorithm,
 	// proceed to draw the shapes in each tile. Start from the farthest
 	// (painter's algorithm)
@@ -740,8 +756,9 @@ start_rendering:
 		elem_map_value = tiles_to_draw_elem_type_vec[si];
 		terr_map_value = tiles_to_draw_terr_type_vec[si];
 		// On the first attempt, draw everything at max resolution. If it fails
-		// (too many polygons), use the given detail level
-		tile_det_level = (is_first_attempt ? 0 : tile_detail_level[si]);
+		// (too many polygons), use the low-polygon version on selected squares
+		low_detail_priority = lookahead_tiles_supersight[si].low_detail_priority;
+		use_low_poly_version = (low_detail_priority >= low_detail_threshold);
 		var_12A = 0;
 		if (elem_map_value == 0) {
 			var_counter = 1;
@@ -798,7 +815,7 @@ start_rendering:
 
 				if (di != -1) { // obj on the border
 					var_trkobjectptr = &trkObjectList[fence_TrkObjCodes[di]];
-					if (tile_det_level == 0) {
+					if (use_low_poly_version == 0) {
 						currenttransshape->shapeptr = var_trkobjectptr->ss_shapePtr;
 					} else {
 						currenttransshape->shapeptr = var_trkobjectptr->ss_loShapePtr;
@@ -974,7 +991,7 @@ start_rendering:
 
 			if (var_trkobject_ptr->ss_ssOvelay != 0) {
 				var_trkobjectptr = &trkObjectList[var_trkobject_ptr->ss_ssOvelay];
-				if (tile_det_level != 0) {
+				if (use_low_poly_version != 0) {
 					currenttransshape[1].shapeptr = var_trkobjectptr->ss_loShapePtr;
 				} else {
 					currenttransshape[1].shapeptr = var_trkobjectptr->ss_shapePtr;
@@ -1013,7 +1030,7 @@ start_rendering:
 				}
 			}
 
-			if (tile_det_level != 0) {
+			if (use_low_poly_version != 0) {
 				currenttransshape->shapeptr = var_trkobject_ptr->ss_loShapePtr;
 			} else {
 				currenttransshape->shapeptr = var_trkobject_ptr->ss_shapePtr;
@@ -1130,7 +1147,7 @@ start_rendering:
 			curtransshape_ptr->pos.y = (state.playerstate.car_posWorld1.ly >> 6) - cam_pos.y;
 			curtransshape_ptr->pos.z = (state.playerstate.car_posWorld1.lz >> 6) - cam_pos.z;
 
-			if (tile_det_level != 0 || detail_level > 2) {
+			if (use_low_poly_version != 0 || detail_level > 2) {
 				curtransshape_ptr->shapeptr = var_trkobject_ptr->ss_loShapePtr;
 			} else {
 				curtransshape_ptr->shapeptr = var_trkobject_ptr->ss_shapePtr;
@@ -1184,7 +1201,7 @@ start_rendering:
 				curtransshape_ptr->pos.y = (state.opponentstate.car_posWorld1.ly >> 6) - cam_pos.y;
 				curtransshape_ptr->pos.z = (state.opponentstate.car_posWorld1.lz >> 6) - cam_pos.z;
 
-				if (tile_det_level != 0 || detail_level > 2) {
+				if (use_low_poly_version != 0 || detail_level > 2) {
 					curtransshape_ptr->shapeptr = var_trkobject_ptr->ss_loShapePtr;
 				} else {
 					curtransshape_ptr->shapeptr = var_trkobject_ptr->ss_shapePtr;
@@ -1304,14 +1321,11 @@ start_rendering:
 	if ((si < TILES_TO_DRAW_COUNT || has_attempt_failed > 0) && ! is_last_attempt)
 	{
 		// Rendering failed (due to out-of-memory).
-        // If this was the first attempt (i.e. drawing everything with max
-        // detail), try to just drop the detail: this alone should reduce the #
-        // of polygons needed by about 30%. Otherwise, start to drop tiles.
-		if (is_first_attempt) {
-			is_first_attempt = 0;
-		}
-		else
-		{
+		// If this was the first attempt (i.e. drawing everything with max
+		// detail), try to just drop the detail: this alone should reduce the #
+		// of polygons needed by about 30%. Otherwise, start to drop tiles.
+		++attempts_count;
+		if (attempts_count > 1) {
 			discarded_tiles += 20;
 			if (discarded_tiles > TILES_TO_DRAW_COUNT - 4) {
 				discarded_tiles = TILES_TO_DRAW_COUNT - 4;
@@ -1327,8 +1341,8 @@ start_rendering:
 		// Debug: print discarded tiles
 		_sprintf(
 			discarded_tiles_str,
-			"Polys: %3u, mem: %5u, discards: %2u, reveal: %s",
-			polyinfonumpolys, polyinfoptrnext, discarded_tiles,
+			"Polys: %3u, mem: %5u, attempts: %u, discards: %2u, reveal: %s",
+			polyinfonumpolys, polyinfoptrnext, attempts_count, discarded_tiles,
 			reveal_illusions ? "on" : "off");
 	}
 
@@ -1408,7 +1422,7 @@ start_rendering:
 	if (display_debug_overlay)
 	{
 		font_set_fontdef2(fontnptr);
-		si = is_first_attempt ? 15 : discarded_tiles < 30 ? 14 : 12; // white, yellow, red
+		si = (attempts_count == 0) ? 15 : discarded_tiles < 30 ? 14 : 12; // white, yellow, red
 		rect_union(intro_draw_text(discarded_tiles_str, 0x0C, roofbmpheight + 12, si, 0), &rect_unk11, &rect_unk11);
 		rect_union(intro_draw_text(" ", 0x0C, roofbmpheight + 2, 0, 0), &rect_unk11, &rect_unk11);
 		font_set_fontdef();
