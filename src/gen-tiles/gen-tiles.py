@@ -34,7 +34,7 @@ first_coordinates = sorted_coordinates[:TILES_TO_DRAW_COUNT]
 #for index, (x, y, dist) in enumerate(first_coordinates, start=1):
 #    print(f"{index}: ({x}, {y}) ({distance_from_origin(x, y)})")
 
-print('struct TILE_REL_COORDS lookahead_tiles_supersight[TILES_TO_DRAW_COUNT] = {')
+print('struct TILE_REL_COORDS lookahead_tiles_supersight_full[TILES_TO_DRAW_COUNT] = {')
 u = ',\n'.join([f'{{ {c[0]:3}, {c[1]:3},  {c[2]:2} }}' for c in reversed(first_coordinates)])
 print(u)
 print('};')
