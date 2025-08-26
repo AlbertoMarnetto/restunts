@@ -3,11 +3,11 @@
 
 // How many tiles will be really drawn.
 // DO NOT EXCEED LOOKAHEAD_TILES_DB_SIZE, i.e. 180
-#define TILES_TO_DRAW_MAX 180
+#define TILES_TO_DRAW_MAX 80
 
 // At rendering attempt x, only the tiles having a low_detail_priority lower
 // than the x-th element of this array will be rendered in high detail
-char low_detail_priority_thresholds[] = { 99, 20, 18, 16, 14, 12, 10 };
+char low_detail_priority_thresholds[] = { 20, 18, 16, 14, 12, 10 };
 
 extern struct RECTANGLE* rectptr_unk2;
 extern struct RECTANGLE rect_array_unk[];
