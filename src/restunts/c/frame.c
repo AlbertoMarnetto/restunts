@@ -83,9 +83,6 @@ struct TILE_REL_COORDS {
 	char low_detail_priority;
 };
 
-
-
-
 struct TILE_REL_COORDS lookahead_tiles_db[] = {
 {   1,  13,  29 },
 {  -1,  13,  29 },
@@ -360,9 +357,6 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	char attempts_count;
 	char is_last_attempt;
 	char has_attempt_failed;
-	struct TILE_REL_COORDS * lookahead_tiles_supersight
-		= lookahead_tiles_db
-		+ (LOOKAHEAD_TILES_DB_SIZE - TILES_TO_DRAW_MAX);
 
 	var_DC[0] = 0;
 	var_DC[1] = 0;
@@ -572,11 +566,11 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			continue;
 
 		offset_east
-			= lookahead_tiles_supersight[si].depth * M_depth_east
-			+ lookahead_tiles_supersight[si].width * M_width_east;
+			= lookahead_tiles_db[si].depth * M_depth_east
+			+ lookahead_tiles_db[si].width * M_width_east;
 		offset_south
-			= lookahead_tiles_supersight[si].depth * M_depth_south
-			+ lookahead_tiles_supersight[si].width * M_width_south;
+			= lookahead_tiles_db[si].depth * M_depth_south
+			+ lookahead_tiles_db[si].width * M_width_south;
 
 		tile_east = cam_tile_east + offset_east;
 		tile_south = cam_tile_south + offset_south;
@@ -658,11 +652,11 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 			// counts backwards) and remove those which belong to the same
 			// multi-tile component as this tile
 			other_offset_east
-				= lookahead_tiles_supersight[di].depth * M_depth_east
-				+ lookahead_tiles_supersight[di].width * M_width_east;
+				= lookahead_tiles_db[di].depth * M_depth_east
+				+ lookahead_tiles_db[di].width * M_width_east;
 			other_offset_south
-				= lookahead_tiles_supersight[di].depth * M_depth_south
-				+ lookahead_tiles_supersight[di].width * M_width_south;
+				= lookahead_tiles_db[di].depth * M_depth_south
+				+ lookahead_tiles_db[di].width * M_width_south;
 
 			if (idx == 1) {
 				if (other_offset_east == offset_east
@@ -714,11 +708,11 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 					}
 
 					offset_east
-						= lookahead_tiles_supersight[si].depth * M_depth_east
-						+ lookahead_tiles_supersight[si].width * M_width_east;
+						= lookahead_tiles_db[si].depth * M_depth_east
+						+ lookahead_tiles_db[si].width * M_width_east;
 					offset_south
-						= lookahead_tiles_supersight[si].depth * M_depth_south
-						+ lookahead_tiles_supersight[si].width * M_width_south;
+						= lookahead_tiles_db[si].depth * M_depth_south
+						+ lookahead_tiles_db[si].width * M_width_south;
 
 					if (offset_east + cam_tile_east == tile_east
 					    && offset_south + cam_tile_south == tile_south)
@@ -771,11 +765,11 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 						}
 
 						offset_east
-							= lookahead_tiles_supersight[si].depth * M_depth_east
-							+ lookahead_tiles_supersight[si].width * M_width_east;
+							= lookahead_tiles_db[si].depth * M_depth_east
+							+ lookahead_tiles_db[si].width * M_width_east;
 						offset_south
-							= lookahead_tiles_supersight[si].depth * M_depth_south
-							+ lookahead_tiles_supersight[si].width * M_width_south;
+							= lookahead_tiles_db[si].depth * M_depth_south
+							+ lookahead_tiles_db[si].width * M_width_south;
 
 						if (offset_east + cam_tile_east == tile_east
 							&& offset_south + cam_tile_south == tile_south)
@@ -812,7 +806,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	var_4E = 0;
 	si = 0;
 
-	discarded_tiles = 0;
+	discarded_tiles = (LOOKAHEAD_TILES_DB_SIZE - TILES_TO_DRAW_MAX);
 	attempts_count = 0;
 	is_last_attempt = 0;
 start_rendering:
@@ -831,7 +825,7 @@ start_rendering:
 		terr_map_value = tiles_to_draw_terr_type_vec[si];
 		// On the first attempt, draw everything at max resolution. If it fails
 		// (too many polygons), use the low-polygon version on selected squares
-		low_detail_priority = lookahead_tiles_supersight[si].low_detail_priority;
+		low_detail_priority = lookahead_tiles_db[si].low_detail_priority;
 		use_low_poly_version = (low_detail_priority >= low_detail_threshold);
 		var_12A = 0;
 		if (elem_map_value == 0) {
