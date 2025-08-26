@@ -1,11 +1,13 @@
 #include "externs.h"
 #include "math.h"
 
-#define TILES_TO_DRAW_COUNT 180
-
-// Level of detail customization
+// How many tiles will be really drawn.
+// DO NOT EXCEED LOOKAHEAD_TILES_DB_SIZE, i.e. 180
 #define TILES_TO_DRAW_MAX 180
-char low_detail_priority_array[] = { 99, 20, 18, 16, 14, 12, 10 };
+
+// At rendering attempt x, only the tiles having a low_detail_priority lower
+// than the x-th element of this array will be rendered in high detail
+char low_detail_priority_thresholds[] = { 99, 20, 18, 16, 14, 12, 10 };
 
 extern struct RECTANGLE* rectptr_unk2;
 extern struct RECTANGLE rect_array_unk[];
@@ -84,7 +86,7 @@ struct TILE_REL_COORDS {
 
 
 
-struct TILE_REL_COORDS lookahead_tiles_supersight_full[TILES_TO_DRAW_COUNT] = {
+struct TILE_REL_COORDS lookahead_tiles_db[] = {
 {   1,  13,  29 },
 {  -1,  13,  29 },
 {   0,  13,  26 },
@@ -266,9 +268,7 @@ struct TILE_REL_COORDS lookahead_tiles_supersight_full[TILES_TO_DRAW_COUNT] = {
 {   0,  -1,   2 },
 {   0,   0,   0 }
 };
-
-
-
+#define LOOKAHEAD_TILES_DB_SIZE (sizeof(lookahead_tiles_db) / sizeof(*lookahead_tiles_db))
 
 void build_track_object(struct VECTOR* a, struct VECTOR* b);
 void transformed_shape_add_for_sort(int a, int b);
@@ -285,10 +285,10 @@ void heapsort_by_order(int n, int* heap, int* data);
 
 char get_low_detail_threshold_at_attempt(char attempt)
 {
-    if (attempt >= sizeof(low_detail_priority_array)) {
-        attempt = sizeof(low_detail_priority_array) - 1;
+    if (attempt >= sizeof(low_detail_priority_thresholds)) {
+        attempt = sizeof(low_detail_priority_thresholds) - 1;
     }
-    return low_detail_priority_array[attempt];
+    return low_detail_priority_thresholds[attempt];
 }
 
 void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
@@ -313,11 +313,11 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	char other_offset_south, other_offset_east;
 	char tile_to_draw_south_offset, tile_to_draw_east_offset;
 	char car_tile_east, car_tile_y;
-	unsigned char tiles_to_draw_terr_type_vec[TILES_TO_DRAW_COUNT];
-	char should_skip_tile[TILES_TO_DRAW_COUNT];
-	char tiles_to_draw_south[TILES_TO_DRAW_COUNT];
-	char tiles_to_draw_east[TILES_TO_DRAW_COUNT];
-	unsigned char tiles_to_draw_elem_type_vec[TILES_TO_DRAW_COUNT];
+	unsigned char tiles_to_draw_terr_type_vec[LOOKAHEAD_TILES_DB_SIZE];
+	char should_skip_tile[LOOKAHEAD_TILES_DB_SIZE];
+	char tiles_to_draw_south[LOOKAHEAD_TILES_DB_SIZE];
+	char tiles_to_draw_east[LOOKAHEAD_TILES_DB_SIZE];
+	unsigned char tiles_to_draw_elem_type_vec[LOOKAHEAD_TILES_DB_SIZE];
 	char detail_threshold;
 	char var_3C;
 	char var_60;
@@ -361,8 +361,8 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	char is_last_attempt;
 	char has_attempt_failed;
 	struct TILE_REL_COORDS * lookahead_tiles_supersight
-		= lookahead_tiles_supersight_full
-		+ (TILES_TO_DRAW_COUNT - TILES_TO_DRAW_MAX);
+		= lookahead_tiles_db
+		+ (LOOKAHEAD_TILES_DB_SIZE - TILES_TO_DRAW_MAX);
 
 	var_DC[0] = 0;
 	var_DC[1] = 0;
@@ -546,7 +546,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		car_tile_y = 0x1D - (state.playerstate.car_posWorld1.lz >> 16);
 	}
 
-	for (si = 0; si < TILES_TO_DRAW_COUNT; si++) {
+	for (si = 0; si < LOOKAHEAD_TILES_DB_SIZE; si++) {
 		should_skip_tile[si] = 0;
 	}
 
@@ -564,7 +564,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	M_width_south = lookahead_tiles[1] == 2 ? 1 : lookahead_tiles[1] == -2 ? -1 : 0;
 
 	// Cycle on the tiles to draw, determine if they really need to be drawn
-	for (si = TILES_TO_DRAW_COUNT - 1; si >= 0; si--) {
+	for (si = LOOKAHEAD_TILES_DB_SIZE - 1; si >= 0; si--) {
 
 		// Skip if a previous iteration determined this tile is not needed
 		// (happens for multi-tile elements)
@@ -708,7 +708,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				tile_east = (var_vec8.x + state.playerstate.car_posWorld1.lx) >> 16; // bits 16-24
 				tile_south = -(((var_vec8.z + state.playerstate.car_posWorld1.lz) >> 16) - 0x1D);
 
-				for (si = TILES_TO_DRAW_COUNT - 1; si > idx; si--) {
+				for (si = LOOKAHEAD_TILES_DB_SIZE - 1; si > idx; si--) {
 					if (should_skip_tile[si] == 2) {
 						continue;
 					}
@@ -765,7 +765,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 					tile_east = (var_vec8.x + state.opponentstate.car_posWorld1.lx) >> 16; // bits 16-24
 					tile_south = -(((var_vec8.z + state.opponentstate.car_posWorld1.lz) >> 16) - 0x1D);
 
-					for (si = TILES_TO_DRAW_COUNT - 1; si > idx; si--) {
+					for (si = LOOKAHEAD_TILES_DB_SIZE - 1; si > idx; si--) {
 						if (should_skip_tile[si] == 2) {
 							continue;
 						}
@@ -821,7 +821,7 @@ start_rendering:
 	// proceed to draw the shapes in each tile. Start from the farthest
 	// (painter's algorithm)
 	has_attempt_failed = 0;
-	for (si = discarded_tiles; si < TILES_TO_DRAW_COUNT; si++) {
+	for (si = discarded_tiles; si < LOOKAHEAD_TILES_DB_SIZE; si++) {
 		if (should_skip_tile[si] != 0) {
 			continue;
 		}
@@ -1392,7 +1392,7 @@ start_rendering:
 			}
 		}
 	}
-	if ((si < TILES_TO_DRAW_COUNT || has_attempt_failed > 0) && ! is_last_attempt)
+	if ((si < LOOKAHEAD_TILES_DB_SIZE || has_attempt_failed > 0) && ! is_last_attempt)
 	{
 		// Rendering failed (due to out-of-memory).
 		// If this was the first attempt (i.e. drawing everything with max
@@ -1401,8 +1401,8 @@ start_rendering:
 		++attempts_count;
 		if (attempts_count > 1) {
 			discarded_tiles += 25;
-			if (discarded_tiles > TILES_TO_DRAW_COUNT - 4) {
-				discarded_tiles = TILES_TO_DRAW_COUNT - 4;
+			if (discarded_tiles > LOOKAHEAD_TILES_DB_SIZE - 4) {
+				discarded_tiles = LOOKAHEAD_TILES_DB_SIZE - 4;
 				is_last_attempt = 1;
 			}
 		}
