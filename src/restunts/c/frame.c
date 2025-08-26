@@ -1,10 +1,10 @@
 #include "externs.h"
 #include "math.h"
 
-#define TILES_TO_DRAW_COUNT 110
+#define TILES_TO_DRAW_COUNT 180
 
 // Level of detail customization
-#define TILES_TO_DRAW_MAX 110
+#define TILES_TO_DRAW_MAX 180
 char low_detail_priority_array[] = { 99, 20, 18, 16, 14, 12, 10 };
 
 extern struct RECTANGLE* rectptr_unk2;
@@ -79,7 +79,79 @@ struct TILE_REL_COORDS {
 };
 
 
+
+
 struct TILE_REL_COORDS lookahead_tiles_supersight_full[TILES_TO_DRAW_COUNT] = {
+{   1,  13,  29 },
+{  -1,  13,  29 },
+{   0,  13,  26 },
+{   8,   4,  32 },
+{  -8,   4,  32 },
+{   6,   9,  36 },
+{  -6,   9,  36 },
+{   7,   7,  35 },
+{  -7,   7,  35 },
+{   3,  12,  33 },
+{  -3,  12,  33 },
+{   5,  10,  35 },
+{  -5,  10,  35 },
+{   8,   3,  30 },
+{  -8,   3,  30 },
+{   4,  11,  34 },
+{  -4,  11,  34 },
+{   8,   2,  28 },
+{  -8,   2,  28 },
+{   2,  12,  30 },
+{  -2,  12,  30 },
+{   7,   6,  33 },
+{  -7,   6,  33 },
+{   6,   8,  34 },
+{  -6,   8,  34 },
+{   1,  12,  27 },
+{  -1,  12,  27 },
+{   0,  12,  24 },
+{   3,  11,  31 },
+{  -3,  11,  31 },
+{   7,   5,  31 },
+{  -7,   5,  31 },
+{   5,   9,  33 },
+{  -5,   9,  33 },
+{   4,  10,  32 },
+{  -4,  10,  32 },
+{   6,   7,  32 },
+{  -6,   7,  32 },
+{   7,   4,  29 },
+{  -7,   4,  29 },
+{   2,  11,  28 },
+{  -2,  11,  28 },
+{   7,   3,  27 },
+{  -7,   3,  27 },
+{   5,   8,  31 },
+{  -5,   8,  31 },
+{   1,  11,  25 },
+{  -1,  11,  25 },
+{   3,  10,  29 },
+{  -3,  10,  29 },
+{   6,   6,  30 },
+{  -6,   6,  30 },
+{   0,  11,  22 },
+{   4,   9,  30 },
+{  -4,   9,  30 },
+{   7,   2,  25 },
+{  -7,   2,  25 },
+{   6,   5,  28 },
+{  -6,   5,  28 },
+{   2,  10,  26 },
+{  -2,  10,  26 },
+{   5,   7,  29 },
+{  -5,   7,  29 },
+{   3,   9,  27 },
+{  -3,   9,  27 },
+{   1,  10,  23 },
+{  -1,  10,  23 },
+{   4,   8,  28 },
+{  -4,   8,  28 },
+{   6,   4,  26 },
 {  -6,   4,  26 },
 {   0,  10,  20 },
 {   5,   6,  27 },
@@ -191,6 +263,8 @@ struct TILE_REL_COORDS lookahead_tiles_supersight_full[TILES_TO_DRAW_COUNT] = {
 {   0,  -1,   2 },
 {   0,   0,   0 }
 };
+
+
 
 
 void build_track_object(struct VECTOR* a, struct VECTOR* b);
@@ -1319,7 +1393,7 @@ start_rendering:
 		// of polygons needed by about 30%. Otherwise, start to drop tiles.
 		++attempts_count;
 		if (attempts_count > 1) {
-			discarded_tiles += 20;
+			discarded_tiles += 25;
 			if (discarded_tiles > TILES_TO_DRAW_COUNT - 4) {
 				discarded_tiles = TILES_TO_DRAW_COUNT - 4;
 				is_last_attempt = 1;
