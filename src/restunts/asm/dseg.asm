@@ -76,9 +76,9 @@ dseg segment byte public 'STUNTSD' use16
     public aCity
     public aCountry
     public hillHeightConsts
-    public word_3B8EC
-    public word_3B8EE
-    public word_3B8F0
+    public custom_camera_distance
+    public custom_camera_azimuth_angle
+    public custom_camera_elevation_angle
     public byte_3B8F2
     public is_audioloaded
     public HKeyFlag
@@ -1871,9 +1871,9 @@ aCountry     db 99
     db 0
 hillHeightConsts     dw 0
     dw 450
-word_3B8EC     dw 210
-word_3B8EE     dw 464
-word_3B8F0     dw 80
+custom_camera_distance     dw 210
+custom_camera_azimuth_angle     dw 464
+custom_camera_elevation_angle     dw 80
 byte_3B8F2     db 0
 is_audioloaded     db 0
 HKeyFlag     db 0
