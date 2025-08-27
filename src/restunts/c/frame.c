@@ -23,9 +23,6 @@ extern struct RECTANGLE cliprect_unk;
 extern struct VECTOR vec_unk2;
 extern struct VECTOR vec_planerotopresult;
 extern struct MATRIX mat_temp;
-extern int custom_camera_distance;
-extern int custom_camera_elevation_angle;
-extern int custom_camera_azimuth_angle;
 extern int word_44D20;
 extern char detail_threshold_by_level[];
 extern char byte_3C0C6[];
@@ -1495,8 +1492,25 @@ start_rendering:
 	if (display_debug_overlay)
 	{
 		font_set_fontdef2(fontnptr);
+
+		// Print rendering engine debug infos
 		si = (attempts_count == 0) ? 15 : discarded_tiles < 30 ? 14 : 12; // white, yellow, red
 		rect_union(intro_draw_text(debug_overlay_str, 0x0C, roofbmpheight + 12, si, 0), &rect_unk11, &rect_unk11);
+
+		// Print camera coords
+		if (cameramode == 2)
+		{
+			_sprintf(
+				debug_overlay_str,
+				"Cam: dist: %5d, azimuth: %6d, elevation: %4d",
+				custom_camera_distance, custom_camera_azimuth_angle, custom_camera_elevation_angle);
+		}
+		else
+		{
+			_sprintf(debug_overlay_str, " ");
+		}
+		rect_union(intro_draw_text(debug_overlay_str, 0x0C, roofbmpheight + 2, si, 0), &rect_unk11, &rect_unk11);
+
 		// Reset text color to black
 		rect_union(intro_draw_text(" ", 0x0C, roofbmpheight + 2, 0, 0), &rect_unk11, &rect_unk11);
 		font_set_fontdef();
