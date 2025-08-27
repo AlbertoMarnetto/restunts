@@ -282,10 +282,10 @@ void heapsort_by_order(int n, int* heap, int* data);
 
 char get_low_detail_threshold_at_attempt(char attempt)
 {
-    if (attempt >= sizeof(low_detail_priority_thresholds)) {
-        attempt = sizeof(low_detail_priority_thresholds) - 1;
-    }
-    return low_detail_priority_thresholds[attempt];
+	if (attempt >= sizeof(low_detail_priority_thresholds)) {
+		attempt = sizeof(low_detail_priority_thresholds) - 1;
+	}
+	return low_detail_priority_thresholds[attempt];
 }
 
 void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
@@ -352,8 +352,9 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 
 	char low_detail_priority; // for the tile being processed
 	char low_detail_threshold; // for this rendering attempt
+	unsigned tiles_to_discard;
 	unsigned discarded_tiles;
-	char discarded_tiles_str[60];
+	char debug_overlay_str[60];
 	char attempts_count;
 	char is_last_attempt;
 	char has_attempt_failed;
@@ -715,7 +716,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 						+ lookahead_tiles_db[si].width * M_width_south;
 
 					if (offset_east + cam_tile_east == tile_east
-					    && offset_south + cam_tile_south == tile_south)
+						&& offset_south + cam_tile_south == tile_south)
 					{
 						var_3C = tile_east;
 						var_60 = tile_south;
@@ -1394,7 +1395,11 @@ start_rendering:
 		// of polygons needed by about 30%. Otherwise, start to drop tiles.
 		++attempts_count;
 		if (attempts_count > 1) {
-			discarded_tiles += 25;
+			tiles_to_discard = LOOKAHEAD_TILES_DB_SIZE - si;
+			if (tiles_to_discard < 5) tiles_to_discard = 5;
+			if (tiles_to_discard > 30) tiles_to_discard = 30;
+
+			discarded_tiles += tiles_to_discard;
 			if (discarded_tiles > LOOKAHEAD_TILES_DB_SIZE - 4) {
 				discarded_tiles = LOOKAHEAD_TILES_DB_SIZE - 4;
 				is_last_attempt = 1;
@@ -1408,7 +1413,7 @@ start_rendering:
 	{
 		// Debug: print discarded tiles
 		_sprintf(
-			discarded_tiles_str,
+			debug_overlay_str,
 			"Polys: %3u, mem: %5u, fails: %u, discards: %2u, reveal: %s",
 			polyinfonumpolys, polyinfoptrnext, attempts_count, discarded_tiles,
 			reveal_illusions ? "on" : "off");
@@ -1491,7 +1496,8 @@ start_rendering:
 	{
 		font_set_fontdef2(fontnptr);
 		si = (attempts_count == 0) ? 15 : discarded_tiles < 30 ? 14 : 12; // white, yellow, red
-		rect_union(intro_draw_text(discarded_tiles_str, 0x0C, roofbmpheight + 12, si, 0), &rect_unk11, &rect_unk11);
+		rect_union(intro_draw_text(debug_overlay_str, 0x0C, roofbmpheight + 12, si, 0), &rect_unk11, &rect_unk11);
+		// Reset text color to black
 		rect_union(intro_draw_text(" ", 0x0C, roofbmpheight + 2, 0, 0), &rect_unk11, &rect_unk11);
 		font_set_fontdef();
 	}
