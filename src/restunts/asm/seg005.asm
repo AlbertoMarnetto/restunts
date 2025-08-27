@@ -4222,7 +4222,11 @@ loc_2427F:
     db 144
 loc_24288:
     cmp     custom_camera_distance, 5DCh
-    jl      short loc_24293
+    ; SuperSight: remove the upper cap of 1500 units to the distance. Note that
+    ; this allows the distance to go negative via signed rollover, which
+    ; creates strange but interesting and not dangerous graphical glitches
+    ;jl      short loc_24293
+    jmp      short loc_24293
     jmp     loc_241F9
 loc_24293:
     add     custom_camera_distance, 1Eh
@@ -4240,7 +4244,11 @@ loc_242AE:
     jmp     loc_24D5E
 loc_242B6:
     cmp     custom_camera_distance, 78h ; 'x'
-    jg      short loc_242C0
+    ; SuperSight: remove the lower cap of 120 units to the distance. Note that
+    ; this allows the distance to go negative, which creates strange but
+    ; interesting and not dangerous graphical glitches
+    ;jg      short loc_242C0
+    jmp      short loc_242C0
     jmp     loc_241F9
 loc_242C0:
     sub     custom_camera_distance, 1Eh
