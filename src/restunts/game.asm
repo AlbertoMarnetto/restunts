@@ -19509,14 +19509,14 @@ loc_1A23E:				; CODE XREF: sub_1A0F4+13Dj
 		mov	si, ax
 		mov	[bp+var_F2], 0
 		mov	[bp+var_F0], 0
-		mov	ax, word_3B8EC
+		mov	ax, custom_camera_distance
 		mov	[bp+var_EE], ax
 		sub	ax, ax
 		push	ax
 		mov	ax, si
-		sub	ax, word_3B8EE
+		sub	ax, custom_camera_azimuth_angle
 		push	ax
-		mov	ax, word_3B8F0
+		mov	ax, custom_camera_elevation_angle
 		neg	ax
 		push	ax
 		sub	ax, ax
@@ -38932,7 +38932,7 @@ loc_24226:				; CODE XREF: sub_23B4C+6D5j
 		align 2
 
 loc_2422A:				; CODE XREF: sub_23B4C+6A6j
-		add	word_3B8EE, 10h
+		add	custom_camera_azimuth_angle, 10h
 		pop	si
 		pop	di
 		mov	sp, bp
@@ -38942,7 +38942,7 @@ loc_2422A:				; CODE XREF: sub_23B4C+6A6j
 		align 2
 
 loc_24236:				; CODE XREF: sub_23B4C+6A1j
-		sub	word_3B8EE, 10h
+		sub	custom_camera_azimuth_angle, 10h
 		pop	si
 		pop	di
 		mov	sp, bp
@@ -38952,11 +38952,11 @@ loc_24236:				; CODE XREF: sub_23B4C+6A1j
 		align 2
 
 loc_24242:				; CODE XREF: sub_23B4C+69Cj
-		mov	ax, word_3B8F0
+		mov	ax, custom_camera_elevation_angle
 		add	ax, 10h
 		cmp	ax, 100h
 		jge	short loc_241F9
-		add	word_3B8F0, 10h
+		add	custom_camera_elevation_angle, 10h
 		pop	si
 		pop	di
 		mov	sp, bp
@@ -38965,11 +38965,11 @@ loc_24242:				; CODE XREF: sub_23B4C+69Cj
 ; ---------------------------------------------------------------------------
 
 loc_24258:				; CODE XREF: sub_23B4C+6ABj
-		mov	ax, word_3B8F0
+		mov	ax, custom_camera_elevation_angle
 		sub	ax, 10h
 		cmp	ax, 0FF00h
 		jle	short loc_241F9
-		sub	word_3B8F0, 10h
+		sub	custom_camera_elevation_angle, 10h
 		pop	si
 		pop	di
 		mov	sp, bp
@@ -38993,13 +38993,13 @@ loc_2427F:				; CODE XREF: sub_23B4C+72Ej
 		align 2
 
 loc_24288:				; CODE XREF: sub_23B4C+727j
-		cmp	word_3B8EC, 5DCh
+		cmp	custom_camera_distance, 5DCh
 		jl	short loc_24293
 		jmp	loc_241F9
 ; ---------------------------------------------------------------------------
 
 loc_24293:				; CODE XREF: sub_23B4C+742j
-		add	word_3B8EC, 1Eh
+		add	custom_camera_distance, 1Eh
 		jmp	loc_24D5E
 ; ---------------------------------------------------------------------------
 		align 2
@@ -39019,13 +39019,13 @@ loc_242AE:				; CODE XREF: sub_23B4C+75Dj
 ; ---------------------------------------------------------------------------
 
 loc_242B6:				; CODE XREF: sub_23B4C+755j
-		cmp	word_3B8EC, 78h	; 'x'
+		cmp	custom_camera_distance, 78h	; 'x'
 		jg	short loc_242C0
 		jmp	loc_241F9
 ; ---------------------------------------------------------------------------
 
 loc_242C0:				; CODE XREF: sub_23B4C+76Fj
-		sub	word_3B8EC, 1Eh
+		sub	custom_camera_distance, 1Eh
 		jmp	loc_24D5E
 ; ---------------------------------------------------------------------------
 
@@ -90206,11 +90206,11 @@ word_3B870	dw 0			; DATA XREF: seg012:73AEo
 		db    0
 word_3B8EA	dw 1C2h			; DATA XREF: sub_18D60+1D2r
 					; sub_1A0F4+DDFr ...
-word_3B8EC	dw 0D2h			; DATA XREF: sub_1A0F4+1B2r
+custom_camera_distance	dw 0D2h			; DATA XREF: sub_1A0F4+1B2r
 					; sub_23B4C:loc_24288r	...
-word_3B8EE	dw 1D0h			; DATA XREF: sub_1A0F4+1BEr
+custom_camera_azimuth_angle	dw 1D0h			; DATA XREF: sub_1A0F4+1BEr
 					; sub_23B4C:loc_2422Aw	...
-word_3B8F0	dw 50h			; DATA XREF: sub_1A0F4+1C3r
+custom_camera_elevation_angle	dw 50h			; DATA XREF: sub_1A0F4+1C3r
 					; sub_23B4C:loc_24242r	...
 byte_3B8F2	db 0			; DATA XREF: sub_12F4A:loc_1304Er
 					; sub_21B7A+135r ...

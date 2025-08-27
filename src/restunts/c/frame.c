@@ -17,9 +17,9 @@ extern struct RECTANGLE cliprect_unk;
 extern struct VECTOR vec_unk2;
 extern struct VECTOR vec_planerotopresult;
 extern struct MATRIX mat_temp;
-extern int word_3B8EC;
-extern int word_3B8F0;
-extern int word_3B8EE;
+extern int custom_camera_distance;
+extern int custom_camera_elevation_angle;
+extern int custom_camera_azimuth_angle;
 extern int word_44D20;
 extern char detail_threshold_by_level[];
 extern char byte_3C0C6[];
@@ -335,8 +335,8 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 
 		offset_vector.x = 0;
 		offset_vector.y = 0;
-		offset_vector.z = word_3B8EC;
-		car_rot_matrix = mat_rot_zxy(0, -word_3B8F0, polarAngle(car_to_cam_rotated.x, car_to_cam_rotated.z) - word_3B8EE, 0);
+		offset_vector.z = custom_camera_distance;
+		car_rot_matrix = mat_rot_zxy(0, -custom_camera_elevation_angle, polarAngle(car_to_cam_rotated.x, car_to_cam_rotated.z) - custom_camera_azimuth_angle, 0);
 
 		mat_mul_vector(&offset_vector, car_rot_matrix, &car_to_cam_rotated);
 		cam_pos.x = car_pos.x + car_to_cam_rotated.x;

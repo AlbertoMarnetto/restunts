@@ -28,9 +28,9 @@ dseg segment byte public 'STUNTSD' use16
     extrn aCity:byte
     extrn aCountry:byte
     extrn hillHeightConsts:word
-    extrn word_3B8EC:word
-    extrn word_3B8EE:word
-    extrn word_3B8F0:word
+    extrn custom_camera_distance:word
+    extrn custom_camera_azimuth_angle:word
+    extrn custom_camera_elevation_angle:word
     extrn byte_3B8F2:byte
     extrn is_audioloaded:byte
     extrn HKeyFlag:byte
