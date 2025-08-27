@@ -279,10 +279,10 @@ void heapsort_by_order(int n, int* heap, int* data);
 
 char get_low_detail_threshold_at_attempt(char attempt)
 {
-    if (attempt >= sizeof(low_detail_priority_thresholds)) {
-        attempt = sizeof(low_detail_priority_thresholds) - 1;
-    }
-    return low_detail_priority_thresholds[attempt];
+	if (attempt >= sizeof(low_detail_priority_thresholds)) {
+		attempt = sizeof(low_detail_priority_thresholds) - 1;
+	}
+	return low_detail_priority_thresholds[attempt];
 }
 
 void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
@@ -349,6 +349,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 
 	char low_detail_priority; // for the tile being processed
 	char low_detail_threshold; // for this rendering attempt
+	unsigned tiles_to_discard;
 	unsigned discarded_tiles;
 	char debug_overlay_str[60];
 	char attempts_count;
@@ -709,7 +710,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 						+ lookahead_tiles_db[si].width * M_width_south;
 
 					if (offset_east + cam_tile_east == tile_east
-					    && offset_south + cam_tile_south == tile_south)
+						&& offset_south + cam_tile_south == tile_south)
 					{
 						var_3C = tile_east;
 						var_60 = tile_south;
@@ -1388,7 +1389,11 @@ start_rendering:
 		// of polygons needed by about 30%. Otherwise, start to drop tiles.
 		++attempts_count;
 		if (attempts_count > 1) {
-			discarded_tiles += 25;
+			tiles_to_discard = LOOKAHEAD_TILES_DB_SIZE - si;
+			if (tiles_to_discard < 5) tiles_to_discard = 5;
+			if (tiles_to_discard > 30) tiles_to_discard = 30;
+
+			discarded_tiles += tiles_to_discard;
 			if (discarded_tiles > LOOKAHEAD_TILES_DB_SIZE - 4) {
 				discarded_tiles = LOOKAHEAD_TILES_DB_SIZE - 4;
 				is_last_attempt = 1;
