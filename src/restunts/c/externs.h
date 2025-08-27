@@ -262,6 +262,9 @@ extern void* steerWhlRespTable_20fps;
 extern char startcol2, startrow2;
 extern char hillFlag;
 extern short hillHeightConsts[];
+extern short custom_camera_distance;
+extern short custom_camera_elevation_angle;
+extern short custom_camera_azimuth_angle;
 
 extern struct RECTANGLE rect_windshield;
 extern short word_449EA;
