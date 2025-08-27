@@ -16,9 +16,9 @@ extern struct RECTANGLE cliprect_unk;
 extern struct VECTOR vec_unk2;
 extern struct VECTOR vec_planerotopresult;
 extern struct MATRIX mat_temp;
-extern int word_3B8EC;
-extern int word_3B8F0;
-extern int word_3B8EE;
+extern int custom_camera_distance;
+extern int custom_camera_elevation_angle;
+extern int custom_camera_azimuth_angle;
 extern int word_44D20;
 extern char detail_threshold_by_level[];
 extern char byte_3C0C6[];
@@ -88,7 +88,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	struct RECTANGLE* var_rectptr;
 	struct MATRIX var_mat, var_mat2;
 	struct MATRIX* car_rot_matrix;
-	struct VECTOR cam_pos, car_pos, offset_vector, var_vec7, var_vec8;
+	struct VECTOR cam_pos, car_pos, offset_vector, car_to_cam_rotated, var_vec8;
 	int car_rot_y, car_rot_x, car_rot_z;
 	int car_rot_y_2, car_rot_x_2, car_rot_z_2;
 	int var_38, car_rot_z_3;
@@ -185,10 +185,10 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		offset_vector.z = 0;
 		offset_vector.y = simd_player.car_height - 6;
 
-		mat_mul_vector(&offset_vector, car_rot_matrix, &var_vec7);
-		cam_pos.x = car_pos.x + var_vec7.x;
-		cam_pos.y = car_pos.y + var_vec7.y;
-		cam_pos.z = car_pos.z + var_vec7.z;
+		mat_mul_vector(&offset_vector, car_rot_matrix, &car_to_cam_rotated);
+		cam_pos.x = car_pos.x + car_to_cam_rotated.x;
+		cam_pos.y = car_pos.y + car_to_cam_rotated.y;
+		cam_pos.z = car_pos.z + car_to_cam_rotated.z;
 	} else if (cameramode == 1) {
 		cam_pos.x = state.game_vec1[followOpponentFlag].x;
 		cam_pos.z = state.game_vec1[followOpponentFlag].z;
@@ -198,17 +198,17 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		offset_vector.y = 0;
 		offset_vector.z = 0x4000;
 		car_rot_matrix = mat_rot_zxy(-car_rot_z, -car_rot_y, -car_rot_x, 0);
-		mat_mul_vector(&offset_vector, car_rot_matrix, &var_vec7);
+		mat_mul_vector(&offset_vector, car_rot_matrix, &car_to_cam_rotated);
 
 		offset_vector.x = 0;
 		offset_vector.y = 0;
-		offset_vector.z = word_3B8EC;
-		car_rot_matrix = mat_rot_zxy(0, -word_3B8F0, polarAngle(var_vec7.x, var_vec7.z) - word_3B8EE, 0);
+		offset_vector.z = custom_camera_distance;
+		car_rot_matrix = mat_rot_zxy(0, -custom_camera_elevation_angle, polarAngle(car_to_cam_rotated.x, car_to_cam_rotated.z) - custom_camera_azimuth_angle, 0);
 
-		mat_mul_vector(&offset_vector, car_rot_matrix, &var_vec7);
-		cam_pos.x = car_pos.x + var_vec7.x;
-		cam_pos.y = car_pos.y + var_vec7.y;
-		cam_pos.z = car_pos.z + var_vec7.z;
+		mat_mul_vector(&offset_vector, car_rot_matrix, &car_to_cam_rotated);
+		cam_pos.x = car_pos.x + car_to_cam_rotated.x;
+		cam_pos.y = car_pos.y + car_to_cam_rotated.y;
+		cam_pos.z = car_pos.z + car_to_cam_rotated.z;
 	} else if (cameramode == 3) {
 		cam_pos.x = trackdata9[state.field_3F7[followOpponentFlag] * 3 + 0];
 		cam_pos.y = trackdata9[state.field_3F7[followOpponentFlag] * 3 + 1] + word_44D20 + 0x5A;
@@ -307,9 +307,9 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 				offset_vector.x = 0;
 				offset_vector.y = 0xAE6 - cam_pos.y;
 				offset_vector.z = 0x3A98; //15000
-				mat_mul_vector(&offset_vector, &var_mat2, &var_vec7);
-				var_vec7.z = 0x3A98; //15000
-				mat_mul_vector(&var_vec7, &var_mat, &currenttransshape->pos);
+				mat_mul_vector(&offset_vector, &var_mat2, &car_to_cam_rotated);
+				car_to_cam_rotated.z = 0x3A98; //15000
+				mat_mul_vector(&car_to_cam_rotated, &var_mat, &currenttransshape->pos);
 				if (currenttransshape->pos.z > 0xC8) {
 					currenttransshape->shapeptr = off_3BE44[var_counter];
 					currenttransshape->rotvec.z = -car_rot_x_2;

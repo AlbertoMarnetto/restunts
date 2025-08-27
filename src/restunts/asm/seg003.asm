@@ -546,14 +546,14 @@ loc_1A23E:
     mov     si, ax
     mov     [bp+var_vec6.vx], 0
     mov     [bp+var_vec6.vy], 0
-    mov     ax, word_3B8EC
+    mov     ax, custom_camera_distance
     mov     [bp+var_vec6.vz], ax
     sub     ax, ax
     push    ax
     mov     ax, si
-    sub     ax, word_3B8EE
+    sub     ax, custom_camera_azimuth_angle
     push    ax
-    mov     ax, word_3B8F0
+    mov     ax, custom_camera_elevation_angle
     neg     ax
     push    ax
     sub     ax, ax

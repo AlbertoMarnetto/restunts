@@ -4138,7 +4138,7 @@ loc_24226:
     ; align 2
     db 144
 loc_2422A:
-    add     word_3B8EE, 10h
+    add     custom_camera_azimuth_angle, 10h
     pop     si
     pop     di
     mov     sp, bp
@@ -4147,7 +4147,7 @@ loc_2422A:
     ; align 2
     db 144
 loc_24236:
-    sub     word_3B8EE, 10h
+    sub     custom_camera_azimuth_angle, 10h
     pop     si
     pop     di
     mov     sp, bp
@@ -4156,22 +4156,22 @@ loc_24236:
     ; align 2
     db 144
 loc_24242:
-    mov     ax, word_3B8F0
+    mov     ax, custom_camera_elevation_angle
     add     ax, 10h
     cmp     ax, 100h
     jge     short loc_241F9
-    add     word_3B8F0, 10h
+    add     custom_camera_elevation_angle, 10h
     pop     si
     pop     di
     mov     sp, bp
     pop     bp
     retf
 loc_24258:
-    mov     ax, word_3B8F0
+    mov     ax, custom_camera_elevation_angle
     sub     ax, 10h
     cmp     ax, 0FF00h
     jle     short loc_241F9
-    sub     word_3B8F0, 10h
+    sub     custom_camera_elevation_angle, 10h
     pop     si
     pop     di
     mov     sp, bp
@@ -4189,11 +4189,11 @@ loc_2427F:
     ; align 2
     db 144
 loc_24288:
-    cmp     word_3B8EC, 5DCh
+    cmp     custom_camera_distance, 5DCh
     jl      short loc_24293
     jmp     loc_241F9
 loc_24293:
-    add     word_3B8EC, 1Eh
+    add     custom_camera_distance, 1Eh
     jmp     loc_24D5E
     ; align 2
     db 144
@@ -4207,11 +4207,11 @@ loc_242AE:
     add     word_44D20, 1Eh
     jmp     loc_24D5E
 loc_242B6:
-    cmp     word_3B8EC, 78h ; 'x'
+    cmp     custom_camera_distance, 78h ; 'x'
     jg      short loc_242C0
     jmp     loc_241F9
 loc_242C0:
-    sub     word_3B8EC, 1Eh
+    sub     custom_camera_distance, 1Eh
     jmp     loc_24D5E
 loc_242C8:
     mov     al, byte_3E9DB

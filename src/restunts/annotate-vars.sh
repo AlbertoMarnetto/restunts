@@ -29,3 +29,6 @@ replace word_4554A poly_linklist_40ED6_iter3
 replace word_45D98 poly_linklist_40ED6_iter4
 replace timertestflag slow_video_mgmt
 replace do_mrl_textres show_graphic_levels_menu
+replace word_3B8EC custom_camera_distance
+replace word_3B8EE custom_camera_azimuth_angle # 1024 = 360 deg; increases going ccw
+replace word_3B8F0 custom_camera_elevation_angle # 1024 = 360 deg
