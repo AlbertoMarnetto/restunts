@@ -21,9 +21,6 @@ extern struct RECTANGLE cliprect_unk;
 extern struct VECTOR vec_unk2;
 extern struct VECTOR vec_planerotopresult;
 extern struct MATRIX mat_temp;
-extern int custom_camera_distance;
-extern int custom_camera_elevation_angle;
-extern int custom_camera_azimuth_angle;
 extern int word_44D20;
 extern char detail_threshold_by_level[];
 extern char byte_3C0C6[];
@@ -282,7 +279,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	char low_detail_priority; // for the tile being processed
 	char low_detail_threshold; // for this rendering attempt
 	unsigned discarded_tiles;
-	char discarded_tiles_str[60];
+	char debug_overlay_str[60];
 	char attempts_count;
 	char is_last_attempt;
 	char has_attempt_failed;
@@ -1340,8 +1337,8 @@ start_rendering:
 	{
 		// Debug: print discarded tiles
 		_sprintf(
-			discarded_tiles_str,
-			"Polys: %3u, mem: %5u, attempts: %u, discards: %2u, reveal: %s",
+			debug_overlay_str,
+			"Polys: %3u, mem: %5u, fails: %u, discards: %2u, reveal: %s",
 			polyinfonumpolys, polyinfoptrnext, attempts_count, discarded_tiles,
 			reveal_illusions ? "on" : "off");
 	}
@@ -1422,8 +1419,27 @@ start_rendering:
 	if (display_debug_overlay)
 	{
 		font_set_fontdef2(fontnptr);
+
+		// Print rendering engine debug infos
 		si = (attempts_count == 0) ? 15 : discarded_tiles < 30 ? 14 : 12; // white, yellow, red
-		rect_union(intro_draw_text(discarded_tiles_str, 0x0C, roofbmpheight + 12, si, 0), &rect_unk11, &rect_unk11);
+
+		rect_union(intro_draw_text(debug_overlay_str, 0x0C, roofbmpheight + 12, si, 0), &rect_unk11, &rect_unk11);
+
+		// Print camera coords
+		if (cameramode == 2)
+		{
+			_sprintf(
+				debug_overlay_str,
+				"Cam: dist: %5d, azimuth: %6d, elevation: %4d",
+				custom_camera_distance, custom_camera_azimuth_angle, custom_camera_elevation_angle);
+		}
+		else
+		{
+			_sprintf(debug_overlay_str, " ");
+		}
+		rect_union(intro_draw_text(debug_overlay_str, 0x0C, roofbmpheight + 2, si, 0), &rect_unk11, &rect_unk11);
+
+		// Reset text color to black
 		rect_union(intro_draw_text(" ", 0x0C, roofbmpheight + 2, 0, 0), &rect_unk11, &rect_unk11);
 		font_set_fontdef();
 	}
