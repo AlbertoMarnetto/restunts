@@ -1497,6 +1497,7 @@ dseg segment byte public 'STUNTSD' use16
     public mat_x_rot
     public replaybar_enabled
     public word_46486
+    public marker
     public display_debug_overlay
     public reveal_illusions
 word_3B770     dw 0
