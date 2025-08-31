@@ -312,7 +312,6 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	char tiles_to_draw_south[LOOKAHEAD_TILES_DB_SIZE];
 	char tiles_to_draw_east[LOOKAHEAD_TILES_DB_SIZE];
 	unsigned char tiles_to_draw_elem_type_vec[LOOKAHEAD_TILES_DB_SIZE];
-	char detail_threshold;
 	char var_3C;
 	char var_60;
 	char var_6E;
@@ -497,9 +496,9 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		skybox_parameter = -1;
 	}
 
-	// Draw 8 shapes (still TBD what they are), but only if the detail
-	// level is the max one
-	if (detail_level == 0) {
+	// Draw 8 shapes (still TBD what they are)
+	// SuperSight: draw at any detail level
+	if (1) {
 		currenttransshape->rectptr = &rect_unk9;
 		currenttransshape->ts_flags = var_122 | 7;
 		currenttransshape->rotvec.x = 0;
@@ -533,15 +532,10 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 
 	cam_tile_east = cam_pos.x >> 0xA;
 	cam_tile_south = -((cam_pos.z >> 0xA) - 0x1D);
-	if (detail_level != 0) {
-		car_tile_east = state.playerstate.car_posWorld1.lx >> 16;
-		car_tile_y = 0x1D - (state.playerstate.car_posWorld1.lz >> 16);
-	}
 
 	for (si = 0; si < LOOKAHEAD_TILES_DB_SIZE; si++) {
 		should_skip_tile[si] = 0;
 	}
-
 
 	// Calculate the matrix to convert depth-width in east-south coords
 	// Use the original lookahead_tiles tables, noticing that its first two
@@ -621,13 +615,6 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		}
 
 		tiles_to_draw_terr_type_vec[si] = terr_map_value;
-
-		if (elem_map_value != 0 && detail_level != 0 &&
-			trkObjectList[elem_map_value].ss_physicalModel >= 0x40 &&
-			(tile_east != car_tile_east || tile_south != car_tile_y))
-		{
-			elem_map_value = 0;
-		}
 
 		tiles_to_draw_east[si] = tile_east;
 		tiles_to_draw_south[si] = tile_south;
@@ -848,7 +835,9 @@ start_rendering:
 			tile_to_draw_east_offset = var_10E[idx * 2] + tile_east;
 			tile_to_draw_south_offset = var_10E[idx * 2 + 1] + tile_south;
 
-			if (detail_level == 0 || (tile_to_draw_east_offset == car_tile_east && tile_to_draw_south_offset == car_tile_y)) {
+
+			// SuperSight: draw at any detail level
+			if (1) {
 				if (tile_to_draw_east_offset == 0) {
 					if (tile_to_draw_south_offset == 0) {
 						di = 7;
@@ -1210,7 +1199,7 @@ start_rendering:
 			curtransshape_ptr->pos.y = (state.playerstate.car_posWorld1.ly >> 6) - cam_pos.y;
 			curtransshape_ptr->pos.z = (state.playerstate.car_posWorld1.lz >> 6) - cam_pos.z;
 
-			if (use_low_poly_version != 0 || detail_level > 2) {
+			if (use_low_poly_version != 0) {
 				curtransshape_ptr->shapeptr = var_trkobject_ptr->ss_loShapePtr;
 			} else {
 				curtransshape_ptr->shapeptr = var_trkobject_ptr->ss_shapePtr;
@@ -1264,7 +1253,7 @@ start_rendering:
 				curtransshape_ptr->pos.y = (state.opponentstate.car_posWorld1.ly >> 6) - cam_pos.y;
 				curtransshape_ptr->pos.z = (state.opponentstate.car_posWorld1.lz >> 6) - cam_pos.z;
 
-				if (use_low_poly_version != 0 || detail_level > 2) {
+				if (use_low_poly_version != 0) {
 					curtransshape_ptr->shapeptr = var_trkobject_ptr->ss_loShapePtr;
 				} else {
 					curtransshape_ptr->shapeptr = var_trkobject_ptr->ss_shapePtr;
