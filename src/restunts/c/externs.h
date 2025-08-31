@@ -3,11 +3,6 @@
 
 #include "math.h"
 
-#ifdef RESTUNTS_SDL
-#define far
-#define huge
-#endif
-
 #define MAX_POLY_INFO_COUNT 0x250
 
 #pragma pack (push, 1)
@@ -549,7 +544,6 @@ extern unsigned _abs(unsigned);
 extern int _rand(void);
 extern void _srand(unsigned int);
 
-#ifdef RESTUNTS_DOS
 #define memcpy _memcpy
 #define strcpy _strcpy
 #define strcat _strcat
@@ -561,13 +555,9 @@ extern void _srand(unsigned int);
 #define printf _printf
 #define rand _rand
 #define srand _srand
-#else
-#define MK_FP(x, y) ((x << 4) + y)
-#define FP_SEG(x) 0
-#define FP_OFF(x) (size_t)x
-#endif
 
 extern char display_debug_overlay;
 extern char reveal_illusions;
+extern void update_frame();
 
 #endif

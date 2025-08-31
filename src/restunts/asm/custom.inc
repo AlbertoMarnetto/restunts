@@ -10,4 +10,8 @@ endseg ends
 ; externs for implementations in frame.c
 extrn update_frame:proc
 
+; externs for implementations in save_opt.c
+extrn load_graphic_options:proc
+extrn save_graphic_options:proc
+
 extrn stuntsmain:proc
