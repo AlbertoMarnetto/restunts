@@ -18,7 +18,7 @@ replace () {
 
 replace byte_3C09C detail_threshold_by_level
 replace off_3C084 lookahead_tiles_tables
-replace timertestflag2 detail_level
+replace timertestflag2 graphic_level
 replace transformed_shape_op_helper2 projectiondata9_times_ratio
 replace transformed_shape_op_helper3 is_facing_camera
 replace transformed_shape_op_helper insert_newest_poly_in_poly_linked_list_40ED6
