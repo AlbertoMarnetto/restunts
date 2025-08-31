@@ -1,14 +1,6 @@
 #ifndef RESTUNTS_FILEIO_H
 #define RESTUNTS_FILEIO_H
 
-#ifdef RESTUNTS_SDL
-#define far
-#endif
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 const char* file_find(const char* query);
 const char* file_find_next(void);
 const char* file_find_next_alt(void);
@@ -48,9 +40,5 @@ void far* file_load_3dres(const char* filename);
 
 short file_load_replay(const char* dir, const char* name);
 short file_write_replay(const char* filename);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

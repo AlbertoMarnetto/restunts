@@ -16,7 +16,7 @@ else
   $(error Unsupported C target: $(TARGET))
 endif
 
-C_FILES = frame.c
+C_FILES = frame.c save_opt.c stdio.c
 
 OBJ_FILES = $(addprefix $(OBJDIR)/, $(C_FILES:.c=.obj))
 OBJ_FILES_BACKSLASH = $(subst /,\,$(OBJ_FILES))

@@ -3,7 +3,7 @@ TARGET ?= ported
 
 SRC = s:\src\restunts
 
-RESTUNTS_OBJ_FILES = frame.obj 
+RESTUNTS_OBJ_FILES = frame.obj save_opt.obj stdio.obj
 
 ASM_OBJ_FILES = segments.obj seg000.obj seg001.obj seg002.obj seg003.obj seg004.obj seg005.obj \
                 seg006.obj seg007.obj seg008.obj seg009.obj seg010.obj seg011.obj seg012.obj \

@@ -5414,6 +5414,11 @@ loc_2A103:
     call    sub_372F4
     push    cs
     call near ptr input_pop_status
+    ; SuperSight: add the following:
+    call save_graphic_options
+    ; call far is 5 bytes, add 11 NOPs to keep the para alignment
+    db 11 dup(144)
+    ; SuperSight: end of the modification
     pop     si
     pop     di
     mov     sp, bp
