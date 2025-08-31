@@ -1,75 +1,15 @@
 #include "externs.h"
 #include "math.h"
 
-// How many tiles will be really drawn.
-// DO NOT EXCEED LOOKAHEAD_TILES_DB_SIZE, i.e. 180
-#define TILES_TO_DRAW_MAX 180
-
 // At rendering attempt x, only the tiles having a low_detail_priority lower
 // than the x-th element of this array will be rendered in high detail
-char low_detail_priority_thresholds[] = { 99, 20, 18, 16, 14, 12, 10 };
+char low_detail_priority_thresholds_0[] = { 99, 20, 18, 16, 14, 12, 10 };
+char low_detail_priority_thresholds_1[] = { 99, 10, 10, 10, 10, 10, 10 };
+char low_detail_priority_thresholds_2[] = { 10, 10, 10, 10, 10, 10, 10 };
+#define LOW_DETAIL_PRIORITY_THRESHOLDS_SIZE (sizeof(low_detail_priority_thresholds) / sizeof(*low_detail_priority_thresholds))
 
-extern struct RECTANGLE* rectptr_unk2;
-extern struct RECTANGLE rect_array_unk[];
-extern struct RECTANGLE rect_array_unk2[];
-extern struct RECTANGLE rect_unk[];
-extern struct RECTANGLE rect_unk2;
-extern struct RECTANGLE rect_unk6;
-extern struct RECTANGLE rect_unk9;
-extern struct RECTANGLE rect_unk11;
-extern struct RECTANGLE rect_unk12;
-extern struct RECTANGLE rect_unk15;
-extern struct RECTANGLE cliprect_unk;
-extern struct VECTOR vec_unk2;
-extern struct VECTOR vec_planerotopresult;
-extern struct MATRIX mat_temp;
-extern int word_44D20;
-extern char detail_threshold_by_level[];
-extern char byte_3C0C6[];
-extern char word_46468;
-extern int word_3BE34[];
-extern char* lookahead_tiles_tables[];
-extern struct SHAPE3D* off_3BE44[];
-extern int terrainHeight;
-extern int planindex;
-extern int planindex_copy;
-extern char byte_4392C;
-extern struct TRANSFORMEDSHAPE3D currenttransshape[29];
-//extern struct TRANSFORMEDSHAPE3D transshapeunk;
-extern struct TRANSFORMEDSHAPE3D* curtransshape_ptr;
-extern struct TRACKOBJECT trkObjectList[215]; // 215 entries
-extern unsigned char fence_TrkObjCodes[];
-extern int pState_minusRotate_z_2, pState_minusRotate_x_2, pState_minusRotate_y_2, pState_f36Mminf40sar2;
-
-extern char unk_3C0EE[];
-extern char unk_3C0F0[];
-extern char unk_3C0F8[];
-extern char unk_3C0F4[];
-extern int word_3C0D6[];
-extern int unk_3C0A2[];
-extern int unk_3C0A6[];
-extern int unk_3C0AE[];
-extern int unk_3C0B6[];
-extern struct TRACKOBJECT sceneshapes2[];
-extern struct TRACKOBJECT sceneshapes3[];
-extern struct SHAPE3D game3dshapes[130];
-extern struct VECTOR carshapevec;
-extern struct VECTOR carshapevecs[6];
-extern short word_443E8[];
-extern struct VECTOR oppcarshapevec;
-extern struct VECTOR oppcarshapevecs[6];
-extern short word_4448A[];
-extern char backlights_paint_override;
-extern int word_449FC[];
-extern int word_463D6;
-extern int transformedshape_zarray[29];
-extern int transformedshape_indices[29];
-extern char transformedshape_arg2array[29];
-extern int sdgame2_widths[];
-extern void far* sdgame2shapes[];
-extern void far* fontledresptr;
-extern int dialog_fnt_colour;
-extern char transformedshape_counter;
+unsigned char tiles_to_draw_max[] = {180, 110, 80, 50, 1};
+//unsigned char tiles_to_draw_max[] = {90, 90, 90, 90, 90};
 
 struct TILE_REL_COORDS {
 	char width;
@@ -77,7 +17,7 @@ struct TILE_REL_COORDS {
 	// A metric representing how acceptable it is to use the low-polygon
 	// version of the models in this square in case the program needs to reduce the
 	// memory consumption
-	char low_detail_priority;
+	unsigned char low_detail_priority;
 };
 
 struct TILE_REL_COORDS lookahead_tiles_db[] = {
@@ -264,6 +204,69 @@ struct TILE_REL_COORDS lookahead_tiles_db[] = {
 };
 #define LOOKAHEAD_TILES_DB_SIZE (sizeof(lookahead_tiles_db) / sizeof(*lookahead_tiles_db))
 
+
+extern struct RECTANGLE* rectptr_unk2;
+extern struct RECTANGLE rect_array_unk[];
+extern struct RECTANGLE rect_array_unk2[];
+extern struct RECTANGLE rect_unk[];
+extern struct RECTANGLE rect_unk2;
+extern struct RECTANGLE rect_unk6;
+extern struct RECTANGLE rect_unk9;
+extern struct RECTANGLE rect_unk11;
+extern struct RECTANGLE rect_unk12;
+extern struct RECTANGLE rect_unk15;
+extern struct RECTANGLE cliprect_unk;
+extern struct VECTOR vec_unk2;
+extern struct VECTOR vec_planerotopresult;
+extern struct MATRIX mat_temp;
+extern int word_44D20;
+extern char detail_threshold_by_level[];
+extern char byte_3C0C6[];
+extern char word_46468;
+extern int word_3BE34[];
+extern char* lookahead_tiles_tables[];
+extern struct SHAPE3D* off_3BE44[];
+extern int terrainHeight;
+extern int planindex;
+extern int planindex_copy;
+extern char byte_4392C;
+extern struct TRANSFORMEDSHAPE3D currenttransshape[29];
+//extern struct TRANSFORMEDSHAPE3D transshapeunk;
+extern struct TRANSFORMEDSHAPE3D* curtransshape_ptr;
+extern struct TRACKOBJECT trkObjectList[215]; // 215 entries
+extern unsigned char fence_TrkObjCodes[];
+extern int pState_minusRotate_z_2, pState_minusRotate_x_2, pState_minusRotate_y_2, pState_f36Mminf40sar2;
+
+extern char unk_3C0EE[];
+extern char unk_3C0F0[];
+extern char unk_3C0F8[];
+extern char unk_3C0F4[];
+extern int word_3C0D6[];
+extern int unk_3C0A2[];
+extern int unk_3C0A6[];
+extern int unk_3C0AE[];
+extern int unk_3C0B6[];
+extern struct TRACKOBJECT sceneshapes2[];
+extern struct TRACKOBJECT sceneshapes3[];
+extern struct SHAPE3D game3dshapes[130];
+extern struct VECTOR carshapevec;
+extern struct VECTOR carshapevecs[6];
+extern short word_443E8[];
+extern struct VECTOR oppcarshapevec;
+extern struct VECTOR oppcarshapevecs[6];
+extern short word_4448A[];
+extern char backlights_paint_override;
+extern int word_449FC[];
+extern int word_463D6;
+extern int transformedshape_zarray[29];
+extern int transformedshape_indices[29];
+extern char transformedshape_arg2array[29];
+extern int sdgame2_widths[];
+extern void far* sdgame2shapes[];
+extern void far* fontledresptr;
+extern int dialog_fnt_colour;
+extern char transformedshape_counter;
+
 void build_track_object(struct VECTOR* a, struct VECTOR* b);
 void transformed_shape_add_for_sort(int a, int b);
 unsigned char subst_hillroad_track(unsigned char a, unsigned char b);
@@ -279,8 +282,13 @@ void heapsort_by_order(int n, int* heap, int* data);
 
 char get_low_detail_threshold_at_attempt(char attempt)
 {
-	if (attempt >= sizeof(low_detail_priority_thresholds)) {
-		attempt = sizeof(low_detail_priority_thresholds) - 1;
+    char const * low_detail_priority_thresholds
+        = graphic_level == 0 ? low_detail_priority_thresholds_0
+        : graphic_level <= 2 ? low_detail_priority_thresholds_1
+        :                     low_detail_priority_thresholds_2;
+
+	if (attempt >= LOW_DETAIL_PRIORITY_THRESHOLDS_SIZE) {
+		attempt = LOW_DETAIL_PRIORITY_THRESHOLDS_SIZE - 1;
 	}
 	return low_detail_priority_thresholds[attempt];
 }
@@ -788,7 +796,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	var_4E = 0;
 	si = 0;
 
-	discarded_tiles = (LOOKAHEAD_TILES_DB_SIZE - TILES_TO_DRAW_MAX);
+	discarded_tiles = (LOOKAHEAD_TILES_DB_SIZE - tiles_to_draw_max[graphic_level]);
 	attempts_count = 0;
 	is_last_attempt = 0;
 start_rendering:
@@ -1378,9 +1386,16 @@ start_rendering:
 		// of polygons needed by about 30%. Otherwise, start to drop tiles.
 		++attempts_count;
 		if (attempts_count > 1) {
-			tiles_to_discard = LOOKAHEAD_TILES_DB_SIZE - si;
-			if (tiles_to_discard < 5) tiles_to_discard = 5;
-			if (tiles_to_discard > 30) tiles_to_discard = 30;
+			if (graphic_level == 0)
+			{
+				tiles_to_discard = LOOKAHEAD_TILES_DB_SIZE - si;
+				if (tiles_to_discard < 5) tiles_to_discard = 5;
+				if (tiles_to_discard > 30) tiles_to_discard = 30;
+			}
+			else
+			{
+				tiles_to_discard = 20;
+			}
 
 			discarded_tiles += tiles_to_discard;
 			if (discarded_tiles > LOOKAHEAD_TILES_DB_SIZE - 4) {
@@ -1480,7 +1495,7 @@ start_rendering:
 		font_set_fontdef2(fontnptr);
 
 		// Print rendering engine debug infos
-		si = (attempts_count == 0) ? 15 : discarded_tiles < 30 ? 14 : 12; // white, yellow, red
+		si = (attempts_count == 0) ? 15 : attempts_count == 1 ? 14 : 12; // white, yellow, red
 		rect_union(intro_draw_text(debug_overlay_str, 0x0C, roofbmpheight + 12, si, 0), &rect_unk11, &rect_unk11);
 
 		// Print camera coords
