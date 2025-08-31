@@ -1,4 +1,5 @@
 #include "externs.h"
+#include "save_opt.h"
 #include "math.h"
 
 // At rendering attempt x, only the tiles having a low_detail_priority lower
@@ -9,7 +10,6 @@ char low_detail_priority_thresholds_2[] = { 10, 10, 10, 10, 10, 10, 10 };
 #define LOW_DETAIL_PRIORITY_THRESHOLDS_SIZE (sizeof(low_detail_priority_thresholds) / sizeof(*low_detail_priority_thresholds))
 
 unsigned char tiles_to_draw_max[] = {180, 110, 80, 50, 1};
-//unsigned char tiles_to_draw_max[] = {90, 90, 90, 90, 90};
 
 struct TILE_REL_COORDS {
 	char width;
