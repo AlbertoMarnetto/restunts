@@ -5,7 +5,7 @@
 #include "stdio.h"
 #include <dos.h>
 
-extern int g_errno;
+extern unsigned char tiles_to_draw_max[];
 
 void save_graphic_options()
 {
@@ -63,10 +63,15 @@ void load_graphic_options()
 
 	// Poor man's atoi. Thankfully it's one digit only
 	temp_graphic_level -= '0' - 0;
-	if (temp_graphic_level < 0 || temp_graphic_level > 4)
+	if (temp_graphic_level < 0 || temp_graphic_level > 5)
 	{
 		// _printf("Invalid graphic level:\n", temp_graphic_level);
 		return;
+	}
+	if (temp_graphic_level == 5) {
+		// There is no graphic level 5 in the game. But we offer it as easter egg
+		temp_graphic_level = 4;
+		tiles_to_draw_max[4] = 0;
 	}
 
 	graphic_level = temp_graphic_level;

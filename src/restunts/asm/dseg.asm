@@ -41829,7 +41829,7 @@ word_46486     dw 0
 
 marker db 'ZakS'  ; A string to make this point easily searchable in the .exe
 display_debug_overlay db 0  ; prints rendering engine status on the top of the screeen
-reveal_illusions db 0    ; shoes illusion tiles
+reveal_illusions db 0    ; shows illusion tiles
 
 ;ALIGN 4
 polyinfoptr     dd 0
