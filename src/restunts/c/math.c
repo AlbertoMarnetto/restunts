@@ -296,9 +296,8 @@ void mat_rot_z(struct MATRIX* outmat, int angle) {
 #define DEG90   0x100
 #define DEG270  0x300
 
-//extern struct MATRIX mat_z_rot, mat_x_rot, mat_y_rot, mat_rot_temp;
-//extern struct MATRIX mat_y0;
-//extern int mat_y_rot_angle;
+extern struct MATRIX mat_z_rot, mat_x_rot, mat_y_rot, mat_rot_temp;
+extern struct MATRIX mat_y0;
 
 struct MATRIX* mat_rot_zxy(int z, int x, int y, int unk)
 {

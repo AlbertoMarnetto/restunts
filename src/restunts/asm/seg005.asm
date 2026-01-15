@@ -4160,7 +4160,7 @@ loc_24242:
     add     ax, 10h
     cmp     ax, 100h
     ; SuperSight: allow the camera angle to be perfectly vertical
-    #jge     short loc_241F9
+    ;jge     short loc_241F9
     jg     short loc_241F9
     add     custom_camera_elevation_angle, 10h
     pop     si
