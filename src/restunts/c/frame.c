@@ -241,7 +241,6 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	char tiles_to_draw_south[TILES_TO_DRAW_COUNT];
 	char tiles_to_draw_east[TILES_TO_DRAW_COUNT];
 	unsigned char tiles_to_draw_elem_type_vec[TILES_TO_DRAW_COUNT];
-	char detail_threshold;
 	char var_3C;
 	char var_60;
 	char var_6E;
@@ -473,9 +472,6 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 		should_skip_tile[si] = 0;
 	}
 
-	// Select the detail level (FULL if 1st or 2nd option in the graphics menu
-	// were chosen, MEDIUM if the 3rd, FASTEST if 4th or 5th)
-	detail_threshold = detail_threshold_by_level[graphic_level];
 
 	// Calculate the matrix to convert depth-width in east-south coords
 	// Use the original lookahead_tiles tables, noticing that its first two
@@ -1421,8 +1417,7 @@ start_rendering:
 		font_set_fontdef2(fontnptr);
 
 		// Print rendering engine debug infos
-		si = (attempts_count == 0) ? 15 : discarded_tiles < 30 ? 14 : 12; // white, yellow, red
-
+		si = (attempts_count == 0) ? 15 : attempts_count == 1 ? 14 : 12; // white, yellow, red
 		rect_union(intro_draw_text(debug_overlay_str, 0x0C, roofbmpheight + 12, si, 0), &rect_unk11, &rect_unk11);
 
 		// Print camera coords
