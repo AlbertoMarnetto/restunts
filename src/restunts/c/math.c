@@ -291,30 +291,99 @@ void mat_rot_z(struct MATRIX* outmat, int angle) {
 // mat_rot_zxy was originally optimized, using pre-calced y-matrices and only 
 // multiplying the non-zero axes. currently not optimized except for the y cache:
 
-struct MATRIX* mat_rot_zxy(int z, int x, int y, int unk) {
-	int flag;
-	
-	mat_rot_z(&mat_z_rot, z);
-	mat_rot_x(&mat_x_rot, x);
-	
-	// y rotation matrix cache
-	/*if (mat_y_rot_angle != y) {
-		mat_rot_y(&mat_y_rot, y);
-		mat_y_rot_angle = y;
-	}*/
-	mat_y_rot_angle = y; // dont forget this!!
-	mat_rot_y(&mat_y_rot, y);
-	
-	if ((unk & 1) != 0) {
-		mat_multiply(&mat_y_rot, &mat_x_rot, &mat_rot_temp);
-		mat_multiply(&mat_rot_temp, &mat_z_rot, &mat_x_rot);
-		return &mat_x_rot;
-	} else {
-		mat_multiply(&mat_z_rot, &mat_x_rot, &mat_rot_temp);
-		mat_multiply(&mat_rot_temp, &mat_y_rot, &mat_z_rot);
-		return &mat_z_rot;
-	}
+
+#define ANG_MASK 0x3FF
+#define DEG90   0x100
+#define DEG270  0x300
+
+//extern struct MATRIX mat_z_rot, mat_x_rot, mat_y_rot, mat_rot_temp;
+//extern struct MATRIX mat_y0;
+//extern int mat_y_rot_angle;
+
+struct MATRIX* mat_rot_zxy(int z, int x, int y, int unk)
+{
+    int useZ, useX, useY;
+
+    z &= ANG_MASK;
+    x &= ANG_MASK;
+    y &= ANG_MASK;
+
+    /* ---- GIMBAL LOCK ---- */
+    if (x == DEG90) {
+        int Zeff = (z + y) & ANG_MASK;
+        mat_rot_z(&mat_z_rot, Zeff);
+        mat_rot_x(&mat_x_rot, DEG90);
+        mat_multiply(&mat_z_rot, &mat_x_rot, &mat_x_rot);
+        return &mat_x_rot;
+    }
+    if (x == DEG270) {
+        int Zeff = (z - y) & ANG_MASK;
+        mat_rot_z(&mat_z_rot, Zeff);
+        mat_rot_x(&mat_x_rot, DEG270);
+        mat_multiply(&mat_z_rot, &mat_x_rot, &mat_x_rot);
+        return &mat_x_rot;
+    }
+
+    useZ = (z != 0);
+    useX = (x != 0);
+    useY = (y != 0);
+
+    if (useZ) mat_rot_z(&mat_z_rot, z);
+    if (useX) mat_rot_x(&mat_x_rot, x);
+
+    if (useY) {
+        if (y != mat_y_rot_angle) {
+            mat_y_rot_angle = y;
+            mat_rot_y(&mat_y_rot, y);
+        }
+    }
+
+    /* no rotation at all → identity */
+    if (!useZ && !useX && !useY)
+        return &mat_y0;
+
+    /* single-axis cases */
+    if (useZ && !useX && !useY) return &mat_z_rot;
+    if (!useZ && useX && !useY) return &mat_x_rot;
+    if (!useZ && !useX && useY) return &mat_y_rot;
+
+    /* two-axis cases */
+    if (useZ && useX && !useY) {
+        if (unk & 1)
+            mat_multiply(&mat_x_rot, &mat_z_rot, &mat_rot_temp);
+        else
+            mat_multiply(&mat_z_rot, &mat_x_rot, &mat_rot_temp);
+        return &mat_rot_temp;
+    }
+
+    if (useZ && !useX && useY) {
+        if (unk & 1)
+            mat_multiply(&mat_y_rot, &mat_z_rot, &mat_rot_temp);
+        else
+            mat_multiply(&mat_z_rot, &mat_y_rot, &mat_rot_temp);
+        return &mat_rot_temp;
+    }
+
+    if (!useZ && useX && useY) {
+        if (unk & 1)
+            mat_multiply(&mat_y_rot, &mat_x_rot, &mat_rot_temp);
+        else
+            mat_multiply(&mat_x_rot, &mat_y_rot, &mat_rot_temp);
+        return &mat_rot_temp;
+    }
+
+    /* all three axes */
+    if (unk & 1) {
+        mat_multiply(&mat_y_rot, &mat_x_rot, &mat_rot_temp);
+        mat_multiply(&mat_rot_temp, &mat_z_rot, &mat_rot_temp);
+    } else {
+        mat_multiply(&mat_z_rot, &mat_x_rot, &mat_rot_temp);
+        mat_multiply(&mat_rot_temp, &mat_y_rot, &mat_rot_temp);
+    }
+
+    return &mat_rot_temp;
 }
+
 
 void rect_adjust_from_point(struct POINT2D* pt, struct RECTANGLE* rc) {
 	int temp;
