@@ -306,14 +306,13 @@ struct MATRIX* mat_rot_zxy(int z, int x, int y, int unk)
     y &= ANG_MASK;
 
     /* ---- GIMBAL LOCK: X = 90° ---- */
-    if (x == DEG90 || x == DEG270) {
-        x+=2;
-        //int Zeff = (z + y) & ANG_MASK;
-        //mat_rot_y(&mat_y_rot, Zeff);
-        //mat_rot_x(&mat_rot_temp, DEG90);
-        //mat_multiply(&mat_y_rot, &mat_rot_temp, &mat_x_rot);
-        //return &mat_x_rot;
-    }
+    //if (x == DEG90 || x == DEG270) {
+    //    int Zeff = (z - y) & ANG_MASK;
+    //    mat_rot_z(&mat_z_rot, Zeff);
+    //    mat_rot_x(&mat_rot_temp, DEG90);
+    //    mat_multiply(&mat_z_rot, &mat_rot_temp, &mat_x_rot);
+    //    return &mat_x_rot;
+    //}
 
     ///* ---- GIMBAL LOCK: X = 270° ---- */
     //if (x == DEG270) {
@@ -325,7 +324,7 @@ struct MATRIX* mat_rot_zxy(int z, int x, int y, int unk)
     //}
 
     /* normal path */
-    mat_rot_z(&mat_z_rot, z);
+    mat_rot_z(&mat_z_rot, 200);
     mat_rot_x(&mat_x_rot, x);
 
     mat_y_rot_angle = y;
