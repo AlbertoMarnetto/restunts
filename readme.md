@@ -100,6 +100,9 @@ The makefile supports the following targets:
 		Builds the replay dump tool without ported C code.
 
 
+**NOTE:** unfortunately, the makefiles are not perfect and some dependencies are not represented correctly. If the linker compains about “fixup overflow” errors when building, try cleaning the build space by manually erasing the build products (`src/restunts/asm/build/*` and `src/restunts/c/build/dos/*`). Note that, if you are editing the code, these fixus overflow might very well be real errors, indicating you are exceeding the allowed memory limits.
+```
+
 ## Build options
 
 ### Assembler selection
