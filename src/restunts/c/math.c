@@ -324,7 +324,7 @@ struct MATRIX* mat_rot_zxy(int z, int x, int y, int unk)
     //}
 
     /* normal path */
-    mat_rot_z(&mat_z_rot, 200);
+    mat_rot_z(&mat_z_rot, 120);
     mat_rot_x(&mat_x_rot, x);
 
     mat_y_rot_angle = y;
