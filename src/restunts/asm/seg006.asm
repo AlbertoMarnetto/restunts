@@ -50,7 +50,7 @@ seg006 segment byte public 'STUNTSC' use16
     public ported_copy_material_list_pointers_
     public ported_polyinfo_reset_
     public ported_select_cliprect_rotate_
-    public ported_transformed_shape_op_
+    public transformed_shape_op
     public ported_insert_newest_poly_in_poly_linked_list_40ED6_
     public ported_rect_compare_point_
     public ported_is_facing_camera_
@@ -243,7 +243,7 @@ nosmart
     pop     bp
     retf
 ported_select_cliprect_rotate_ endp
-ported_transformed_shape_op_ proc far
+transformed_shape_op proc far
     var_B7C = word ptr -2940
     var_polyvertunktabptr = word ptr -2938
     var_cull1 = dword ptr -2936
@@ -1816,7 +1816,7 @@ _done_ret_0:
     retf
     ; align 2
     db 144
-ported_transformed_shape_op_ endp
+transformed_shape_op endp
 ported_insert_newest_poly_in_poly_linked_list_40ED6_ proc far
      s = byte ptr 0
      r = byte ptr 2

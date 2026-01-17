@@ -139,6 +139,7 @@ struct ASMVECTOR {
 	int vx, vy, vz;
 };
 
+#if 0
 unsigned transformed_shape_op(struct TRANSFORMEDSHAPE3D* arg_transshapeptr) {
 	long far* var_cull1;
 	long far* var_cull2;
@@ -2533,6 +2534,7 @@ return result;
 */
 }
 
+#endif
 
 
 

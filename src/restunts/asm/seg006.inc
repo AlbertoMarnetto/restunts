@@ -3,7 +3,7 @@ seg006 segment byte public 'STUNTSC' use16
     extrn ported_copy_material_list_pointers_:proc
     extrn ported_polyinfo_reset_:proc
     extrn ported_select_cliprect_rotate_:proc
-    extrn ported_transformed_shape_op_:proc
+    extrn transformed_shape_op:proc
     extrn ported_insert_newest_poly_in_poly_linked_list_40ED6_:proc
     extrn ported_rect_compare_point_:proc
     extrn ported_is_facing_camera_:proc
