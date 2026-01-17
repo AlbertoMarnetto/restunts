@@ -1663,7 +1663,7 @@ loc_25C92:
     mov     ax, [bp+var_462]
     mov     bx, polyvertpointptrtab
     add     ax, [bx]
-    mov     [bp+var_450.x2], ax
+    mov     [bp+var_450.y2], ax
     mov     ax, [bx+2]
     add     ax, [bp+var_462]
     mov     [bp+var_450.x2], ax
