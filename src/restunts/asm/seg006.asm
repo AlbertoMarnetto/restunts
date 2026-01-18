@@ -849,7 +849,7 @@ loc_25444:
 loc_25455:
     cmp     ax, 2
     jnz     short loc_2545D
-    jmp     _primtype_sphere; 2 = sphere
+    jmp     loc_25801; 2 = sphere
 loc_2545D:
     cmp     ax, 3
     jnz     short loc_25465
