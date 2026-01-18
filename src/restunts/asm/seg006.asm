@@ -1647,6 +1647,10 @@ loc_25C01:
     jnz     short loc_25C92
     jmp     loc_25983
 loc_25C92:
+    ; fixxie
+    jmp loc_25983
+    db 13 dup(144)
+    ; end fixxie
     mov     bx, polyvertpointptrtab
     mov     ax, [bx+2]
     sub     ax, [bp+var_462]
