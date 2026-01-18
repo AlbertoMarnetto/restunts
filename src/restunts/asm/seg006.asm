@@ -1658,12 +1658,8 @@ loc_25C92:
     lea     ax, [bp+var_450]
     push    ax
     push    cs
-    ; fixxie
-    ;call near ptr ported_rect_adjust_from_point_
-    ;add     sp, 4
-    db 3 dup(144) ; keep aligned after removing the call
-    add sp, 6 ; pop an extra variable
-    ; fixxie end
+    call near ptr ported_rect_adjust_from_point_
+    add     sp, 4
     mov     ax, [bp+var_462]
     mov     bx, polyvertpointptrtab
     add     ax, [bx]
