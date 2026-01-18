@@ -864,7 +864,7 @@ loc_2545D:
 loc_25465:
     cmp     ax, 5
     jnz     short loc_2546D
-    jmp     loc_25CE0       ; 5 = particle
+    jmp     _primtype_particle       ; 5 = particle
 loc_2546D:
     jmp     loc_25801       ; everything else? (4?)
 _primtype_poly:
@@ -1678,7 +1678,7 @@ loc_25C92:
     lea     ax, [bp+var_450]
     push    ax
     jmp     loc_2597C
-loc_25CE0:
+_primtype_particle:
     les     bx, transshapeprimitives
     mov     al, es:[bx]     ; primitives+ 0 = type
     sub     ah, ah
