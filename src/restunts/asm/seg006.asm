@@ -1654,7 +1654,17 @@ loc_25C01:
     jnz     short loc_25C92
     jmp     loc_25983
 loc_25C92:
+    ; SuperSight: skip the bounding box calculation for spheres.
+    ; The algorithm is bugged and results in a wrong shape and position
+    ; of the explosion sprite.
+    jmp loc_25983
+    db 13 dup(144)  ; to keep the alignment
+    ; End of the fix. The following code, up to _primtype_particle,
+    ; will be skipped.
     mov     bx, polyvertpointptrtab
+    ; Likely bug here. The C code dereferences `polyvertpointptrtab` twice
+    ; (once with [0], once with ->), but the assembly only seems to do that
+    ; once.
     mov     ax, [bx+2]
     sub     ax, [bp+var_462]
     mov     [bp+var_450.y2], ax
@@ -1673,6 +1683,7 @@ loc_25C92:
     mov     [bp+var_450.x2], ax
     mov     ax, [bx+2]
     add     ax, [bp+var_462]
+    ; Bug here: .x2 is written to, but it should be y2
     mov     [bp+var_450.x2], ax
     push    transshaperectptr
     lea     ax, [bp+var_450]
