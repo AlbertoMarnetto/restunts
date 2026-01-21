@@ -165,7 +165,7 @@ struct RECTANGLE* transshaperectptr;
 
 unsigned char byte_4393D;
 unsigned poly_linklist_40ED6_iter1;
-unsigned word_45D98;
+unsigned poly_linklist_40ED6_iter4;
 unsigned poly_linklist_40ED6_iter3;
 unsigned poly_linklist_40ED6_iter2;
 unsigned char transshapenumvertscopy;
