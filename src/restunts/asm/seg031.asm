@@ -527,21 +527,21 @@ loc_3A1E2:
 loc_3A1E8:
     cmp     [bp+var_timerdelta3], 23h ; '#'
     jge     short loc_3A1F6
-    mov     graphic_level, 0
+    mov     detail_level, 0
     jmp     short loc_3A22B
     ; align 2
     db 144
 loc_3A1F6:
     cmp     [bp+var_timerdelta3], 37h ; '7'
     jge     short loc_3A204
-    mov     graphic_level, 1
+    mov     detail_level, 1
     jmp     short loc_3A22B
     ; align 2
     db 144
 loc_3A204:
     cmp     [bp+var_timerdelta3], 4Bh ; 'K'
     jge     short loc_3A212
-    mov     graphic_level, 2
+    mov     detail_level, 2
     jmp     short loc_3A22B
     ; align 2
     db 144
@@ -551,10 +551,10 @@ loc_3A212:
     cmp     slow_video_mgmt, 0
     jnz     short loc_3A226
 loc_3A21F:
-    mov     graphic_level, 3
+    mov     detail_level, 3
     jmp     short loc_3A22B
 loc_3A226:
-    mov     graphic_level, 4
+    mov     detail_level, 4
 loc_3A22B:
     mov     ax, framespersec2
     mov     framespersec, ax

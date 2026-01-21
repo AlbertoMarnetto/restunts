@@ -5288,7 +5288,7 @@ loc_29FFC:
     inc     si
     cmp     si, 9
     jl      short loc_29FFC
-    mov     bl, graphic_level
+    mov     bl, detail_level
     sub     bh, bh
     add     bx, bp
     mov     byte ptr [bx-20Ch], 1
@@ -5357,7 +5357,7 @@ loc_2A050:
 loc_2A098:
     cmp     ax, 9
     jz      short loc_2A0CC
-    mov     graphic_level, al
+    mov     detail_level, al
     jmp     loc_29FD9
     ; align 2
     db 144

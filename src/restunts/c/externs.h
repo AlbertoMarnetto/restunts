@@ -384,7 +384,7 @@ extern unsigned short framespersec;
 extern unsigned short framespersec2;
 extern unsigned short slow_video_mgmt;
 extern unsigned short slow_video_mgmt_copy;
-extern unsigned char graphic_level;
+extern unsigned char detail_level;
 
 extern unsigned short pspofs;
 extern unsigned short pspseg;

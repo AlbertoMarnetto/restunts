@@ -39,7 +39,7 @@ dseg segment byte public 'STUNTSD' use16
     extrn byte_3B8F7:byte
     extrn kbormouse:byte
     extrn mouse_isdirty:byte
-    extrn graphic_level:byte
+    extrn detail_level:byte
     extrn g_is_busy:byte
     extrn byte_3B8FC:byte
     extrn aKevin:byte
