@@ -283,8 +283,8 @@ void heapsort_by_order(int n, int* heap, int* data);
 char get_low_detail_threshold_at_attempt(char attempt)
 {
     char const * low_detail_priority_thresholds
-        = graphic_level == 0 ? low_detail_priority_thresholds_0
-        : graphic_level <= 2 ? low_detail_priority_thresholds_1
+        = detail_level == 0 ? low_detail_priority_thresholds_0
+        : detail_level <= 2 ? low_detail_priority_thresholds_1
         :                     low_detail_priority_thresholds_2;
 
 	if (attempt >= LOW_DETAIL_PRIORITY_THRESHOLDS_SIZE) {
@@ -796,7 +796,7 @@ void update_frame(char arg_0, struct RECTANGLE* arg_cliprectptr) {
 	var_4E = 0;
 	si = 0;
 
-	discarded_tiles = (LOOKAHEAD_TILES_DB_SIZE - tiles_to_draw_max[graphic_level]);
+	discarded_tiles = (LOOKAHEAD_TILES_DB_SIZE - tiles_to_draw_max[detail_level]);
 	attempts_count = 0;
 	is_last_attempt = 0;
 start_rendering:
@@ -1386,7 +1386,7 @@ start_rendering:
 		// of polygons needed by about 30%. Otherwise, start to drop tiles.
 		++attempts_count;
 		if (attempts_count > 1) {
-			if (graphic_level == 0)
+			if (detail_level == 0)
 			{
 				tiles_to_discard = LOOKAHEAD_TILES_DB_SIZE - si;
 				if (tiles_to_discard < 5) tiles_to_discard = 5;

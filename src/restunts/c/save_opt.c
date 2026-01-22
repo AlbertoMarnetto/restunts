@@ -11,7 +11,7 @@ void save_graphic_options()
 {
 	char buffer[80];
 	int buflen;
-	buflen = _sprintf(buffer, "graphic_level=%d\n", graphic_level);
+	buflen = _sprintf(buffer, "detail_level=%d\n", detail_level);
 	file_write_nofatal("stunts.ini", buffer, buflen);
 }
 
@@ -23,7 +23,7 @@ void load_graphic_options()
 	// implementation we borrow from Restunts
 	char buffer[80];
 	int res;
-	char temp_graphic_level = 0;
+	char temp_detail_level = 0;
 
 	FILE* file = fopen("stunts.ini", "rb");
 	if (file == 0)
@@ -51,30 +51,30 @@ void load_graphic_options()
 
 	// Parse graphic level: copy away the number and check
 	// that what precedes is the name of the variable
-	temp_graphic_level = buffer[strlen("graphic_level=")];
-	buffer[strlen("graphic_level=")] = '\0';
-	res = strcmp(buffer, "graphic_level=");
+	temp_detail_level = buffer[strlen("detail_level=")];
+	buffer[strlen("detail_level=")] = '\0';
+	res = strcmp(buffer, "detail_level=");
 	if (res != 0)
 	{
 		_printf("Invalid options file:\n");
-		_printf("Expected %s got %s: %d\n", "graphic_level=", buffer);
+		_printf("Expected %s got %s: %d\n", "detail_level=", buffer);
 		return;
 	}
 
 	// Poor man's atoi. Thankfully it's one digit only
-	temp_graphic_level -= '0' - 0;
-	if (temp_graphic_level < 0 || temp_graphic_level > 5)
+	temp_detail_level -= '0' - 0;
+	if (temp_detail_level < 0 || temp_detail_level > 5)
 	{
-		// _printf("Invalid graphic level:\n", temp_graphic_level);
+		// _printf("Invalid graphic level:\n", temp_detail_level);
 		return;
 	}
-	if (temp_graphic_level == 5) {
+	if (temp_detail_level == 5) {
 		// There is no graphic level 5 in the game. But we offer it as easter egg
-		temp_graphic_level = 4;
+		temp_detail_level = 4;
 		tiles_to_draw_max[4] = 0;
 	}
 
-	graphic_level = temp_graphic_level;
+	detail_level = temp_detail_level;
 
 	fclose(file);
 }

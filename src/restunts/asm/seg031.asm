@@ -559,7 +559,7 @@ loc_3A22B:
     ; SuperSight: Stunts tried to determine the graphics level on the basis
     ; of a machine speed test. But we want instead to load the last user-set
     ; graphics level, if possible. Do that
-    call load_graphic_options ; this overwrites graphic_level on success
+    call load_graphic_options ; this overwrites detail_level on success
     ; call far is 5 bytes, add 11 NOPs to keep the para alignment^M
     db 11 dup(144)
     ; SuperSight: end of the modification
