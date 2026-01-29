@@ -21500,7 +21500,7 @@ material_patlist2_ptr     dw offset material_pattern2_list
 ; default audio driver. The first two letters are overwritten by the
 ; user-defined command line audio parameter, if present.
 ; The result must match the filename of one of the .DRV files
-audiodriverstring     db 'pc15',0
+audiodriverstring     db 'ad15',0
 aSdmain     db "sdmain", 0
 aPal        db "!pal", 0
 aSmou       db "smou", 0
