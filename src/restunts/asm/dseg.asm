@@ -21497,40 +21497,15 @@ material_clrlist_ptr     dw offset material_color_list
 material_clrlist2_ptr     dw offset material_color_list
 material_patlist_ptr     dw offset material_pattern_list
 material_patlist2_ptr     dw offset material_pattern2_list
-audiodriverstring     db 112
-    db 99
-    db 49
-    db 53
-    db 0
-aSdmain     db 115
-    db 100
-    db 109
-    db 97
-    db 105
-    db 110
-    db 0
-aPal     db 33
-    db 112
-    db 97
-    db 108
-    db 0
-aSmou     db 115
-    db 109
-    db 111
-    db 117
-    db 0
-aSdmain_0     db 115
-    db 100
-    db 109
-    db 97
-    db 105
-    db 110
-    db 0
-aSmou_0     db 115
-    db 109
-    db 111
-    db 117
-    db 0
+; default audio driver. The first two letters are overwritten by the
+; user-defined command line audio parameter, if present.
+; The result must match the filename of one of the .DRV files
+audiodriverstring     db 'pc15',0
+aSdmain     db "sdmain", 0
+aPal        db "!pal", 0
+aSmou       db "smou", 0
+aSdmain_0   db "sdmain", 0
+aSmou_0     db "smou", 0
 aMmou     db 109
     db 109
     db 111
