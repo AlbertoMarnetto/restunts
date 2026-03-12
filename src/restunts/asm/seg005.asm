@@ -1045,11 +1045,23 @@ supersight_handle_f5:
     xor     [display_debug_overlay], 1h
 supersight_handle_f6:
     cmp     ax, 4000h ; F6 pressed
-    jnz     short loc_22530
+    jnz     short supersight_handle_f7
     xor     [reveal_illusions], 1h
+supersight_handle_f7:
+    cmp     ax, 4100h ; F7 pressed
+    jnz     short loc_22530
+    ; SuperSight:
+    ; Put the cam in the position defined by the OWOOT rules:
+    ; elevation: max allowed by vanilla Stunts = 240 units (84.375 deg)
+    ; azimuth: right behind the car = 512 units (3 right from starting pose)
+    ; distance: starting distance = 210 units
+    ; see https://forum.stunts.hu/index.php?msg=100057
+    mov     custom_camera_elevation_angle, 0F0h ; 240
+    mov     custom_camera_azimuth_angle, 200h  ; 512
+    mov     custom_camera_distance, 0D2h  ; 210
 loc_22530:
     jmp     loc_224C0
-	db 11 dup(144)  ; alignment
+	db 4 dup(144)  ; alignment
 handle_ingame_kb_shortcuts endp
 init_unknown proc far
      s = byte ptr 0
