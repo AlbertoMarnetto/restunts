@@ -1043,10 +1043,12 @@ supersight_handle_f5:
     cmp     ax, 3F00h ; F5 pressed
     jnz     short supersight_handle_f6
     xor     [display_debug_overlay], 1h
+    jmp     loc_224E9
 supersight_handle_f6:
     cmp     ax, 4000h ; F6 pressed
     jnz     short supersight_handle_f7
     xor     [reveal_illusions], 1h
+    jmp     loc_224E9
 supersight_handle_f7:
     cmp     ax, 4100h ; F7 pressed
     jnz     short loc_22530
@@ -1059,9 +1061,10 @@ supersight_handle_f7:
     mov     custom_camera_elevation_angle, 0F0h ; 240
     mov     custom_camera_azimuth_angle, 200h  ; 512
     mov     custom_camera_distance, 0D2h  ; 210
+    jmp     loc_22446   ; activate cam 3
 loc_22530:
     jmp     loc_224C0
-	db 4 dup(144)  ; alignment
+	db 13 dup(144)  ; alignment
 handle_ingame_kb_shortcuts endp
 init_unknown proc far
      s = byte ptr 0
