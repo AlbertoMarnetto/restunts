@@ -1503,7 +1503,7 @@ start_rendering:
 		{
 			_sprintf(
 				debug_overlay_str,
-				"Cam: dist: %5d, azimuth: %6d, elevation: %4d",
+				"Cam: dist: %5d, azimuth: %4d, elevation: %4d",
 				custom_camera_distance, custom_camera_azimuth_angle, custom_camera_elevation_angle);
 		}
 		else
@@ -1522,10 +1522,21 @@ start_rendering:
 		if (state.game_inputmode != 0) {
 			format_frame_as_string(&resID_byte1, elapsed_time1 + elapsed_time2, 0);
 			font_set_fontdef2(fontledresptr);
+			// Shift clock to the right if cam stats are shown
 			if (slow_video_mgmt_copy != 0) {
-				rect_union(intro_draw_text(&resID_byte1, 0x8C, roofbmpheight + 2, dialog_fnt_colour, 0), &rect_unk11, &rect_unk11);
+				rect_union(
+					intro_draw_text(
+						&resID_byte1,
+						0x8C + (display_debug_overlay && cameramode == 2 ? 115 : 0),
+						roofbmpheight + 2,
+						dialog_fnt_colour, 0),
+					&rect_unk11, &rect_unk11);
 			} else {
-				intro_draw_text(&resID_byte1, 0x8C, roofbmpheight + 2, dialog_fnt_colour, 0);
+				intro_draw_text(
+					&resID_byte1,
+					0x8C + (display_debug_overlay && cameramode == 2 ? 115 : 0),
+					roofbmpheight + 2,
+					dialog_fnt_colour, 0);
 			}
 
 			font_set_fontdef();
